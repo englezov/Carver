@@ -158,6 +158,36 @@ class PortfolioCompletionGateSyntheticTests(unittest.TestCase):
                 "",
             ).validate()
 
+    def test_minute_fallback_requires_direct_daily_blockage_artifact(self) -> None:
+        source_artifact = SourceArtifactRef("docs/process/CARVER_P01_P02_PORTFOLIO_COMPLETION_RECORD_2026-05-29.md")
+        with self.assertRaises(CarverBlocked):
+            build_portfolio_completion_report(
+                p01_risk_parity(1_000_000, 0.20, 1.0),
+                {"MES": "06-26", "ZN": "06-26"},
+                self.locked_risk_fx,
+                intake_contract=IntakeRouteContract(
+                    PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK,
+                    SourceRuleStatus.LOCKED,
+                    source_artifact,
+                ),
+            )
+
+        report = build_portfolio_completion_report(
+            p01_risk_parity(1_000_000, 0.20, 1.0),
+            {"MES": "06-26", "ZN": "06-26"},
+            self.locked_risk_fx,
+            intake_contract=IntakeRouteContract(
+                PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK,
+                SourceRuleStatus.LOCKED,
+                source_artifact,
+                direct_daily_blocked_artifact=source_artifact,
+            ),
+        )
+
+        self.assertEqual(report.intake_mode, PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK)
+        self.assertNotIn("intake route contract is unresolved", report.blockers)
+        self.assertIn("provider mapping unresolved for MES 06-26", report.blockers)
+
     def test_completion_report_rejects_provider_mapping_set_mismatch(self) -> None:
         p01 = p01_risk_parity(1_000_000, 0.20, 1.0)
         zn_only_mapping_set = PortfolioProviderMappingSet(

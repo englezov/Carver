@@ -59,6 +59,7 @@ from carver.spine.web_chart_api import (  # noqa: E402
     BoundWebChartResponse,
     ChartBarType,
     LockedWebChartSymbol,
+    LOCKED_WEB_CHART_PROVIDER_SYMBOLS,
     WebChartRequest,
     WebChartSymbol,
     normalize_bound_web_chart_response,
@@ -78,19 +79,14 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         return int(datetime(2026, 5, 28, hour, minute, tzinfo=timezone.utc).timestamp() * 1000)
 
     def web_request(self) -> WebChartRequest:
-        contract = mes_contract()
-        es_contract = replace(contract, code="ES", name="E-mini S&P 500 future", multiplier=50)
-        locked = LockedWebChartSymbol(es_contract, "06-26", "3570919", "ES JUN26")
-        symbol = WebChartSymbol(locked, "3570919", "ES JUN26")
+        locked = LockedWebChartSymbol(zn_contract(), "06-26", "4470301", "ZN JUN26")
+        symbol = WebChartSymbol(locked, "4470301", "ZN JUN26")
         return WebChartRequest(symbol, ChartBarType.MINUTE, element_size=1, element_count=3)
 
     def daily_web_request(self) -> WebChartRequest:
         locked = LockedWebChartSymbol(zn_contract(), "06-26", "4470301", "ZN JUN26")
         symbol = WebChartSymbol(locked, "4470301", "ZN JUN26")
         return WebChartRequest(symbol, ChartBarType.DAILY, element_size=1, element_count=1)
-
-    def es_daily_web_request(self) -> WebChartRequest:
-        return replace(self.web_request(), bar_type=ChartBarType.DAILY, element_count=1)
 
     def zn_minute_web_request(self) -> WebChartRequest:
         return replace(self.daily_web_request(), bar_type=ChartBarType.MINUTE, element_count=3)
@@ -137,13 +133,13 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory) / "data" / "quarantine" / "ninjatrader" / "web_chart"
             root.mkdir(parents=True)
-            response_path = root / "ES_06-26_getChart_20260528.json"
+            response_path = root / "ZN_06-26_getChart_20260528.json"
             response_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
 
             response = normalize_bound_web_chart_response_file(response_path, request, root)
             daily = derive_completed_daily_from_bound_web_chart(response, self.session)
 
-            self.assertEqual(daily.code, "ES")
+            self.assertEqual(daily.code, "ZN")
             self.assertEqual(daily.timestamp, self.daily_ts)
             self.assertEqual(daily.open, 5000)
             self.assertEqual(daily.high, 5005)
@@ -151,11 +147,11 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
             self.assertEqual(daily.close, 5004)
             self.assertEqual(daily.volume, 60)
 
-            outside_path = Path(temporary_directory) / "ES_06-26_getChart_20260528.json"
+            outside_path = Path(temporary_directory) / "ZN_06-26_getChart_20260528.json"
             outside_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
             with self.assertRaises(CarverBlocked):
                 normalize_web_chart_response_file(outside_path, request, root)
-            cache_path = root / "ES_06-26_getChart_20260528.ncd"
+            cache_path = root / "ZN_06-26_getChart_20260528.ncd"
             cache_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
             with self.assertRaises(CarverBlocked):
                 normalize_web_chart_response_file(cache_path, request, root)
@@ -231,7 +227,7 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
             },
         }
         response = normalize_bound_web_chart_response(payload, request)
-        spoofed_response = BoundWebChartResponse(self.es_daily_web_request(), response.bars)
+        spoofed_response = BoundWebChartResponse(replace(request, bar_type=ChartBarType.MINUTE, element_count=1), response.bars)
 
         with self.assertRaises(CarverBlocked):
             normalize_direct_daily_bound_web_chart(spoofed_response)
@@ -239,7 +235,7 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
     def test_minute_bound_web_chart_daily_derivation_rejects_cross_request_replay(self) -> None:
         request = self.web_request()
         response = normalize_bound_web_chart_response(self.web_payload(request), request)
-        spoofed_response = BoundWebChartResponse(self.zn_minute_web_request(), response.bars)
+        spoofed_response = BoundWebChartResponse(self.daily_web_request(), response.bars)
 
         with self.assertRaises(CarverBlocked):
             derive_completed_daily_from_bound_web_chart(spoofed_response, self.session)
@@ -334,6 +330,15 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         )
         self.assertEqual([row.contract_code for row in p02_rows], ["MES", "ZN", "ZF", "QM", "ZC", "MGC"])
         self.assertEqual(sum(row.status is ProviderMappingStatus.LOCKED for row in p02_rows), 1)
+
+    def test_locked_web_chart_registry_contains_only_p01_p02_book_legs(self) -> None:
+        book_leg_codes = {"MES", "ZN", "ZF", "QM", "ZC", "MGC"}
+        self.assertEqual(set(LOCKED_WEB_CHART_PROVIDER_SYMBOLS), {("ZN", "06-26", "ZN JUN26")})
+        for contract_code, contract_month, display_symbol in LOCKED_WEB_CHART_PROVIDER_SYMBOLS:
+            with self.subTest(contract_code=contract_code):
+                self.assertIn(contract_code, book_leg_codes)
+                self.assertEqual(display_symbol, f"{contract_code} JUN26")
+                self.assertEqual(contract_month, "06-26")
 
     def test_locked_provider_mapping_set_requires_exact_portfolio_legs(self) -> None:
         zn_mapping = LockedPortfolioProviderMapping(zn_contract(), "06-26", "ZN JUN26", "4470301")

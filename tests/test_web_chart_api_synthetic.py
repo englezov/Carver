@@ -24,9 +24,9 @@ from carver.spine.web_chart_api import (  # noqa: E402
 
 class WebChartApiSyntheticTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.es_contract = ContractSpec("ES", "E-mini S&P 500 future", "CME", "USD", 50)
-        self.locked_symbol = LockedWebChartSymbol(self.es_contract, "06-26", "3570919", "ES JUN26")
-        self.symbol = WebChartSymbol(self.locked_symbol, "3570919", "ES JUN26")
+        self.zn_contract = ContractSpec("ZN", "US 10-year bond future", "CBOT", "USD", 1000)
+        self.locked_symbol = LockedWebChartSymbol(self.zn_contract, "06-26", "4470301", "ZN JUN26")
+        self.symbol = WebChartSymbol(self.locked_symbol, "4470301", "ZN JUN26")
         self.request = WebChartRequest(
             symbol=self.symbol,
             bar_type=ChartBarType.MINUTE,
@@ -71,7 +71,7 @@ class WebChartApiSyntheticTests(unittest.TestCase):
     def test_builds_allowlisted_get_chart_payload(self) -> None:
         request_payload = self.request.payload()
 
-        self.assertEqual(request_payload["symbol"], "3570919")
+        self.assertEqual(request_payload["symbol"], "4470301")
         self.assertEqual(request_payload["chartDescription"]["underlyingType"], "MinuteBar")
         self.assertEqual(request_payload["chartDescription"]["elementSize"], 1)
         self.assertEqual(request_payload["timeRange"]["asMuchAsElements"], 2)
@@ -96,15 +96,17 @@ class WebChartApiSyntheticTests(unittest.TestCase):
 
     def test_rejects_arbitrary_symbols_and_bulk_requests(self) -> None:
         with self.assertRaises(CarverBlocked):
-            LockedWebChartSymbol(self.es_contract, "06-26", "ES JUN26", "ES JUN26").validate()
+            LockedWebChartSymbol(self.zn_contract, "06-26", "ZN JUN26", "ZN JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "9999999", "ES JUN26").validate()
+            WebChartSymbol(self.locked_symbol, "9999999", "ZN JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "3570919", "MES JUN26").validate()
+            WebChartSymbol(self.locked_symbol, "4470301", "MES JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "3570919", "ES JUN26", LaneClass.CFD_ADAPTER).validate()
+            WebChartSymbol(self.locked_symbol, "4470301", "ZN JUN26", LaneClass.CFD_ADAPTER).validate()
         with self.assertRaises(CarverBlocked):
-            LockedWebChartSymbol(self.es_contract, "06-26", "9999999", "ES JUN26").validate()
+            LockedWebChartSymbol(self.zn_contract, "06-26", "9999999", "ZN JUN26").validate()
+        with self.assertRaises(CarverBlocked):
+            LockedWebChartSymbol(ContractSpec("ES", "E-mini S&P 500 future", "CME", "USD", 50), "06-26", "3570919", "ES JUN26").validate()
         with self.assertRaises(CarverBlocked):
             replace(self.request, element_count=501).validate()
         with self.assertRaises(CarverBlocked):

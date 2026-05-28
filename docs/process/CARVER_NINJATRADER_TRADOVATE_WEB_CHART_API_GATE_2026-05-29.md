@@ -42,7 +42,7 @@ The synthetic response envelope assumed by this gate is:
   "request": {
     "endpoint": "md/getChart",
     "payload": {
-      "symbol": "3570919",
+      "symbol": "4470301",
       "chartDescription": {
         "underlyingType": "MinuteBar",
         "elementSizeUnit": "UnderlyingUnits",
@@ -54,10 +54,10 @@ The synthetic response envelope assumed by this gate is:
       }
     },
     "identity": {
-      "contractCode": "ES",
+      "contractCode": "ZN",
       "contractMonth": "06-26",
-      "displaySymbol": "ES JUN26",
-      "providerSymbolId": "3570919"
+      "displaySymbol": "ZN JUN26",
+      "providerSymbolId": "4470301"
     }
   },
   "ok": true,
@@ -79,12 +79,13 @@ The synthetic response envelope assumed by this gate is:
 
 The `request` binding must exactly match the locked request object before any bars are normalized. A quarantined chart response cannot be paired with a different provider symbol, display symbol, contract month, endpoint, or request payload.
 
-Each symbol must be locked by contract identity, contract month, display symbol, and provider numeric symbol id before any request payload can be built. The initial locked observed mappings are:
+Each symbol must be locked by contract identity, contract month, display symbol, and provider numeric symbol id before any request payload can be built. The current locked P01/P02 validation mapping is:
 
 ```text
-ES 06-26 ES JUN26 -> 3570919
 ZN 06-26 ZN JUN26 -> 4470301
 ```
+
+The observed `ES 06-26 ES JUN26 -> 3570919` id is non-portfolio archaeology only. It is not admitted by locked-provider validation and must not be used as a substitute for `MES`.
 
 No other provider symbol id is admitted by this synthetic gate.
 

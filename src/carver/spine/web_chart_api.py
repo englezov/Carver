@@ -16,8 +16,10 @@ ALLOWED_CHART_ENDPOINTS = frozenset({"md/getChart", "md/cancelChart"})
 MAX_SYNTHETIC_CHART_ELEMENTS = 500
 DEFAULT_WEB_CHART_QUARANTINE = Path("data/quarantine/ninjatrader/web_chart")
 LOCKED_WEB_CHART_PROVIDER_SYMBOLS = {
-    ("ES", "06-26", "ES JUN26"): "3570919",
     ("ZN", "06-26", "ZN JUN26"): "4470301",
+}
+OBSERVED_NON_PORTFOLIO_WEB_CHART_SYMBOLS = {
+    ("ES", "06-26", "ES JUN26"): "3570919",
 }
 
 

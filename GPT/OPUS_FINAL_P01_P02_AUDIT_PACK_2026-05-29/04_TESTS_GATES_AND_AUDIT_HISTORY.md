@@ -7,6 +7,7 @@ Use this file to audit the synthetic tests and process gates for P01/P02. Tests 
 # FILE: docs\process\CARVER_NINJATRADER_TRADOVATE_WEB_CHART_API_GATE_2026-05-29.md
 
 ```text
+
 # Carver NinjaTrader Tradovate Web Chart API Gate
 
 Date: 2026-05-29
@@ -51,7 +52,7 @@ The synthetic response envelope assumed by this gate is:
   "request": {
     "endpoint": "md/getChart",
     "payload": {
-      "symbol": "3570919",
+      "symbol": "4470301",
       "chartDescription": {
         "underlyingType": "MinuteBar",
         "elementSizeUnit": "UnderlyingUnits",
@@ -63,10 +64,10 @@ The synthetic response envelope assumed by this gate is:
       }
     },
     "identity": {
-      "contractCode": "ES",
+      "contractCode": "ZN",
       "contractMonth": "06-26",
-      "displaySymbol": "ES JUN26",
-      "providerSymbolId": "3570919"
+      "displaySymbol": "ZN JUN26",
+      "providerSymbolId": "4470301"
     }
   },
   "ok": true,
@@ -88,12 +89,13 @@ The synthetic response envelope assumed by this gate is:
 
 The `request` binding must exactly match the locked request object before any bars are normalized. A quarantined chart response cannot be paired with a different provider symbol, display symbol, contract month, endpoint, or request payload.
 
-Each symbol must be locked by contract identity, contract month, display symbol, and provider numeric symbol id before any request payload can be built. The initial locked observed mappings are:
+Each symbol must be locked by contract identity, contract month, display symbol, and provider numeric symbol id before any request payload can be built. The current locked P01/P02 validation mapping is:
 
 ```text
-ES 06-26 ES JUN26 -> 3570919
 ZN 06-26 ZN JUN26 -> 4470301
 ```
+
+The observed `ES 06-26 ES JUN26 -> 3570919` id is non-portfolio archaeology only. It is not admitted by locked-provider validation and must not be used as a substitute for `MES`.
 
 No other provider symbol id is admitted by this synthetic gate.
 
@@ -120,9 +122,12 @@ No such probe is authorized by this file.
 
 ```
 
+---
+
 # FILE: docs\process\CARVER_P01_P02_SOURCE_NATIVE_PORTFOLIO_CONFORMANCE_GATE_2026-05-29.md
 
 ```text
+
 # Carver P01/P02 Source-Native Portfolio Conformance Gate
 
 Date: 2026-05-29
@@ -158,7 +163,7 @@ The code surface added by this gate is deliberately small:
 - `continuous.py` defines a continuous-contract rule set but refuses to build a continuous/back-adjusted series until session, roll, back-adjustment, and cost-source rules are locked separately.
 - `portfolio_conformance.py` sizes P01/P02 from exact completed daily bars, prevalidated annual risk estimates, and aligned FX rates.
 - `portfolio_conformance.py` defines exact provider mapping sets that must match the portfolio legs and the locked provider registry before a real-data route can be considered mapped.
-- Provider-symbol mapping status is explicit and fail-closed. The currently locked observed mappings are only `ES 06-26 -> 3570919` and `ZN 06-26 -> 4470301`. P01 uses `MES` and `ZN`; P02 uses `MES`, `ZN`, `ZF`, `QM`, `ZC`, and `MGC`. Therefore real P01/P02 Web Chart conformance remains blocked until exact book-contract provider IDs are locked.
+- Provider-symbol mapping status is explicit and fail-closed. The only currently locked P01/P02 mapping is `ZN 06-26 -> 4470301`. The observed `ES 06-26 -> 3570919` id is retained only as non-portfolio archaeology and is not read by locked-provider validation. P01 uses `MES` and `ZN`; P02 uses `MES`, `ZN`, `ZF`, `QM`, `ZC`, and `MGC`. Therefore real P01/P02 Web Chart conformance remains blocked until exact book-contract provider IDs are locked.
 
 ## Required Next Data-Surface Locks
 
@@ -166,7 +171,7 @@ Before any real P01/P02 data pull or conformance run:
 
 - Lock exact NinjaTrader/Tradovate provider IDs for `MES`, `ZN`, `ZF`, `QM`, `ZC`, and `MGC` contract months.
 - Lock the daily-session convention for each instrument.
-- Lock whether the first data intake uses direct daily bars or one-minute-to-daily derivation.
+- Lock whether the first data intake uses direct daily bars or one-minute-to-daily derivation. Direct daily is primary; minute-derived fallback must carry a separate artifact explaining why direct daily is unavailable for that route.
 - Lock roll and back-adjustment rules for continuous series use.
 - Lock annual risk estimates and FX inputs as prevalidated upstream facts, not post-result tuned values.
 - Pass the real-data conformance preflight before any future real-data sizing call.
@@ -191,9 +196,12 @@ The test suite does not use real market data and does not claim strategy perform
 
 ```
 
+---
+
 # FILE: docs\process\CARVER_P01_P02_PORTFOLIO_COMPLETION_RECORD_2026-05-29.md
 
 ```text
+
 # Carver P01/P02 Portfolio Completion Record
 
 Date: 2026-05-29
@@ -217,7 +225,7 @@ The package now contains:
 - P01 exact portfolio definition: `MES` and `ZN`, 50/50 risk weights.
 - P02 exact portfolio definition: `MES`, `ZN`, `ZF`, `QM`, `ZC`, `MGC`, weights 25 / 12.5 / 12.5 / 12.5 / 12.5 / 25.
 - Direct daily bars as the preferred first intake path because NinjaTrader can provide daily candles.
-- Direct daily Web Chart normalization is represented in code as a first-class path; minute-to-daily derivation remains fallback only.
+- Direct daily Web Chart normalization is represented in code as a first-class path; minute-to-daily derivation remains fallback only and requires a direct-daily-blocked artifact before it can be locked.
 - Minute-to-completed-daily derivation as a tested fallback only, requiring a full contiguous locked session.
 - Quarantined JSON chart response normalization with exact request/provider binding.
 - P01/P02 conformance orchestration from completed daily bars, prevalidated annual risk, and aligned FX inputs.
@@ -227,13 +235,13 @@ The package now contains:
 
 ## Current Mapping Status
 
-Observed and locked:
+Locked for P01/P02 validation:
 
 ```text
 ZN 06-26 ZN JUN26 -> 4470301
 ```
 
-Observed but not a book-contract substitute for P01/P02:
+Observed archaeology only; not read by locked-provider validation and not a book-contract substitute for P01/P02:
 
 ```text
 ES 06-26 ES JUN26 -> 3570919
@@ -256,7 +264,7 @@ MGC 06-26
 Before any real P01/P02 conformance run:
 
 - Lock exact provider IDs for `MES`, `ZN`, `ZF`, `QM`, `ZC`, and `MGC`.
-- Lock the intake-route contract as a source artifact: direct daily primary or minute-derived fallback.
+- Lock the intake-route contract as a source artifact: direct daily primary, or minute-derived fallback with a separate direct-daily-blocked artifact.
 - Lock session calendars/timezones as `SessionCalendarSpec` artifacts for the selected route.
 - Lock roll and back-adjustment rules as `RollRuleSpec` and `BackAdjustmentSpec` artifacts for continuous futures use.
 - Lock the annual risk input source and FX input source as prevalidated facts.
@@ -280,9 +288,12 @@ That audit should inspect the book, the module specs, the P01/P02 briefs, this c
 
 ```
 
+---
+
 # FILE: tests\test_first_portfolio_spine_synthetic.py
 
 ```text
+
 from __future__ import annotations
 
 import sys
@@ -572,9 +583,12 @@ if __name__ == "__main__":
 
 ```
 
+---
+
 # FILE: tests\test_minute_export_intake_synthetic.py
 
 ```text
+
 from __future__ import annotations
 
 import sys
@@ -758,9 +772,12 @@ if __name__ == "__main__":
 
 ```
 
+---
+
 # FILE: tests\test_web_chart_api_synthetic.py
 
 ```text
+
 from __future__ import annotations
 
 import sys
@@ -787,9 +804,9 @@ from carver.spine.web_chart_api import (  # noqa: E402
 
 class WebChartApiSyntheticTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.es_contract = ContractSpec("ES", "E-mini S&P 500 future", "CME", "USD", 50)
-        self.locked_symbol = LockedWebChartSymbol(self.es_contract, "06-26", "3570919", "ES JUN26")
-        self.symbol = WebChartSymbol(self.locked_symbol, "3570919", "ES JUN26")
+        self.zn_contract = ContractSpec("ZN", "US 10-year bond future", "CBOT", "USD", 1000)
+        self.locked_symbol = LockedWebChartSymbol(self.zn_contract, "06-26", "4470301", "ZN JUN26")
+        self.symbol = WebChartSymbol(self.locked_symbol, "4470301", "ZN JUN26")
         self.request = WebChartRequest(
             symbol=self.symbol,
             bar_type=ChartBarType.MINUTE,
@@ -834,7 +851,7 @@ class WebChartApiSyntheticTests(unittest.TestCase):
     def test_builds_allowlisted_get_chart_payload(self) -> None:
         request_payload = self.request.payload()
 
-        self.assertEqual(request_payload["symbol"], "3570919")
+        self.assertEqual(request_payload["symbol"], "4470301")
         self.assertEqual(request_payload["chartDescription"]["underlyingType"], "MinuteBar")
         self.assertEqual(request_payload["chartDescription"]["elementSize"], 1)
         self.assertEqual(request_payload["timeRange"]["asMuchAsElements"], 2)
@@ -859,15 +876,17 @@ class WebChartApiSyntheticTests(unittest.TestCase):
 
     def test_rejects_arbitrary_symbols_and_bulk_requests(self) -> None:
         with self.assertRaises(CarverBlocked):
-            LockedWebChartSymbol(self.es_contract, "06-26", "ES JUN26", "ES JUN26").validate()
+            LockedWebChartSymbol(self.zn_contract, "06-26", "ZN JUN26", "ZN JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "9999999", "ES JUN26").validate()
+            WebChartSymbol(self.locked_symbol, "9999999", "ZN JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "3570919", "MES JUN26").validate()
+            WebChartSymbol(self.locked_symbol, "4470301", "MES JUN26").validate()
         with self.assertRaises(CarverBlocked):
-            WebChartSymbol(self.locked_symbol, "3570919", "ES JUN26", LaneClass.CFD_ADAPTER).validate()
+            WebChartSymbol(self.locked_symbol, "4470301", "ZN JUN26", LaneClass.CFD_ADAPTER).validate()
         with self.assertRaises(CarverBlocked):
-            LockedWebChartSymbol(self.es_contract, "06-26", "9999999", "ES JUN26").validate()
+            LockedWebChartSymbol(self.zn_contract, "06-26", "9999999", "ZN JUN26").validate()
+        with self.assertRaises(CarverBlocked):
+            LockedWebChartSymbol(ContractSpec("ES", "E-mini S&P 500 future", "CME", "USD", 50), "06-26", "3570919", "ES JUN26").validate()
         with self.assertRaises(CarverBlocked):
             replace(self.request, element_count=501).validate()
         with self.assertRaises(CarverBlocked):
@@ -972,9 +991,12 @@ if __name__ == "__main__":
 
 ```
 
+---
+
 # FILE: tests\test_daily_portfolio_conformance_synthetic.py
 
 ```text
+
 from __future__ import annotations
 
 import json
@@ -1036,6 +1058,7 @@ from carver.spine.web_chart_api import (  # noqa: E402
     BoundWebChartResponse,
     ChartBarType,
     LockedWebChartSymbol,
+    LOCKED_WEB_CHART_PROVIDER_SYMBOLS,
     WebChartRequest,
     WebChartSymbol,
     normalize_bound_web_chart_response,
@@ -1055,19 +1078,14 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         return int(datetime(2026, 5, 28, hour, minute, tzinfo=timezone.utc).timestamp() * 1000)
 
     def web_request(self) -> WebChartRequest:
-        contract = mes_contract()
-        es_contract = replace(contract, code="ES", name="E-mini S&P 500 future", multiplier=50)
-        locked = LockedWebChartSymbol(es_contract, "06-26", "3570919", "ES JUN26")
-        symbol = WebChartSymbol(locked, "3570919", "ES JUN26")
+        locked = LockedWebChartSymbol(zn_contract(), "06-26", "4470301", "ZN JUN26")
+        symbol = WebChartSymbol(locked, "4470301", "ZN JUN26")
         return WebChartRequest(symbol, ChartBarType.MINUTE, element_size=1, element_count=3)
 
     def daily_web_request(self) -> WebChartRequest:
         locked = LockedWebChartSymbol(zn_contract(), "06-26", "4470301", "ZN JUN26")
         symbol = WebChartSymbol(locked, "4470301", "ZN JUN26")
         return WebChartRequest(symbol, ChartBarType.DAILY, element_size=1, element_count=1)
-
-    def es_daily_web_request(self) -> WebChartRequest:
-        return replace(self.web_request(), bar_type=ChartBarType.DAILY, element_count=1)
 
     def zn_minute_web_request(self) -> WebChartRequest:
         return replace(self.daily_web_request(), bar_type=ChartBarType.MINUTE, element_count=3)
@@ -1114,13 +1132,13 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory) / "data" / "quarantine" / "ninjatrader" / "web_chart"
             root.mkdir(parents=True)
-            response_path = root / "ES_06-26_getChart_20260528.json"
+            response_path = root / "ZN_06-26_getChart_20260528.json"
             response_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
 
             response = normalize_bound_web_chart_response_file(response_path, request, root)
             daily = derive_completed_daily_from_bound_web_chart(response, self.session)
 
-            self.assertEqual(daily.code, "ES")
+            self.assertEqual(daily.code, "ZN")
             self.assertEqual(daily.timestamp, self.daily_ts)
             self.assertEqual(daily.open, 5000)
             self.assertEqual(daily.high, 5005)
@@ -1128,11 +1146,11 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
             self.assertEqual(daily.close, 5004)
             self.assertEqual(daily.volume, 60)
 
-            outside_path = Path(temporary_directory) / "ES_06-26_getChart_20260528.json"
+            outside_path = Path(temporary_directory) / "ZN_06-26_getChart_20260528.json"
             outside_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
             with self.assertRaises(CarverBlocked):
                 normalize_web_chart_response_file(outside_path, request, root)
-            cache_path = root / "ES_06-26_getChart_20260528.ncd"
+            cache_path = root / "ZN_06-26_getChart_20260528.ncd"
             cache_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
             with self.assertRaises(CarverBlocked):
                 normalize_web_chart_response_file(cache_path, request, root)
@@ -1208,7 +1226,7 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
             },
         }
         response = normalize_bound_web_chart_response(payload, request)
-        spoofed_response = BoundWebChartResponse(self.es_daily_web_request(), response.bars)
+        spoofed_response = BoundWebChartResponse(replace(request, bar_type=ChartBarType.MINUTE, element_count=1), response.bars)
 
         with self.assertRaises(CarverBlocked):
             normalize_direct_daily_bound_web_chart(spoofed_response)
@@ -1216,7 +1234,7 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
     def test_minute_bound_web_chart_daily_derivation_rejects_cross_request_replay(self) -> None:
         request = self.web_request()
         response = normalize_bound_web_chart_response(self.web_payload(request), request)
-        spoofed_response = BoundWebChartResponse(self.zn_minute_web_request(), response.bars)
+        spoofed_response = BoundWebChartResponse(self.daily_web_request(), response.bars)
 
         with self.assertRaises(CarverBlocked):
             derive_completed_daily_from_bound_web_chart(spoofed_response, self.session)
@@ -1312,6 +1330,15 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         self.assertEqual([row.contract_code for row in p02_rows], ["MES", "ZN", "ZF", "QM", "ZC", "MGC"])
         self.assertEqual(sum(row.status is ProviderMappingStatus.LOCKED for row in p02_rows), 1)
 
+    def test_locked_web_chart_registry_contains_only_p01_p02_book_legs(self) -> None:
+        book_leg_codes = {"MES", "ZN", "ZF", "QM", "ZC", "MGC"}
+        self.assertEqual(set(LOCKED_WEB_CHART_PROVIDER_SYMBOLS), {("ZN", "06-26", "ZN JUN26")})
+        for contract_code, contract_month, display_symbol in LOCKED_WEB_CHART_PROVIDER_SYMBOLS:
+            with self.subTest(contract_code=contract_code):
+                self.assertIn(contract_code, book_leg_codes)
+                self.assertEqual(display_symbol, f"{contract_code} JUN26")
+                self.assertEqual(contract_month, "06-26")
+
     def test_locked_provider_mapping_set_requires_exact_portfolio_legs(self) -> None:
         zn_mapping = LockedPortfolioProviderMapping(zn_contract(), "06-26", "ZN JUN26", "4470301")
         p01 = p01_risk_parity(1_000_000, 0.20, 1.0)
@@ -1361,9 +1388,12 @@ if __name__ == "__main__":
 
 ```
 
+---
+
 # FILE: tests\test_portfolio_completion_gate_synthetic.py
 
 ```text
+
 from __future__ import annotations
 
 import sys
@@ -1524,6 +1554,36 @@ class PortfolioCompletionGateSyntheticTests(unittest.TestCase):
                 "",
             ).validate()
 
+    def test_minute_fallback_requires_direct_daily_blockage_artifact(self) -> None:
+        source_artifact = SourceArtifactRef("docs/process/CARVER_P01_P02_PORTFOLIO_COMPLETION_RECORD_2026-05-29.md")
+        with self.assertRaises(CarverBlocked):
+            build_portfolio_completion_report(
+                p01_risk_parity(1_000_000, 0.20, 1.0),
+                {"MES": "06-26", "ZN": "06-26"},
+                self.locked_risk_fx,
+                intake_contract=IntakeRouteContract(
+                    PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK,
+                    SourceRuleStatus.LOCKED,
+                    source_artifact,
+                ),
+            )
+
+        report = build_portfolio_completion_report(
+            p01_risk_parity(1_000_000, 0.20, 1.0),
+            {"MES": "06-26", "ZN": "06-26"},
+            self.locked_risk_fx,
+            intake_contract=IntakeRouteContract(
+                PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK,
+                SourceRuleStatus.LOCKED,
+                source_artifact,
+                direct_daily_blocked_artifact=source_artifact,
+            ),
+        )
+
+        self.assertEqual(report.intake_mode, PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK)
+        self.assertNotIn("intake route contract is unresolved", report.blockers)
+        self.assertIn("provider mapping unresolved for MES 06-26", report.blockers)
+
     def test_completion_report_rejects_provider_mapping_set_mismatch(self) -> None:
         p01 = p01_risk_parity(1_000_000, 0.20, 1.0)
         zn_only_mapping_set = PortfolioProviderMappingSet(
@@ -1562,3 +1622,5 @@ if __name__ == "__main__":
     unittest.main()
 
 ```
+
+---

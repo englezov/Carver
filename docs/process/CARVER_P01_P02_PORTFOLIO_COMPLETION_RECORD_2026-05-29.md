@@ -21,7 +21,7 @@ The package now contains:
 - P01 exact portfolio definition: `MES` and `ZN`, 50/50 risk weights.
 - P02 exact portfolio definition: `MES`, `ZN`, `ZF`, `QM`, `ZC`, `MGC`, weights 25 / 12.5 / 12.5 / 12.5 / 12.5 / 25.
 - Direct daily bars as the preferred first intake path because NinjaTrader can provide daily candles.
-- Direct daily Web Chart normalization is represented in code as a first-class path; minute-to-daily derivation remains fallback only.
+- Direct daily Web Chart normalization is represented in code as a first-class path; minute-to-daily derivation remains fallback only and requires a direct-daily-blocked artifact before it can be locked.
 - Minute-to-completed-daily derivation as a tested fallback only, requiring a full contiguous locked session.
 - Quarantined JSON chart response normalization with exact request/provider binding.
 - P01/P02 conformance orchestration from completed daily bars, prevalidated annual risk, and aligned FX inputs.
@@ -31,13 +31,13 @@ The package now contains:
 
 ## Current Mapping Status
 
-Observed and locked:
+Locked for P01/P02 validation:
 
 ```text
 ZN 06-26 ZN JUN26 -> 4470301
 ```
 
-Observed but not a book-contract substitute for P01/P02:
+Observed archaeology only; not read by locked-provider validation and not a book-contract substitute for P01/P02:
 
 ```text
 ES 06-26 ES JUN26 -> 3570919
@@ -60,7 +60,7 @@ MGC 06-26
 Before any real P01/P02 conformance run:
 
 - Lock exact provider IDs for `MES`, `ZN`, `ZF`, `QM`, `ZC`, and `MGC`.
-- Lock the intake-route contract as a source artifact: direct daily primary or minute-derived fallback.
+- Lock the intake-route contract as a source artifact: direct daily primary, or minute-derived fallback with a separate direct-daily-blocked artifact.
 - Lock session calendars/timezones as `SessionCalendarSpec` artifacts for the selected route.
 - Lock roll and back-adjustment rules as `RollRuleSpec` and `BackAdjustmentSpec` artifacts for continuous futures use.
 - Lock the annual risk input source and FX input source as prevalidated facts.

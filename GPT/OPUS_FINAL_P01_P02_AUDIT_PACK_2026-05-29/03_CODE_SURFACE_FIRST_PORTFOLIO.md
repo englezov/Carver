@@ -7,6 +7,7 @@ Use this file to audit the implemented source-native first-spine code. It is syn
 # FILE: src\carver\spine\m0.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -133,9 +134,12 @@ def require_non_empty_text(name: str, value: str) -> None:
 
 ```
 
+---
+
 # FILE: src\carver\spine\m1.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -250,9 +254,12 @@ def _round_contracts(value: float, policy: RoundingPolicy) -> int:
 
 ```
 
+---
+
 # FILE: src\carver\spine\m3.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -423,9 +430,12 @@ def mgc_contract() -> ContractSpec:
 
 ```
 
+---
+
 # FILE: src\carver\spine\first_spine.py
 
 ```text
+
 from __future__ import annotations
 
 from .m0 import CompletedBar, LaneClass, CarverBlocked, require_source_native
@@ -495,9 +505,12 @@ def _require_same_portfolio(actual: PortfolioSpec, expected: PortfolioSpec) -> N
 
 ```
 
+---
+
 # FILE: src\carver\spine\s03.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -597,9 +610,12 @@ def estimate_s03_annual_risk(
 
 ```
 
+---
+
 # FILE: src\carver\spine\minute_export.py
 
 ```text
+
 from __future__ import annotations
 
 import csv
@@ -818,9 +834,12 @@ def _require_offset_seconds(value: int) -> None:
 
 ```
 
+---
+
 # FILE: src\carver\spine\web_chart_api.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -839,8 +858,10 @@ ALLOWED_CHART_ENDPOINTS = frozenset({"md/getChart", "md/cancelChart"})
 MAX_SYNTHETIC_CHART_ELEMENTS = 500
 DEFAULT_WEB_CHART_QUARANTINE = Path("data/quarantine/ninjatrader/web_chart")
 LOCKED_WEB_CHART_PROVIDER_SYMBOLS = {
-    ("ES", "06-26", "ES JUN26"): "3570919",
     ("ZN", "06-26", "ZN JUN26"): "4470301",
+}
+OBSERVED_NON_PORTFOLIO_WEB_CHART_SYMBOLS = {
+    ("ES", "06-26", "ES JUN26"): "3570919",
 }
 
 
@@ -1205,9 +1226,12 @@ def _display_contract_month(value: str) -> str:
 
 ```
 
+---
+
 # FILE: src\carver\spine\daily_bars.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -1453,9 +1477,12 @@ def _require_finite_non_negative(name: str, value: float) -> None:
 
 ```
 
+---
+
 # FILE: src\carver\spine\continuous.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -1504,9 +1531,12 @@ def build_continuous_back_adjusted_series(request: ContinuousSeriesRequest) -> t
 
 ```
 
+---
+
 # FILE: src\carver\spine\portfolio_conformance.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -1700,9 +1730,12 @@ def _display_symbol(contract_code: str, contract_month: str) -> str:
 
 ```
 
+---
+
 # FILE: src\carver\spine\portfolio_completion.py
 
 ```text
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -1794,6 +1827,7 @@ class IntakeRouteContract:
     mode: PortfolioIntakeMode
     status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     source_artifact: SourceArtifactRef | None = None
+    direct_daily_blocked_artifact: SourceArtifactRef | None = None
 
     def validate(self) -> None:
         if not isinstance(self.mode, PortfolioIntakeMode):
@@ -1802,6 +1836,10 @@ class IntakeRouteContract:
             if not isinstance(self.source_artifact, SourceArtifactRef):
                 raise CarverBlocked("intake route source artifact is unresolved")
             self.source_artifact.validate("intake route source artifact")
+            if self.mode is PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK:
+                if not isinstance(self.direct_daily_blocked_artifact, SourceArtifactRef):
+                    raise CarverBlocked("minute-derived fallback requires a direct-daily-blocked artifact")
+                self.direct_daily_blocked_artifact.validate("direct-daily-blocked artifact")
 
     def blockers(self) -> tuple[str, ...]:
         self.validate()
@@ -1954,9 +1992,12 @@ def locked_rule_artifact_blockers(
 
 ```
 
+---
+
 # FILE: src\carver\spine\__init__.py
 
 ```text
+
 """First-spine machinery for synthetic conformance tests."""
 
 from .m0 import (
@@ -2110,3 +2151,5 @@ __all__ = [
 ]
 
 ```
+
+---

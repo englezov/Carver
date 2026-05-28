@@ -89,6 +89,7 @@ class IntakeRouteContract:
     mode: PortfolioIntakeMode
     status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     source_artifact: SourceArtifactRef | None = None
+    direct_daily_blocked_artifact: SourceArtifactRef | None = None
 
     def validate(self) -> None:
         if not isinstance(self.mode, PortfolioIntakeMode):
@@ -97,6 +98,10 @@ class IntakeRouteContract:
             if not isinstance(self.source_artifact, SourceArtifactRef):
                 raise CarverBlocked("intake route source artifact is unresolved")
             self.source_artifact.validate("intake route source artifact")
+            if self.mode is PortfolioIntakeMode.MINUTE_DERIVED_FALLBACK:
+                if not isinstance(self.direct_daily_blocked_artifact, SourceArtifactRef):
+                    raise CarverBlocked("minute-derived fallback requires a direct-daily-blocked artifact")
+                self.direct_daily_blocked_artifact.validate("direct-daily-blocked artifact")
 
     def blockers(self) -> tuple[str, ...]:
         self.validate()
