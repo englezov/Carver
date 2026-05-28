@@ -15,9 +15,20 @@ from carver.spine.first_spine import (  # noqa: E402
     p02_synthetic_conformance,
     s01_buy_and_hold_single_contract,
 )
-from carver.spine.m0 import CompletedBar, LaneClass, CarverBlocked  # noqa: E402
+from carver.spine.m0 import (  # noqa: E402
+    BackAdjustmentSpec,
+    CompletedBar,
+    ContractSpec,
+    CostSourceSpec,
+    LaneClass,
+    CarverBlocked,
+    RollRuleSpec,
+    SessionCalendarSpec,
+    SourceRuleStatus,
+)
 from carver.spine.m1 import RoundingPolicy, SizingInput, TimedValue, size_contracts  # noqa: E402
 from carver.spine.m3 import PortfolioLeg, PortfolioSpec, p01_risk_parity, p02_all_weather, synthetic_market_inputs  # noqa: E402
+from carver.spine.s03 import S03RiskConfig, SyntheticDailyPrice, estimate_s03_annual_risk  # noqa: E402
 
 
 class FirstPortfolioSpineSyntheticTests(unittest.TestCase):
@@ -61,6 +72,24 @@ class FirstPortfolioSpineSyntheticTests(unittest.TestCase):
                 LaneClass.SOURCE_NATIVE_FUTURES,
                 CompletedBar(datetime(2026, 5, 28, 14, 30, tzinfo=timezone.utc)),
             )
+
+    def test_m0_hardening_guards_source_rules_and_contract_identity(self) -> None:
+        with self.assertRaises(CarverBlocked):
+            RollRuleSpec("roll calendar").require_locked()
+        with self.assertRaises(CarverBlocked):
+            BackAdjustmentSpec("back adjustment").require_locked()
+        with self.assertRaises(CarverBlocked):
+            SessionCalendarSpec("session calendar", SourceRuleStatus.LOCKED).require_locked()
+        with self.assertRaises(CarverBlocked):
+            CostSourceSpec("costs", SourceRuleStatus.LOCKED, "tmp/costs.json").require_locked()
+
+        SessionCalendarSpec("session calendar", SourceRuleStatus.LOCKED, "UTC").require_locked()
+        CostSourceSpec("costs", SourceRuleStatus.LOCKED, "config/costs.json").require_locked()
+        ContractSpec("MES", "S&P 500 micro future", "CME", "USD", 5).validate()
+        with self.assertRaises(CarverBlocked):
+            ContractSpec("MES", "S&P 500 micro future", "CME", "usd", 5).validate()
+        with self.assertRaises(CarverBlocked):
+            ContractSpec("MES", "S&P 500 micro future", "CME", "USD", 5, LaneClass.CFD_ADAPTER).validate()
 
     def test_m1_sizing_invariants(self) -> None:
         base = size_contracts(self.base_sizing())
@@ -137,12 +166,31 @@ class FirstPortfolioSpineSyntheticTests(unittest.TestCase):
             target_risk=0.20,
             idm=1.0,
             legs=(
-                PortfolioLeg("MES", "S&P 500 micro future", 0.40, 5),
-                PortfolioLeg("ZN", "US 10-year bond future", 0.60, 1000),
+                PortfolioLeg(ContractSpec("MES", "S&P 500 micro future", "CME", "USD", 5), 0.40),
+                PortfolioLeg(ContractSpec("ZN", "US 10-year bond future", "CBOT", "USD", 1000), 0.60),
             ),
         )
         with self.assertRaises(CarverBlocked):
             p01_synthetic_conformance(spoof, self.bar, market)
+
+        exchange_spoof = PortfolioSpec(
+            portfolio_id="P01_RISK_PARITY_EXAMPLE",
+            lane_class=LaneClass.SOURCE_NATIVE_FUTURES,
+            capital=1_000_000,
+            target_risk=0.20,
+            idm=1.0,
+            legs=(
+                PortfolioLeg(ContractSpec("MES", "S&P 500 micro future", "CBOT", "USD", 5), 0.50),
+                PortfolioLeg(ContractSpec("ZN", "US 10-year bond future", "CBOT", "USD", 1000), 0.50),
+            ),
+        )
+        with self.assertRaises(CarverBlocked):
+            p01_synthetic_conformance(exchange_spoof, self.bar, market)
+
+        extra_market = dict(market)
+        extra_market["EXTRA"] = market["MES"]
+        with self.assertRaises(CarverBlocked):
+            p01_synthetic_conformance(p01, self.bar, extra_market)
 
     def test_p02_weights_and_synthetic_sizing(self) -> None:
         p02 = p02_all_weather(capital=1_000_000, target_risk=0.20, idm=1.0)
@@ -181,6 +229,57 @@ class FirstPortfolioSpineSyntheticTests(unittest.TestCase):
         )
         with self.assertRaises(CarverBlocked):
             bad.validate()
+
+    def test_s03_synthetic_volatility_estimator_feeds_m1(self) -> None:
+        timestamps = tuple(datetime(2026, 5, day, tzinfo=timezone.utc) for day in (25, 26, 27, 28))
+        prices = (
+            SyntheticDailyPrice(CompletedBar(timestamps[0]), 100.0),
+            SyntheticDailyPrice(CompletedBar(timestamps[1]), 102.0),
+            SyntheticDailyPrice(CompletedBar(timestamps[2]), 101.0),
+            SyntheticDailyPrice(CompletedBar(timestamps[3]), 103.0),
+        )
+        estimate = estimate_s03_annual_risk(prices, TimedValue(0.18, timestamps[-1]))
+
+        returns = (0.02, (101.0 / 102.0) - 1.0, (103.0 / 101.0) - 1.0)
+        alpha = 2.0 / 33.0
+        ewma_variance = returns[0] * returns[0]
+        for daily_return in returns[1:]:
+            ewma_variance = alpha * daily_return * daily_return + (1.0 - alpha) * ewma_variance
+        expected_short = (ewma_variance * 256) ** 0.5
+        expected_blended = 0.30 * 0.18 + 0.70 * expected_short
+
+        self.assertEqual(estimate.observation_count, 4)
+        self.assertAlmostEqual(estimate.short_run_annual_risk, expected_short)
+        self.assertAlmostEqual(estimate.as_of.value, expected_blended)
+
+        sizing = size_contracts(
+            SizingInput(
+                lane_class=LaneClass.SOURCE_NATIVE_FUTURES,
+                completed_bar=CompletedBar(timestamps[-1]),
+                capital=TimedValue(1_000_000, timestamps[-1]),
+                target_risk=TimedValue(0.20, timestamps[-1]),
+                current_held_price=TimedValue(103.0, timestamps[-1]),
+                annual_risk_estimate=estimate.as_of,
+                multiplier=5,
+                fx_rate=TimedValue(1.0, timestamps[-1]),
+                risk_estimate_prevalidated=True,
+                rounding_policy=RoundingPolicy.TRUNCATE,
+            )
+        )
+        self.assertGreater(sizing.unrounded_contracts, 0)
+
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(prices[:1], TimedValue(0.18, timestamps[0]))
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(tuple(reversed(prices)), TimedValue(0.18, timestamps[0]))
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(prices, TimedValue(0.18, timestamps[0]))
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(prices, TimedValue(0.18, timestamps[-1]), S03RiskConfig(long_run_weight=0.2))
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(prices, TimedValue(0.18, timestamps[-1]), S03RiskConfig(ewma_span=32.5))
+        with self.assertRaises(CarverBlocked):
+            estimate_s03_annual_risk(prices, TimedValue(0.18, timestamps[-1]), S03RiskConfig(annualization_days=inf))
 
 
 if __name__ == "__main__":

@@ -56,6 +56,7 @@ def _require_same_portfolio(actual: PortfolioSpec, expected: PortfolioSpec) -> N
         if (
             actual_leg.code != expected_leg.code
             or actual_leg.name != expected_leg.name
+            or actual_leg.contract.exchange != expected_leg.contract.exchange
             or actual_leg.currency != expected_leg.currency
             or actual_leg.weight != expected_leg.weight
             or actual_leg.multiplier != expected_leg.multiplier

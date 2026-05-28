@@ -3,10 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
-from math import ceil, floor, isfinite
-from numbers import Real
+from math import ceil, floor
 
-from .m0 import CompletedBar, LaneClass, CarverBlocked, require_source_native
+from .m0 import CompletedBar, LaneClass, CarverBlocked, require_finite_positive, require_source_native
 
 
 class RoundingPolicy(StrEnum):
@@ -48,12 +47,12 @@ def size_contracts(sizing: SizingInput) -> SizingResult:
     require_source_native(sizing.lane_class)
     sizing.completed_bar.validate()
     _validate_timestamps(sizing)
-    _validate_positive("capital", sizing.capital.value)
-    _validate_positive("target_risk", sizing.target_risk.value)
-    _validate_positive("current_held_price", sizing.current_held_price.value)
-    _validate_positive("annual_risk_estimate", sizing.annual_risk_estimate.value)
-    _validate_positive("multiplier", sizing.multiplier)
-    _validate_positive("fx_rate", sizing.fx_rate.value)
+    require_finite_positive("capital", sizing.capital.value)
+    require_finite_positive("target_risk", sizing.target_risk.value)
+    require_finite_positive("current_held_price", sizing.current_held_price.value)
+    require_finite_positive("annual_risk_estimate", sizing.annual_risk_estimate.value)
+    require_finite_positive("multiplier", sizing.multiplier)
+    require_finite_positive("fx_rate", sizing.fx_rate.value)
 
     if not sizing.risk_estimate_prevalidated:
         raise CarverBlocked("risk estimate is not pre-validated")
@@ -67,7 +66,7 @@ def size_contracts(sizing: SizingInput) -> SizingResult:
         * sizing.fx_rate.value
         * sizing.annual_risk_estimate.value
     )
-    _validate_positive("contract_risk", contract_risk)
+    require_finite_positive("contract_risk", contract_risk)
 
     target_currency_risk = sizing.capital.value * sizing.target_risk.value
     unrounded = target_currency_risk * weight * idm / contract_risk
@@ -93,15 +92,10 @@ def _validate_timestamps(sizing: SizingInput) -> None:
             raise CarverBlocked(f"{name} timestamp is not aligned to completed bar")
 
 
-def _validate_positive(name: str, value: float) -> None:
-    if isinstance(value, bool) or not isinstance(value, Real) or not isfinite(float(value)) or value <= 0:
-        raise CarverBlocked(f"{name} must be positive")
-
-
 def _context_value(name: str, timed: TimedValue | None, default: float) -> float:
     if timed is None:
         return default
-    _validate_positive(name, timed.value)
+    require_finite_positive(name, timed.value)
     return timed.value
 
 

@@ -2,20 +2,32 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from math import isclose, isfinite
-from numbers import Real
+from math import isclose
 
-from .m0 import CompletedBar, LaneClass, CarverBlocked, require_source_native
+from .m0 import CompletedBar, ContractSpec, LaneClass, CarverBlocked, require_finite_positive, require_source_native
 from .m1 import RoundingPolicy, SizingInput, SizingResult, TimedValue, size_contracts
 
 
 @dataclass(frozen=True)
 class PortfolioLeg:
-    code: str
-    name: str
+    contract: ContractSpec
     weight: float
-    multiplier: float
-    currency: str = "USD"
+
+    @property
+    def code(self) -> str:
+        return self.contract.code
+
+    @property
+    def name(self) -> str:
+        return self.contract.name
+
+    @property
+    def multiplier(self) -> float:
+        return self.contract.multiplier
+
+    @property
+    def currency(self) -> str:
+        return self.contract.currency
 
 
 @dataclass(frozen=True)
@@ -31,16 +43,18 @@ class PortfolioSpec:
         require_source_native(self.lane_class)
         if not self.legs:
             raise CarverBlocked("portfolio requires at least one leg")
-        _validate_positive("portfolio capital", self.capital)
-        _validate_positive("portfolio target risk", self.target_risk)
-        _validate_positive("portfolio IDM", self.idm)
+        require_finite_positive("portfolio capital", self.capital)
+        require_finite_positive("portfolio target risk", self.target_risk)
+        require_finite_positive("portfolio IDM", self.idm)
         if not isclose(sum(leg.weight for leg in self.legs), 1.0, rel_tol=0.0, abs_tol=1e-12):
             raise CarverBlocked("portfolio weights must sum to 1")
+        seen_codes: set[str] = set()
         for leg in self.legs:
-            if not leg.code or not leg.name:
-                raise CarverBlocked("portfolio leg identity is unresolved")
-            _validate_positive("portfolio leg weight", leg.weight)
-            _validate_positive("portfolio leg multiplier", leg.multiplier)
+            leg.contract.validate()
+            require_finite_positive("portfolio leg weight", leg.weight)
+            if leg.code in seen_codes:
+                raise CarverBlocked(f"duplicate portfolio leg {leg.code}")
+            seen_codes.add(leg.code)
 
     def size_legs(
         self,
@@ -50,6 +64,10 @@ class PortfolioSpec:
     ) -> dict[str, SizingResult]:
         self.validate()
         completed_bar.validate()
+        expected_codes = {leg.code for leg in self.legs}
+        provided_codes = set(market_inputs)
+        if provided_codes != expected_codes:
+            raise CarverBlocked("synthetic market inputs must exactly match portfolio legs")
         results: dict[str, SizingResult] = {}
         as_of = completed_bar.timestamp
         for leg in self.legs:
@@ -90,8 +108,8 @@ def p01_risk_parity(capital: float, target_risk: float, idm: float) -> Portfolio
         target_risk=target_risk,
         idm=idm,
         legs=(
-            PortfolioLeg("MES", "S&P 500 micro future", 0.50, 5),
-            PortfolioLeg("ZN", "US 10-year bond future", 0.50, 1000),
+            PortfolioLeg(mes_contract(), 0.50),
+            PortfolioLeg(zn_contract(), 0.50),
         ),
     )
 
@@ -104,12 +122,12 @@ def p02_all_weather(capital: float, target_risk: float, idm: float) -> Portfolio
         target_risk=target_risk,
         idm=idm,
         legs=(
-            PortfolioLeg("MES", "S&P 500 micro future", 0.25, 5),
-            PortfolioLeg("ZN", "US 10-year bond future", 0.125, 1000),
-            PortfolioLeg("ZF", "US 5-year bond future", 0.125, 1000),
-            PortfolioLeg("QM", "WTI Crude Oil mini future", 0.125, 500),
-            PortfolioLeg("ZC", "Corn future", 0.125, 5000),
-            PortfolioLeg("MGC", "Gold micro future", 0.25, 10),
+            PortfolioLeg(mes_contract(), 0.25),
+            PortfolioLeg(zn_contract(), 0.125),
+            PortfolioLeg(zf_contract(), 0.125),
+            PortfolioLeg(qm_contract(), 0.125),
+            PortfolioLeg(zc_contract(), 0.125),
+            PortfolioLeg(mgc_contract(), 0.25),
         ),
     )
 
@@ -125,6 +143,25 @@ def synthetic_market_inputs(timestamp: datetime, values: dict[str, tuple[float, 
     }
 
 
-def _validate_positive(name: str, value: float) -> None:
-    if isinstance(value, bool) or not isinstance(value, Real) or not isfinite(float(value)) or value <= 0:
-        raise CarverBlocked(f"{name} must be positive")
+def mes_contract() -> ContractSpec:
+    return ContractSpec("MES", "S&P 500 micro future", "CME", "USD", 5)
+
+
+def zn_contract() -> ContractSpec:
+    return ContractSpec("ZN", "US 10-year bond future", "CBOT", "USD", 1000)
+
+
+def zf_contract() -> ContractSpec:
+    return ContractSpec("ZF", "US 5-year bond future", "CBOT", "USD", 1000)
+
+
+def qm_contract() -> ContractSpec:
+    return ContractSpec("QM", "WTI Crude Oil mini future", "NYMEX", "USD", 500)
+
+
+def zc_contract() -> ContractSpec:
+    return ContractSpec("ZC", "Corn future", "CBOT", "USD", 5000)
+
+
+def mgc_contract() -> ContractSpec:
+    return ContractSpec("MGC", "Gold micro future", "COMEX", "USD", 10)
