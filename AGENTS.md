@@ -23,5 +23,6 @@ Core rules:
 - Use completed bars only.
 - Do not tune parameters, thresholds, filters, exits, symbols, costs, or windows after seeing results.
 - Do not trade, deploy, promote, or claim alpha from this workspace without explicit locked authorization.
+- Carver must use a distinct GitHub repository. Do not push to or reuse the old `QuantLab_v3` remote, branches, PRs, Actions state, releases, tags, deployment environments, or secrets. See `docs/process/CARVER_REMOTE_ISOLATION_RULE_2026-05-29.md`.
 
 For any risky action, ambiguous stage transition, data-window question, destructive operation, credential exposure risk, GitHub push, or governance conflict, stop and ask the operator.
