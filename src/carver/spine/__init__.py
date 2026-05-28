@@ -24,6 +24,19 @@ from .minute_export import (
     parse_minute_export_text,
 )
 from .s03 import S03RiskConfig, S03RiskEstimate, SyntheticDailyPrice, estimate_s03_annual_risk
+from .web_chart_api import (
+    ALLOWED_CHART_ENDPOINTS,
+    LOCKED_WEB_CHART_PROVIDER_SYMBOLS,
+    MAX_SYNTHETIC_CHART_ELEMENTS,
+    ChartBarType,
+    LockedWebChartSymbol,
+    WebChartBar,
+    WebChartProbePlan,
+    WebChartRequest,
+    WebChartSymbol,
+    assert_safe_web_chart_endpoint,
+    normalize_web_chart_response,
+)
 
 __all__ = [
     "BackAdjustmentSpec",
@@ -33,7 +46,12 @@ __all__ = [
     "ContractSpec",
     "CostSourceSpec",
     "DEFAULT_MINUTE_EXPORT_QUARANTINE",
+    "ALLOWED_CHART_ENDPOINTS",
+    "ChartBarType",
     "LaneClass",
+    "LOCKED_WEB_CHART_PROVIDER_SYMBOLS",
+    "MAX_SYNTHETIC_CHART_ELEMENTS",
+    "LockedWebChartSymbol",
     "EXPECTED_MINUTE_EXPORT_HEADER",
     "MinuteBar",
     "MinuteExportSpec",
@@ -50,7 +68,13 @@ __all__ = [
     "SizingInput",
     "SizingResult",
     "TimedValue",
+    "WebChartBar",
+    "WebChartProbePlan",
+    "WebChartRequest",
+    "WebChartSymbol",
+    "assert_safe_web_chart_endpoint",
     "estimate_s03_annual_risk",
+    "normalize_web_chart_response",
     "p01_risk_parity",
     "p02_all_weather",
     "parse_minute_export_file",
