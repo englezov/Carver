@@ -18,8 +18,11 @@ from .continuous import ContinuousContractRuleSet, ContinuousSeriesRequest, buil
 from .daily_bars import (
     CompletedDailyMarketBar,
     DailyDerivationSession,
+    derive_completed_daily_from_bound_web_chart,
     derive_completed_daily_from_minute_export,
     derive_completed_daily_from_web_chart,
+    normalize_direct_daily_bound_web_chart,
+    normalize_direct_daily_web_chart_bar,
 )
 from .m3 import PortfolioLeg, PortfolioSpec, p01_risk_parity, p02_all_weather
 from .minute_export import (
@@ -37,21 +40,27 @@ from .web_chart_api import (
     LOCKED_WEB_CHART_PROVIDER_SYMBOLS,
     MAX_SYNTHETIC_CHART_ELEMENTS,
     ChartBarType,
+    BoundWebChartResponse,
     LockedWebChartSymbol,
     WebChartBar,
     WebChartProbePlan,
     WebChartRequest,
     WebChartSymbol,
     assert_safe_web_chart_endpoint,
+    normalize_bound_web_chart_response,
+    normalize_bound_web_chart_response_file,
     normalize_web_chart_response_file,
     normalize_web_chart_response,
     web_chart_response_request_binding,
 )
 from .portfolio_conformance import (
+    LockedPortfolioProviderMapping,
+    PortfolioProviderMappingSet,
     PortfolioProviderMappingRow,
     ProviderMappingStatus,
     portfolio_conformance_from_daily_bars,
     portfolio_web_chart_mapping_status,
+    require_locked_provider_mapping_set,
     require_locked_portfolio_web_chart_mapping,
 )
 from .portfolio_completion import (
@@ -62,11 +71,13 @@ from .portfolio_completion import (
     RiskFxInputContract,
     SourceArtifactRef,
     build_portfolio_completion_report,
+    require_real_data_conformance_preflight,
 )
 
 __all__ = [
     "BackAdjustmentSpec",
     "BarConvention",
+    "BoundWebChartResponse",
     "CarverBlocked",
     "CompletedBar",
     "CompletedDailyMarketBar",
@@ -82,6 +93,7 @@ __all__ = [
     "LaneClass",
     "LOCKED_WEB_CHART_PROVIDER_SYMBOLS",
     "MAX_SYNTHETIC_CHART_ELEMENTS",
+    "LockedPortfolioProviderMapping",
     "LockedWebChartSymbol",
     "EXPECTED_MINUTE_EXPORT_HEADER",
     "MinuteBar",
@@ -92,6 +104,7 @@ __all__ = [
     "IntakeRouteContract",
     "PortfolioIntakeMode",
     "PortfolioProviderMappingRow",
+    "PortfolioProviderMappingSet",
     "PortfolioSpec",
     "ProviderMappingStatus",
     "RoundingPolicy",
@@ -114,11 +127,17 @@ __all__ = [
     "assert_safe_web_chart_endpoint",
     "build_continuous_back_adjusted_series",
     "build_portfolio_completion_report",
+    "require_real_data_conformance_preflight",
     "derive_completed_daily_from_minute_export",
     "derive_completed_daily_from_web_chart",
+    "derive_completed_daily_from_bound_web_chart",
     "estimate_s03_annual_risk",
     "normalize_web_chart_response",
+    "normalize_bound_web_chart_response",
     "normalize_web_chart_response_file",
+    "normalize_bound_web_chart_response_file",
+    "normalize_direct_daily_web_chart_bar",
+    "normalize_direct_daily_bound_web_chart",
     "web_chart_response_request_binding",
     "p01_risk_parity",
     "p02_all_weather",
@@ -127,5 +146,6 @@ __all__ = [
     "parse_minute_export_file",
     "parse_minute_export_text",
     "require_locked_portfolio_web_chart_mapping",
+    "require_locked_provider_mapping_set",
     "size_contracts",
 ]

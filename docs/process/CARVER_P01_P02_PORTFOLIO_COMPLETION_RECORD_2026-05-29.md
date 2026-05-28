@@ -21,10 +21,12 @@ The package now contains:
 - P01 exact portfolio definition: `MES` and `ZN`, 50/50 risk weights.
 - P02 exact portfolio definition: `MES`, `ZN`, `ZF`, `QM`, `ZC`, `MGC`, weights 25 / 12.5 / 12.5 / 12.5 / 12.5 / 25.
 - Direct daily bars as the preferred first intake path because NinjaTrader can provide daily candles.
+- Direct daily Web Chart normalization is represented in code as a first-class path; minute-to-daily derivation remains fallback only.
 - Minute-to-completed-daily derivation as a tested fallback only, requiring a full contiguous locked session.
 - Quarantined JSON chart response normalization with exact request/provider binding.
 - P01/P02 conformance orchestration from completed daily bars, prevalidated annual risk, and aligned FX inputs.
 - A completion report object that fails closed until all real-data prerequisites are locked as artifacts, not as bare status flags.
+- A named real-data conformance preflight that blocks future real-data sizing until the completion report is ready.
 - Continuous/roll/back-adjustment placeholders that intentionally refuse to build a series until separate source rules are locked.
 
 ## Current Mapping Status

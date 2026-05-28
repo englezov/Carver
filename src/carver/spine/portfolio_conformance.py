@@ -5,7 +5,7 @@ from enum import StrEnum
 
 from .daily_bars import CompletedDailyMarketBar
 from .first_spine import p01_synthetic_conformance, p02_synthetic_conformance
-from .m0 import CarverBlocked
+from .m0 import CarverBlocked, ContractSpec
 from .m1 import RoundingPolicy, SizingResult, TimedValue
 from .m3 import LegMarketInput, PortfolioSpec
 from .web_chart_api import LOCKED_WEB_CHART_PROVIDER_SYMBOLS
@@ -23,6 +23,56 @@ class PortfolioProviderMappingRow:
     display_symbol: str
     status: ProviderMappingStatus
     provider_symbol_id: str | None = None
+
+
+@dataclass(frozen=True)
+class LockedPortfolioProviderMapping:
+    contract: ContractSpec
+    contract_month: str
+    display_symbol: str
+    provider_symbol_id: str
+
+    @property
+    def code(self) -> str:
+        return self.contract.code
+
+    def validate(self) -> None:
+        self.contract.validate()
+        if self.display_symbol != _display_symbol(self.contract.code, self.contract_month):
+            raise CarverBlocked("provider mapping display symbol does not match contract month")
+        if not isinstance(self.provider_symbol_id, str) or not self.provider_symbol_id.isdigit():
+            raise CarverBlocked("provider mapping id must be a numeric string")
+        locked_id = LOCKED_WEB_CHART_PROVIDER_SYMBOLS.get((self.contract.code, self.contract_month, self.display_symbol))
+        if locked_id != self.provider_symbol_id:
+            raise CarverBlocked("provider mapping is not locked in the observed mapping registry")
+
+
+@dataclass(frozen=True)
+class PortfolioProviderMappingSet:
+    portfolio: PortfolioSpec
+    mappings: tuple[LockedPortfolioProviderMapping, ...]
+
+    def validate(self) -> None:
+        self.portfolio.validate()
+        expected_codes = {leg.code for leg in self.portfolio.legs}
+        provided_codes = {mapping.code for mapping in self.mappings}
+        if provided_codes != expected_codes:
+            raise CarverBlocked("locked provider mappings must exactly match portfolio legs")
+        leg_by_code = {leg.code: leg for leg in self.portfolio.legs}
+        seen_ids: set[str] = set()
+        for mapping in self.mappings:
+            mapping.validate()
+            leg = leg_by_code[mapping.code]
+            if mapping.contract != leg.contract:
+                raise CarverBlocked("provider mapping contract does not match portfolio leg")
+            if mapping.provider_symbol_id in seen_ids:
+                raise CarverBlocked("provider mapping ids must be unique")
+            seen_ids.add(mapping.provider_symbol_id)
+
+    @property
+    def contract_months(self) -> dict[str, str]:
+        self.validate()
+        return {mapping.code: mapping.contract_month for mapping in self.mappings}
 
 
 def portfolio_web_chart_mapping_status(
@@ -56,6 +106,10 @@ def require_locked_portfolio_web_chart_mapping(rows: tuple[PortfolioProviderMapp
     for row in rows:
         if row.status is not ProviderMappingStatus.LOCKED or not row.provider_symbol_id:
             raise CarverBlocked(f"web chart mapping for {row.contract_code} {row.contract_month} is unresolved")
+
+
+def require_locked_provider_mapping_set(mapping_set: PortfolioProviderMappingSet) -> None:
+    mapping_set.validate()
 
 
 def portfolio_conformance_from_daily_bars(

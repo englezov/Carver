@@ -17,7 +17,9 @@ from carver.spine.portfolio_completion import (  # noqa: E402
     RiskFxInputContract,
     SourceArtifactRef,
     build_portfolio_completion_report,
+    require_real_data_conformance_preflight,
 )
+from carver.spine.portfolio_conformance import LockedPortfolioProviderMapping, PortfolioProviderMappingSet
 from carver.spine.portfolio_conformance import ProviderMappingStatus  # noqa: E402
 
 
@@ -50,6 +52,8 @@ class PortfolioCompletionGateSyntheticTests(unittest.TestCase):
         self.assertIn("back-adjustment rule is unresolved", report.blockers)
         with self.assertRaises(CarverBlocked):
             report.require_real_data_ready()
+        with self.assertRaises(CarverBlocked):
+            require_real_data_conformance_preflight(report)
 
     def test_p02_completion_report_names_all_book_legs_without_es_substitution(self) -> None:
         report = build_portfolio_completion_report(
@@ -153,6 +157,20 @@ class PortfolioCompletionGateSyntheticTests(unittest.TestCase):
                 SourceRuleStatus.LOCKED,
                 "",
             ).validate()
+
+    def test_completion_report_rejects_provider_mapping_set_mismatch(self) -> None:
+        p01 = p01_risk_parity(1_000_000, 0.20, 1.0)
+        zn_only_mapping_set = PortfolioProviderMappingSet(
+            p01,
+            (LockedPortfolioProviderMapping(p01.legs[1].contract, "06-26", "ZN JUN26", "4470301"),),
+        )
+        with self.assertRaises(CarverBlocked):
+            build_portfolio_completion_report(
+                p01,
+                {"MES": "06-26", "ZN": "06-26"},
+                self.locked_risk_fx,
+                provider_mapping_set=zn_only_mapping_set,
+            )
 
     def test_locked_rule_placeholders_still_need_artifact_references(self) -> None:
         report = build_portfolio_completion_report(

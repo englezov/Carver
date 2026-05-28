@@ -7,7 +7,7 @@ from numbers import Real
 
 from .m0 import CompletedBar, ContractSpec, CarverBlocked, require_finite_positive
 from .minute_export import MinuteBar, MinuteExportSpec
-from .web_chart_api import ChartBarType, WebChartBar, WebChartRequest
+from .web_chart_api import BoundWebChartResponse, ChartBarType, WebChartBar, WebChartRequest
 
 
 @dataclass(frozen=True)
@@ -88,11 +88,20 @@ def derive_completed_daily_from_web_chart(
     request: WebChartRequest,
     session: DailyDerivationSession,
 ) -> CompletedDailyMarketBar:
+    raise CarverBlocked("loose web chart bars are not authorized for daily derivation; use a bound web chart response")
+
+
+def derive_completed_daily_from_bound_web_chart(
+    response: BoundWebChartResponse,
+    session: DailyDerivationSession,
+) -> CompletedDailyMarketBar:
+    response.validate()
+    request = response.request
     request.validate()
     session.validate()
     if request.bar_type is not ChartBarType.MINUTE or request.element_size != 1:
         raise CarverBlocked("daily derivation requires one-minute web chart bars")
-    for bar in bars:
+    for bar in response.bars:
         bar.validate(request)
     return _derive_completed_daily(
         contract=request.symbol.contract,
@@ -100,9 +109,42 @@ def derive_completed_daily_from_web_chart(
         session=session,
         rows=tuple(
             _MinuteLike(bar.timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume)
-            for bar in bars
+            for bar in response.bars
         ),
     )
+
+
+def normalize_direct_daily_web_chart_bar(
+    bar: WebChartBar,
+    request: WebChartRequest,
+) -> CompletedDailyMarketBar:
+    raise CarverBlocked("loose web chart bars are not authorized for direct daily normalization; use a bound web chart response")
+
+
+def normalize_direct_daily_bound_web_chart(
+    response: BoundWebChartResponse,
+) -> CompletedDailyMarketBar:
+    response.validate()
+    if len(response.bars) != 1:
+        raise CarverBlocked("direct daily normalization requires exactly one bound daily bar")
+    request = response.request
+    bar = response.bars[0]
+    request.validate()
+    if request.bar_type is not ChartBarType.DAILY or request.element_size != 1:
+        raise CarverBlocked("direct daily normalization requires one-day web chart bars")
+    bar.validate(request)
+    daily = CompletedDailyMarketBar(
+        completed_bar=CompletedBar(bar.timestamp),
+        contract=request.symbol.contract,
+        contract_month=request.symbol.contract_month,
+        open=bar.open,
+        high=bar.high,
+        low=bar.low,
+        close=bar.close,
+        volume=bar.volume,
+    )
+    daily.validate()
+    return daily
 
 
 @dataclass(frozen=True)

@@ -19,8 +19,11 @@ from carver.spine.continuous import (  # noqa: E402
 from carver.spine.daily_bars import (  # noqa: E402
     CompletedDailyMarketBar,
     DailyDerivationSession,
+    derive_completed_daily_from_bound_web_chart,
     derive_completed_daily_from_minute_export,
     derive_completed_daily_from_web_chart,
+    normalize_direct_daily_bound_web_chart,
+    normalize_direct_daily_web_chart_bar,
 )
 from carver.spine.m0 import (  # noqa: E402
     BackAdjustmentSpec,
@@ -44,16 +47,22 @@ from carver.spine.m3 import (  # noqa: E402
 )
 from carver.spine.minute_export import EXPECTED_MINUTE_EXPORT_HEADER, MinuteExportSpec, parse_minute_export_text  # noqa: E402
 from carver.spine.portfolio_conformance import (  # noqa: E402
+    LockedPortfolioProviderMapping,
+    PortfolioProviderMappingSet,
     ProviderMappingStatus,
     portfolio_conformance_from_daily_bars,
     portfolio_web_chart_mapping_status,
+    require_locked_provider_mapping_set,
     require_locked_portfolio_web_chart_mapping,
 )
 from carver.spine.web_chart_api import (  # noqa: E402
+    BoundWebChartResponse,
     ChartBarType,
     LockedWebChartSymbol,
     WebChartRequest,
     WebChartSymbol,
+    normalize_bound_web_chart_response,
+    normalize_bound_web_chart_response_file,
     normalize_web_chart_response,
     normalize_web_chart_response_file,
     web_chart_response_request_binding,
@@ -74,6 +83,17 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         locked = LockedWebChartSymbol(es_contract, "06-26", "3570919", "ES JUN26")
         symbol = WebChartSymbol(locked, "3570919", "ES JUN26")
         return WebChartRequest(symbol, ChartBarType.MINUTE, element_size=1, element_count=3)
+
+    def daily_web_request(self) -> WebChartRequest:
+        locked = LockedWebChartSymbol(zn_contract(), "06-26", "4470301", "ZN JUN26")
+        symbol = WebChartSymbol(locked, "4470301", "ZN JUN26")
+        return WebChartRequest(symbol, ChartBarType.DAILY, element_size=1, element_count=1)
+
+    def es_daily_web_request(self) -> WebChartRequest:
+        return replace(self.web_request(), bar_type=ChartBarType.DAILY, element_count=1)
+
+    def zn_minute_web_request(self) -> WebChartRequest:
+        return replace(self.daily_web_request(), bar_type=ChartBarType.MINUTE, element_count=3)
 
     def web_payload(self, request: WebChartRequest) -> dict:
         return {
@@ -120,8 +140,8 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
             response_path = root / "ES_06-26_getChart_20260528.json"
             response_path.write_text(json.dumps(self.web_payload(request)), encoding="utf-8")
 
-            bars = normalize_web_chart_response_file(response_path, request, root)
-            daily = derive_completed_daily_from_web_chart(bars, request, self.session)
+            response = normalize_bound_web_chart_response_file(response_path, request, root)
+            daily = derive_completed_daily_from_bound_web_chart(response, self.session)
 
             self.assertEqual(daily.code, "ES")
             self.assertEqual(daily.timestamp, self.daily_ts)
@@ -158,11 +178,77 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         with self.assertRaises(CarverBlocked):
             derive_completed_daily_from_minute_export(bars[:-1], spec)
 
+    def test_direct_daily_web_chart_bar_normalizes_without_minute_derivation(self) -> None:
+        request = self.daily_web_request()
+        payload = {
+            "request": web_chart_response_request_binding(request),
+            "ok": True,
+            "body": {
+                "items": [
+                    {
+                        "timestamp": int(self.daily_ts.timestamp() * 1000),
+                        "open": 119.0,
+                        "high": 121.0,
+                        "low": 118.0,
+                        "close": 120.0,
+                        "volume": 1000,
+                        "complete": True,
+                    }
+                ]
+            },
+        }
+        response = normalize_bound_web_chart_response(payload, request)
+        daily = normalize_direct_daily_bound_web_chart(response)
+
+        self.assertEqual(daily.code, "ZN")
+        self.assertEqual(daily.contract, zn_contract())
+        self.assertEqual(daily.timestamp, self.daily_ts)
+        self.assertEqual(daily.close, 120.0)
+        with self.assertRaises(CarverBlocked):
+            normalize_direct_daily_web_chart_bar(response.bars[0], request)
+        with self.assertRaises(CarverBlocked):
+            normalize_direct_daily_bound_web_chart(
+                normalize_bound_web_chart_response(payload, replace(request, bar_type=ChartBarType.MINUTE))
+            )
+
+    def test_direct_daily_bound_web_chart_rejects_cross_request_replay(self) -> None:
+        request = self.daily_web_request()
+        payload = {
+            "request": web_chart_response_request_binding(request),
+            "ok": True,
+            "body": {
+                "items": [
+                    {
+                        "timestamp": int(self.daily_ts.timestamp() * 1000),
+                        "open": 119.0,
+                        "high": 121.0,
+                        "low": 118.0,
+                        "close": 120.0,
+                        "volume": 1000,
+                        "complete": True,
+                    }
+                ]
+            },
+        }
+        response = normalize_bound_web_chart_response(payload, request)
+        spoofed_response = BoundWebChartResponse(self.es_daily_web_request(), response.bars)
+
+        with self.assertRaises(CarverBlocked):
+            normalize_direct_daily_bound_web_chart(spoofed_response)
+
+    def test_minute_bound_web_chart_daily_derivation_rejects_cross_request_replay(self) -> None:
+        request = self.web_request()
+        response = normalize_bound_web_chart_response(self.web_payload(request), request)
+        spoofed_response = BoundWebChartResponse(self.zn_minute_web_request(), response.bars)
+
+        with self.assertRaises(CarverBlocked):
+            derive_completed_daily_from_bound_web_chart(spoofed_response, self.session)
+
     def test_daily_derivation_rejects_gaps_wrong_alignment_and_incomplete_web_bars(self) -> None:
         request = self.web_request()
-        bars = normalize_web_chart_response(self.web_payload(request), request)
+        response = normalize_bound_web_chart_response(self.web_payload(request), request)
         with self.assertRaises(CarverBlocked):
-            derive_completed_daily_from_web_chart(bars, request, DailyDerivationSession(time(13, 31), time(13, 34)))
+            derive_completed_daily_from_bound_web_chart(response, DailyDerivationSession(time(13, 31), time(13, 34)))
 
         bad_payload = self.web_payload(request)
         bad_payload["body"]["items"][1]["timestamp"] = self.epoch_ms(13, 32)
@@ -248,6 +334,29 @@ class DailyPortfolioConformanceSyntheticTests(unittest.TestCase):
         )
         self.assertEqual([row.contract_code for row in p02_rows], ["MES", "ZN", "ZF", "QM", "ZC", "MGC"])
         self.assertEqual(sum(row.status is ProviderMappingStatus.LOCKED for row in p02_rows), 1)
+
+    def test_locked_provider_mapping_set_requires_exact_portfolio_legs(self) -> None:
+        zn_mapping = LockedPortfolioProviderMapping(zn_contract(), "06-26", "ZN JUN26", "4470301")
+        p01 = p01_risk_parity(1_000_000, 0.20, 1.0)
+
+        with self.assertRaises(CarverBlocked):
+            require_locked_provider_mapping_set(PortfolioProviderMappingSet(p01, (zn_mapping,)))
+        with self.assertRaises(CarverBlocked):
+            LockedPortfolioProviderMapping(mes_contract(), "06-26", "ES JUN26", "3570919").validate()
+        with self.assertRaises(CarverBlocked):
+            LockedPortfolioProviderMapping(mes_contract(), "06-26", "MES JUN26", "3570919").validate()
+        with self.assertRaises(CarverBlocked):
+            LockedPortfolioProviderMapping(zn_contract(), "06-26", "ZN JUN26", "999999").validate()
+
+        zn_only = PortfolioProviderMappingSet(
+            p01_risk_parity(1_000_000, 0.20, 1.0),
+            (
+                LockedPortfolioProviderMapping(mes_contract(), "06-26", "MES JUN26", "3570919"),
+                zn_mapping,
+            ),
+        )
+        with self.assertRaises(CarverBlocked):
+            zn_only.validate()
 
     def test_continuous_roll_and_back_adjustment_gate_fails_closed(self) -> None:
         unresolved_rules = ContinuousContractRuleSet(

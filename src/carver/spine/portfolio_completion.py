@@ -8,9 +8,11 @@ from pathlib import Path
 from .m0 import BackAdjustmentSpec, CarverBlocked, RollRuleSpec, SessionCalendarSpec, SourceRuleStatus, require_non_empty_text
 from .m3 import PortfolioSpec
 from .portfolio_conformance import (
+    PortfolioProviderMappingSet,
     PortfolioProviderMappingRow,
     ProviderMappingStatus,
     portfolio_web_chart_mapping_status,
+    require_locked_provider_mapping_set,
 )
 
 
@@ -132,10 +134,15 @@ class PortfolioCompletionReport:
             raise CarverBlocked("; ".join(self.blockers))
 
 
+def require_real_data_conformance_preflight(report: PortfolioCompletionReport) -> None:
+    report.require_real_data_ready()
+
+
 def build_portfolio_completion_report(
     portfolio: PortfolioSpec,
     contract_months: dict[str, str],
     risk_fx_contract: RiskFxInputContract,
+    provider_mapping_set: PortfolioProviderMappingSet | None = None,
     intake_contract: IntakeRouteContract | None = None,
     session_calendar: SessionCalendarSpec | None = None,
     roll_rule: RollRuleSpec | None = None,
@@ -155,6 +162,12 @@ def build_portfolio_completion_report(
         back_adjustment = BackAdjustmentSpec("P01/P02 back-adjustment rule")
     intake_contract.validate()
     risk_fx_contract.validate()
+    if provider_mapping_set is not None:
+        require_locked_provider_mapping_set(provider_mapping_set)
+        if provider_mapping_set.portfolio != portfolio:
+            raise CarverBlocked("provider mapping set portfolio does not match completion portfolio")
+        if provider_mapping_set.contract_months != contract_months:
+            raise CarverBlocked("provider mapping set months do not match completion months")
     mapping_rows = portfolio_web_chart_mapping_status(portfolio, contract_months)
     blockers: list[str] = []
     for row in mapping_rows:

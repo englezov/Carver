@@ -124,9 +124,12 @@ class WebChartBar:
     close: float
     volume: float
     complete: bool
+    request_fingerprint: str
 
     def validate(self, request: WebChartRequest) -> None:
         request.validate()
+        if self.request_fingerprint != web_chart_request_fingerprint(request):
+            raise CarverBlocked("web chart bar request binding does not match locked request")
         if self.timestamp.tzinfo is None or self.timestamp.utcoffset() is None:
             raise CarverBlocked("web chart bar timestamp must be timezone-aware")
         if request.bar_type is ChartBarType.MINUTE and (self.timestamp.second or self.timestamp.microsecond):
@@ -149,6 +152,27 @@ class WebChartBar:
 
 
 @dataclass(frozen=True)
+class BoundWebChartResponse:
+    request: WebChartRequest
+    bars: tuple[WebChartBar, ...]
+
+    def validate(self) -> None:
+        self.request.validate()
+        if not self.bars:
+            raise CarverBlocked("bound web chart response contains no bars")
+        previous_timestamp: datetime | None = None
+        seen_timestamps: set[datetime] = set()
+        for bar in self.bars:
+            bar.validate(self.request)
+            if bar.timestamp in seen_timestamps:
+                raise CarverBlocked("bound web chart response contains duplicate timestamp")
+            if previous_timestamp is not None and bar.timestamp <= previous_timestamp:
+                raise CarverBlocked("bound web chart response bars must be strictly increasing")
+            seen_timestamps.add(bar.timestamp)
+            previous_timestamp = bar.timestamp
+
+
+@dataclass(frozen=True)
 class WebChartProbePlan:
     request: WebChartRequest
     execution_authorized: bool = False
@@ -160,6 +184,10 @@ class WebChartProbePlan:
 
 
 def normalize_web_chart_response(payload: dict[str, Any], request: WebChartRequest) -> tuple[WebChartBar, ...]:
+    return normalize_bound_web_chart_response(payload, request).bars
+
+
+def normalize_bound_web_chart_response(payload: dict[str, Any], request: WebChartRequest) -> BoundWebChartResponse:
     request.validate()
     if not isinstance(payload, dict):
         raise CarverBlocked("web chart response must be an object")
@@ -181,7 +209,7 @@ def normalize_web_chart_response(payload: dict[str, Any], request: WebChartReque
     previous_timestamp: datetime | None = None
     seen_timestamps: set[datetime] = set()
     for raw in raw_bars:
-        bar = _normalize_raw_bar(raw)
+        bar = _normalize_raw_bar(raw, request)
         bar.validate(request)
         if bar.timestamp in seen_timestamps:
             raise CarverBlocked("web chart response contains duplicate timestamp")
@@ -190,7 +218,9 @@ def normalize_web_chart_response(payload: dict[str, Any], request: WebChartReque
         seen_timestamps.add(bar.timestamp)
         previous_timestamp = bar.timestamp
         bars.append(bar)
-    return tuple(bars)
+    bound = BoundWebChartResponse(request, tuple(bars))
+    bound.validate()
+    return bound
 
 
 def web_chart_response_request_binding(request: WebChartRequest) -> dict[str, Any]:
@@ -207,11 +237,23 @@ def web_chart_response_request_binding(request: WebChartRequest) -> dict[str, An
     }
 
 
+def web_chart_request_fingerprint(request: WebChartRequest) -> str:
+    return json.dumps(web_chart_response_request_binding(request), sort_keys=True, separators=(",", ":"))
+
+
 def normalize_web_chart_response_file(
     file_path: Path | str,
     request: WebChartRequest,
     quarantine_root: Path | str = DEFAULT_WEB_CHART_QUARANTINE,
 ) -> tuple[WebChartBar, ...]:
+    return normalize_bound_web_chart_response_file(file_path, request, quarantine_root).bars
+
+
+def normalize_bound_web_chart_response_file(
+    file_path: Path | str,
+    request: WebChartRequest,
+    quarantine_root: Path | str = DEFAULT_WEB_CHART_QUARANTINE,
+) -> BoundWebChartResponse:
     try:
         root = Path(quarantine_root).resolve(strict=True)
     except FileNotFoundError as exc:
@@ -232,7 +274,7 @@ def normalize_web_chart_response_file(
         payload = json.loads(path.read_text(encoding="utf-8-sig"))
     except json.JSONDecodeError as exc:
         raise CarverBlocked("web chart response file must contain JSON") from exc
-    return normalize_web_chart_response(payload, request)
+    return normalize_bound_web_chart_response(payload, request)
 
 
 def assert_safe_web_chart_endpoint(endpoint: str) -> None:
@@ -248,9 +290,10 @@ def _require_response_request_binding(payload: dict[str, Any], request: WebChart
         raise CarverBlocked("web chart response request binding does not match locked request")
 
 
-def _normalize_raw_bar(raw: Any) -> WebChartBar:
+def _normalize_raw_bar(raw: Any, request: WebChartRequest) -> WebChartBar:
     if not isinstance(raw, dict):
         raise CarverBlocked("web chart bar must be an object")
+    request.validate()
     timestamp = _parse_timestamp(raw.get("timestamp"))
     open_price = _parse_float("open", raw.get("open"))
     high = _parse_float("high", raw.get("high"))
@@ -262,7 +305,16 @@ def _normalize_raw_bar(raw: Any) -> WebChartBar:
     complete = raw["complete"]
     if not isinstance(complete, bool):
         raise CarverBlocked("web chart bar complete flag must be boolean")
-    return WebChartBar(timestamp, open_price, high, low, close, volume, complete)
+    return WebChartBar(
+        timestamp,
+        open_price,
+        high,
+        low,
+        close,
+        volume,
+        complete,
+        web_chart_request_fingerprint(request),
+    )
 
 
 def _parse_volume(raw: dict[str, Any]) -> float:
