@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from carver.spine.m3 import mes_contract  # noqa: E402
 from carver.spine.minute_export import (  # noqa: E402
     EXPECTED_MINUTE_EXPORT_HEADER,
     MinuteExportSpec,
+    parse_minute_export_file,
     parse_minute_export_text,
 )
 
@@ -37,6 +39,31 @@ class MinuteExportIntakeSyntheticTests(unittest.TestCase):
         self.assertEqual(bars[0].contract_month, "06-26")
         self.assertEqual(bars[0].close, 5001.0)
         self.assertEqual(bars[1].volume, 95.0)
+
+    def test_parse_explicit_file_only_inside_quarantine(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory) / "data" / "quarantine" / "ninjatrader" / "minute_exports"
+            root.mkdir(parents=True)
+            export_path = root / "MES_06-26_1Minute_Last_20260528.csv"
+            export_path.write_text(self.good_text(), encoding="utf-8")
+
+            bars = parse_minute_export_file(export_path, self.spec, root)
+            self.assertEqual(len(bars), 2)
+
+            outside_path = Path(temporary_directory) / "MES_06-26_1Minute_Last_20260528.csv"
+            outside_path.write_text(self.good_text(), encoding="utf-8")
+            with self.assertRaises(CarverBlocked):
+                parse_minute_export_file(outside_path, self.spec, root)
+
+            cache_path = root / "20260528.Last.ncd"
+            cache_path.write_text(self.good_text(), encoding="utf-8")
+            with self.assertRaises(CarverBlocked):
+                parse_minute_export_file(cache_path, self.spec, root)
+
+            with self.assertRaises(CarverBlocked):
+                parse_minute_export_file(root / "missing.csv", self.spec, root)
+            with self.assertRaises(CarverBlocked):
+                parse_minute_export_file(export_path, self.spec, Path(temporary_directory) / "missing-root")
 
     def test_rejects_bad_header_and_empty_export(self) -> None:
         with self.assertRaises(CarverBlocked):

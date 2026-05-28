@@ -6,6 +6,7 @@ from datetime import datetime, time, timedelta
 from io import StringIO
 from math import isfinite
 from numbers import Real
+from pathlib import Path
 
 from .m0 import ContractSpec, CarverBlocked, require_finite_positive
 
@@ -22,6 +23,8 @@ EXPECTED_MINUTE_EXPORT_HEADER = (
     "close",
     "volume",
 )
+
+DEFAULT_MINUTE_EXPORT_QUARANTINE = Path("data/quarantine/ninjatrader/minute_exports")
 
 
 @dataclass(frozen=True)
@@ -127,6 +130,30 @@ def parse_minute_export_text(text: str, spec: MinuteExportSpec) -> tuple[MinuteB
     if not bars:
         raise CarverBlocked("minute export contains no rows")
     return tuple(bars)
+
+
+def parse_minute_export_file(
+    file_path: Path | str,
+    spec: MinuteExportSpec,
+    quarantine_root: Path | str = DEFAULT_MINUTE_EXPORT_QUARANTINE,
+) -> tuple[MinuteBar, ...]:
+    try:
+        root = Path(quarantine_root).resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise CarverBlocked("minute export quarantine root does not exist") from exc
+    try:
+        path = Path(file_path).resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise CarverBlocked("minute export file does not exist") from exc
+    try:
+        path.relative_to(root)
+    except ValueError as exc:
+        raise CarverBlocked("minute export file must be inside the quarantine root") from exc
+    if not path.is_file():
+        raise CarverBlocked("minute export path must be a file")
+    if path.suffix.lower() not in {".csv", ".txt"}:
+        raise CarverBlocked("minute export file must be CSV/text, not platform cache")
+    return parse_minute_export_text(path.read_text(encoding="utf-8-sig"), spec)
 
 
 def _parse_timestamp(value: str) -> datetime:
