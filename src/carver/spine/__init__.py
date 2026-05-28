@@ -54,6 +54,15 @@ from .portfolio_conformance import (
     portfolio_web_chart_mapping_status,
     require_locked_portfolio_web_chart_mapping,
 )
+from .portfolio_completion import (
+    PortfolioCompletionReport,
+    PortfolioCompletionStatus,
+    IntakeRouteContract,
+    PortfolioIntakeMode,
+    RiskFxInputContract,
+    SourceArtifactRef,
+    build_portfolio_completion_report,
+)
 
 __all__ = [
     "BackAdjustmentSpec",
@@ -78,10 +87,16 @@ __all__ = [
     "MinuteBar",
     "MinuteExportSpec",
     "PortfolioLeg",
+    "PortfolioCompletionReport",
+    "PortfolioCompletionStatus",
+    "IntakeRouteContract",
+    "PortfolioIntakeMode",
     "PortfolioProviderMappingRow",
     "PortfolioSpec",
     "ProviderMappingStatus",
     "RoundingPolicy",
+    "RiskFxInputContract",
+    "SourceArtifactRef",
     "RollRuleSpec",
     "S03RiskConfig",
     "S03RiskEstimate",
@@ -98,6 +113,7 @@ __all__ = [
     "WebChartSymbol",
     "assert_safe_web_chart_endpoint",
     "build_continuous_back_adjusted_series",
+    "build_portfolio_completion_report",
     "derive_completed_daily_from_minute_export",
     "derive_completed_daily_from_web_chart",
     "estimate_s03_annual_risk",
