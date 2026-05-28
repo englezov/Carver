@@ -1,0 +1,36 @@
+# Local book/reference files
+*.pdf
+
+# Research data and platform/runtime state
+data/
+exports/
+runtime/
+cache/
+artifacts/
+reports/generated/
+
+# Secrets and broker/platform files
+.env
+*.key
+*.pem
+*.pfx
+*.crt
+credentials/
+secrets/
+mt5/
+ninjatrader/
+
+# Python/editor noise
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
