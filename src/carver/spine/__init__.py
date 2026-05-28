@@ -14,6 +14,20 @@ from .m0 import (
     SourceRuleStatus,
 )
 from .m1 import RoundingPolicy, SizingInput, SizingResult, TimedValue, size_contracts
+from .m2 import (
+    FORECAST_CAP,
+    S09_EWMAC_FDM_ROWS,
+    S09_EWMAC_SCALARS,
+    S09_EWMAC_SPANS,
+    ForecastBlockRequest,
+    ForecastBlockResult,
+    ForecastRuleInput,
+    ForecastRuleResult,
+    cap_forecast,
+    combine_forecast_block,
+    s09_fdm_for_allowed_spans,
+    s09_rule_id,
+)
 from .continuous import ContinuousContractRuleSet, ContinuousSeriesRequest, build_continuous_back_adjusted_series
 from .daily_bars import (
     CompletedDailyMarketBar,
@@ -34,6 +48,13 @@ from .minute_export import (
     parse_minute_export_text,
 )
 from .s03 import S03RiskConfig, S03RiskEstimate, SyntheticDailyPrice, estimate_s03_annual_risk
+from .s09 import (
+    S09RuleForecast,
+    S09SyntheticConvention,
+    S09TrendForecastRequest,
+    S09TrendForecastResult,
+    s09_multiple_trend_forecast,
+)
 from .web_chart_api import (
     ALLOWED_CHART_ENDPOINTS,
     DEFAULT_WEB_CHART_QUARANTINE,
@@ -96,6 +117,11 @@ __all__ = [
     "LockedPortfolioProviderMapping",
     "LockedWebChartSymbol",
     "EXPECTED_MINUTE_EXPORT_HEADER",
+    "FORECAST_CAP",
+    "ForecastBlockRequest",
+    "ForecastBlockResult",
+    "ForecastRuleInput",
+    "ForecastRuleResult",
     "MinuteBar",
     "MinuteExportSpec",
     "PortfolioLeg",
@@ -109,6 +135,13 @@ __all__ = [
     "ProviderMappingStatus",
     "RoundingPolicy",
     "RiskFxInputContract",
+    "S09_EWMAC_FDM_ROWS",
+    "S09_EWMAC_SCALARS",
+    "S09_EWMAC_SPANS",
+    "S09RuleForecast",
+    "S09SyntheticConvention",
+    "S09TrendForecastRequest",
+    "S09TrendForecastResult",
     "SourceArtifactRef",
     "RollRuleSpec",
     "S03RiskConfig",
@@ -127,6 +160,8 @@ __all__ = [
     "assert_safe_web_chart_endpoint",
     "build_continuous_back_adjusted_series",
     "build_portfolio_completion_report",
+    "cap_forecast",
+    "combine_forecast_block",
     "require_real_data_conformance_preflight",
     "derive_completed_daily_from_minute_export",
     "derive_completed_daily_from_web_chart",
@@ -147,5 +182,8 @@ __all__ = [
     "parse_minute_export_text",
     "require_locked_portfolio_web_chart_mapping",
     "require_locked_provider_mapping_set",
+    "s09_fdm_for_allowed_spans",
+    "s09_multiple_trend_forecast",
+    "s09_rule_id",
     "size_contracts",
 ]
