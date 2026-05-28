@@ -34,18 +34,20 @@ def p01_synthetic_conformance(
     portfolio: PortfolioSpec,
     completed_bar: CompletedBar,
     market_inputs: dict[str, LegMarketInput],
+    rounding_policy: RoundingPolicy = RoundingPolicy.NEAREST,
 ) -> dict[str, SizingResult]:
     _require_same_portfolio(portfolio, p01_risk_parity(portfolio.capital, portfolio.target_risk, portfolio.idm))
-    return s04_portfolio_with_variable_risk_position_sizing(portfolio, completed_bar, market_inputs)
+    return s04_portfolio_with_variable_risk_position_sizing(portfolio, completed_bar, market_inputs, rounding_policy)
 
 
 def p02_synthetic_conformance(
     portfolio: PortfolioSpec,
     completed_bar: CompletedBar,
     market_inputs: dict[str, LegMarketInput],
+    rounding_policy: RoundingPolicy = RoundingPolicy.NEAREST,
 ) -> dict[str, SizingResult]:
     _require_same_portfolio(portfolio, p02_all_weather(portfolio.capital, portfolio.target_risk, portfolio.idm))
-    return s04_portfolio_with_variable_risk_position_sizing(portfolio, completed_bar, market_inputs)
+    return s04_portfolio_with_variable_risk_position_sizing(portfolio, completed_bar, market_inputs, rounding_policy)
 
 
 def _require_same_portfolio(actual: PortfolioSpec, expected: PortfolioSpec) -> None:

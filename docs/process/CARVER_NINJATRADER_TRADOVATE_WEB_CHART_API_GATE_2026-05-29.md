@@ -39,6 +39,27 @@ The synthetic response envelope assumed by this gate is:
 
 ```json
 {
+  "request": {
+    "endpoint": "md/getChart",
+    "payload": {
+      "symbol": "3570919",
+      "chartDescription": {
+        "underlyingType": "MinuteBar",
+        "elementSizeUnit": "UnderlyingUnits",
+        "elementSize": 1,
+        "withHistogram": false
+      },
+      "timeRange": {
+        "asMuchAsElements": 3
+      }
+    },
+    "identity": {
+      "contractCode": "ES",
+      "contractMonth": "06-26",
+      "displaySymbol": "ES JUN26",
+      "providerSymbolId": "3570919"
+    }
+  },
   "ok": true,
   "body": {
     "items": [
@@ -55,6 +76,8 @@ The synthetic response envelope assumed by this gate is:
   }
 }
 ```
+
+The `request` binding must exactly match the locked request object before any bars are normalized. A quarantined chart response cannot be paired with a different provider symbol, display symbol, contract month, endpoint, or request payload.
 
 Each symbol must be locked by contract identity, contract month, display symbol, and provider numeric symbol id before any request payload can be built. The initial locked observed mappings are:
 

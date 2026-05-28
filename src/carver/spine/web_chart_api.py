@@ -3,8 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import StrEnum
+import json
 from math import isfinite
 from numbers import Real
+from pathlib import Path
 from typing import Any
 
 from .m0 import ContractSpec, LaneClass, CarverBlocked, require_finite_positive, require_source_native
@@ -12,6 +14,7 @@ from .m0 import ContractSpec, LaneClass, CarverBlocked, require_finite_positive,
 
 ALLOWED_CHART_ENDPOINTS = frozenset({"md/getChart", "md/cancelChart"})
 MAX_SYNTHETIC_CHART_ELEMENTS = 500
+DEFAULT_WEB_CHART_QUARANTINE = Path("data/quarantine/ninjatrader/web_chart")
 LOCKED_WEB_CHART_PROVIDER_SYMBOLS = {
     ("ES", "06-26", "ES JUN26"): "3570919",
     ("ZN", "06-26", "ZN JUN26"): "4470301",
@@ -160,6 +163,7 @@ def normalize_web_chart_response(payload: dict[str, Any], request: WebChartReque
     request.validate()
     if not isinstance(payload, dict):
         raise CarverBlocked("web chart response must be an object")
+    _require_response_request_binding(payload, request)
     if not payload.get("ok", False):
         raise CarverBlocked("web chart response is not ok")
     body = payload.get("body")
@@ -189,9 +193,59 @@ def normalize_web_chart_response(payload: dict[str, Any], request: WebChartReque
     return tuple(bars)
 
 
+def web_chart_response_request_binding(request: WebChartRequest) -> dict[str, Any]:
+    request_payload = request.payload()
+    return {
+        "endpoint": request.endpoint,
+        "payload": request_payload,
+        "identity": {
+            "contractCode": request.symbol.contract.code,
+            "contractMonth": request.symbol.contract_month,
+            "displaySymbol": request.symbol.display_symbol,
+            "providerSymbolId": request.symbol.provider_symbol_id,
+        },
+    }
+
+
+def normalize_web_chart_response_file(
+    file_path: Path | str,
+    request: WebChartRequest,
+    quarantine_root: Path | str = DEFAULT_WEB_CHART_QUARANTINE,
+) -> tuple[WebChartBar, ...]:
+    try:
+        root = Path(quarantine_root).resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise CarverBlocked("web chart quarantine root does not exist") from exc
+    try:
+        path = Path(file_path).resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise CarverBlocked("web chart response file does not exist") from exc
+    try:
+        path.relative_to(root)
+    except ValueError as exc:
+        raise CarverBlocked("web chart response file must be inside the quarantine root") from exc
+    if not path.is_file():
+        raise CarverBlocked("web chart response path must be a file")
+    if path.suffix.lower() != ".json":
+        raise CarverBlocked("web chart response file must be JSON")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as exc:
+        raise CarverBlocked("web chart response file must contain JSON") from exc
+    return normalize_web_chart_response(payload, request)
+
+
 def assert_safe_web_chart_endpoint(endpoint: str) -> None:
     if endpoint not in ALLOWED_CHART_ENDPOINTS:
         raise CarverBlocked("endpoint is not an allowed read-only chart endpoint")
+
+
+def _require_response_request_binding(payload: dict[str, Any], request: WebChartRequest) -> None:
+    binding = payload.get("request")
+    if not isinstance(binding, dict):
+        raise CarverBlocked("web chart response request binding is missing")
+    if binding != web_chart_response_request_binding(request):
+        raise CarverBlocked("web chart response request binding does not match locked request")
 
 
 def _normalize_raw_bar(raw: Any) -> WebChartBar:

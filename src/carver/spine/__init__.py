@@ -14,6 +14,13 @@ from .m0 import (
     SourceRuleStatus,
 )
 from .m1 import RoundingPolicy, SizingInput, SizingResult, TimedValue, size_contracts
+from .continuous import ContinuousContractRuleSet, ContinuousSeriesRequest, build_continuous_back_adjusted_series
+from .daily_bars import (
+    CompletedDailyMarketBar,
+    DailyDerivationSession,
+    derive_completed_daily_from_minute_export,
+    derive_completed_daily_from_web_chart,
+)
 from .m3 import PortfolioLeg, PortfolioSpec, p01_risk_parity, p02_all_weather
 from .minute_export import (
     DEFAULT_MINUTE_EXPORT_QUARANTINE,
@@ -26,6 +33,7 @@ from .minute_export import (
 from .s03 import S03RiskConfig, S03RiskEstimate, SyntheticDailyPrice, estimate_s03_annual_risk
 from .web_chart_api import (
     ALLOWED_CHART_ENDPOINTS,
+    DEFAULT_WEB_CHART_QUARANTINE,
     LOCKED_WEB_CHART_PROVIDER_SYMBOLS,
     MAX_SYNTHETIC_CHART_ELEMENTS,
     ChartBarType,
@@ -35,7 +43,16 @@ from .web_chart_api import (
     WebChartRequest,
     WebChartSymbol,
     assert_safe_web_chart_endpoint,
+    normalize_web_chart_response_file,
     normalize_web_chart_response,
+    web_chart_response_request_binding,
+)
+from .portfolio_conformance import (
+    PortfolioProviderMappingRow,
+    ProviderMappingStatus,
+    portfolio_conformance_from_daily_bars,
+    portfolio_web_chart_mapping_status,
+    require_locked_portfolio_web_chart_mapping,
 )
 
 __all__ = [
@@ -43,9 +60,14 @@ __all__ = [
     "BarConvention",
     "CarverBlocked",
     "CompletedBar",
+    "CompletedDailyMarketBar",
     "ContractSpec",
+    "ContinuousContractRuleSet",
+    "ContinuousSeriesRequest",
     "CostSourceSpec",
+    "DailyDerivationSession",
     "DEFAULT_MINUTE_EXPORT_QUARANTINE",
+    "DEFAULT_WEB_CHART_QUARANTINE",
     "ALLOWED_CHART_ENDPOINTS",
     "ChartBarType",
     "LaneClass",
@@ -56,7 +78,9 @@ __all__ = [
     "MinuteBar",
     "MinuteExportSpec",
     "PortfolioLeg",
+    "PortfolioProviderMappingRow",
     "PortfolioSpec",
+    "ProviderMappingStatus",
     "RoundingPolicy",
     "RollRuleSpec",
     "S03RiskConfig",
@@ -73,11 +97,19 @@ __all__ = [
     "WebChartRequest",
     "WebChartSymbol",
     "assert_safe_web_chart_endpoint",
+    "build_continuous_back_adjusted_series",
+    "derive_completed_daily_from_minute_export",
+    "derive_completed_daily_from_web_chart",
     "estimate_s03_annual_risk",
     "normalize_web_chart_response",
+    "normalize_web_chart_response_file",
+    "web_chart_response_request_binding",
     "p01_risk_parity",
     "p02_all_weather",
+    "portfolio_conformance_from_daily_bars",
+    "portfolio_web_chart_mapping_status",
     "parse_minute_export_file",
     "parse_minute_export_text",
+    "require_locked_portfolio_web_chart_mapping",
     "size_contracts",
 ]

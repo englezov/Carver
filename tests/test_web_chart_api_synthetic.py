@@ -18,6 +18,7 @@ from carver.spine.web_chart_api import (  # noqa: E402
     WebChartSymbol,
     assert_safe_web_chart_endpoint,
     normalize_web_chart_response,
+    web_chart_response_request_binding,
 )
 
 
@@ -38,6 +39,7 @@ class WebChartApiSyntheticTests(unittest.TestCase):
 
     def payload(self) -> dict:
         return {
+            "request": web_chart_response_request_binding(self.request),
             "ok": True,
             "body": {
                 "historicalId": 11,
@@ -114,10 +116,16 @@ class WebChartApiSyntheticTests(unittest.TestCase):
 
     def test_rejects_bad_response_shape(self) -> None:
         bad_payloads = (
-            {"ok": False, "body": {"items": []}},
-            {"ok": True},
-            {"ok": True, "body": {"items": []}},
-            {"ok": True, "body": {"items": [*self.payload()["body"]["items"], *self.payload()["body"]["items"]]}},
+            {"request": web_chart_response_request_binding(self.request), "ok": False, "body": {"items": []}},
+            {"request": web_chart_response_request_binding(self.request), "ok": True},
+            {"request": web_chart_response_request_binding(self.request), "ok": True, "body": {"items": []}},
+            {
+                "request": web_chart_response_request_binding(self.request),
+                "ok": True,
+                "body": {"items": [*self.payload()["body"]["items"], *self.payload()["body"]["items"]]},
+            },
+            {"ok": True, "body": {"items": self.payload()["body"]["items"]}},
+            {**self.payload(), "request": {**web_chart_response_request_binding(self.request), "endpoint": "md/getChart2"}},
         )
         for payload in bad_payloads:
             with self.subTest(payload=payload):
@@ -139,12 +147,16 @@ class WebChartApiSyntheticTests(unittest.TestCase):
         for item in bad_items:
             with self.subTest(item=item):
                 with self.assertRaises(CarverBlocked):
-                    normalize_web_chart_response({"ok": True, "body": {"items": [item]}}, replace(self.request, element_count=1))
+                    one_bar_request = replace(self.request, element_count=1)
+                    normalize_web_chart_response(
+                        {"request": web_chart_response_request_binding(one_bar_request), "ok": True, "body": {"items": [item]}},
+                        one_bar_request,
+                    )
 
     def test_rejects_unordered_and_duplicate_timestamps(self) -> None:
         item_a, item_b = self.payload()["body"]["items"]
-        duplicate = {"ok": True, "body": {"items": [item_a, item_a]}}
-        unordered = {"ok": True, "body": {"items": [item_b, item_a]}}
+        duplicate = {"request": web_chart_response_request_binding(self.request), "ok": True, "body": {"items": [item_a, item_a]}}
+        unordered = {"request": web_chart_response_request_binding(self.request), "ok": True, "body": {"items": [item_b, item_a]}}
         for payload in (duplicate, unordered):
             with self.subTest(payload=payload):
                 with self.assertRaises(CarverBlocked):
@@ -158,6 +170,7 @@ class WebChartApiSyntheticTests(unittest.TestCase):
             element_count=1,
         )
         daily_payload = {
+            "request": web_chart_response_request_binding(daily_request),
             "ok": True,
             "body": {
                 "items": [
@@ -176,7 +189,11 @@ class WebChartApiSyntheticTests(unittest.TestCase):
         self.assertEqual(len(normalize_web_chart_response(daily_payload, daily_request)), 1)
         with self.assertRaises(CarverBlocked):
             replace(daily_request, element_size=5).validate()
-        bad_daily = {"ok": True, "body": {"items": [{**daily_payload["body"]["items"][0], "timestamp": self.epoch_ms(2026, 5, 28, 13, 30)}]}}
+        bad_daily = {
+            "request": web_chart_response_request_binding(daily_request),
+            "ok": True,
+            "body": {"items": [{**daily_payload["body"]["items"][0], "timestamp": self.epoch_ms(2026, 5, 28, 13, 30)}]},
+        }
         with self.assertRaises(CarverBlocked):
             normalize_web_chart_response(bad_daily, daily_request)
 
