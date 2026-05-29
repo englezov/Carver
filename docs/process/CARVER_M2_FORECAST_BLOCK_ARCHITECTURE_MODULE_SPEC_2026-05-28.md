@@ -59,13 +59,13 @@ M2 does not own:
 - S07 uses daily price-point risk to normalize trend crossover forecasts so forecast values can be compared across time and instruments. See PDF pages 179-180.
 - S09 selects EWMAC trend variations 2, 4, 8, 16, 32, and 64 and uses forecast scalars, caps, optimal unrounded position, buffer zone, and trade/no-trade decision. See PDF pages 202-204.
 - S09 combines capped forecasts with non-negative forecast weights that sum to 1. See PDF pages 208-209.
-- S09 uses a trading-rule cost/speed eligibility rule before allocating forecast weights. The current definition pack records 0.15 SR units as source context, but the exact quote and page reference must be re-page-audited before implementation. See PDF pages 216-218 and the general cost-speed rule on PDF page 112.
+- S09 uses a trading-rule cost/speed eligibility rule before allocating forecast weights. Opus 4.7 later verified the `0.15 SR` cost-units threshold at PDF page 216, but it has not yet been transcribed as a hash-bound machine-readable production lock. Per-instrument cost eligibility from prevalidated costs and turnover policy remains closed. See PDF pages 216-218 and the general cost-speed rule on PDF page 112.
 - S09 applies FDM to combined trend forecasts, then caps the combined forecast again at absolute value 20. See PDF pages 221-222.
 - S10 treats risk-adjusted carry as a forecast because it is expected annual return divided by annualized risk. See PDF page 241.
 - S10 smooths carry forecasts over spans 5, 20, 60, and 120 business days, uses forecast scalar 30, caps forecasts, weights eligible spans equally, and applies carry FDM. See PDF pages 247-253.
 - S11 states that scaled trading-rule forecasts are building blocks that can be combined because they share a common scale. See PDF pages 264-265.
 - S11 uses top-down forecast weighting by style, rule, and variation; trend is divergent, carry is convergent, and the source example uses 60% trend and 40% carry. See PDF pages 265-268.
-- S11 provides source table examples for combined trend/carry weights and approximate FDM by number of trading rules. The table-number/page labels for Tables 51 and 52 must be re-page-audited before implementation; interpolation remains blocked unless separately operator-locked before data work.
+- S11 provides source table examples for combined trend/carry weights and approximate FDM by number of trading rules. Opus 4.7 later verified Table 51 at PDF page 268 and Table 52 plus interpolation policy at PDF page 269, but they have not yet been transcribed as hash-bound machine-readable production locks; production row selection and interpolation use remain blocked unless separately operator-locked before data work.
 
 ## Implementation-Ready Contract
 
