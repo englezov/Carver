@@ -189,6 +189,18 @@ from .portfolio_completion import (
     build_portfolio_completion_report,
     require_real_data_conformance_preflight,
 )
+from .p05_phase1 import (
+    P05_PHASE1_CONSTRUCTION_ID,
+    P05_PHASE1_EQUAL_SEED_WEIGHT,
+    P05_PHASE1_FORECAST_DIVISOR,
+    P05Phase1ConstructionRequest,
+    P05Phase1ConstructionResult,
+    P05Phase1ConstructionSourceLocks,
+    P05Phase1InstrumentConstructionResult,
+    P05Phase1LegConstructionInput,
+    p05_phase1_portfolio_construction_conformance,
+    p05_phase1_seed_portfolio_spec,
+)
 
 __all__ = [
     "BackAdjustmentSpec",
@@ -246,6 +258,14 @@ __all__ = [
     "PortfolioProviderMappingSet",
     "PortfolioSpec",
     "PARTS_1_3_DAILY_SEED_MANIFEST_CONFIG",
+    "P05_PHASE1_CONSTRUCTION_ID",
+    "P05_PHASE1_EQUAL_SEED_WEIGHT",
+    "P05_PHASE1_FORECAST_DIVISOR",
+    "P05Phase1ConstructionRequest",
+    "P05Phase1ConstructionResult",
+    "P05Phase1ConstructionSourceLocks",
+    "P05Phase1InstrumentConstructionResult",
+    "P05Phase1LegConstructionInput",
     "Phase1ContinuousReadinessReport",
     "Phase1ContinuousReadinessSummary",
     "ProviderMappingStatus",
@@ -333,6 +353,8 @@ __all__ = [
     "web_chart_response_request_binding",
     "p01_risk_parity",
     "p02_all_weather",
+    "p05_phase1_portfolio_construction_conformance",
+    "p05_phase1_seed_portfolio_spec",
     "portfolio_conformance_from_daily_bars",
     "portfolio_web_chart_mapping_status",
     "parse_minute_export_file",
