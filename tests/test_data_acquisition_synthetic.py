@@ -19,7 +19,9 @@ from carver.spine.data_acquisition import (  # noqa: E402
     NinjaTraderNativeDailyExportRequest,
     build_ninjatrader_manifest_export_plan,
     build_parts_1_3_daily_seed_manifest,
+    build_parts_1_3_multi_asset_phase1_manifest,
     load_parts_1_3_daily_seed_manifest_config,
+    manifest_export_requests_for_root,
     parse_native_ninjatrader_daily_export_file,
     parse_native_ninjatrader_daily_export_text,
     render_native_daily_export_forensic_markdown,
@@ -86,6 +88,39 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
             self.assertEqual(row.interval, NinjaTraderInterval.DAY)
         self.assertIn("manifest_id,root,contract_month,ninjatrader_symbol,start_date,end_date,data_type,interval,native_file", csv_text)
         self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_S09_ZN_CONTINUOUS_READINESS,ZN,06-26,ZN JUN26", csv_text)
+
+    def test_builds_phase1_multi_asset_manifest_without_execution(self) -> None:
+        manifest = build_parts_1_3_multi_asset_phase1_manifest()
+        rows = build_ninjatrader_manifest_export_plan(manifest)
+        csv_text = render_ninjatrader_manifest_export_plan_csv(manifest)
+
+        self.assertEqual(manifest.manifest_id, "CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF")
+        self.assertEqual({root.root for root in manifest.roots}, {"MES", "ZN", "ZF", "QM", "ZC", "MGC"})
+        self.assertEqual(len(manifest.export_requests), 12)
+        self.assertEqual(
+            [(request.contract.code, request.contract_month, request.ninjatrader_symbol) for request in manifest_export_requests_for_root(manifest, "MES")],
+            [
+                ("MES", "09-25", "MES SEP25"),
+                ("MES", "12-25", "MES DEC25"),
+                ("MES", "03-26", "MES MAR26"),
+                ("MES", "06-26", "MES JUN26"),
+            ],
+        )
+        self.assertEqual(
+            [(request.contract.code, request.contract_month, request.ninjatrader_symbol) for request in manifest_export_requests_for_root(manifest, "ZF")],
+            [
+                ("ZF", "09-25", "ZF SEP25"),
+                ("ZF", "12-25", "ZF DEC25"),
+                ("ZF", "03-26", "ZF MAR26"),
+                ("ZF", "06-26", "ZF JUN26"),
+            ],
+        )
+        self.assertEqual(len(rows), 12)
+        self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF,MES,09-25,MES SEP25", csv_text)
+        self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF,ZF,06-26,ZF JUN26", csv_text)
+        self.assertNotIn(",ES,", csv_text)
+        with self.assertRaises(CarverBlocked):
+            manifest_export_requests_for_root(manifest, "ZC")
 
     def test_ninjatrader_manifest_helper_is_disarmed_and_manifest_bound(self) -> None:
         helper_text = NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER.read_text(encoding="utf-8")

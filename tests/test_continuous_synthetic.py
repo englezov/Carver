@@ -16,7 +16,9 @@ from carver.spine.continuous import (  # noqa: E402
 )
 from carver.spine.data_acquisition import (  # noqa: E402
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+    build_continuous_readiness_for_root_from_native_exports,
     build_parts_1_3_daily_seed_manifest,
+    build_parts_1_3_multi_asset_phase1_manifest,
     build_zn_continuous_readiness_from_native_exports,
 )
 from carver.spine.daily_bars import CompletedDailyMarketBar  # noqa: E402
@@ -180,6 +182,37 @@ class ContinuousSyntheticTests(unittest.TestCase):
                 self.assertEqual(len(result.adjusted_bars), 5)
                 self.assertFalse(result.ready)
                 self.assertEqual(result.minimum_rows, 257)
+            finally:
+                if root.exists():
+                    shutil.rmtree(root)
+
+    def test_builds_root_filtered_readiness_from_multi_asset_manifest(self) -> None:
+        manifest = build_parts_1_3_multi_asset_phase1_manifest()
+        with tempfile.TemporaryDirectory():
+            root = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / "_synthetic_multi_asset_continuous_test"
+            try:
+                for request in manifest.export_requests:
+                    path = root / request.quarantine_relative_path
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    root_offset = {"MES": 0, "ZN": 10, "ZF": 20}[request.contract.code]
+                    root_requests = tuple(candidate for candidate in manifest.export_requests if candidate.contract.code == request.contract.code)
+                    index = root_requests.index(request)
+                    first_day = 20 + index
+                    second_day = 21 + index
+                    path.write_text(
+                        f"202605{first_day:02d};{100 + root_offset};{101 + root_offset};{99 + root_offset};{100 + root_offset};1\n"
+                        f"202605{second_day:02d};{101 + root_offset};{102 + root_offset};{100 + root_offset};{101 + root_offset};1\n",
+                        encoding="utf-8",
+                    )
+
+                result = build_continuous_readiness_for_root_from_native_exports("ZF", self.rule_set(), manifest, root)
+
+                self.assertEqual(result.source_contract_months, ("09-25", "12-25", "03-26", "06-26"))
+                self.assertEqual(len(result.adjusted_bars), 5)
+                self.assertTrue(all(bar.code == "ZF" for bar in result.adjusted_bars))
+                self.assertFalse(result.ready)
+                with self.assertRaises(CarverBlocked):
+                    build_continuous_readiness_for_root_from_native_exports("ZC", self.rule_set(), manifest, root)
             finally:
                 if root.exists():
                     shutil.rmtree(root)

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from math import isfinite
-from numbers import Real
+from math import isfinite, sqrt
+from numbers import Integral, Real
 
 from .daily_bars import CompletedDailyMarketBar
 from .m0 import LaneClass, SourceRuleStatus, CarverBlocked, require_finite_positive, require_source_native
@@ -54,6 +54,16 @@ class S09TrendForecastRequest:
     daily_price_risk: TimedValue
     allowed_spans: tuple[int, ...]
     convention: S09SyntheticConvention = S09SyntheticConvention()
+    lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
+
+
+@dataclass(frozen=True)
+class S09DailyPriceRiskRequest:
+    completed_bar: CompletedBar
+    current_price: TimedValue
+    annual_percentage_risk: TimedValue
+    annualization_days: int = 256
+    conversion_source_status: SourceRuleStatus = SourceRuleStatus.LOCKED
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
 
 
@@ -150,6 +160,27 @@ def s09_multiple_trend_forecast(request: S09TrendForecastRequest) -> S09TrendFor
         as_of=request.as_of,
         rule_forecasts=tuple(rule_forecasts),
         forecast_block=block,
+    )
+
+
+def s09_daily_price_risk(request: S09DailyPriceRiskRequest) -> TimedValue:
+    require_source_native(request.lane_class)
+    request.completed_bar.validate()
+    if request.conversion_source_status is not SourceRuleStatus.LOCKED:
+        raise CarverBlocked("S09 daily price-risk conversion source is unresolved")
+    if isinstance(request.annualization_days, bool) or not isinstance(request.annualization_days, Integral):
+        raise CarverBlocked("S09 daily price-risk annualization days must be an integer")
+    if request.annualization_days != 256:
+        raise CarverBlocked("S09 daily price-risk annualization is locked to 256 trading days")
+    if request.current_price.as_of != request.completed_bar.timestamp:
+        raise CarverBlocked("S09 daily price-risk current price timestamp must align to completed bar")
+    if request.annual_percentage_risk.as_of != request.completed_bar.timestamp:
+        raise CarverBlocked("S09 daily price-risk annual risk timestamp must align to completed bar")
+    require_finite_positive("S09 daily price-risk current price", request.current_price.value)
+    require_finite_positive("S09 daily price-risk annual percentage risk", request.annual_percentage_risk.value)
+    return TimedValue(
+        request.current_price.value * request.annual_percentage_risk.value / sqrt(request.annualization_days),
+        request.completed_bar.timestamp,
     )
 
 

@@ -276,6 +276,31 @@ def build_parts_1_3_daily_seed_manifest() -> SourceNativeDailyAcquisitionManifes
     return manifest
 
 
+def build_parts_1_3_multi_asset_phase1_manifest() -> SourceNativeDailyAcquisitionManifest:
+    roots = (
+        FuturesRootManifestEntry(mes_contract(), "Equity index", "P01/P02 equity leg; P05 phase-1 trend seed"),
+        FuturesRootManifestEntry(zn_contract(), "Bond", "P01/P02 bond leg; P05 phase-1 trend seed"),
+        FuturesRootManifestEntry(zf_contract(), "Bond", "P02 bond leg; P05 phase-1 trend seed"),
+        FuturesRootManifestEntry(qm_contract(), "Energy", "P02 commodity leg; pending commodity chain lock"),
+        FuturesRootManifestEntry(zc_contract(), "Grain", "P02 commodity leg; pending seasonal chain lock"),
+        FuturesRootManifestEntry(mgc_contract(), "Metal", "P02 gold leg; pending metal chain lock"),
+    )
+    chain_contracts = (mes_contract(), zn_contract(), zf_contract())
+    export_requests = tuple(
+        request
+        for contract in chain_contracts
+        for request in _quarterly_chain_requests(contract)
+    )
+    manifest = SourceNativeDailyAcquisitionManifest(
+        manifest_id="CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF",
+        roots=roots,
+        export_requests=export_requests,
+        minimum_continuous_rows=257,
+    )
+    manifest.validate()
+    return manifest
+
+
 def build_ninjatrader_manifest_export_plan(
     manifest: SourceNativeDailyAcquisitionManifest | None = None,
 ) -> tuple[NinjaTraderManifestExportPlanRow, ...]:
@@ -407,6 +432,18 @@ def require_manifest_export_request(
         if candidate == request:
             return
     raise CarverBlocked("native NinjaTrader daily export request is not declared in the acquisition manifest")
+
+
+def manifest_export_requests_for_root(
+    manifest: SourceNativeDailyAcquisitionManifest,
+    root: str,
+) -> tuple[NinjaTraderNativeDailyExportRequest, ...]:
+    manifest.validate()
+    require_non_empty_text("manifest root", root)
+    requests = tuple(request for request in manifest.export_requests if request.contract.code == root)
+    if not requests:
+        raise CarverBlocked("manifest does not contain export requests for requested root")
+    return requests
 
 
 def parse_native_ninjatrader_daily_export_text(
@@ -548,6 +585,15 @@ def build_zn_continuous_readiness_from_native_exports(
     manifest: SourceNativeDailyAcquisitionManifest | None = None,
     quarantine_root: Path | str = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
 ) -> ContinuousChainBuildResult:
+    return build_continuous_readiness_for_root_from_native_exports("ZN", rules, manifest, quarantine_root)
+
+
+def build_continuous_readiness_for_root_from_native_exports(
+    root: str,
+    rules: ContinuousContractRuleSet,
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+    quarantine_root: Path | str = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+) -> ContinuousChainBuildResult:
     active_manifest = manifest or build_parts_1_3_daily_seed_manifest()
     active_manifest.validate()
     rules.require_locked()
@@ -558,7 +604,7 @@ def build_zn_continuous_readiness_from_native_exports(
             quarantine_root=quarantine_root,
             manifest=active_manifest,
         )
-        for request in active_manifest.export_requests
+        for request in manifest_export_requests_for_root(active_manifest, root)
     )
     return build_back_adjusted_continuous_chain(
         ContinuousChainRequest(
@@ -634,6 +680,24 @@ def _contract_month_to_ninjatrader(contract_month: str) -> str:
         "12": "DEC",
     }
     return f"{codes[month]}{year}"
+
+
+def _quarterly_chain_requests(contract: ContractSpec) -> tuple[NinjaTraderNativeDailyExportRequest, ...]:
+    return tuple(
+        NinjaTraderNativeDailyExportRequest(
+            contract,
+            contract_month,
+            f"{contract.code} {month_code}",
+            start_date="2025-05-29",
+            end_date="2026-05-28",
+        )
+        for contract_month, month_code in (
+            ("09-25", "SEP25"),
+            ("12-25", "DEC25"),
+            ("03-26", "MAR26"),
+            ("06-26", "JUN26"),
+        )
+    )
 
 
 def _parse_yyyymmdd(value: str, line_number: int) -> datetime:

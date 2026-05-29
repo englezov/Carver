@@ -4,6 +4,7 @@ import sys
 import unittest
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
+from math import nan
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +23,13 @@ from carver.spine.m2 import (  # noqa: E402
     s09_rule_id,
 )
 from carver.spine.m3 import mes_contract, zn_contract  # noqa: E402
-from carver.spine.s09 import S09SyntheticConvention, S09TrendForecastRequest, s09_multiple_trend_forecast  # noqa: E402
+from carver.spine.s09 import (  # noqa: E402
+    S09DailyPriceRiskRequest,
+    S09SyntheticConvention,
+    S09TrendForecastRequest,
+    s09_daily_price_risk,
+    s09_multiple_trend_forecast,
+)
 
 
 class S09M2SyntheticTests(unittest.TestCase):
@@ -147,6 +154,79 @@ class S09M2SyntheticTests(unittest.TestCase):
         self.assertGreater(result.rule_forecasts[0].fast_ewma, result.rule_forecasts[0].slow_ewma)
         self.assertGreater(result.final_forecast, 0.0)
         self.assertLessEqual(abs(result.final_forecast), 20.0)
+
+    def test_s09_daily_price_risk_converts_annual_percentage_risk_to_price_points(self) -> None:
+        risk = s09_daily_price_risk(
+            S09DailyPriceRiskRequest(
+                completed_bar=self.completed_bar,
+                current_price=TimedValue(4000.0, self.as_of),
+                annual_percentage_risk=TimedValue(0.16, self.as_of),
+            )
+        )
+
+        self.assertEqual(risk.as_of, self.as_of)
+        self.assertAlmostEqual(risk.value, 40.0)
+
+    def test_s09_daily_price_risk_fails_closed_on_unlocked_or_misaligned_inputs(self) -> None:
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of),
+                    conversion_source_status=SourceRuleStatus.UNRESOLVED,
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of - timedelta(days=1)),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of),
+                    annualization_days=252,
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of - timedelta(days=1)),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(0.0, self.as_of),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of),
+                    annual_percentage_risk=TimedValue(nan, self.as_of),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s09_daily_price_risk(
+                S09DailyPriceRiskRequest(
+                    completed_bar=self.completed_bar,
+                    current_price=TimedValue(4000.0, self.as_of),
+                    annual_percentage_risk=TimedValue(0.16, self.as_of),
+                    lane_class=LaneClass.CFD_ADAPTER,
+                )
+            )
 
     def test_s09_rejects_incomplete_future_misaligned_or_mixed_contract_inputs(self) -> None:
         bars = self.trend_bars()
