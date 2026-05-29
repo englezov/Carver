@@ -55,6 +55,15 @@ from .s09 import (
     S09TrendForecastResult,
     s09_multiple_trend_forecast,
 )
+from .s09_readiness import (
+    S09InstrumentDataContract,
+    S09ProviderMappingRow,
+    S09ReadinessReport,
+    S09ReadinessStatus,
+    build_s09_readiness_report,
+    require_s09_real_data_readiness_preflight,
+    s09_provider_mapping_status,
+)
 from .web_chart_api import (
     ALLOWED_CHART_ENDPOINTS,
     DEFAULT_WEB_CHART_QUARANTINE,
@@ -138,6 +147,10 @@ __all__ = [
     "S09_EWMAC_FDM_ROWS",
     "S09_EWMAC_SCALARS",
     "S09_EWMAC_SPANS",
+    "S09InstrumentDataContract",
+    "S09ProviderMappingRow",
+    "S09ReadinessReport",
+    "S09ReadinessStatus",
     "S09RuleForecast",
     "S09SyntheticConvention",
     "S09TrendForecastRequest",
@@ -160,9 +173,11 @@ __all__ = [
     "assert_safe_web_chart_endpoint",
     "build_continuous_back_adjusted_series",
     "build_portfolio_completion_report",
+    "build_s09_readiness_report",
     "cap_forecast",
     "combine_forecast_block",
     "require_real_data_conformance_preflight",
+    "require_s09_real_data_readiness_preflight",
     "derive_completed_daily_from_minute_export",
     "derive_completed_daily_from_web_chart",
     "derive_completed_daily_from_bound_web_chart",
@@ -184,6 +199,7 @@ __all__ = [
     "require_locked_provider_mapping_set",
     "s09_fdm_for_allowed_spans",
     "s09_multiple_trend_forecast",
+    "s09_provider_mapping_status",
     "s09_rule_id",
     "size_contracts",
 ]
