@@ -19,7 +19,8 @@ source: NinjaTrader Desktop local data/provider access
 artifact: tools/nt8/CarverDailyBarExporter.cs
 contract: ZN
 contract month: 06-26
-desktop display symbol: ZN 06-26
+NinjaTrader chart name: ZN JUN26
+Carver export display symbol: ZN 06-26
 bar type: Last
 timeframe: 1 Day
 required completed rows: 257
@@ -41,7 +42,8 @@ Rationale for `last completed trade date UTC: 2026-05-28`:
 - Set:
 
 ```text
-ExpectedInstrumentFullName = ZN 06-26
+ExpectedNinjaTraderInstrumentFullName = ZN JUN26
+ExpectedCarverDisplaySymbol = ZN 06-26
 ExpectedInstrumentCode = ZN
 ExpectedContractMonth = 06-26
 LastCompletedTradeDateUtc = 2026-05-28
@@ -82,6 +84,27 @@ sha256: A29B94A0E1D4A9CC1EFAB4F997D88F6B70CA1C83D3B9D3D01EFBB890731F6FE5F85B
 ```
 
 No NinjaTrader compile, import confirmation, chart attachment, or data export was performed by this file copy.
+
+## Runtime Patch
+
+After the first chart attempt, NinjaTrader displayed the chart instrument as `ZN JUN26`. The exporter was patched to distinguish:
+
+```text
+NinjaTrader chart name: ZN JUN26
+Carver export display symbol: ZN 06-26
+```
+
+The default `LastCompletedTradeDateUtc` was then set to the locked gate date:
+
+```text
+2026-05-28
+```
+
+This reduces manual property-entry risk but does not broaden the export boundary.
+
+If NinjaTrader's indicator UI leaves `LastCompletedTradeDateUtc` blank, the exporter now falls back internally to the same locked gate date, `2026-05-28`. If the UI leaves `RequiredBars` unset or zero, the exporter falls back internally to the same locked row count, `257`. Any non-blank/non-zero value outside those locks still blocks.
+
+The exporter was then patched to avoid relying on NinjaTrader's final chart-bar callback. It now keeps a rolling 257-row buffer and writes once it reaches the locked completed trade date, or attempts the same final write if it sees a newer in-progress bar. If fewer than 257 completed daily rows are loaded, it prints a waiting/blocking line with the loaded row count and stops without creating a file.
 
 ## Stop Conditions
 

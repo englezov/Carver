@@ -23,27 +23,31 @@ namespace NinjaTrader.NinjaScript.Indicators
         private DateTime lastCompletedTradeDate;
 
         [NinjaScriptProperty]
-        [Display(Name = "Expected instrument full name", Order = 1, GroupName = "Carver")]
-        public string ExpectedInstrumentFullName { get; set; }
+        [Display(Name = "Expected NinjaTrader instrument full name", Order = 1, GroupName = "Carver")]
+        public string ExpectedNinjaTraderInstrumentFullName { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Expected instrument code", Order = 2, GroupName = "Carver")]
+        [Display(Name = "Expected Carver display symbol", Order = 2, GroupName = "Carver")]
+        public string ExpectedCarverDisplaySymbol { get; set; }
+
+        [NinjaScriptProperty]
+        [Display(Name = "Expected instrument code", Order = 3, GroupName = "Carver")]
         public string ExpectedInstrumentCode { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Expected contract month", Order = 3, GroupName = "Carver")]
+        [Display(Name = "Expected contract month", Order = 4, GroupName = "Carver")]
         public string ExpectedContractMonth { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Last completed trade date UTC (yyyy-MM-dd)", Order = 4, GroupName = "Carver")]
+        [Display(Name = "Last completed trade date UTC (yyyy-MM-dd)", Order = 5, GroupName = "Carver")]
         public string LastCompletedTradeDateUtc { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Required bars", Order = 5, GroupName = "Carver")]
+        [Display(Name = "Required bars", Order = 6, GroupName = "Carver")]
         public int RequiredBars { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Output directory", Order = 6, GroupName = "Carver")]
+        [Display(Name = "Output directory", Order = 7, GroupName = "Carver")]
         public string OutputDirectory { get; set; }
 
         protected override void OnStateChange()
@@ -59,10 +63,11 @@ namespace NinjaTrader.NinjaScript.Indicators
                 IsSuspendedWhileInactive = false;
                 BarsRequiredToPlot = 0;
 
-                ExpectedInstrumentFullName = "ZN 06-26";
+                ExpectedNinjaTraderInstrumentFullName = "ZN JUN26";
+                ExpectedCarverDisplaySymbol = "ZN 06-26";
                 ExpectedInstrumentCode = "ZN";
                 ExpectedContractMonth = "06-26";
-                LastCompletedTradeDateUtc = "";
+                LastCompletedTradeDateUtc = "2026-05-28";
                 RequiredBars = 257;
                 OutputDirectory = @"C:\Users\openclaw\Desktop\Carver\data\quarantine\ninjatrader\desktop_daily_exports";
             }
@@ -87,32 +92,46 @@ namespace NinjaTrader.NinjaScript.Indicators
             }
 
             rows.Add(ToCsvRow(tradeDate));
+            while (rows.Count > RequiredBars)
+                rows.RemoveAt(0);
 
-            if (CurrentBar == Count - 1)
+            if (tradeDate >= lastCompletedTradeDate)
                 WriteExportIfReady();
         }
 
         private void ValidateConfiguration()
         {
-            if (Instrument == null || Instrument.FullName != ExpectedInstrumentFullName)
-                throw new InvalidOperationException("Carver export blocked: attach only to ZN 06-26.");
+            if (Instrument == null || Instrument.FullName != ExpectedNinjaTraderInstrumentFullName)
+                throw new InvalidOperationException("Carver export blocked: attach only to ZN JUN26.");
 
             if (BarsPeriod == null || BarsPeriod.BarsPeriodType != BarsPeriodType.Day || BarsPeriod.Value != 1)
                 throw new InvalidOperationException("Carver export blocked: chart must use 1 Day bars.");
 
-            if (ExpectedInstrumentCode != "ZN" || ExpectedContractMonth != "06-26" || ExpectedInstrumentFullName != "ZN 06-26")
+            if (ExpectedNinjaTraderInstrumentFullName != "ZN JUN26"
+                || ExpectedCarverDisplaySymbol != "ZN 06-26"
+                || ExpectedInstrumentCode != "ZN"
+                || ExpectedContractMonth != "06-26")
                 throw new InvalidOperationException("Carver export blocked: identity fields are locked to ZN 06-26.");
+
+            if (RequiredBars <= 0)
+                RequiredBars = 257;
 
             if (RequiredBars != 257)
                 throw new InvalidOperationException("Carver export blocked: RequiredBars is locked to 257.");
 
+            string effectiveLastCompletedTradeDate = string.IsNullOrWhiteSpace(LastCompletedTradeDateUtc)
+                ? "2026-05-28"
+                : LastCompletedTradeDateUtc;
+
             if (!DateTime.TryParseExact(
-                    LastCompletedTradeDateUtc,
+                    effectiveLastCompletedTradeDate,
                     "yyyy-MM-dd",
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None,
                     out lastCompletedTradeDate))
                 throw new InvalidOperationException("Carver export blocked: set LastCompletedTradeDateUtc as yyyy-MM-dd.");
+
+            LastCompletedTradeDateUtc = effectiveLastCompletedTradeDate;
 
             string lockedRoot = Path.GetFullPath(@"C:\Users\openclaw\Desktop\Carver\data\quarantine\ninjatrader\desktop_daily_exports")
                 .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
@@ -129,7 +148,7 @@ namespace NinjaTrader.NinjaScript.Indicators
             {
                 ExpectedInstrumentCode,
                 ExpectedContractMonth,
-                ExpectedInstrumentFullName,
+                ExpectedCarverDisplaySymbol,
                 "Last",
                 "1 Day",
                 tradeDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
@@ -144,7 +163,11 @@ namespace NinjaTrader.NinjaScript.Indicators
         private void WriteExportIfReady()
         {
             if (rows.Count < RequiredBars)
+            {
+                Print("CARVER_NINJATRADER_DESKTOP_DAILY_EXPORT_WAITING rows=" + rows.Count.ToString(CultureInfo.InvariantCulture)
+                    + " required=" + RequiredBars.ToString(CultureInfo.InvariantCulture));
                 throw new InvalidOperationException("Carver export blocked: fewer than 257 completed daily rows are loaded.");
+            }
 
             Directory.CreateDirectory(OutputDirectory);
             string outputPath = Path.Combine(OutputDirectory, "ZN_06-26_Daily_Last_257.csv");

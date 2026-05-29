@@ -1,0 +1,97 @@
+{
+  "manifest_id": "CARVER_PARTS_1_3_DAILY_SEED_S09_ZN_CONTINUOUS_READINESS",
+  "status": "PROCESS_ONLY_MANIFEST_NOT_BULK_DOWNLOAD_AUTHORIZATION",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "quarantine_root": "data/quarantine/ninjatrader/native_daily_exports",
+  "frequency": "DAILY",
+  "data_type": "Last",
+  "interval": "Day",
+  "minimum_continuous_rows": 257,
+  "roots": [
+    {
+      "root": "MES",
+      "book_name": "S&P 500 micro future",
+      "asset_class": "Equity index",
+      "book_role": "P01/P02 equity leg; daily stack seed"
+    },
+    {
+      "root": "ZN",
+      "book_name": "US 10-year bond future",
+      "asset_class": "Bond",
+      "book_role": "P01/P02/S09 ZN continuous-readiness seed"
+    },
+    {
+      "root": "ZF",
+      "book_name": "US 5-year bond future",
+      "asset_class": "Bond",
+      "book_role": "P02 bond leg; daily stack seed"
+    },
+    {
+      "root": "QM",
+      "book_name": "WTI Crude Oil mini future",
+      "asset_class": "Energy",
+      "book_role": "P02 commodity leg; daily stack seed"
+    },
+    {
+      "root": "ZC",
+      "book_name": "Corn future",
+      "asset_class": "Grain",
+      "book_role": "P02 commodity leg; daily stack seed"
+    },
+    {
+      "root": "MGC",
+      "book_name": "Gold micro future",
+      "asset_class": "Metal",
+      "book_role": "P02 gold leg; daily stack seed"
+    }
+  ],
+  "first_chain_requests": [
+    {
+      "root": "ZN",
+      "contract_month": "09-25",
+      "ninjatrader_symbol": "ZN SEP25",
+      "start_date": "2025-05-29",
+      "end_date": "2026-05-28",
+      "native_file": "ZN/ZN 09-25.Last.txt"
+    },
+    {
+      "root": "ZN",
+      "contract_month": "12-25",
+      "ninjatrader_symbol": "ZN DEC25",
+      "start_date": "2025-05-29",
+      "end_date": "2026-05-28",
+      "native_file": "ZN/ZN 12-25.Last.txt"
+    },
+    {
+      "root": "ZN",
+      "contract_month": "03-26",
+      "ninjatrader_symbol": "ZN MAR26",
+      "start_date": "2025-05-29",
+      "end_date": "2026-05-28",
+      "native_file": "ZN/ZN 03-26.Last.txt"
+    },
+    {
+      "root": "ZN",
+      "contract_month": "06-26",
+      "ninjatrader_symbol": "ZN JUN26",
+      "start_date": "2025-05-29",
+      "end_date": "2026-05-28",
+      "native_file": "ZN/ZN 06-26.Last.txt"
+    }
+  ],
+  "non_authorization": [
+    "No bulk download execution",
+    "No strategy computation",
+    "No diagnostics",
+    "No backtests",
+    "No OOS",
+    "No Lockbox",
+    "No Forward",
+    "No CFD adapters",
+    "No old QuantLab imports",
+    "No tuning",
+    "No deployment",
+    "No trading",
+    "No promotion"
+  ]
+}

@@ -21,7 +21,8 @@ Instrument identity:
 ```text
 contract: ZN
 contract month: 06-26
-desktop display symbol: ZN 06-26
+NinjaTrader chart name: ZN JUN26
+Carver export display symbol: ZN 06-26
 bar type: Last
 timeframe: 1 Day
 required completed rows: 257
@@ -42,7 +43,7 @@ src/carver/spine/ninjatrader_desktop_export.py
 The parser is hard-locked to the same single export surface as the NinjaScript artifact:
 
 ```text
-ZN 06-26 / ZN 06-26 / Last / 1 Day / exactly 257 rows
+NinjaTrader chart ZN JUN26 -> Carver export ZN 06-26 / Last / 1 Day / exactly 257 rows
 ```
 
 It does not admit generic NinjaTrader daily exports, MES/ES substitutes, adjacent contracts, or alternate row counts.
@@ -97,6 +98,7 @@ The NinjaScript artifact is an indicator-style export bridge. It is not a strate
 The script refuses to write unless:
 
 - it is attached to `ZN 06-26`;
+- NinjaTrader reports the chart instrument as `ZN JUN26`;
 - the chart uses `1 Day` bars;
 - `RequiredBars == 257`;
 - `LastCompletedTradeDateUtc` is explicitly set as `YYYY-MM-DD`;
