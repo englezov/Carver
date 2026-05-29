@@ -5,6 +5,7 @@ import tempfile
 import unittest
 import shutil
 import copy
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,13 +13,16 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from carver.spine.data_acquisition import (  # noqa: E402
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+    NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER,
     NinjaTraderDataType,
     NinjaTraderInterval,
     NinjaTraderNativeDailyExportRequest,
+    build_ninjatrader_manifest_export_plan,
     build_parts_1_3_daily_seed_manifest,
     load_parts_1_3_daily_seed_manifest_config,
     parse_native_ninjatrader_daily_export_file,
     parse_native_ninjatrader_daily_export_text,
+    render_ninjatrader_manifest_export_plan_csv,
     require_seed_manifest_config_matches_code,
 )
 from carver.spine.m0 import CarverBlocked, ContractSpec, LaneClass  # noqa: E402
@@ -58,6 +62,53 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
             self.assertEqual(request.interval, NinjaTraderInterval.DAY)
             self.assertEqual(request.data_type, NinjaTraderDataType.LAST)
             self.assertTrue(str(request.quarantine_relative_path).startswith("ZN"))
+
+    def test_builds_manifest_driven_ninjatrader_export_plan_without_execution(self) -> None:
+        manifest = build_parts_1_3_daily_seed_manifest()
+        rows = build_ninjatrader_manifest_export_plan(manifest)
+        csv_text = render_ninjatrader_manifest_export_plan_csv(manifest)
+
+        self.assertEqual(
+            [(row.root, row.contract_month, row.ninjatrader_symbol, row.native_file.as_posix()) for row in rows],
+            [
+                ("ZN", "09-25", "ZN SEP25", "ZN/ZN 09-25.Last.txt"),
+                ("ZN", "12-25", "ZN DEC25", "ZN/ZN 12-25.Last.txt"),
+                ("ZN", "03-26", "ZN MAR26", "ZN/ZN 03-26.Last.txt"),
+                ("ZN", "06-26", "ZN JUN26", "ZN/ZN 06-26.Last.txt"),
+            ],
+        )
+        for row in rows:
+            row.validate(manifest)
+            self.assertEqual(row.output_path, DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / row.native_file)
+            self.assertEqual(row.data_type, NinjaTraderDataType.LAST)
+            self.assertEqual(row.interval, NinjaTraderInterval.DAY)
+        self.assertIn("manifest_id,root,contract_month,ninjatrader_symbol,start_date,end_date,data_type,interval,native_file", csv_text)
+        self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_S09_ZN_CONTINUOUS_READINESS,ZN,06-26,ZN JUN26", csv_text)
+
+    def test_ninjatrader_manifest_helper_is_disarmed_and_manifest_bound(self) -> None:
+        helper_text = NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER.read_text(encoding="utf-8")
+
+        self.assertIn("ExecutionArmed = false", helper_text)
+        self.assertIn("LockedOutputRoot = @\"C:\\Users\\openclaw\\Desktop\\Carver\\data\\quarantine\\ninjatrader\\native_daily_exports\"", helper_text)
+        self.assertIn("LookupPolicies.Provider", helper_text)
+        self.assertIn("BarsPeriodType.Day", helper_text)
+        for expected in ("ZN SEP25", "ZN DEC25", "ZN MAR26", "ZN JUN26"):
+            self.assertIn(expected, helper_text)
+        for expected in ("ZN\\ZN 09-25.Last.txt", "ZN\\ZN 12-25.Last.txt", "ZN\\ZN 03-26.Last.txt", "ZN\\ZN 06-26.Last.txt"):
+            self.assertIn(expected, helper_text)
+        export_rows = re.findall(r'new ExportRow\("([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", @"([^"]+)"\)', helper_text)
+        self.assertEqual(export_rows, [
+            ("ZN", "09-25", "ZN SEP25", "2025-05-29", "2026-05-28", "ZN\\ZN 09-25.Last.txt"),
+            ("ZN", "12-25", "ZN DEC25", "2025-05-29", "2026-05-28", "ZN\\ZN 12-25.Last.txt"),
+            ("ZN", "03-26", "ZN MAR26", "2025-05-29", "2026-05-28", "ZN\\ZN 03-26.Last.txt"),
+            ("ZN", "06-26", "ZN JUN26", "2025-05-29", "2026-05-28", "ZN\\ZN 06-26.Last.txt"),
+        ])
+        self.assertNotIn('"ES"', helper_text)
+        self.assertNotIn('"MES"', helper_text)
+        forbidden_fragments = ("EnterLong", "EnterShort", "Buy ", "Sell ", "SubmitOrder", "Account.", "Position.")
+        for forbidden in forbidden_fragments:
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, helper_text)
 
     def test_json_seed_manifest_matches_code_manifest(self) -> None:
         manifest = build_parts_1_3_daily_seed_manifest()

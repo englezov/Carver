@@ -138,6 +138,14 @@ The next gate should authorize one of:
 
 No real data run is authorized by this gate.
 
+Follow-on implementation note:
+
+```text
+docs/process/CARVER_NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER_GATE_2026-05-29.md
+```
+
+records the prepared, disarmed NinjaTrader helper surface. That follow-on gate still does not authorize importing, compiling, arming, or running the helper.
+
 ## Non-Authorization
 
 This gate authorizes no bulk data download execution, no strategy computation, no diagnostics, no backtests, no returns, no PnL, no Sharpe, no drawdown, no OOS, no Lockbox, no Forward, no CFD adapter, no old QuantLab import, no tuning, no deployment, no trading, no promotion, and no remote push by inference.

@@ -20,6 +20,7 @@ DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE = (
 PARTS_1_3_DAILY_SEED_MANIFEST_CONFIG = (
     CARVER_WORKSPACE_ROOT / "config" / "carver_daily_futures_manifest_parts_1_3_seed.json"
 )
+NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER = CARVER_WORKSPACE_ROOT / "tools" / "nt8" / "CarverManifestDailyExporter.cs"
 
 
 class AcquisitionFrequency(StrEnum):
@@ -130,6 +131,47 @@ class SourceNativeDailyAcquisitionManifest:
             request_keys.add(key)
 
 
+@dataclass(frozen=True)
+class NinjaTraderManifestExportPlanRow:
+    manifest_id: str
+    root: str
+    contract_month: str
+    ninjatrader_symbol: str
+    start_date: str
+    end_date: str
+    data_type: NinjaTraderDataType
+    interval: NinjaTraderInterval
+    native_file: Path
+
+    def validate(self, manifest: SourceNativeDailyAcquisitionManifest) -> None:
+        manifest.validate()
+        if self.manifest_id != manifest.manifest_id:
+            raise CarverBlocked("NinjaTrader manifest export row has wrong manifest id")
+        if self.data_type is not NinjaTraderDataType.LAST:
+            raise CarverBlocked("NinjaTrader manifest export row is locked to Last data")
+        if self.interval is not NinjaTraderInterval.DAY:
+            raise CarverBlocked("NinjaTrader manifest export row is locked to Day interval")
+        if self.native_file.is_absolute():
+            raise CarverBlocked("NinjaTrader manifest export row native file must be relative")
+        for request in manifest.export_requests:
+            if (
+                self.root == request.contract.code
+                and self.contract_month == request.contract_month
+                and self.ninjatrader_symbol == request.ninjatrader_symbol
+                and self.start_date == request.start_date
+                and self.end_date == request.end_date
+                and self.native_file == request.quarantine_relative_path
+            ):
+                return
+        raise CarverBlocked("NinjaTrader manifest export row is not declared in the acquisition manifest")
+
+    @property
+    def output_path(self) -> Path:
+        if self.native_file.is_absolute():
+            raise CarverBlocked("NinjaTrader manifest export row native file must be relative")
+        return DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / self.native_file
+
+
 def build_parts_1_3_daily_seed_manifest() -> SourceNativeDailyAcquisitionManifest:
     roots = (
         FuturesRootManifestEntry(mes_contract(), "Equity index", "P01/P02 equity leg; daily stack seed"),
@@ -162,6 +204,54 @@ def build_parts_1_3_daily_seed_manifest() -> SourceNativeDailyAcquisitionManifes
     )
     manifest.validate()
     return manifest
+
+
+def build_ninjatrader_manifest_export_plan(
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+) -> tuple[NinjaTraderManifestExportPlanRow, ...]:
+    active_manifest = manifest or build_parts_1_3_daily_seed_manifest()
+    active_manifest.validate()
+    rows = tuple(
+        NinjaTraderManifestExportPlanRow(
+            manifest_id=active_manifest.manifest_id,
+            root=request.contract.code,
+            contract_month=request.contract_month,
+            ninjatrader_symbol=request.ninjatrader_symbol,
+            start_date=request.start_date,
+            end_date=request.end_date,
+            data_type=request.data_type,
+            interval=request.interval,
+            native_file=request.quarantine_relative_path,
+        )
+        for request in active_manifest.export_requests
+    )
+    for row in rows:
+        row.validate(active_manifest)
+    return rows
+
+
+def render_ninjatrader_manifest_export_plan_csv(
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+) -> str:
+    rows = build_ninjatrader_manifest_export_plan(manifest)
+    header = "manifest_id,root,contract_month,ninjatrader_symbol,start_date,end_date,data_type,interval,native_file"
+    rendered_rows = [
+        ",".join(
+            (
+                row.manifest_id,
+                row.root,
+                row.contract_month,
+                row.ninjatrader_symbol,
+                row.start_date,
+                row.end_date,
+                row.data_type.value,
+                row.interval.value,
+                row.native_file.as_posix(),
+            )
+        )
+        for row in rows
+    ]
+    return "\n".join((header, *rendered_rows)) + "\n"
 
 
 def load_parts_1_3_daily_seed_manifest_config(
