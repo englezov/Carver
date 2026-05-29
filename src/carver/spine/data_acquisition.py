@@ -172,6 +172,75 @@ class NinjaTraderManifestExportPlanRow:
         return DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / self.native_file
 
 
+@dataclass(frozen=True)
+class NativeDailyExportValidationSummary:
+    root: str
+    contract_month: str
+    ninjatrader_symbol: str
+    native_file: Path
+    row_count: int
+    first_date: str
+    last_date: str
+    first_open: float
+    first_high: float
+    first_low: float
+    first_close: float
+    last_open: float
+    last_high: float
+    last_low: float
+    last_close: float
+
+    def validate(self) -> None:
+        require_non_empty_text("root", self.root)
+        _require_contract_month(self.contract_month)
+        require_non_empty_text("NinjaTrader symbol", self.ninjatrader_symbol)
+        if self.native_file.is_absolute():
+            raise CarverBlocked("native daily export validation summary file path must be relative")
+        _require_positive_int("native daily export validation row count", self.row_count)
+        first = _parse_yyyy_mm_dd(self.first_date, "first date")
+        last = _parse_yyyy_mm_dd(self.last_date, "last date")
+        if first > last:
+            raise CarverBlocked("native daily export validation summary first date must not be after last date")
+        for name, value in (
+            ("first open", self.first_open),
+            ("first high", self.first_high),
+            ("first low", self.first_low),
+            ("first close", self.first_close),
+            ("last open", self.last_open),
+            ("last high", self.last_high),
+            ("last low", self.last_low),
+            ("last close", self.last_close),
+        ):
+            require_finite_positive(name, value)
+
+
+@dataclass(frozen=True)
+class NativeDailyExportForensicReport:
+    manifest_id: str
+    summaries: tuple[NativeDailyExportValidationSummary, ...]
+    minimum_continuous_rows: int
+    identical_first_date_count: int
+    identical_first_ohlc_count: int
+    potential_provider_merge_policy: bool
+
+    def validate(self, manifest: SourceNativeDailyAcquisitionManifest) -> None:
+        manifest.validate()
+        if self.manifest_id != manifest.manifest_id:
+            raise CarverBlocked("native daily export forensic report manifest id mismatch")
+        if self.minimum_continuous_rows != manifest.minimum_continuous_rows:
+            raise CarverBlocked("native daily export forensic report minimum rows mismatch")
+        if len(self.summaries) != len(manifest.export_requests):
+            raise CarverBlocked("native daily export forensic report must cover every manifest request")
+        for summary in self.summaries:
+            summary.validate()
+        expected_files = {request.quarantine_relative_path for request in manifest.export_requests}
+        actual_files = {summary.native_file for summary in self.summaries}
+        if actual_files != expected_files:
+            raise CarverBlocked("native daily export forensic report file set does not match manifest")
+        _require_positive_int("identical first date count", self.identical_first_date_count)
+        _require_positive_int("identical first OHLC count", self.identical_first_ohlc_count)
+
+
 def build_parts_1_3_daily_seed_manifest() -> SourceNativeDailyAcquisitionManifest:
     roots = (
         FuturesRootManifestEntry(mes_contract(), "Equity index", "P01/P02 equity leg; daily stack seed"),
@@ -415,6 +484,98 @@ def parse_native_ninjatrader_daily_export_file(
     return parse_native_ninjatrader_daily_export_text(path.read_text(encoding="utf-8-sig"), request, active_manifest)
 
 
+def validate_manifest_native_daily_exports(
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+    quarantine_root: Path | str = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+) -> NativeDailyExportForensicReport:
+    active_manifest = manifest or build_parts_1_3_daily_seed_manifest()
+    active_manifest.validate()
+    summaries: list[NativeDailyExportValidationSummary] = []
+    for request in active_manifest.export_requests:
+        bars = parse_native_ninjatrader_daily_export_file(
+            request.quarantine_path(quarantine_root),
+            request,
+            quarantine_root=quarantine_root,
+            manifest=active_manifest,
+        )
+        first = bars[0]
+        last = bars[-1]
+        summaries.append(
+            NativeDailyExportValidationSummary(
+                root=request.contract.code,
+                contract_month=request.contract_month,
+                ninjatrader_symbol=request.ninjatrader_symbol,
+                native_file=request.quarantine_relative_path,
+                row_count=len(bars),
+                first_date=first.timestamp.date().isoformat(),
+                last_date=last.timestamp.date().isoformat(),
+                first_open=first.open,
+                first_high=first.high,
+                first_low=first.low,
+                first_close=first.close,
+                last_open=last.open,
+                last_high=last.high,
+                last_low=last.low,
+                last_close=last.close,
+            )
+        )
+
+    identical_first_date_count = _largest_duplicate_count(summary.first_date for summary in summaries)
+    identical_first_ohlc_count = _largest_duplicate_count(
+        (
+            summary.first_open,
+            summary.first_high,
+            summary.first_low,
+            summary.first_close,
+        )
+        for summary in summaries
+    )
+    report = NativeDailyExportForensicReport(
+        manifest_id=active_manifest.manifest_id,
+        summaries=tuple(summaries),
+        minimum_continuous_rows=active_manifest.minimum_continuous_rows,
+        identical_first_date_count=identical_first_date_count,
+        identical_first_ohlc_count=identical_first_ohlc_count,
+        potential_provider_merge_policy=identical_first_date_count > 1 and identical_first_ohlc_count > 1,
+    )
+    report.validate(active_manifest)
+    return report
+
+
+def render_native_daily_export_forensic_markdown(report: NativeDailyExportForensicReport) -> str:
+    lines = [
+        f"Manifest: `{report.manifest_id}`",
+        "",
+        "| File | Rows | First date | Last date | First OHLC | Last OHLC |",
+        "|---|---:|---|---|---|---|",
+    ]
+    for summary in report.summaries:
+        lines.append(
+            "| "
+            + " | ".join(
+                (
+                    summary.native_file.as_posix(),
+                    str(summary.row_count),
+                    summary.first_date,
+                    summary.last_date,
+                    _format_ohlc(summary.first_open, summary.first_high, summary.first_low, summary.first_close),
+                    _format_ohlc(summary.last_open, summary.last_high, summary.last_low, summary.last_close),
+                )
+            )
+            + " |"
+        )
+    lines.extend(
+        [
+            "",
+            f"Minimum continuous-readiness target: `{report.minimum_continuous_rows}` rows.",
+            f"Largest identical first-date cluster: `{report.identical_first_date_count}`.",
+            f"Largest identical first-OHLC cluster: `{report.identical_first_ohlc_count}`.",
+            f"Potential provider merge policy: `{str(report.potential_provider_merge_policy).upper()}`.",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
 def _resolve_carver_quarantine(root: Path | str) -> Path:
     try:
         resolved = Path(root).resolve(strict=True)
@@ -502,3 +663,16 @@ def _require_finite_non_negative(name: str, value: float) -> None:
 def _require_positive_int(name: str, value: int) -> None:
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         raise CarverBlocked(f"{name} must be a positive integer")
+
+
+def _largest_duplicate_count(values) -> int:
+    counts: dict[object, int] = {}
+    for value in values:
+        counts[value] = counts.get(value, 0) + 1
+    if not counts:
+        raise CarverBlocked("cannot compute duplicate count for empty values")
+    return max(counts.values())
+
+
+def _format_ohlc(open_value: float, high_value: float, low_value: float, close_value: float) -> str:
+    return f"{open_value:g}/{high_value:g}/{low_value:g}/{close_value:g}"

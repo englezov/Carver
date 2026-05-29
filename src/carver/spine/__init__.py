@@ -34,6 +34,8 @@ from .data_acquisition import (
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
     FuturesRootManifestEntry,
     NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER,
+    NativeDailyExportForensicReport,
+    NativeDailyExportValidationSummary,
     NinjaTraderDataType,
     NinjaTraderInterval,
     NinjaTraderManifestExportPlanRow,
@@ -45,9 +47,11 @@ from .data_acquisition import (
     load_parts_1_3_daily_seed_manifest_config,
     parse_native_ninjatrader_daily_export_file,
     parse_native_ninjatrader_daily_export_text,
+    render_native_daily_export_forensic_markdown,
     render_ninjatrader_manifest_export_plan_csv,
     require_manifest_export_request,
     require_seed_manifest_config_matches_code,
+    validate_manifest_native_daily_exports,
 )
 from .daily_bars import (
     CompletedDailyMarketBar,
@@ -191,6 +195,8 @@ __all__ = [
     "NinjaTraderDailyExportSpec",
     "NinjaTraderInterval",
     "NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER",
+    "NativeDailyExportForensicReport",
+    "NativeDailyExportValidationSummary",
     "NinjaTraderManifestExportPlanRow",
     "NinjaTraderNativeDailyExportRequest",
     "PortfolioLeg",
@@ -276,6 +282,7 @@ __all__ = [
     "parse_ninjatrader_daily_export_text",
     "parse_native_ninjatrader_daily_export_file",
     "parse_native_ninjatrader_daily_export_text",
+    "render_native_daily_export_forensic_markdown",
     "render_ninjatrader_manifest_export_plan_csv",
     "require_locked_portfolio_web_chart_mapping",
     "require_locked_provider_mapping_set",
@@ -288,4 +295,5 @@ __all__ = [
     "s09_zn_tiny_slice_forecast_conformance",
     "s09_zn_ninjatrader_daily_export_spec",
     "size_contracts",
+    "validate_manifest_native_daily_exports",
 ]

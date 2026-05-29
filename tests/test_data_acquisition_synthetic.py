@@ -22,8 +22,10 @@ from carver.spine.data_acquisition import (  # noqa: E402
     load_parts_1_3_daily_seed_manifest_config,
     parse_native_ninjatrader_daily_export_file,
     parse_native_ninjatrader_daily_export_text,
+    render_native_daily_export_forensic_markdown,
     render_ninjatrader_manifest_export_plan_csv,
     require_seed_manifest_config_matches_code,
+    validate_manifest_native_daily_exports,
 )
 from carver.spine.m0 import CarverBlocked, ContractSpec, LaneClass  # noqa: E402
 from carver.spine.m3 import mes_contract, zn_contract  # noqa: E402
@@ -213,6 +215,29 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
             finally:
                 if root.exists():
                     shutil.rmtree(root)
+
+    def test_manifest_native_daily_export_validation_reports_merge_policy_clue(self) -> None:
+        root = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / "_synthetic_unit_test"
+        try:
+            manifest = build_parts_1_3_daily_seed_manifest()
+            for request in manifest.export_requests:
+                export_path = root / request.quarantine_relative_path
+                export_path.parent.mkdir(parents=True, exist_ok=True)
+                export_path.write_text(self.good_text(), encoding="utf-8")
+
+            report = validate_manifest_native_daily_exports(manifest, root)
+            report.validate(manifest)
+            markdown = render_native_daily_export_forensic_markdown(report)
+
+            self.assertEqual([summary.row_count for summary in report.summaries], [3, 3, 3, 3])
+            self.assertEqual(report.identical_first_date_count, 4)
+            self.assertEqual(report.identical_first_ohlc_count, 4)
+            self.assertTrue(report.potential_provider_merge_policy)
+            self.assertIn("ZN/ZN 06-26.Last.txt", markdown)
+            self.assertIn("Potential provider merge policy: `TRUE`.", markdown)
+        finally:
+            if root.exists():
+                shutil.rmtree(root)
 
     def test_manifest_rejects_duplicate_or_undeclared_roots(self) -> None:
         manifest = build_parts_1_3_daily_seed_manifest()
