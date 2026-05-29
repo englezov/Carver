@@ -16,10 +16,12 @@ from carver.spine.continuous import (  # noqa: E402
 )
 from carver.spine.data_acquisition import (  # noqa: E402
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+    build_phase1_continuous_readiness_report,
     build_continuous_readiness_for_root_from_native_exports,
     build_parts_1_3_daily_seed_manifest,
     build_parts_1_3_multi_asset_phase1_manifest,
     build_zn_continuous_readiness_from_native_exports,
+    render_phase1_continuous_readiness_markdown,
 )
 from carver.spine.daily_bars import CompletedDailyMarketBar  # noqa: E402
 from carver.spine.m0 import (  # noqa: E402
@@ -213,6 +215,45 @@ class ContinuousSyntheticTests(unittest.TestCase):
                 self.assertFalse(result.ready)
                 with self.assertRaises(CarverBlocked):
                     build_continuous_readiness_for_root_from_native_exports("ZC", self.rule_set(), manifest, root)
+            finally:
+                if root.exists():
+                    shutil.rmtree(root)
+
+    def test_phase1_readiness_report_summarizes_ready_and_blocked_roots_without_strategy(self) -> None:
+        manifest = build_parts_1_3_multi_asset_phase1_manifest()
+        with tempfile.TemporaryDirectory():
+            root = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE / "_synthetic_phase1_report_test"
+            try:
+                for request in manifest.export_requests:
+                    if request.contract.code == "ZF":
+                        continue
+                    path = root / request.quarantine_relative_path
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    root_offset = {"MES": 0, "ZN": 10}[request.contract.code]
+                    root_requests = tuple(candidate for candidate in manifest.export_requests if candidate.contract.code == request.contract.code)
+                    index = root_requests.index(request)
+                    first_day = 20 + index
+                    second_day = 21 + index
+                    path.write_text(
+                        f"202605{first_day:02d};{100 + root_offset};{101 + root_offset};{99 + root_offset};{100 + root_offset};1\n"
+                        f"202605{second_day:02d};{101 + root_offset};{102 + root_offset};{100 + root_offset};{101 + root_offset};1\n",
+                        encoding="utf-8",
+                    )
+
+                report = build_phase1_continuous_readiness_report(self.rule_set(), manifest, root)
+                markdown = render_phase1_continuous_readiness_markdown(report)
+
+                self.assertEqual([summary.root for summary in report.summaries], ["MES", "ZN", "ZF"])
+                self.assertFalse(report.all_ready)
+                self.assertEqual([summary.ready for summary in report.summaries], [False, False, False])
+                self.assertEqual(report.summaries[0].adjusted_row_count, 5)
+                self.assertEqual(report.summaries[1].adjusted_row_count, 5)
+                self.assertEqual(report.summaries[2].adjusted_row_count, 0)
+                self.assertIn("continuous chain has fewer than minimum required rows", report.summaries[0].blockers)
+                self.assertIn("native NinjaTrader daily export file does not exist", report.summaries[2].blockers[0])
+                self.assertIn("| MES | FALSE | 5 | 257 |", markdown)
+                self.assertIn("| ZF | FALSE | 0 | 257 |", markdown)
+                self.assertIn("All phase-1 roots ready: `FALSE`.", markdown)
             finally:
                 if root.exists():
                     shutil.rmtree(root)

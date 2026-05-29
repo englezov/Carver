@@ -74,6 +74,10 @@ namespace NinjaTrader.NinjaScript.Indicators
         [Display(Name = "Output root", Order = 3, GroupName = "Carver")]
         public string OutputRoot { get; set; }
 
+        [NinjaScriptProperty]
+        [Display(Name = "Allow replace existing files", Order = 4, GroupName = "Carver")]
+        public bool AllowReplaceExistingFiles { get; set; }
+
         protected override void OnStateChange()
         {
             if (State == State.SetDefaults)
@@ -90,6 +94,7 @@ namespace NinjaTrader.NinjaScript.Indicators
                 ExecutionArmed = false;
                 ExpectedManifestId = LockedManifestId;
                 OutputRoot = LockedOutputRoot;
+                AllowReplaceExistingFiles = false;
             }
             else if (State == State.DataLoaded)
             {
@@ -207,6 +212,8 @@ namespace NinjaTrader.NinjaScript.Indicators
             string tempPath = outputPath + ".tmp";
             if (File.Exists(tempPath))
                 File.Delete(tempPath);
+            if (File.Exists(outputPath) && !AllowReplaceExistingFiles)
+                throw new InvalidOperationException("Carver phase-1 manifest export blocked: target file exists and replacement is not explicitly allowed.");
             File.WriteAllLines(tempPath, lines);
             if (File.Exists(outputPath))
                 File.Delete(outputPath);

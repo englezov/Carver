@@ -245,6 +245,54 @@ class NativeDailyExportForensicReport:
         _require_positive_int("identical first OHLC count", self.identical_first_ohlc_count)
 
 
+@dataclass(frozen=True)
+class Phase1ContinuousReadinessSummary:
+    root: str
+    ready: bool
+    adjusted_row_count: int
+    minimum_rows: int
+    first_date: str
+    last_date: str
+    source_contract_months: tuple[str, ...]
+    blockers: tuple[str, ...] = ()
+
+    def validate(self) -> None:
+        require_non_empty_text("phase-1 readiness root", self.root)
+        if self.root not in {"MES", "ZN", "ZF"}:
+            raise CarverBlocked("phase-1 readiness root must be MES, ZN, or ZF")
+        _require_non_negative_int("phase-1 readiness adjusted row count", self.adjusted_row_count)
+        _require_positive_int("phase-1 readiness minimum rows", self.minimum_rows)
+        if self.ready:
+            if self.blockers:
+                raise CarverBlocked("ready phase-1 summary cannot have blockers")
+            if self.adjusted_row_count < self.minimum_rows:
+                raise CarverBlocked("ready phase-1 summary row count is below minimum")
+            _parse_yyyy_mm_dd(self.first_date, "phase-1 readiness first date")
+            _parse_yyyy_mm_dd(self.last_date, "phase-1 readiness last date")
+            if not self.source_contract_months:
+                raise CarverBlocked("ready phase-1 summary requires source contract months")
+        elif not self.blockers:
+            raise CarverBlocked("blocked phase-1 summary requires blockers")
+
+
+@dataclass(frozen=True)
+class Phase1ContinuousReadinessReport:
+    manifest_id: str
+    summaries: tuple[Phase1ContinuousReadinessSummary, ...]
+
+    def validate(self) -> None:
+        if self.manifest_id != "CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF":
+            raise CarverBlocked("phase-1 readiness report manifest id mismatch")
+        if tuple(summary.root for summary in self.summaries) != ("MES", "ZN", "ZF"):
+            raise CarverBlocked("phase-1 readiness report must cover MES, ZN, and ZF in order")
+        for summary in self.summaries:
+            summary.validate()
+
+    @property
+    def all_ready(self) -> bool:
+        return all(summary.ready for summary in self.summaries)
+
+
 def build_parts_1_3_daily_seed_manifest() -> SourceNativeDailyAcquisitionManifest:
     roots = (
         FuturesRootManifestEntry(mes_contract(), "Equity index", "P01/P02 equity leg; daily stack seed"),
@@ -618,6 +666,79 @@ def build_continuous_readiness_for_root_from_native_exports(
     )
 
 
+def build_phase1_continuous_readiness_report(
+    rules: ContinuousContractRuleSet,
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+    quarantine_root: Path | str = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+) -> Phase1ContinuousReadinessReport:
+    active_manifest = manifest or build_parts_1_3_multi_asset_phase1_manifest()
+    active_manifest.validate()
+    summaries: list[Phase1ContinuousReadinessSummary] = []
+    for root in ("MES", "ZN", "ZF"):
+        try:
+            result = build_continuous_readiness_for_root_from_native_exports(root, rules, active_manifest, quarantine_root)
+            first = result.adjusted_bars[0]
+            last = result.adjusted_bars[-1]
+            blockers = () if result.ready else ("continuous chain has fewer than minimum required rows",)
+            summaries.append(
+                Phase1ContinuousReadinessSummary(
+                    root=root,
+                    ready=result.ready,
+                    adjusted_row_count=len(result.adjusted_bars),
+                    minimum_rows=result.minimum_rows,
+                    first_date=first.timestamp.date().isoformat(),
+                    last_date=last.timestamp.date().isoformat(),
+                    source_contract_months=result.source_contract_months,
+                    blockers=blockers,
+                )
+            )
+        except CarverBlocked as exc:
+            summaries.append(
+                Phase1ContinuousReadinessSummary(
+                    root=root,
+                    ready=False,
+                    adjusted_row_count=0,
+                    minimum_rows=active_manifest.minimum_continuous_rows,
+                    first_date="",
+                    last_date="",
+                    source_contract_months=(),
+                    blockers=(str(exc),),
+                )
+            )
+    report = Phase1ContinuousReadinessReport(active_manifest.manifest_id, tuple(summaries))
+    report.validate()
+    return report
+
+
+def render_phase1_continuous_readiness_markdown(report: Phase1ContinuousReadinessReport) -> str:
+    report.validate()
+    lines = [
+        f"Manifest: `{report.manifest_id}`",
+        "",
+        "| Root | Ready | Rows | Minimum | First date | Last date | Source months | Blockers |",
+        "|---|---|---:|---:|---|---|---|---|",
+    ]
+    for summary in report.summaries:
+        lines.append(
+            "| "
+            + " | ".join(
+                (
+                    summary.root,
+                    str(summary.ready).upper(),
+                    str(summary.adjusted_row_count),
+                    str(summary.minimum_rows),
+                    summary.first_date or "-",
+                    summary.last_date or "-",
+                    ", ".join(summary.source_contract_months) if summary.source_contract_months else "-",
+                    "; ".join(summary.blockers) if summary.blockers else "-",
+                )
+            )
+            + " |"
+        )
+    lines.extend(("", f"All phase-1 roots ready: `{str(report.all_ready).upper()}`."))
+    return "\n".join(lines) + "\n"
+
+
 def render_native_daily_export_forensic_markdown(report: NativeDailyExportForensicReport) -> str:
     lines = [
         f"Manifest: `{report.manifest_id}`",
@@ -752,6 +873,11 @@ def _require_contract_month(value: str) -> None:
 def _require_finite_non_negative(name: str, value: float) -> None:
     if isinstance(value, bool) or not isinstance(value, Real) or not isfinite(float(value)) or value < 0:
         raise CarverBlocked(f"{name} must be non-negative")
+
+
+def _require_non_negative_int(name: str, value: int) -> None:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise CarverBlocked(f"{name} must be a non-negative integer")
 
 
 def _require_positive_int(name: str, value: int) -> None:

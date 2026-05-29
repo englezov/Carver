@@ -152,6 +152,7 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
         helper_text = NINJATRADER_MANIFEST_PHASE1_DAILY_EXPORT_HELPER.read_text(encoding="utf-8")
 
         self.assertIn("ExecutionArmed = false", helper_text)
+        self.assertIn("AllowReplaceExistingFiles = false", helper_text)
         self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF", helper_text)
         self.assertIn("LockedOutputRoot = @\"C:\\Users\\openclaw\\Desktop\\Carver\\data\\quarantine\\ninjatrader\\native_daily_exports\"", helper_text)
         self.assertIn("LookupPolicies.Provider", helper_text)
@@ -175,6 +176,7 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
         self.assertNotIn('"QM"', helper_text)
         self.assertNotIn('"ZC"', helper_text)
         self.assertNotIn('"MGC"', helper_text)
+        self.assertIn("target file exists and replacement is not explicitly allowed", helper_text)
         forbidden_fragments = ("EnterLong", "EnterShort", "Buy ", "Sell ", "SubmitOrder", "Account.", "Position.")
         for forbidden in forbidden_fragments:
             with self.subTest(forbidden=forbidden):

@@ -30,6 +30,7 @@ The helper defaults to:
 
 ```text
 ExecutionArmed = false
+AllowReplaceExistingFiles = false
 ```
 
 It prints a prepared-not-armed message and returns unless a future operator execution gate explicitly arms it inside NinjaTrader Desktop.
@@ -92,22 +93,29 @@ A future operator authorization may run `CarverManifestDailyExporterPhase1` with
 That future execution gate must explicitly choose one overwrite policy:
 
 ```text
-ALLOW_REPLACE_LOCKED_TARGET_FILES
+ALLOW_REPLACE_LOCKED_TARGET_FILES by setting AllowReplaceExistingFiles = true
 ```
 
 or:
 
 ```text
-REQUIRE_RUN_STAMPED_OUTPUT_PATH
+REQUIRE_CLEAN_OR_RUN_STAMPED_OUTPUT_PATH by leaving AllowReplaceExistingFiles = false
 ```
 
-The prepared helper currently writes via a temporary file, deletes an existing target file, and moves the temporary file into place. That behavior is not executed or authorized by this helper-preparation gate.
+The prepared helper currently writes via a temporary file and refuses to replace an existing target unless `AllowReplaceExistingFiles = true`. That replacement behavior is not executed or authorized by this helper-preparation gate.
 
 After that execution, the next process steps are:
 
 1. Parser-only validation of the phase-1 export files.
 2. Continuous-readiness construction for `MES`, `ZN`, and `ZF`.
 3. S09 multi-instrument forecast conformance without returns or diagnostics.
+
+The code now has a phase-1 readiness report surface that can summarize all three roots after export:
+
+```text
+build_phase1_continuous_readiness_report
+render_phase1_continuous_readiness_markdown
+```
 
 ## Verification
 
