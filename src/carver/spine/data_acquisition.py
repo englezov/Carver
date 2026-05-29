@@ -9,6 +9,7 @@ from numbers import Real
 from pathlib import Path
 
 from .daily_bars import CompletedDailyMarketBar
+from .continuous import ContinuousChainBuildResult, ContinuousChainRequest, ContinuousContractRuleSet, build_back_adjusted_continuous_chain
 from .m0 import CompletedBar, ContractSpec, LaneClass, CarverBlocked, require_finite_positive, require_non_empty_text, require_source_native
 from .m3 import mes_contract, mgc_contract, qm_contract, zc_contract, zf_contract, zn_contract
 
@@ -540,6 +541,32 @@ def validate_manifest_native_daily_exports(
     )
     report.validate(active_manifest)
     return report
+
+
+def build_zn_continuous_readiness_from_native_exports(
+    rules: ContinuousContractRuleSet,
+    manifest: SourceNativeDailyAcquisitionManifest | None = None,
+    quarantine_root: Path | str = DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
+) -> ContinuousChainBuildResult:
+    active_manifest = manifest or build_parts_1_3_daily_seed_manifest()
+    active_manifest.validate()
+    rules.require_locked()
+    contract_bars = tuple(
+        parse_native_ninjatrader_daily_export_file(
+            request.quarantine_path(quarantine_root),
+            request,
+            quarantine_root=quarantine_root,
+            manifest=active_manifest,
+        )
+        for request in active_manifest.export_requests
+    )
+    return build_back_adjusted_continuous_chain(
+        ContinuousChainRequest(
+            rules=rules,
+            contract_bars=contract_bars,
+            minimum_rows=active_manifest.minimum_continuous_rows,
+        )
+    )
 
 
 def render_native_daily_export_forensic_markdown(report: NativeDailyExportForensicReport) -> str:

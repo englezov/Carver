@@ -28,7 +28,14 @@ from .m2 import (
     s09_fdm_for_allowed_spans,
     s09_rule_id,
 )
-from .continuous import ContinuousContractRuleSet, ContinuousSeriesRequest, build_continuous_back_adjusted_series
+from .continuous import (
+    ContinuousChainBuildResult,
+    ContinuousChainRequest,
+    ContinuousContractRuleSet,
+    ContinuousSeriesRequest,
+    build_back_adjusted_continuous_chain,
+    build_continuous_back_adjusted_series,
+)
 from .data_acquisition import (
     AcquisitionFrequency,
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
@@ -42,6 +49,7 @@ from .data_acquisition import (
     NinjaTraderNativeDailyExportRequest,
     PARTS_1_3_DAILY_SEED_MANIFEST_CONFIG,
     SourceNativeDailyAcquisitionManifest,
+    build_zn_continuous_readiness_from_native_exports,
     build_ninjatrader_manifest_export_plan,
     build_parts_1_3_daily_seed_manifest,
     load_parts_1_3_daily_seed_manifest_config,
@@ -164,6 +172,8 @@ __all__ = [
     "CompletedDailyMarketBar",
     "ContractSpec",
     "ContinuousContractRuleSet",
+    "ContinuousChainBuildResult",
+    "ContinuousChainRequest",
     "ContinuousSeriesRequest",
     "CostSourceSpec",
     "DailyDerivationSession",
@@ -247,8 +257,10 @@ __all__ = [
     "WebChartSymbol",
     "assert_safe_web_chart_endpoint",
     "build_continuous_back_adjusted_series",
+    "build_back_adjusted_continuous_chain",
     "build_ninjatrader_manifest_export_plan",
     "build_parts_1_3_daily_seed_manifest",
+    "build_zn_continuous_readiness_from_native_exports",
     "build_portfolio_completion_report",
     "build_s09_readiness_report",
     "build_s09_zn_tradovate_probe_config",
