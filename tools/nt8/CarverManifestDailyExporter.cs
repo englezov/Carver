@@ -146,7 +146,7 @@ namespace NinjaTrader.NinjaScript.Indicators
 
         private void RequestRow(ExportRow row)
         {
-            Instrument instrument = Instrument.GetInstrument(row.NinjaTraderSymbol);
+            Instrument instrument = NinjaTrader.Cbi.Instrument.GetInstrument(row.NinjaTraderSymbol);
             if (instrument == null)
                 throw new InvalidOperationException("Carver manifest export blocked: NinjaTrader instrument not found: " + row.NinjaTraderSymbol);
 
