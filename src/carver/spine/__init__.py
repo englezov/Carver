@@ -106,11 +106,17 @@ from .s09_readiness import (
     s09_provider_mapping_status,
 )
 from .s09_zn_package import (
+    S09_ZN_CONTINUOUS_CONTRACT_MONTHS,
+    S09_ZN_CONTINUOUS_ROLL_DATES,
     S09_ZN_REQUIRED_DAILY_BARS,
+    S09_ZN_UNIT_PRICE_RISK_CONFORMANCE_MODE,
+    S09ContinuousTinySliceConformanceRequest,
+    S09ContinuousTinySliceConformanceResult,
     S09TinySliceConformanceRequest,
     S09ZnPackage,
     build_s09_zn_package,
     require_s09_zn_probe_authorization,
+    s09_zn_continuous_tiny_slice_forecast_conformance,
     s09_zn_tiny_slice_forecast_conformance,
 )
 from .tradovate_api_probe import (
@@ -225,7 +231,12 @@ __all__ = [
     "S09_EWMAC_SCALARS",
     "S09_EWMAC_SPANS",
     "S09_ZN_REQUIRED_DAILY_BARS",
+    "S09_ZN_CONTINUOUS_CONTRACT_MONTHS",
+    "S09_ZN_CONTINUOUS_ROLL_DATES",
     "S09_ZN_DESKTOP_DAILY_EXPORT_FILE_NAME",
+    "S09_ZN_UNIT_PRICE_RISK_CONFORMANCE_MODE",
+    "S09ContinuousTinySliceConformanceRequest",
+    "S09ContinuousTinySliceConformanceResult",
     "S09InstrumentDataContract",
     "S09ProviderMappingRow",
     "S09ReadinessReport",
@@ -304,6 +315,7 @@ __all__ = [
     "s09_multiple_trend_forecast",
     "s09_provider_mapping_status",
     "s09_rule_id",
+    "s09_zn_continuous_tiny_slice_forecast_conformance",
     "s09_zn_tiny_slice_forecast_conformance",
     "s09_zn_ninjatrader_daily_export_spec",
     "size_contracts",
