@@ -17,6 +17,7 @@ S09_ZN_CONTRACT_MONTH = "06-26"
 S09_ZN_PROVIDER_SYMBOL_ID = "4470301"
 S09_ZN_DISPLAY_SYMBOL = "ZN JUN26"
 S09_ZN_ELIGIBLE_SPANS = (32, 64)
+S09_ZN_REQUIRED_DAILY_BARS = max(S09_ZN_ELIGIBLE_SPANS) * 4 + 1
 S09_ZN_GATE_ARTIFACT = SourceArtifactRef("docs/process/CARVER_S09_REAL_DATA_READINESS_GATE_2026-05-29.md")
 
 
@@ -80,7 +81,7 @@ def build_s09_zn_package() -> S09ZnPackage:
         WebChartSymbol(locked_symbol, S09_ZN_PROVIDER_SYMBOL_ID, S09_ZN_DISPLAY_SYMBOL),
         ChartBarType.DAILY,
         element_size=1,
-        element_count=1,
+        element_count=S09_ZN_REQUIRED_DAILY_BARS,
     )
     package = S09ZnPackage(
         instrument_contract=instrument_contract,
@@ -99,7 +100,7 @@ def require_s09_zn_probe_authorization(package: S09ZnPackage) -> None:
 def s09_zn_tiny_slice_forecast_conformance(request: S09TinySliceConformanceRequest) -> S09TrendForecastResult:
     require_source_native(request.lane_class)
     request.package.validate()
-    if len(request.bars) < max(S09_ZN_ELIGIBLE_SPANS) * 4 + 1:
+    if len(request.bars) < S09_ZN_REQUIRED_DAILY_BARS:
         raise CarverBlocked("S09 ZN tiny-slice conformance requires enough completed bars for synthetic warm-up")
     for bar in request.bars:
         bar.validate()

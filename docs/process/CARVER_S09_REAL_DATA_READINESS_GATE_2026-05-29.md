@@ -64,6 +64,7 @@ Display symbol: ZN JUN26
 Provider symbol id: 4470301
 Intake route: DIRECT_DAILY_PRIMARY
 Eligible EWMAC speed set: EWMAC32 and EWMAC64
+Required completed daily bars: 257
 ```
 
 The package is artifact-bound to this process record for synthetic readiness only. It does not prove that future real sessions, rolls, back-adjustment, risk estimates, or eligible speeds are correct for production use.
@@ -90,7 +91,10 @@ A future probe, if separately authorized, must be exactly one quarantined direct
 providerSymbolId: 4470301
 barType: DailyBar
 elementSize: 1
+elementCount: 257
 ```
+
+The `257` daily bars are the synthetic warm-up minimum for `EWMAC64`, whose slow leg is `64 * 4 = 256`; the synthetic convention requires `slowest span + 1` completed daily bars.
 
 The probe must write only to the Git-ignored Web Chart quarantine. This gate does not execute the probe.
 

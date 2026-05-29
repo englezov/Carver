@@ -17,6 +17,7 @@ from carver.spine.s09_zn_package import (  # noqa: E402
     S09_ZN_DISPLAY_SYMBOL,
     S09_ZN_ELIGIBLE_SPANS,
     S09_ZN_PROVIDER_SYMBOL_ID,
+    S09_ZN_REQUIRED_DAILY_BARS,
     S09TinySliceConformanceRequest,
     build_s09_zn_package,
     require_s09_zn_probe_authorization,
@@ -43,7 +44,7 @@ class S09ZnPackageSyntheticTests(unittest.TestCase):
             volume=100.0,
         )
 
-    def zn_bars(self, count: int = 257) -> tuple[CompletedDailyMarketBar, ...]:
+    def zn_bars(self, count: int = S09_ZN_REQUIRED_DAILY_BARS) -> tuple[CompletedDailyMarketBar, ...]:
         return tuple(self.daily_bar(index, 110.0 + index * 0.05) for index in range(count))
 
     def test_builds_locked_zn_readiness_package_without_probe_execution(self) -> None:
@@ -57,7 +58,7 @@ class S09ZnPackageSyntheticTests(unittest.TestCase):
         self.assertEqual(package.probe_plan.request.symbol.display_symbol, S09_ZN_DISPLAY_SYMBOL)
         self.assertEqual(package.probe_plan.request.bar_type, ChartBarType.DAILY)
         self.assertEqual(package.probe_plan.request.element_size, 1)
-        self.assertEqual(package.probe_plan.request.element_count, 1)
+        self.assertEqual(package.probe_plan.request.element_count, S09_ZN_REQUIRED_DAILY_BARS)
         with self.assertRaises(CarverBlocked):
             require_s09_zn_probe_authorization(package)
 
@@ -81,8 +82,8 @@ class S09ZnPackageSyntheticTests(unittest.TestCase):
         with self.assertRaises(CarverBlocked):
             s09_zn_tiny_slice_forecast_conformance(
                 S09TinySliceConformanceRequest(
-                    bars=bars[:64],
-                    daily_price_risk=TimedValue(1.0, bars[63].timestamp),
+                    bars=bars[: S09_ZN_REQUIRED_DAILY_BARS - 1],
+                    daily_price_risk=TimedValue(1.0, bars[S09_ZN_REQUIRED_DAILY_BARS - 2].timestamp),
                     package=package,
                 )
             )
@@ -117,6 +118,7 @@ class S09ZnPackageSyntheticTests(unittest.TestCase):
 
         self.assertIn("One-Instrument ZN Package", text)
         self.assertIn("providerSymbolId: 4470301", text)
+        self.assertIn("elementCount: 257", text)
         self.assertIn("This gate does not execute the probe.", text)
         self.assertIn("It must not calculate returns, PnL", text)
 
