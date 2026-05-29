@@ -116,6 +116,12 @@ The next execution-style gate should authorize a specific NinjaTrader Desktop ex
 
 The next process-only gate should separately lock commodity chain month conventions for `QM`, `ZC`, and `MGC` before they are added to an executable export helper.
 
+Prepared follow-on helper gate:
+
+```text
+docs/process/CARVER_NINJATRADER_PHASE1_MES_ZN_ZF_DAILY_EXPORT_HELPER_GATE_2026-05-29.md
+```
+
 ## Non-Authorization
 
 This artifact authorizes no bulk data download execution, no NinjaTrader export execution, no strategy computation, no returns, no PnL, no Sharpe, no drawdown, no hit rate, no costs, no turnover, no diagnostics, no backtests, no OOS, no Lockbox, no Forward, no CFD adapter, no old QuantLab import, no tuning, no deployment, no trading, no promotion, and no remote push by inference.

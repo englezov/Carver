@@ -22,6 +22,9 @@ PARTS_1_3_DAILY_SEED_MANIFEST_CONFIG = (
     CARVER_WORKSPACE_ROOT / "config" / "carver_daily_futures_manifest_parts_1_3_seed.json"
 )
 NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER = CARVER_WORKSPACE_ROOT / "tools" / "nt8" / "CarverManifestDailyExporter.cs"
+NINJATRADER_MANIFEST_PHASE1_DAILY_EXPORT_HELPER = (
+    CARVER_WORKSPACE_ROOT / "tools" / "nt8" / "CarverManifestDailyExporterPhase1.cs"
+)
 
 
 class AcquisitionFrequency(StrEnum):

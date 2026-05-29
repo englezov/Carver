@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from carver.spine.data_acquisition import (  # noqa: E402
     DEFAULT_NATIVE_DAILY_EXPORT_QUARANTINE,
     NINJATRADER_MANIFEST_DAILY_EXPORT_HELPER,
+    NINJATRADER_MANIFEST_PHASE1_DAILY_EXPORT_HELPER,
     NinjaTraderDataType,
     NinjaTraderInterval,
     NinjaTraderNativeDailyExportRequest,
@@ -142,6 +143,38 @@ class DataAcquisitionSyntheticTests(unittest.TestCase):
         ])
         self.assertNotIn('"ES"', helper_text)
         self.assertNotIn('"MES"', helper_text)
+        forbidden_fragments = ("EnterLong", "EnterShort", "Buy ", "Sell ", "SubmitOrder", "Account.", "Position.")
+        for forbidden in forbidden_fragments:
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, helper_text)
+
+    def test_phase1_ninjatrader_manifest_helper_is_disarmed_and_manifest_bound(self) -> None:
+        helper_text = NINJATRADER_MANIFEST_PHASE1_DAILY_EXPORT_HELPER.read_text(encoding="utf-8")
+
+        self.assertIn("ExecutionArmed = false", helper_text)
+        self.assertIn("CARVER_PARTS_1_3_DAILY_SEED_MULTI_ASSET_PHASE1_MES_ZN_ZF", helper_text)
+        self.assertIn("LockedOutputRoot = @\"C:\\Users\\openclaw\\Desktop\\Carver\\data\\quarantine\\ninjatrader\\native_daily_exports\"", helper_text)
+        self.assertIn("LookupPolicies.Provider", helper_text)
+        self.assertIn("BarsPeriodType.Day", helper_text)
+        export_rows = re.findall(r'new ExportRow\("([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", "([^"]+)", @"([^"]+)"\)', helper_text)
+        self.assertEqual(export_rows, [
+            ("MES", "09-25", "MES SEP25", "2025-05-29", "2026-05-28", "MES\\MES 09-25.Last.txt"),
+            ("MES", "12-25", "MES DEC25", "2025-05-29", "2026-05-28", "MES\\MES 12-25.Last.txt"),
+            ("MES", "03-26", "MES MAR26", "2025-05-29", "2026-05-28", "MES\\MES 03-26.Last.txt"),
+            ("MES", "06-26", "MES JUN26", "2025-05-29", "2026-05-28", "MES\\MES 06-26.Last.txt"),
+            ("ZN", "09-25", "ZN SEP25", "2025-05-29", "2026-05-28", "ZN\\ZN 09-25.Last.txt"),
+            ("ZN", "12-25", "ZN DEC25", "2025-05-29", "2026-05-28", "ZN\\ZN 12-25.Last.txt"),
+            ("ZN", "03-26", "ZN MAR26", "2025-05-29", "2026-05-28", "ZN\\ZN 03-26.Last.txt"),
+            ("ZN", "06-26", "ZN JUN26", "2025-05-29", "2026-05-28", "ZN\\ZN 06-26.Last.txt"),
+            ("ZF", "09-25", "ZF SEP25", "2025-05-29", "2026-05-28", "ZF\\ZF 09-25.Last.txt"),
+            ("ZF", "12-25", "ZF DEC25", "2025-05-29", "2026-05-28", "ZF\\ZF 12-25.Last.txt"),
+            ("ZF", "03-26", "ZF MAR26", "2025-05-29", "2026-05-28", "ZF\\ZF 03-26.Last.txt"),
+            ("ZF", "06-26", "ZF JUN26", "2025-05-29", "2026-05-28", "ZF\\ZF 06-26.Last.txt"),
+        ])
+        self.assertNotIn('"ES"', helper_text)
+        self.assertNotIn('"QM"', helper_text)
+        self.assertNotIn('"ZC"', helper_text)
+        self.assertNotIn('"MGC"', helper_text)
         forbidden_fragments = ("EnterLong", "EnterShort", "Buy ", "Sell ", "SubmitOrder", "Account.", "Position.")
         for forbidden in forbidden_fragments:
             with self.subTest(forbidden=forbidden):
