@@ -46,6 +46,14 @@ Only a pre-supplied market-data token is admitted by this gate. Username/passwor
 
 No credential value belongs in Git, chat, terminal output, docs, screenshots, or committed artifacts.
 
+Official credential requirements were investigated separately in:
+
+```text
+docs/process/CARVER_TRADOVATE_API_CREDENTIAL_REQUIREMENTS_INVESTIGATION_2026-05-29.md
+```
+
+That investigation keeps this gate as `CARVER_TRADOVATE_MD_ACCESS_TOKEN` only. Implementing `/auth/accesstokenrequest` would require a separate explicit credential/auth gate and hostile audit before use.
+
 ## Implemented Client Boundary
 
 The local client is:
