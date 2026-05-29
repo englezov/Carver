@@ -64,6 +64,13 @@ from .s09_readiness import (
     require_s09_real_data_readiness_preflight,
     s09_provider_mapping_status,
 )
+from .s09_zn_package import (
+    S09TinySliceConformanceRequest,
+    S09ZnPackage,
+    build_s09_zn_package,
+    require_s09_zn_probe_authorization,
+    s09_zn_tiny_slice_forecast_conformance,
+)
 from .web_chart_api import (
     ALLOWED_CHART_ENDPOINTS,
     DEFAULT_WEB_CHART_QUARANTINE,
@@ -153,8 +160,10 @@ __all__ = [
     "S09ReadinessStatus",
     "S09RuleForecast",
     "S09SyntheticConvention",
+    "S09TinySliceConformanceRequest",
     "S09TrendForecastRequest",
     "S09TrendForecastResult",
+    "S09ZnPackage",
     "SourceArtifactRef",
     "RollRuleSpec",
     "S03RiskConfig",
@@ -174,10 +183,12 @@ __all__ = [
     "build_continuous_back_adjusted_series",
     "build_portfolio_completion_report",
     "build_s09_readiness_report",
+    "build_s09_zn_package",
     "cap_forecast",
     "combine_forecast_block",
     "require_real_data_conformance_preflight",
     "require_s09_real_data_readiness_preflight",
+    "require_s09_zn_probe_authorization",
     "derive_completed_daily_from_minute_export",
     "derive_completed_daily_from_web_chart",
     "derive_completed_daily_from_bound_web_chart",
@@ -201,5 +212,6 @@ __all__ = [
     "s09_multiple_trend_forecast",
     "s09_provider_mapping_status",
     "s09_rule_id",
+    "s09_zn_tiny_slice_forecast_conformance",
     "size_contracts",
 ]
