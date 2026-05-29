@@ -3,7 +3,9 @@ name = "carver"
 version = "0.1.0"
 description = "Process-safe synthetic conformance skeleton for the Carver source-native futures spine."
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "websockets>=16.0",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
