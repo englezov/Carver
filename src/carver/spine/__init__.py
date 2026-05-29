@@ -47,6 +47,15 @@ from .minute_export import (
     parse_minute_export_file,
     parse_minute_export_text,
 )
+from .ninjatrader_desktop_export import (
+    DEFAULT_NINJATRADER_DAILY_EXPORT_QUARANTINE,
+    EXPECTED_NINJATRADER_DAILY_EXPORT_HEADER,
+    S09_ZN_DESKTOP_DAILY_EXPORT_FILE_NAME,
+    NinjaTraderDailyExportSpec,
+    parse_ninjatrader_daily_export_file,
+    parse_ninjatrader_daily_export_text,
+    s09_zn_ninjatrader_daily_export_spec,
+)
 from .s03 import S03RiskConfig, S03RiskEstimate, SyntheticDailyPrice, estimate_s03_annual_risk
 from .s09 import (
     S09RuleForecast,
@@ -136,6 +145,7 @@ __all__ = [
     "DailyDerivationSession",
     "DEFAULT_TRADOVATE_MD_WS_URL",
     "DEFAULT_MINUTE_EXPORT_QUARANTINE",
+    "DEFAULT_NINJATRADER_DAILY_EXPORT_QUARANTINE",
     "DEFAULT_WEB_CHART_QUARANTINE",
     "ALLOWED_CHART_ENDPOINTS",
     "AUTHORIZED_TRADOVATE_ENDPOINTS",
@@ -146,6 +156,7 @@ __all__ = [
     "LockedPortfolioProviderMapping",
     "LockedWebChartSymbol",
     "EXPECTED_MINUTE_EXPORT_HEADER",
+    "EXPECTED_NINJATRADER_DAILY_EXPORT_HEADER",
     "FORECAST_CAP",
     "ForecastBlockRequest",
     "ForecastBlockResult",
@@ -153,6 +164,7 @@ __all__ = [
     "ForecastRuleResult",
     "MinuteBar",
     "MinuteExportSpec",
+    "NinjaTraderDailyExportSpec",
     "PortfolioLeg",
     "PortfolioCompletionReport",
     "PortfolioCompletionStatus",
@@ -168,6 +180,7 @@ __all__ = [
     "S09_EWMAC_SCALARS",
     "S09_EWMAC_SPANS",
     "S09_ZN_REQUIRED_DAILY_BARS",
+    "S09_ZN_DESKTOP_DAILY_EXPORT_FILE_NAME",
     "S09InstrumentDataContract",
     "S09ProviderMappingRow",
     "S09ReadinessReport",
@@ -226,6 +239,8 @@ __all__ = [
     "portfolio_web_chart_mapping_status",
     "parse_minute_export_file",
     "parse_minute_export_text",
+    "parse_ninjatrader_daily_export_file",
+    "parse_ninjatrader_daily_export_text",
     "require_locked_portfolio_web_chart_mapping",
     "require_locked_provider_mapping_set",
     "s09_fdm_for_allowed_spans",
@@ -233,5 +248,6 @@ __all__ = [
     "s09_provider_mapping_status",
     "s09_rule_id",
     "s09_zn_tiny_slice_forecast_conformance",
+    "s09_zn_ninjatrader_daily_export_spec",
     "size_contracts",
 ]
