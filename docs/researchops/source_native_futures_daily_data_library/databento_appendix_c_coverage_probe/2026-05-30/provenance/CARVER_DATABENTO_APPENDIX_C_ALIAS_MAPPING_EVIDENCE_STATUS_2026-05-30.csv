@@ -1,0 +1,14 @@
+status_key,status_value,notes
+gate_name,CARVER_DATABENTO_APPENDIX_C_ALIAS_MAPPING_EVIDENCE_GATE_2026-05-30,Process/source static alias mapping evidence gate.
+lane_class,SOURCE_NATIVE_FUTURES,No CFD assumptions or adapter path used.
+input_alias_rows,17,Rows previously marked DATABENTO_ALIAS_REQUIRED_METADATA_MATCH.
+alias_equivalence_resolved_static_pre_real_data,16,Resolved using official static exchange/provider contract specification evidence.
+alias_product_family_identified_but_fail_closed,1,SMI/FSMI product family identified but Appendix C currency/venue normalization is not clean.
+corrected_databento_candidate_rows,1,DJ200S prior FXXS.c.0 candidate superseded by FSCP.c.0 based on Eurex STOXX Europe Small 200 evidence and Databento metadata/symbology check.
+market_row_access,NO,No OHLCV or market rows accessed.
+ohlcv_download_authorized,NO,No data download authorization is created by this gate.
+provider_api_access,DATABENTO_METADATA_SYMBOLOGY_ONLY_PRIOR_AND_OPTIONAL,No Databento OHLCV request used in this gate.
+diagnostics_backtests_strategy_use,NO,No diagnostics/backtests/forecasts/positions/costs/carry/trend/risk calculations.
+git_operations,NO,No staging commit push PR or remote repository operation.
+next_required_gate,DATABENTO_CONTRACT_IDENTITY_STATIC_LOCK_AND_DATED_CONTRACT_SELECTION_GATE,Only after resolved aliases are incorporated into a contract identity gate.
+disposition,PASS_ALIAS_MAPPING_EVIDENCE_PRE_REAL_DATA_WITH_ONE_FAIL_CLOSED_ROW,Alias evidence improved coverage but does not open market-row intake.

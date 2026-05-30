@@ -1,0 +1,1064 @@
+{
+  "ZTH6": {
+    "result": {
+      "ZTH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-04-29",
+          "s": "42228527"
+        }
+      ]
+    },
+    "symbols": [
+      "ZTH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZTM6": {
+    "result": {
+      "ZTM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42370722"
+        }
+      ]
+    },
+    "symbols": [
+      "ZTM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZTU6": {
+    "result": {
+      "ZTU6": [
+        {
+          "d0": "2025-12-17",
+          "d1": "2026-05-30",
+          "s": "42670574"
+        }
+      ]
+    },
+    "symbols": [
+      "ZTU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [
+      "ZTU6"
+    ],
+    "not_found": [],
+    "message": "Partially resolved",
+    "status": 1
+  },
+  "ZFH6": {
+    "result": {
+      "ZFH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-04-14",
+          "s": "42278557"
+        }
+      ]
+    },
+    "symbols": [
+      "ZFH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZFM6": {
+    "result": {
+      "ZFM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42156042"
+        }
+      ]
+    },
+    "symbols": [
+      "ZFM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZFU6": {
+    "result": {
+      "ZFU6": [
+        {
+          "d0": "2025-12-17",
+          "d1": "2026-05-30",
+          "s": "42725984"
+        }
+      ]
+    },
+    "symbols": [
+      "ZFU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [
+      "ZFU6"
+    ],
+    "not_found": [],
+    "message": "Partially resolved",
+    "status": 1
+  },
+  "ZNH6": {
+    "result": {
+      "ZNH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-04-05",
+          "s": "42004475"
+        }
+      ]
+    },
+    "symbols": [
+      "ZNH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZNM6": {
+    "result": {
+      "ZNM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42000661"
+        }
+      ]
+    },
+    "symbols": [
+      "ZNM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZNU6": {
+    "result": {
+      "ZNU6": [
+        {
+          "d0": "2025-12-07",
+          "d1": "2026-05-30",
+          "s": "42001136"
+        }
+      ]
+    },
+    "symbols": [
+      "ZNU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [
+      "ZNU6"
+    ],
+    "not_found": [],
+    "message": "Partially resolved",
+    "status": 1
+  },
+  "MESH6": {
+    "result": {
+      "MESH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42003800"
+        }
+      ]
+    },
+    "symbols": [
+      "MESH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MESM6": {
+    "result": {
+      "MESM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42005163"
+        }
+      ]
+    },
+    "symbols": [
+      "MESM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MESU6": {
+    "result": {
+      "MESU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42003239"
+        }
+      ]
+    },
+    "symbols": [
+      "MESU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MNQH6": {
+    "result": {
+      "MNQH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004946"
+        }
+      ]
+    },
+    "symbols": [
+      "MNQH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MNQM6": {
+    "result": {
+      "MNQM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004936"
+        }
+      ]
+    },
+    "symbols": [
+      "MNQM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MNQU6": {
+    "result": {
+      "MNQU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004800"
+        }
+      ]
+    },
+    "symbols": [
+      "MNQU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "M2KH6": {
+    "result": {
+      "M2KH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-17",
+          "s": "42002147"
+        }
+      ]
+    },
+    "symbols": [
+      "M2KH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "M2KM6": {
+    "result": {
+      "M2KM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42002073"
+        }
+      ]
+    },
+    "symbols": [
+      "M2KM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "M2KU6": {
+    "result": {
+      "M2KU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004428"
+        }
+      ]
+    },
+    "symbols": [
+      "M2KU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MYMH6": {
+    "result": {
+      "MYMH6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-04-03",
+          "s": "42001953"
+        }
+      ]
+    },
+    "symbols": [
+      "MYMH6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MYMM6": {
+    "result": {
+      "MYMM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42002662"
+        }
+      ]
+    },
+    "symbols": [
+      "MYMM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "MYMU6": {
+    "result": {
+      "MYMU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004247"
+        }
+      ]
+    },
+    "symbols": [
+      "MYMU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "QMM6": {
+    "result": {
+      "QMM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "2224"
+        }
+      ]
+    },
+    "symbols": [
+      "QMM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "QMN6": {
+    "result": {
+      "QMN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "3159"
+        }
+      ]
+    },
+    "symbols": [
+      "QMN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "QMQ6": {
+    "result": {
+      "QMQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "9568"
+        }
+      ]
+    },
+    "symbols": [
+      "QMQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "RBM6": {
+    "result": {
+      "RBM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "258289"
+        }
+      ]
+    },
+    "symbols": [
+      "RBM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "RBN6": {
+    "result": {
+      "RBN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "781272"
+        }
+      ]
+    },
+    "symbols": [
+      "RBN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "RBQ6": {
+    "result": {
+      "RBQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "319418"
+        }
+      ]
+    },
+    "symbols": [
+      "RBQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZCK6": {
+    "result": {
+      "ZCK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-28",
+          "s": "42273528"
+        }
+      ]
+    },
+    "symbols": [
+      "ZCK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZCN6": {
+    "result": {
+      "ZCN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "495552"
+        }
+      ]
+    },
+    "symbols": [
+      "ZCN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZCU6": {
+    "result": {
+      "ZCU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42280585"
+        }
+      ]
+    },
+    "symbols": [
+      "ZCU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZSK6": {
+    "result": {
+      "ZSK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-28",
+          "s": "42009683"
+        }
+      ]
+    },
+    "symbols": [
+      "ZSK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZSN6": {
+    "result": {
+      "ZSN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "194904"
+        }
+      ]
+    },
+    "symbols": [
+      "ZSN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZSQ6": {
+    "result": {
+      "ZSQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42011290"
+        }
+      ]
+    },
+    "symbols": [
+      "ZSQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZMK6": {
+    "result": {
+      "ZMK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-28",
+          "s": "42282755"
+        }
+      ]
+    },
+    "symbols": [
+      "ZMK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZMN6": {
+    "result": {
+      "ZMN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "748931"
+        }
+      ]
+    },
+    "symbols": [
+      "ZMN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZMQ6": {
+    "result": {
+      "ZMQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42279856"
+        }
+      ]
+    },
+    "symbols": [
+      "ZMQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZLK6": {
+    "result": {
+      "ZLK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-28",
+          "s": "42281352"
+        }
+      ]
+    },
+    "symbols": [
+      "ZLK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZLN6": {
+    "result": {
+      "ZLN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "608206"
+        }
+      ]
+    },
+    "symbols": [
+      "ZLN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZLQ6": {
+    "result": {
+      "ZLQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42281353"
+        }
+      ]
+    },
+    "symbols": [
+      "ZLQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZWK6": {
+    "result": {
+      "ZWK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "4121250"
+        }
+      ]
+    },
+    "symbols": [
+      "ZWK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZWN6": {
+    "result": {
+      "ZWN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "4121243"
+        }
+      ]
+    },
+    "symbols": [
+      "ZWN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "ZWU6": {
+    "result": {
+      "ZWU6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42002441"
+        }
+      ]
+    },
+    "symbols": [
+      "ZWU6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "HEK6": {
+    "result": {
+      "HEK6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-28",
+          "s": "42000554"
+        }
+      ]
+    },
+    "symbols": [
+      "HEK6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "HEM6": {
+    "result": {
+      "HEM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42005488"
+        }
+      ]
+    },
+    "symbols": [
+      "HEM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "HEN6": {
+    "result": {
+      "HEN6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42004812"
+        }
+      ]
+    },
+    "symbols": [
+      "HEN6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "LEJ6": {
+    "result": {
+      "LEJ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-14",
+          "s": "42406129"
+        }
+      ]
+    },
+    "symbols": [
+      "LEJ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "LEM6": {
+    "result": {
+      "LEM6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42290645"
+        }
+      ]
+    },
+    "symbols": [
+      "LEM6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "LEQ6": {
+    "result": {
+      "LEQ6": [
+        {
+          "d0": "2025-10-31",
+          "d1": "2026-05-30",
+          "s": "42101047"
+        }
+      ]
+    },
+    "symbols": [
+      "LEQ6"
+    ],
+    "stype_in": "raw_symbol",
+    "stype_out": "instrument_id",
+    "start_date": "2025-11-01",
+    "end_date": "2026-05-30",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  }
+}

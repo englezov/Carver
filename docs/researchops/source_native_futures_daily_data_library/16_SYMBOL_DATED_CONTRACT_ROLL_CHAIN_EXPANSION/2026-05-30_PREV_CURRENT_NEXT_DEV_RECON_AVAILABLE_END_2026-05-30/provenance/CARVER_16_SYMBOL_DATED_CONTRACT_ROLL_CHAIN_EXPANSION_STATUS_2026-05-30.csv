@@ -1,0 +1,16 @@
+status_key,status_value,status_scope
+execution_status,DATABENTO_DATED_CONTRACT_ROLL_CHAIN_EXPANSION_QUARANTINE_ONLY,DEV_RECON_ONLY
+provider_api_access,YES_DATABENTO_HISTORICAL_EXACT_LOCKED_ROLL_CHAIN_ONLY,DEV_RECON_ONLY
+dataset,GLBX.MDP3,DEV_RECON_ONLY
+schema,ohlcv-1d,DEV_RECON_ONLY
+request_start,2025-11-01T00:00:00Z,DEV_RECON_ONLY
+request_end,2026-05-30T00:00:00Z,DEV_RECON_ONLY
+locked_root_count,16,DEV_RECON_ONLY
+candidate_dated_contract_count,48,DEV_RECON_ONLY
+admitted_row_count_pending_provider_condition_join,6532,DEV_RECON_ONLY
+failed_candidate_count,0,DEV_RECON_ONLY
+continuous_contract_downloaded,NO,DEV_RECON_ONLY
+diagnostics_run,NO,DEV_RECON_ONLY
+backtests_run,NO,DEV_RECON_ONLY
+forecasts_positions_costs_carry_trend_risk_computed,NO,DEV_RECON_ONLY
+git_or_remote_operations,NO,DEV_RECON_ONLY

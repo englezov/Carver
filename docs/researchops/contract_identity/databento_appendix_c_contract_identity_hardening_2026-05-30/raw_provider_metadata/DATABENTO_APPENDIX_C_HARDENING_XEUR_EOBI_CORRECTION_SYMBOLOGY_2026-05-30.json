@@ -1,0 +1,30 @@
+{
+  "result": {
+    "FDXS.c.0": [
+      {
+        "d0": "2026-05-27",
+        "d1": "2026-05-29",
+        "s": "690"
+      }
+    ],
+    "FGBL.c.0": [
+      {
+        "d0": "2026-05-27",
+        "d1": "2026-05-29",
+        "s": "18"
+      }
+    ]
+  },
+  "symbols": [
+    "FDXS.c.0",
+    "FGBL.c.0"
+  ],
+  "stype_in": "continuous",
+  "stype_out": "instrument_id",
+  "start_date": "2026-05-27",
+  "end_date": "2026-05-29",
+  "partial": [],
+  "not_found": [],
+  "message": "OK",
+  "status": 0
+}
