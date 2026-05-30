@@ -1,0 +1,2 @@
+request_attempt_utc,dataset,schema,symbol_count_requested,start,end,provider_api_accessed,market_rows_requested,data_downloaded,market_rows_parsed,diagnostics_run,backtests_run,forecasts_computed,positions_computed,costs_carry_trend_or_risk_computed,archive_status,error_type,error_message_redacted
+2026-05-30T14:50:07Z,GLBX.MDP3,ohlcv-1d,16,2018-01-01T00:00:00Z,2026-05-30T00:00:00Z,YES,YES_EXACT_LOCKED_DATED_CONTRACTS_ONLY,NO,NO,NO,NO,NO,NO,NO,FAIL_CLOSED_DATABENTO_FULL_HISTORY_REQUEST_OR_VALIDATION_ERROR,BentoError,Error streaming response: Response ended prematurely

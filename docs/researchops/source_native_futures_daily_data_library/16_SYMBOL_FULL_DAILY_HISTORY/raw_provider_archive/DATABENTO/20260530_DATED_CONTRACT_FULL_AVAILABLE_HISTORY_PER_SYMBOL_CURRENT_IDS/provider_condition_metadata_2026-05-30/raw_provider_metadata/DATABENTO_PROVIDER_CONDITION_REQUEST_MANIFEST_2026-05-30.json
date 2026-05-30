@@ -1,0 +1,11 @@
+{
+  "status": "AUTHORIZED_DATABENTO_PROVIDER_CONDITION_METADATA_READINESS_EXECUTION",
+  "dataset": "GLBX.MDP3",
+  "archive_sanitized_path": "docs\\researchops\\source_native_futures_daily_data_library\\16_SYMBOL_FULL_DAILY_HISTORY\\raw_provider_archive\\DATABENTO\\20260530_DATED_CONTRACT_FULL_AVAILABLE_HISTORY_PER_SYMBOL_CURRENT_IDS\\sanitized_bars\\DATABENTO_16_SYMBOL_DATED_CONTRACT_FULL_HISTORY_PER_SYMBOL_CURRENT_IDS_SANITIZED.csv",
+  "archive_rows": 4568,
+  "condition_start_date": "2023-05-23",
+  "condition_end_date_exclusive": "2026-05-30",
+  "metadata_method": "Historical.metadata.get_dataset_condition",
+  "new_ohlcv_request": "NO",
+  "new_market_data_download": "NO"
+}

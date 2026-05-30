@@ -1,0 +1,101 @@
+{
+  "source_symbology_file": "docs\\researchops\\source_native_futures_daily_data_library\\16_SYMBOL_FULL_DAILY_HISTORY\\raw_provider_archive\\DATABENTO\\20260530_DATED_CONTRACT_FULL_AVAILABLE_HISTORY\\raw_provider_metadata\\databento_full_history_symbology_resolution_20260530.json",
+  "current_intervals": [
+    {
+      "raw_symbol": "ZTM6",
+      "instrument_id": "42370722",
+      "d0": "2025-09-16",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZFM6",
+      "instrument_id": "42156042",
+      "d0": "2025-09-16",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZNM6",
+      "instrument_id": "42000661",
+      "d0": "2025-09-07",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "MESM6",
+      "instrument_id": "42005163",
+      "d0": "2025-03-09",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "MNQM6",
+      "instrument_id": "42004936",
+      "d0": "2025-03-09",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "M2KM6",
+      "instrument_id": "42002073",
+      "d0": "2025-03-09",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "MYMM6",
+      "instrument_id": "42002662",
+      "d0": "2025-06-08",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "QMN6",
+      "instrument_id": "3159",
+      "d0": "2020-11-05",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "RBN6",
+      "instrument_id": "781272",
+      "d0": "2022-11-16",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZCN6",
+      "instrument_id": "495552",
+      "d0": "2022-12-01",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZSN6",
+      "instrument_id": "194904",
+      "d0": "2022-10-31",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZMN6",
+      "instrument_id": "748931",
+      "d0": "2022-12-01",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZLN6",
+      "instrument_id": "608206",
+      "d0": "2022-12-01",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "ZWN6",
+      "instrument_id": "4121243",
+      "d0": "2023-07-02",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "HEM6",
+      "instrument_id": "42005488",
+      "d0": "2024-12-01",
+      "d1": "2026-05-30"
+    },
+    {
+      "raw_symbol": "LEM6",
+      "instrument_id": "42290645",
+      "d0": "2024-12-17",
+      "d1": "2026-05-30"
+    }
+  ]
+}

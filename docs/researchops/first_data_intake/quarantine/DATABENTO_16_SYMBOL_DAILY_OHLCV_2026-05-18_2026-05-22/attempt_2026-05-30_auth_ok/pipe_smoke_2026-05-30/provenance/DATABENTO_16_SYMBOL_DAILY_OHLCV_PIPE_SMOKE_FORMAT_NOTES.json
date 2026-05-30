@@ -1,0 +1,41 @@
+{
+  "status": "PASS_REPRODUCIBLE_QUARANTINE_NORMALIZATION_AND_VALIDATION",
+  "format_observations": {
+    "raw_provider_header": [
+      "ts_event",
+      "rtype",
+      "publisher_id",
+      "instrument_id",
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "symbol"
+    ],
+    "sanitized_header": [
+      "provider",
+      "dataset",
+      "schema",
+      "stype_in",
+      "provider_symbol",
+      "instrument_id",
+      "timestamp_utc",
+      "completed_trading_date",
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "quarantine_status"
+    ],
+    "daily_timestamp_policy_observed": "Databento ohlcv-1d rows carry ts_event at 00:00:00Z for each completed trading date in this request.",
+    "price_scale_observed": "Provider CSV emits decimal OHLC values; sanitizer preserves decimal display through pandas scalar formatting.",
+    "volume_type_observed": "Volume is integer-like in the provider CSV and sanitized CSV."
+  },
+  "boundaries": {
+    "new_provider_api_access": false,
+    "new_data_download": false,
+    "diagnostics_backtests_or_strategy_logic": false
+  }
+}

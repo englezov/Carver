@@ -1,0 +1,43 @@
+{
+  "status": "AUTHORIZED_DATABENTO_16_SYMBOL_DAILY_OHLCV_QUARANTINE_INTAKE",
+  "dataset": "GLBX.MDP3",
+  "schema": "ohlcv-1d",
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTM6",
+    "ZFM6",
+    "ZNM6",
+    "MESM6",
+    "MNQM6",
+    "M2KM6",
+    "MYMM6",
+    "QMN6",
+    "RBN6",
+    "ZCN6",
+    "ZSN6",
+    "ZMN6",
+    "ZLN6",
+    "ZWN6",
+    "HEM6",
+    "LEM6"
+  ],
+  "start": "2026-05-18T00:00:00Z",
+  "end": "2026-05-23T00:00:00Z",
+  "forbidden": [
+    "continuous_contracts",
+    "diagnostics",
+    "backtests",
+    "forecasts",
+    "positions",
+    "costs",
+    "carry",
+    "trend",
+    "volatility_or_risk_calculations",
+    "oos",
+    "lockbox",
+    "forward",
+    "trading",
+    "promotion"
+  ]
+}
