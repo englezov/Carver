@@ -1,0 +1,16 @@
+{
+  "backtests_run": "NO",
+  "dataset": "GLBX.MDP3",
+  "definition_row_count": 37,
+  "diagnostics_run": "NO",
+  "end": "2026-05-23T00:00:00Z",
+  "expected_raw_symbol": "ZNM6",
+  "forecasts_run": "NO",
+  "gate": "G_R1D_ZN_S26_EXTENDED_DATABENTO_OHLCV_1H_FORECAST_ONLY_COVERAGE_QUARANTINE_INTAKE",
+  "instrument_id": 42000661,
+  "positions_run": "NO",
+  "row_count_provider_dataframe": 690,
+  "schema": "ohlcv-1h",
+  "start": "2026-04-12T00:00:00Z",
+  "status": "RAW_DATABENTO_OHLCV_1H_EXTENDED_REQUEST_PRESERVED_VALIDATION_COMPLETE"
+}

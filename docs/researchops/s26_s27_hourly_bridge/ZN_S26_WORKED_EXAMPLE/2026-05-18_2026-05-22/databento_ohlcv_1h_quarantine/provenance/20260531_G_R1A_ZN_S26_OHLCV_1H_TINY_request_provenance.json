@@ -1,0 +1,28 @@
+{
+  "backtests_run": "NO",
+  "created_utc": "2026-05-30T22:06:20.659879Z",
+  "definition_dataframe_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\raw_provider_metadata\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_definition_dataframe.csv",
+  "definition_dbn": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\raw_provider_metadata\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_definition.dbn",
+  "diagnostics_run": "NO",
+  "forecasts_run": "NO",
+  "market_row_parsing": "PENDING_LOCAL_VALIDATION_AFTER_RAW_PRESERVATION",
+  "parser_snapshot_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\raw_provider_output\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_parser_snapshot.csv",
+  "positions_run": "NO",
+  "provider_api_access": "YES_DATABENTO_HISTORICAL_EXACT_LOCKED_REQUEST_ONLY",
+  "raw_dbn": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\raw_provider_output\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY.dbn",
+  "raw_provider_dataframe_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\raw_provider_output\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_provider_dataframe.csv",
+  "request": {
+    "api_key": "REDACTED",
+    "continuous_contracts": "CLOSED",
+    "dataset": "GLBX.MDP3",
+    "end": "2026-05-23T00:00:00Z",
+    "gate": "G_R1A_ZN_S26_WORKED_EXAMPLE_DATABENTO_OHLCV_1H_TINY_QUARANTINE_INTAKE",
+    "raw_symbol_expected": "ZNM6",
+    "schema": "ohlcv-1h",
+    "start": "2026-05-17T00:00:00Z",
+    "stype_in": "instrument_id",
+    "symbols": [
+      42000661
+    ]
+  }
+}

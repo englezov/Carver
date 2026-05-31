@@ -1,0 +1,24 @@
+{
+  "end_date": "2025-08-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNM5"
+  ],
+  "result": {
+    "ZNM5": [
+      {
+        "d0": "2024-09-05",
+        "d1": "2025-06-25",
+        "s": "42004113"
+      }
+    ]
+  },
+  "start_date": "2024-02-27",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNM5"
+  ]
+}

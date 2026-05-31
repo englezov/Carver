@@ -1,0 +1,23 @@
+{
+  "boundary": [
+    "NO_PROVIDER_API_ACCESS",
+    "NO_NEW_DATA_DOWNLOAD",
+    "NO_MARKET_ROW_EXPANSION",
+    "NO_S27_FORECAST_COMPUTATION",
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_POSITIONS",
+    "NO_COSTS",
+    "NO_CARRY",
+    "NO_TRADING",
+    "NO_PROMOTION"
+  ],
+  "continuous_daily_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S27_EWMAC16_TREND_DEPENDENCY\\local_continuous_daily_lineage_2026-05-31\\ledger\\20260531_ZN_S27_EWMAC16_LOCAL_CONTINUOUS_DAILY_LIFECYCLE_REPAIR_series_dev_recon_only.csv",
+  "continuous_daily_sha256": "14618AF100DD574C2A35C982BB2EBCCDD367474F44C9404BA4E6D2317F3D2D92",
+  "created_at_utc": "2026-05-31T04:54:17.736666Z",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "run_id": "20260531_ZN_S27_EWMAC16_TREND_RUNTIME_LEDGER",
+  "s26_forecast_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-04-13_2026-05-22\\forecast_series_only_output\\2026-05-31\\forecast_rows\\20260531_G_R1E_ZN_S26_EXTENDED_SIGMA_AND_FORECAST_SERIES_forecast_series_only.csv",
+  "s26_forecast_sha256": "8D8F1E5AF325CAAD52626D4E28ADE40895D3564591EB78FE21CCCD9CE25B783F",
+  "source_method": "EWMAC(16,64) over local back-adjusted ZN daily close lineage for S27 trend overlay runtime only."
+}

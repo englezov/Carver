@@ -1,0 +1,24 @@
+{
+  "backtests_run": "NO",
+  "completed_bar_policy": "provider ts_event interval start preserved; derived_completed_bar_end_utc = ts_event + 1 hour",
+  "completed_trading_date_counts": {
+    "2026-05-18": 23,
+    "2026-05-19": 23,
+    "2026-05-20": 23,
+    "2026-05-21": 23,
+    "2026-05-22": 23
+  },
+  "completed_trading_date_policy": "For this locked tiny ZN observed session: UTC hour >=22 maps to next completed trading date, otherwise same UTC date; no row maps outside 2026-05-18 through 2026-05-22.",
+  "diagnostics_run": "NO",
+  "duplicate_ts_event_status": "PASS_NO_DUPLICATES",
+  "forecast_ready": "NO",
+  "forecasts_run": "NO",
+  "gate": "G_R1A_ZN_S26_WORKED_EXAMPLE_DATABENTO_OHLCV_1H_TINY_QUARANTINE_INTAKE",
+  "positions_run": "NO",
+  "provider_condition_status_counts": {
+    "PROVIDER_CONDITION_AVAILABLE": 115
+  },
+  "row_count": 115,
+  "strategy_use_status": "QUARANTINE_ONLY_NOT_FORECAST_READY",
+  "validation_status": "PASS_ROW_SHAPE_COMPLETED_BAR_MAPPING_QUARANTINE_ONLY_NOT_FORECAST_READY"
+}

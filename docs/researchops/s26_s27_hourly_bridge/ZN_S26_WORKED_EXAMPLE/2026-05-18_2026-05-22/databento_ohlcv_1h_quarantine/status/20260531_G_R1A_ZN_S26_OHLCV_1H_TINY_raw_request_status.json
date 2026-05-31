@@ -1,0 +1,17 @@
+{
+  "backtests_run": "NO",
+  "dataset": "GLBX.MDP3",
+  "definition_row_count": 7,
+  "diagnostics_run": "NO",
+  "end": "2026-05-23T00:00:00Z",
+  "expected_raw_symbol": "ZNM6",
+  "forecasts_run": "NO",
+  "gate": "G_R1A_ZN_S26_WORKED_EXAMPLE_DATABENTO_OHLCV_1H_TINY_QUARANTINE_INTAKE",
+  "instrument_id": 42000661,
+  "positions_run": "NO",
+  "raw_artifacts_sha256_record": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\hashes\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_sha256.json",
+  "row_count_provider_dataframe": 115,
+  "schema": "ohlcv-1h",
+  "start": "2026-05-17T00:00:00Z",
+  "status": "RAW_DATABENTO_OHLCV_1H_REQUEST_PRESERVED_VALIDATION_PENDING"
+}

@@ -1,0 +1,444 @@
+{
+  "contract_count": 46,
+  "contracts": [
+    {
+      "contract_year": 2015,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH5",
+      "request_end": "2015-05-05",
+      "request_start": "2014-01-01",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2015,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM5",
+      "request_end": "2015-08-04",
+      "request_start": "2014-02-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2015,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU5",
+      "request_end": "2015-11-04",
+      "request_start": "2014-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2015,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ5",
+      "request_end": "2016-02-04",
+      "request_start": "2014-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2016,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH6",
+      "request_end": "2016-05-05",
+      "request_start": "2014-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2016,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM6",
+      "request_end": "2016-08-04",
+      "request_start": "2015-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2016,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU6",
+      "request_end": "2016-11-04",
+      "request_start": "2015-05-30",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2016,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ6",
+      "request_end": "2017-02-04",
+      "request_start": "2015-08-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2017,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH7",
+      "request_end": "2017-05-05",
+      "request_start": "2015-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2017,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM7",
+      "request_end": "2017-08-04",
+      "request_start": "2016-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2017,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU7",
+      "request_end": "2017-11-04",
+      "request_start": "2016-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2017,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ7",
+      "request_end": "2018-02-04",
+      "request_start": "2016-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2018,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH8",
+      "request_end": "2018-05-05",
+      "request_start": "2016-11-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2018,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM8",
+      "request_end": "2018-08-04",
+      "request_start": "2017-02-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2018,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU8",
+      "request_end": "2018-11-04",
+      "request_start": "2017-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2018,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ8",
+      "request_end": "2019-02-04",
+      "request_start": "2017-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2019,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH9",
+      "request_end": "2019-05-05",
+      "request_start": "2017-11-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2019,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM9",
+      "request_end": "2019-08-04",
+      "request_start": "2018-02-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2019,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU9",
+      "request_end": "2019-11-04",
+      "request_start": "2018-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2019,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ9",
+      "request_end": "2020-02-04",
+      "request_start": "2018-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2020,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH0",
+      "request_end": "2020-05-05",
+      "request_start": "2018-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2020,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM0",
+      "request_end": "2020-08-04",
+      "request_start": "2019-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2020,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU0",
+      "request_end": "2020-11-04",
+      "request_start": "2019-05-30",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2020,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ0",
+      "request_end": "2021-02-04",
+      "request_start": "2019-08-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2021,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH1",
+      "request_end": "2021-05-05",
+      "request_start": "2019-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2021,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM1",
+      "request_end": "2021-08-04",
+      "request_start": "2020-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2021,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU1",
+      "request_end": "2021-11-04",
+      "request_start": "2020-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2021,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ1",
+      "request_end": "2022-02-04",
+      "request_start": "2020-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2022,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH2",
+      "request_end": "2022-05-05",
+      "request_start": "2020-11-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2022,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM2",
+      "request_end": "2022-08-04",
+      "request_start": "2021-02-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2022,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU2",
+      "request_end": "2022-11-04",
+      "request_start": "2021-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2022,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ2",
+      "request_end": "2023-02-04",
+      "request_start": "2021-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2023,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH3",
+      "request_end": "2023-05-05",
+      "request_start": "2021-11-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2023,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM3",
+      "request_end": "2023-08-04",
+      "request_start": "2022-02-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2023,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU3",
+      "request_end": "2023-11-04",
+      "request_start": "2022-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2023,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ3",
+      "request_end": "2024-02-04",
+      "request_start": "2022-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2024,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH4",
+      "request_end": "2024-05-05",
+      "request_start": "2022-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2024,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM4",
+      "request_end": "2024-08-04",
+      "request_start": "2023-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2024,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU4",
+      "request_end": "2024-11-04",
+      "request_start": "2023-05-30",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2024,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ4",
+      "request_end": "2025-02-04",
+      "request_start": "2023-08-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH5",
+      "request_end": "2025-05-05",
+      "request_start": "2023-11-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM5",
+      "request_end": "2025-08-04",
+      "request_start": "2024-02-27",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU5",
+      "request_end": "2025-11-04",
+      "request_start": "2024-05-29",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ5",
+      "request_end": "2026-02-04",
+      "request_start": "2024-08-28",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2026,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH6",
+      "request_end": "2026-05-05",
+      "request_start": "2024-11-26",
+      "root": "ZN"
+    },
+    {
+      "contract_year": 2026,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM6",
+      "request_end": "2026-05-23",
+      "request_start": "2025-02-26",
+      "root": "ZN"
+    }
+  ],
+  "dataset": "GLBX.MDP3",
+  "gate": "S27_ZN_V_Q_M_TEN_YEAR_VOL_HISTORY_DATABENTO_EXECUTION_OR_FAIL_CLOSED_DECISION",
+  "non_authorization": [
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_RETURNS_PNL_STATISTICS",
+    "NO_POSITIONS",
+    "NO_COSTS",
+    "NO_CARRY",
+    "NO_STRATEGY_TEST",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "provider": "DATABENTO_HISTORICAL",
+  "request_end_exclusive": "2026-05-23",
+  "request_start": "2014-01-01",
+  "root_symbol": "ZN",
+  "s26_forecast_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-04-13_2026-05-22\\forecast_series_only_output\\2026-05-31\\forecast_rows\\20260531_G_R1E_ZN_S26_EXTENDED_SIGMA_AND_FORECAST_SERIES_forecast_series_only.csv",
+  "schema": "ohlcv-1d",
+  "stype_in": "raw_symbol"
+}

@@ -1,0 +1,28 @@
+{
+  "boundary": [
+    "NO_OHLCV_DOWNLOAD",
+    "NO_MARKET_ROW_PARSING",
+    "NO_CONTINUOUS_CONTRACT_DOWNLOAD",
+    "NO_PROVIDER_BUILT_CONTINUOUS_SERIES",
+    "NO_TREND_COMPUTATION",
+    "NO_S27_COMPUTATION",
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_POSITIONS",
+    "NO_TRADING",
+    "NO_PROMOTION"
+  ],
+  "created_at_utc": "2026-05-31T00:21:19.986827Z",
+  "dataset": "GLBX.MDP3",
+  "gate": "ZN_LOCAL_CONTINUOUS_DAILY_LIFECYCLE_EVIDENCE_DATABENTO_DEFINITION_PROBE",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "provider": "Databento",
+  "purpose": "Metadata-only Databento definition probe for ZN local continuous daily lifecycle repair before S27 EWMAC16 trend dependency.",
+  "schema": "definition",
+  "secret_handling": "API key read locally and not written to artifacts or stdout.",
+  "symbols": [
+    "ZNH6",
+    "ZNM6",
+    "ZNU6"
+  ]
+}
