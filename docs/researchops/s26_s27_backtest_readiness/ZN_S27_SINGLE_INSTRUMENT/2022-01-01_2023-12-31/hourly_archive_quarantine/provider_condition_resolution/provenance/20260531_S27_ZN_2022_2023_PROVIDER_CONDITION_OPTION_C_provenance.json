@@ -1,0 +1,27 @@
+{
+  "created_at_utc": "2026-05-31T15:29:27.114561Z",
+  "decision": "Retain the full quarantine archive but set strategy-facing effective window to 2022-01-04 through 2023-12-31.",
+  "degraded_row_policy": "Provider-condition degraded rows remain preserved in quarantine and excluded from the strategy-facing layer.",
+  "exclusion_ledger_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\exclusion_ledger\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_exclusion_ledger.csv",
+  "gate": "S27_ZN_PROVIDER_CONDITION_BLOCKER_RESOLUTION_OPTION_C",
+  "non_authorization": [
+    "NO_PROVIDER_API_ACCESS",
+    "NO_NEW_DATA_DOWNLOAD",
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_FORECASTS",
+    "NO_POSITIONS",
+    "NO_COSTS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "selected_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\strategy_facing_hourly_bars\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_strategy_facing_available_ohlcv_1h.csv",
+  "source_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\sanitized_hourly_bars\\20260531_S27_ZN_2022_2023_OHLCV_1H_ARCHIVE_sanitized_quarantine_ohlcv_1h.csv",
+  "source_status": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\status\\20260531_S27_ZN_2022_2023_OHLCV_1H_ARCHIVE_quarantine_intake_status.json",
+  "status_json": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\status\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_status.json"
+}

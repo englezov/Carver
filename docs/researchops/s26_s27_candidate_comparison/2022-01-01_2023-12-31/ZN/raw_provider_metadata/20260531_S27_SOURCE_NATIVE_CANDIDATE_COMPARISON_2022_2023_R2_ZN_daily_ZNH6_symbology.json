@@ -1,0 +1,24 @@
+{
+  "end_date": "2016-05-05",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNH6"
+  ],
+  "result": {
+    "ZNH6": [
+      {
+        "d0": "2014-12-07",
+        "d1": "2016-04-04",
+        "s": "72174"
+      }
+    ]
+  },
+  "start_date": "2014-11-27",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNH6"
+  ]
+}

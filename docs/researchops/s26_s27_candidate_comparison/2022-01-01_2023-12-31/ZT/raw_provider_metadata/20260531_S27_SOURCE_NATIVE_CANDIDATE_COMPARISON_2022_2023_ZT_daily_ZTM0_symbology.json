@@ -1,0 +1,29 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTM0"
+  ],
+  "result": {
+    "ZTM0": [
+      {
+        "d0": "2010-12-31",
+        "d1": "2012-06-24",
+        "s": "108096"
+      },
+      {
+        "d0": "2019-09-16",
+        "d1": "2020-07-28",
+        "s": "246386"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTM0"
+  ]
+}

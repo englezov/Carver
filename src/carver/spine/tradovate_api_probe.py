@@ -8,7 +8,10 @@ from pathlib import Path
 import sys
 from typing import Any, Callable
 
-from websockets.sync.client import connect
+try:
+    from websockets.sync.client import connect
+except ModuleNotFoundError:  # pragma: no cover - exercised when optional dependency is absent
+    connect = None
 
 from .m0 import CarverBlocked
 from .s09_zn_package import S09_ZN_REQUIRED_DAILY_BARS, build_s09_zn_package
@@ -97,6 +100,8 @@ def load_tradovate_credentials(
 
 def run_s09_zn_tradovate_api_probe(config: TradovateProbeConfig) -> TradovateProbeResult:
     config.validate()
+    if connect is None:
+        raise CarverBlocked("Tradovate API probe requires the optional websockets package")
     root = _authorized_quarantine_root(config.quarantine_root)
     root.mkdir(parents=True, exist_ok=True)
     sentinel_path = _claim_single_probe(root)

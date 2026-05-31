@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from carver.spine.m0 import LaneClass, SourceRuleStatus, CarverBlocked  # noqa: E402
-from carver.spine.m1 import TimedValue  # noqa: E402
+from carver.spine.m1 import RoundingPolicy, TimedValue  # noqa: E402
 from carver.spine.m2 import FORECAST_CAP  # noqa: E402
 from carver.spine.s26_s27 import (  # noqa: E402
     S26_EQUILIBRIUM_EWMA_SPAN,
@@ -29,6 +29,16 @@ from carver.spine.s26_s27 import (  # noqa: E402
     S27_TREND_RUNTIME_STATUS,
     S27_VOL_ATTENUATION_RUNTIME_LEDGER_STATUS,
     S27_VOL_ATTENUATION_RUNTIME_STATUS,
+    S27_ZN_BACKTEST_HOURLY_ARCHIVE_OUTPUT_ROOT,
+    S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUIRED_RAW_SYMBOLS,
+    S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUEST_END_UTC,
+    S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUEST_START_UTC,
+    S27_ZN_BACKTEST_HOURLY_ARCHIVE_WINDOW_MANIFEST_STATUS,
+    S27_ZN_BACKTEST_READINESS_GATE_STATUS,
+    S27_ZN_BACKTEST_TARGET_COMPLETED_TRADING_DATE_END,
+    S27_ZN_BACKTEST_TARGET_COMPLETED_TRADING_DATE_START,
+    S27_ZN_DESIRED_POSITION_PLUMBING_STATUS,
+    S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_STATUS,
     S26_ZN_DATABENTO_DATASET,
     S26_ZN_DATABENTO_PROVIDER,
     S26_ZN_DATABENTO_SCHEMA,
@@ -74,10 +84,16 @@ from carver.spine.s26_s27 import (  # noqa: E402
     S27VolAttenuationRuntimeLedgerRequest,
     S27VolAttenuationRuntimeLedgerSourceLocks,
     S27VolAttenuationRuntimeValue,
+    S27ZNDesiredPositionRequest,
+    S27ZNPositionExecutionCostSemanticsLock,
+    S27ZNPrevalidatedBasePosition,
     SyntheticHourlyPrice,
     SyntheticQuantilePoint,
     build_s26_execution_semantics_source_lock,
     build_s26_zn_extended_hourly_forecast_only_coverage_manifest,
+    build_s27_zn_backtest_hourly_archive_window_manifest,
+    build_s27_zn_position_execution_cost_semantics_lock,
+    build_s27_zn_single_instrument_backtest_readiness_gate,
     s26_execution_semantics_source_lock,
     s26_fast_mean_reversion_forecast,
     s26_forecast_only_from_quarantined_zn_hourly_bars,
@@ -86,8 +102,12 @@ from carver.spine.s26_s27 import (  # noqa: E402
     s27_forecast_only_from_s26_forecast_row,
     s27_forecast_series_only_from_s26_forecast_series,
     s27_safer_fast_mean_reversion_forecast,
+    s27_zn_desired_position_from_prevalidated_base,
+    s27_zn_position_execution_cost_semantics_lock,
+    s27_zn_single_instrument_backtest_readiness_gate,
     s27_trend_overlay_runtime_ledger_from_prevalidated_rows,
     s27_vol_attenuation_runtime_ledger_from_prevalidated_rows,
+    validate_s27_zn_backtest_hourly_archive_window_manifest,
     normalize_s26_zn_databento_hourly_ohlcv_raw_row,
     parse_s26_zn_databento_hourly_ohlcv_csv_text,
     validate_s26_zn_hourly_databento_request_manifest,
@@ -360,6 +380,175 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
 
         with self.assertRaises(CarverBlocked):
             s26_execution_semantics_source_lock(lock, lane_class=LaneClass.CFD_ADAPTER)
+
+    def test_s27_zn_position_execution_cost_semantics_lock_is_readiness_only(self) -> None:
+        lock: S27ZNPositionExecutionCostSemanticsLock = build_s27_zn_position_execution_cost_semantics_lock()
+
+        self.assertEqual(lock.source_lock_status, S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_STATUS)
+        self.assertEqual(lock.sizing_formula_policy, "USE_M1_SIZE_CONTRACTS_BASE_POSITION_THEN_CAPPED_FORECAST_OVER_10")
+        self.assertEqual(lock.target_risk_policy, "ANNUAL_TARGET_RISK_20_PERCENT_BOOK_DEFAULT_LOCK_REQUIRED_AT_TEST_GATE")
+        self.assertEqual(lock.single_instrument_context_policy, "SINGLE_INSTRUMENT_ZN_STANDALONE_DEV_RECON_WEIGHT_1_IDM_1")
+        self.assertEqual(lock.annual_risk_estimate_policy, "PREVALIDATED_S03_ANNUAL_PERCENTAGE_RISK_REQUIRED_NO_LOOKAHEAD")
+        self.assertEqual(lock.multiplier_fx_policy, "ZN_CONTRACT_MULTIPLIER_AND_USD_FX_LOCK_REQUIRED_BEFORE_POSITION_OUTPUT")
+        self.assertEqual(lock.forecast_to_position_policy, "FINAL_CAPPED_FORECAST_DIVIDED_BY_10_MULTIPLIES_BASE_POSITION")
+        self.assertEqual(lock.execution_policy, "HOURLY_COMPLETED_BAR_NEXT_BAR_LIMIT_STYLE_NO_BUFFERING_NO_INTRABAR_LOOKAHEAD")
+        self.assertEqual(
+            lock.cost_model_policy,
+            "COMMISSION_ONLY_DEV_RECON_ALLOWED_SPREAD_AND_MARKET_ORDER_COSTS_UNRESOLVED_FAIL_CLOSED",
+        )
+        self.assertEqual(lock.test_boundary_status, "READINESS_ONLY_NOT_BACKTEST_NOT_DIAGNOSTIC_NOT_POSITION")
+        self.assertEqual(lock.position_outputs, ())
+        self.assertEqual(lock.backtest_outputs, ())
+        self.assertEqual(lock.cost_outputs, ())
+
+    def test_s27_zn_position_execution_cost_semantics_lock_fails_closed_on_drift_or_outputs(self) -> None:
+        lock = build_s27_zn_position_execution_cost_semantics_lock()
+        bad_locks = (
+            replace(lock, sizing_formula_policy="DIRECT_FORECAST_AS_POSITION"),
+            replace(lock, target_risk_policy="TARGET_RISK_TUNED_AFTER_RESULTS"),
+            replace(lock, single_instrument_context_policy="PORTFOLIO_IDM_IMPORTED"),
+            replace(lock, annual_risk_estimate_policy="LOOKAHEAD_RISK_ALLOWED"),
+            replace(lock, multiplier_fx_policy="MULTIPLIER_OPTIONAL"),
+            replace(lock, forecast_to_position_policy="FINAL_FORECAST_DIVIDED_BY_20"),
+            replace(lock, rounding_policy_status="ROUNDING_IMPLICIT"),
+            replace(lock, execution_policy="BUFFERING_ALLOWED"),
+            replace(lock, cost_model_policy="MARKET_ORDER_SPREAD_COST_ASSUMED"),
+            replace(lock, test_boundary_status="BACKTEST_AUTHORIZED"),
+            replace(lock, position_outputs=("position",)),
+            replace(lock, backtest_outputs=("backtest",)),
+            replace(lock, cost_outputs=("cost",)),
+        )
+        for bad_lock in bad_locks:
+            with self.subTest(lock=bad_lock):
+                with self.assertRaises(CarverBlocked):
+                    s27_zn_position_execution_cost_semantics_lock(bad_lock)
+
+        with self.assertRaises(CarverBlocked):
+            s27_zn_position_execution_cost_semantics_lock(lock, lane_class=LaneClass.CFD_ADAPTER)
+
+    def test_s27_zn_backtest_hourly_archive_window_manifest_is_process_only(self) -> None:
+        manifest = build_s27_zn_backtest_hourly_archive_window_manifest()
+
+        validated = validate_s27_zn_backtest_hourly_archive_window_manifest(manifest)
+
+        self.assertIs(validated, manifest)
+        self.assertEqual(validated.status, S27_ZN_BACKTEST_HOURLY_ARCHIVE_WINDOW_MANIFEST_STATUS)
+        self.assertEqual(validated.provider, S26_ZN_DATABENTO_PROVIDER)
+        self.assertEqual(validated.dataset, S26_ZN_DATABENTO_DATASET)
+        self.assertEqual(validated.schema, S26_ZN_DATABENTO_SCHEMA)
+        self.assertEqual(validated.stype_in, "raw_symbol")
+        self.assertEqual(validated.target_completed_trading_date_start, S27_ZN_BACKTEST_TARGET_COMPLETED_TRADING_DATE_START)
+        self.assertEqual(validated.target_completed_trading_date_end, S27_ZN_BACKTEST_TARGET_COMPLETED_TRADING_DATE_END)
+        self.assertEqual(validated.target_completed_trading_date_start, "2022-01-01")
+        self.assertEqual(validated.target_completed_trading_date_end, "2023-12-31")
+        self.assertEqual(validated.request_start_utc, S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUEST_START_UTC)
+        self.assertEqual(validated.request_end_utc, S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUEST_END_UTC)
+        self.assertEqual(validated.request_start_utc.isoformat(), "2021-12-31T00:00:00+00:00")
+        self.assertEqual(validated.request_end_utc.isoformat(), "2024-01-01T00:00:00+00:00")
+        self.assertEqual(validated.required_raw_symbols, S27_ZN_BACKTEST_HOURLY_ARCHIVE_REQUIRED_RAW_SYMBOLS)
+        self.assertEqual(
+            validated.required_raw_symbols,
+            ("ZNH2", "ZNM2", "ZNU2", "ZNZ2", "ZNH3", "ZNM3", "ZNU3", "ZNZ3", "ZNH4"),
+        )
+        self.assertEqual(validated.output_root, S27_ZN_BACKTEST_HOURLY_ARCHIVE_OUTPUT_ROOT)
+        self.assertIn("2022-01-01_2023-12-31", validated.output_root)
+        self.assertIn("NO_PROVIDER_API_ACCESS", validated.no_authorization)
+        self.assertIn("NO_DATA_DOWNLOAD", validated.no_authorization)
+        self.assertIn("NO_BACKTESTS", validated.no_authorization)
+
+        gate_doc = (
+            ROOT
+            / "docs"
+            / "process"
+            / "CARVER_S27_ZN_2022_2023_DEV_RECON_BACKTEST_EXECUTION_GATE_DRAFT_2026-05-31.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("PROCESS_ONLY_EXECUTION_GATE_DRAFT_NOT_AUTHORIZATION", gate_doc)
+        self.assertIn("2022-01-01", gate_doc)
+        self.assertIn("2023-12-31", gate_doc)
+        self.assertIn("ZNH2, ZNM2, ZNU2, ZNZ2, ZNH3, ZNM3, ZNU3, ZNZ3, ZNH4", gate_doc)
+        self.assertIn("continuous_contracts: FORBIDDEN", gate_doc)
+        self.assertIn("NO_ALPHA_CLAIM", gate_doc)
+        self.assertIn("no provider API access", gate_doc)
+
+    def test_s27_zn_backtest_hourly_archive_window_manifest_fails_closed_on_scope_drift(self) -> None:
+        manifest = build_s27_zn_backtest_hourly_archive_window_manifest()
+        bad_manifests = (
+            replace(manifest, provider="NINJATRADER"),
+            replace(manifest, dataset="XNAS.ITCH"),
+            replace(manifest, schema="ohlcv-1d"),
+            replace(manifest, stype_in="continuous"),
+            replace(manifest, row_id="APPENDIX_C_174_006"),
+            replace(manifest, author_market_code="MES"),
+            replace(manifest, target_completed_trading_date_start="2024-01-01"),
+            replace(manifest, required_raw_symbols=("ZN.c.0",)),
+            replace(manifest, local_continuous_policy="PROVIDER_CONTINUOUS_ALLOWED"),
+            replace(manifest, provider_condition_policy="DROP_MISSING_ROWS"),
+            replace(manifest, no_authorization=("NO_PROVIDER_API_ACCESS",)),
+        )
+        for bad_manifest in bad_manifests:
+            with self.subTest(manifest=bad_manifest):
+                with self.assertRaises(CarverBlocked):
+                    validate_s27_zn_backtest_hourly_archive_window_manifest(bad_manifest)
+
+    def test_s27_zn_single_instrument_backtest_readiness_gate_opens_path_without_running_backtest(self) -> None:
+        semantics = build_s27_zn_position_execution_cost_semantics_lock()
+        manifest = build_s27_zn_backtest_hourly_archive_window_manifest()
+        gate = build_s27_zn_single_instrument_backtest_readiness_gate()
+
+        validated = s27_zn_single_instrument_backtest_readiness_gate(
+            gate,
+            semantics_lock=semantics,
+            archive_manifest=manifest,
+        )
+
+        self.assertIs(validated, gate)
+        self.assertEqual(validated.status, S27_ZN_BACKTEST_READINESS_GATE_STATUS)
+        self.assertEqual(validated.row_id, S26_ZN_WORKED_EXAMPLE_ROW_ID)
+        self.assertEqual(validated.author_market_code, S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE)
+        self.assertEqual(validated.forecast_series_status, S27_FORECAST_SERIES_STATUS)
+        self.assertEqual(validated.first_backtest_scope, "QUARANTINED_DEV_RECON_ZN_ONLY_S27_NO_OOS_NO_LOCKBOX_NO_PROMOTION")
+        self.assertEqual(validated.promotion_boundary_status, "NO_ALPHA_CLAIM_NO_DEPLOYMENT_NO_TRADING")
+        self.assertEqual(validated.backtest_outputs, ())
+        self.assertEqual(validated.position_outputs, ())
+        self.assertEqual(validated.performance_outputs, ())
+
+    def test_s27_zn_single_instrument_backtest_readiness_gate_fails_closed_on_drift(self) -> None:
+        semantics = build_s27_zn_position_execution_cost_semantics_lock()
+        manifest = build_s27_zn_backtest_hourly_archive_window_manifest()
+        gate = build_s27_zn_single_instrument_backtest_readiness_gate()
+        bad_gates = (
+            replace(gate, status="BACKTEST_READY"),
+            replace(gate, strategy_id="S26_FAST_MEAN_REVERSION_ZN"),
+            replace(gate, row_id="APPENDIX_C_174_006"),
+            replace(gate, forecast_series_status="UNLOCKED"),
+            replace(gate, hostile_audit_status="NOT_AUDITED"),
+            replace(gate, position_execution_cost_status="UNLOCKED"),
+            replace(gate, hourly_archive_manifest_status="DATA_AUTHORIZED"),
+            replace(gate, first_backtest_scope="PORTFOLIO_BACKTEST"),
+            replace(gate, promotion_boundary_status="ALPHA_CLAIM_ALLOWED"),
+            replace(gate, performance_outputs=("sharpe",)),
+        )
+        for bad_gate in bad_gates:
+            with self.subTest(gate=bad_gate):
+                with self.assertRaises(CarverBlocked):
+                    s27_zn_single_instrument_backtest_readiness_gate(
+                        bad_gate,
+                        semantics_lock=semantics,
+                        archive_manifest=manifest,
+                    )
+
+        with self.assertRaises(CarverBlocked):
+            s27_zn_single_instrument_backtest_readiness_gate(
+                gate,
+                semantics_lock=replace(semantics, execution_policy="BUFFERING_ALLOWED"),
+                archive_manifest=manifest,
+            )
+        with self.assertRaises(CarverBlocked):
+            s27_zn_single_instrument_backtest_readiness_gate(
+                gate,
+                semantics_lock=semantics,
+                archive_manifest=replace(manifest, required_raw_symbols=("ZN.c.0",)),
+            )
 
     def test_s26_zn_hourly_databento_request_manifest_is_locked_and_process_only(self) -> None:
         manifest = self.load_s26_zn_request_manifest()
@@ -832,6 +1021,112 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
                 )
             )
 
+    def test_s27_zn_desired_position_plumbing_applies_forecast_over_10_to_prevalidated_base(self) -> None:
+        s26_row = self.s26_forecast_row((100.0, 100.0, 100.0, 100.0, 80.0), sigma_percent=0.16)
+        forecast = s27_forecast_only_from_s26_forecast_row(
+            S27QuarantinedHourlyForecastRequest(
+                s26_forecast=s26_row,
+                trend_runtime=self.locked_s27_trend_runtime(s26_row.derived_completed_bar_end_utc, trend_forecast=1.0),
+                vol_runtime=self.locked_s27_vol_runtime(s26_row.derived_completed_bar_end_utc, vol_multiplier=0.75),
+                source_locks=self.locked_s27_real_hourly_source_locks(),
+            )
+        )
+        base_position = self.locked_s27_base_position(forecast.as_of, base_unrounded_contracts=3.25)
+
+        result = s27_zn_desired_position_from_prevalidated_base(
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=base_position,
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=build_s27_zn_position_execution_cost_semantics_lock(),
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            )
+        )
+
+        self.assertEqual(result.position_output_status, S27_ZN_DESIRED_POSITION_PLUMBING_STATUS)
+        self.assertEqual(result.forecast_to_position_divisor, 10.0)
+        self.assertAlmostEqual(result.forecast_multiplier, forecast.capped_forecast / 10.0)
+        self.assertAlmostEqual(result.desired_unrounded_contracts, 3.25 * forecast.capped_forecast / 10.0)
+        self.assertEqual(result.desired_rounded_contracts, round(result.desired_unrounded_contracts))
+        self.assertEqual(result.diagnostics_outputs, ())
+        self.assertEqual(result.backtest_outputs, ())
+        self.assertEqual(result.return_outputs, ())
+        self.assertEqual(result.pnl_outputs, ())
+        self.assertEqual(result.cost_outputs, ())
+
+    def test_s27_zn_desired_position_plumbing_fails_closed_on_unlocked_or_drifted_inputs(self) -> None:
+        s26_row = self.s26_forecast_row((100.0, 100.0, 100.0, 100.0, 80.0), sigma_percent=0.16)
+        forecast = s27_forecast_only_from_s26_forecast_row(
+            S27QuarantinedHourlyForecastRequest(
+                s26_forecast=s26_row,
+                trend_runtime=self.locked_s27_trend_runtime(s26_row.derived_completed_bar_end_utc, trend_forecast=1.0),
+                vol_runtime=self.locked_s27_vol_runtime(s26_row.derived_completed_bar_end_utc, vol_multiplier=0.75),
+                source_locks=self.locked_s27_real_hourly_source_locks(),
+            )
+        )
+        base_position = self.locked_s27_base_position(forecast.as_of, base_unrounded_contracts=3.25)
+        semantics_lock = build_s27_zn_position_execution_cost_semantics_lock()
+        bad_requests = (
+            S27ZNDesiredPositionRequest(
+                forecast=replace(forecast, row_id="APPENDIX_C_174_006"),
+                base_position=base_position,
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=semantics_lock,
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            ),
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=replace(base_position, as_of=forecast.as_of + timedelta(hours=1)),
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=semantics_lock,
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            ),
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=replace(base_position, source_status="UNLOCKED"),
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=semantics_lock,
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            ),
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=base_position,
+                rounding_policy=RoundingPolicy.TRUNCATE,
+                semantics_lock=semantics_lock,
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            ),
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=base_position,
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=replace(semantics_lock, forecast_to_position_policy="FINAL_FORECAST_DIVIDED_BY_20"),
+                position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+            ),
+            S27ZNDesiredPositionRequest(
+                forecast=forecast,
+                base_position=base_position,
+                rounding_policy=RoundingPolicy.NEAREST,
+                semantics_lock=semantics_lock,
+                position_output_authorization_status="REAL_POSITION_OUTPUT_AUTHORIZED",
+            ),
+        )
+        for request in bad_requests:
+            with self.subTest(request=request):
+                with self.assertRaises(CarverBlocked):
+                    s27_zn_desired_position_from_prevalidated_base(request)
+
+        with self.assertRaises(CarverBlocked):
+            s27_zn_desired_position_from_prevalidated_base(
+                S27ZNDesiredPositionRequest(
+                    forecast=forecast,
+                    base_position=base_position,
+                    rounding_policy=RoundingPolicy.NEAREST,
+                    semantics_lock=semantics_lock,
+                    position_output_authorization_status="PREVALIDATED_POSITION_PLUMBING_ONLY",
+                    lane_class=LaneClass.CFD_ADAPTER,
+                )
+            )
+
     def test_s27_real_hourly_series_handoff_consumes_s26_series_and_runtime_rows_only(self) -> None:
         s26_series = self.s26_forecast_series((100.0, 100.0, 100.0, 100.0, 80.0, 81.0), sigma_percent=0.16)
         trend_runtimes = tuple(
@@ -1209,6 +1504,18 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             method_status="LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
             no_lookahead_status="PASS_NO_LOOKAHEAD",
             source_artifact_sha256="C" * 64,
+        )
+
+    def locked_s27_base_position(self, as_of: datetime, *, base_unrounded_contracts: float) -> S27ZNPrevalidatedBasePosition:
+        return S27ZNPrevalidatedBasePosition(
+            row_id=S26_ZN_WORKED_EXAMPLE_ROW_ID,
+            author_market_code=S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE,
+            as_of=as_of,
+            base_unrounded_contracts=base_unrounded_contracts,
+            source_status="PREVALIDATED_M1_BASE_POSITION_LOCKED",
+            capital_risk_status="CAPITAL_TARGET_RISK_ANNUAL_RISK_LOCKED_NO_LOOKAHEAD",
+            multiplier_fx_status="ZN_MULTIPLIER_USD_FX_LOCKED",
+            source_artifact_sha256="E" * 64,
         )
 
     def s26_forecast_row(self, closes: tuple[float, ...], *, sigma_percent: float):

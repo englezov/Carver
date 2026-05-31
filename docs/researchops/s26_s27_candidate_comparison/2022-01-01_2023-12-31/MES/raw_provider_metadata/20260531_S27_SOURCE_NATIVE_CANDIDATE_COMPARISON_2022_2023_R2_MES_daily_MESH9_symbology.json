@@ -1,0 +1,18 @@
+{
+  "end_date": "2019-05-05",
+  "message": "Not found",
+  "not_found": [
+    "MESH9"
+  ],
+  "partial": [],
+  "result": {
+    "MESH9": []
+  },
+  "start_date": "2019-01-01",
+  "status": 2,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "MESH9"
+  ]
+}

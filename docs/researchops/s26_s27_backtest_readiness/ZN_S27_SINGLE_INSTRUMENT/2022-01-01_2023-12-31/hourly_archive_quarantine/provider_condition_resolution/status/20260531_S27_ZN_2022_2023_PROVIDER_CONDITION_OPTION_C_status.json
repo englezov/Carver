@@ -1,0 +1,44 @@
+{
+  "backtests_run": "NO",
+  "costs_run": "NO",
+  "degraded_provider_condition_completed_trading_dates": [
+    "2022-01-03"
+  ],
+  "degraded_provider_condition_rows_excluded": 1,
+  "diagnostics_run": "NO",
+  "effective_strategy_window_end": "2023-12-31",
+  "effective_strategy_window_start": "2022-01-04",
+  "excluded_completed_trading_dates": [
+    "2022-01-03"
+  ],
+  "excluded_rows": 30,
+  "exclusion_ledger_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\exclusion_ledger\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_exclusion_ledger.csv",
+  "exclusion_reason_counts": {
+    "EXCLUDED_BEFORE_EFFECTIVE_STRATEGY_WINDOW": 30
+  },
+  "forecasts_run": "NO",
+  "forward_access": "NO",
+  "gate": "S27_ZN_PROVIDER_CONDITION_BLOCKER_RESOLUTION_OPTION_C",
+  "lockbox_access": "NO",
+  "new_data_download": "NO",
+  "next_required_gate": "S27_ZN_2022_2023_DEV_RECON_BACKTEST_EXECUTION_GATE_RETARGETED_EFFECTIVE_WINDOW",
+  "oos_access": "NO",
+  "policy": "OPTION_C_REDUCE_BACKTEST_START_AFTER_PROVIDER_CONDITION_BLOCKER",
+  "positions_run": "NO",
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "selected_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\strategy_facing_hourly_bars\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_strategy_facing_available_ohlcv_1h.csv",
+  "source_archive_window_end": "2023-12-31",
+  "source_archive_window_start": "2022-01-01",
+  "source_provider_condition_status_counts": {
+    "PROVIDER_CONDITION_AVAILABLE": 20899,
+    "PROVIDER_CONDITION_DEGRADED": 1
+  },
+  "source_quarantine_rows": 20900,
+  "status": "PASS_OPTION_C_EFFECTIVE_WINDOW_PROVIDER_CONDITION_AVAILABLE_NOT_BACKTEST_AUTHORIZATION",
+  "strategy_facing_provider_condition_status_counts": {
+    "PROVIDER_CONDITION_AVAILABLE": 20870
+  },
+  "strategy_facing_rows": 20870,
+  "zero_silent_row_skip": "PASS_EXCLUSIONS_EXPLICITLY_LEDGERED"
+}

@@ -157,6 +157,27 @@ S27 forecast-series-only execution: PASS_NOT_TEST
 S27 strategy test: NOT_OPEN
 ```
 
+S27 ZN backtest-readiness chapter status:
+
+```text
+completed forecast machinery hostile audit: PASS_LOCAL_HOSTILE_AUDIT_NO_BLOCKING_FINDINGS
+S27 ZN position/execution/cost semantics lock: PASS_NOT_BACKTEST
+S27 ZN longer hourly archive window manifest: PROCESS_ONLY_NOT_DATA_AUTHORIZATION
+S27 ZN quarantined Development/Reconciliation backtest path prep: PROCESS_ONLY_NOT_BACKTEST_AUTHORIZATION
+readiness local hostile audit: PASS_S27_ZN_BACKTEST_READINESS_PATH_NOT_BACKTEST
+```
+
+Readiness artifacts:
+
+```text
+docs/process/CARVER_S26_S27_COMPLETED_FORECAST_MACHINERY_LOCAL_HOSTILE_AUDIT_2026-05-31.md
+docs/process/CARVER_S27_ZN_SINGLE_INSTRUMENT_BACKTEST_READINESS_GATE_DRAFT_2026-05-31.md
+docs/process/CARVER_S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_2026-05-31.md
+docs/process/CARVER_S27_ZN_LONGER_HOURLY_DATABENTO_ARCHIVE_WINDOW_MANIFEST_2026-05-31.md
+docs/process/CARVER_S27_ZN_QUARANTINED_DEV_BACKTEST_PATH_PREP_2026-05-31.md
+docs/process/CARVER_S27_ZN_BACKTEST_READINESS_LOCAL_LEAN_HOSTILE_AUDIT_2026-05-31.md
+```
+
 S27 EWMAC16 source-gate artifacts:
 
 ```text
@@ -203,10 +224,10 @@ Databento definition metadata locked ZNH6/ZNM6/ZNU6 activation, expiration, matu
 ## Current Next Best Gate
 
 ```text
-S27_FIRST_STRATEGY_TEST_GATE_LATER
+S27_ZN_LONGER_HOURLY_ARCHIVE_AND_DEV_RECON_BACKTEST_EXECUTION_GATE_LATER
 ```
 
-The S26 extended forecast-series-only bridge exists. The S27 EWMAC16 source dependency is satisfied at Development/Reconciliation runtime-ledger-only scope. The S27 scalar has been corrected to use the Chapter 27 scalar around 20. The S27 V/Q/M runtime ledger has been emitted from a Databento ZN dated-contract ten-year daily risk-history path, and the S27 ZN forecast-series-only artifact now exists. The next aligned move is not more forecast machinery; it is a separately authorized S27 strategy test gate.
+The S26 extended forecast-series-only bridge exists. The S27 EWMAC16 source dependency is satisfied at Development/Reconciliation runtime-ledger-only scope. The S27 scalar has been corrected to use the Chapter 27 scalar around 20. The S27 V/Q/M runtime ledger has been emitted from a Databento ZN dated-contract ten-year daily risk-history path, and the S27 ZN forecast-series-only artifact now exists. The S27 ZN strategy-test/readiness path is now documented, with position/execution/cost semantics and the longer hourly archive manifest locked as process/readiness artifacts. The next aligned move is a separately authorized S27 ZN archive/backtest execution gate.
 
 ## Non-Authorization
 

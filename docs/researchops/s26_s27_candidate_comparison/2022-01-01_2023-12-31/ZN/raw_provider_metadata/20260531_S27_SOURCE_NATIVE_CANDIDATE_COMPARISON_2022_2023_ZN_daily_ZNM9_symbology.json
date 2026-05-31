@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNM9"
+  ],
+  "result": {
+    "ZNM9": [
+      {
+        "d0": "2018-09-05",
+        "d1": "2019-07-03",
+        "s": "126136"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNM9"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "candidate": {
+    "asset_group": "bond",
+    "book_label": "10-year US",
+    "daily_history_start": "2011-01-01",
+    "etf_fee_per_side": 1.51,
+    "multiplier": 1000.0,
+    "root": "ZN",
+    "row_id": "APPENDIX_C_172_004"
+  },
+  "created_at_utc": "2026-05-31T16:48:56.797839Z",
+  "gate": "S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_DEV_RECON",
+  "non_authorization": [
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "secret_handling": "Databento API key read locally and never written to artifacts.",
+  "status": {
+    "asset_group": "bond",
+    "book_label": "10-year US",
+    "candidate_status": "FAIL_CLOSED_S27_CANDIDATE_COMPARISON_NOT_EXECUTABLE",
+    "daily_contracts_with_rows": 29,
+    "deployment": "NO",
+    "diagnostics_run": "NO_SHARPE_NO_DRAWDOWN_NO_ALPHA_STATISTICS",
+    "effective_backtest_end": "",
+    "effective_backtest_start": "",
+    "estimated_etf_fees_usd": "",
+    "fail_closed_message": "insufficient daily sigma rows for ten-year V/Q/M: 1880",
+    "fail_closed_reason": "RuntimeError",
+    "forward_access": "NO",
+    "gate": "S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_DEV_RECON",
+    "git_operations": "NO",
+    "gross_pnl_usd": "",
+    "hourly_source_rows": 20899,
+    "lockbox_access": "NO",
+    "net_after_etf_fees_usd": "",
+    "oos_access": "NO",
+    "promotion": "NO",
+    "provider_error_count": 24,
+    "provider_errors_preserved": "YES",
+    "real_m1_position_sizing_status": "BLOCKED_NO_EXECUTABLE_DEV_RECON_COMPARISON_ROWS",
+    "requested_window_end": "2023-12-31",
+    "requested_window_start": "2022-01-01",
+    "root": "ZN",
+    "row_id": "APPENDIX_C_172_004",
+    "trading": "NO"
+  }
+}

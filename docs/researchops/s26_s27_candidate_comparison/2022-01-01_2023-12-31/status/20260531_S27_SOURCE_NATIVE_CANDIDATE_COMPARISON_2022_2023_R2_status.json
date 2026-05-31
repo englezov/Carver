@@ -1,0 +1,25 @@
+{
+  "bond_candidates_passed": [
+    "ZT",
+    "ZF",
+    "ZN"
+  ],
+  "candidate_count": 5,
+  "deployment": "NO",
+  "fail_closed_count": 2,
+  "forward_access": "NO",
+  "gate": "S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_DEV_RECON",
+  "git_operations": "NO",
+  "index_candidates_passed": [],
+  "lockbox_access": "NO",
+  "oos_access": "NO",
+  "pass_count": 3,
+  "promotion": "NO",
+  "provider_api_access": "YES_IN_CANDIDATE_EXECUTION_ARTIFACTS_NO_DURING_COMBINE_ONLY_CONSOLIDATION",
+  "requested_window_end": "2023-12-31",
+  "requested_window_start": "2022-01-01",
+  "selection_policy": "NO_TUNING_NO_PROMOTION_SUMMARY_FOR_RESEARCH_DECISION_ONLY",
+  "status": "PASS_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_DEV_RECON_ARTIFACTS_CREATED_NOT_ALPHA",
+  "summary_csv": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\summary\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_summary.csv",
+  "trading": "NO"
+}

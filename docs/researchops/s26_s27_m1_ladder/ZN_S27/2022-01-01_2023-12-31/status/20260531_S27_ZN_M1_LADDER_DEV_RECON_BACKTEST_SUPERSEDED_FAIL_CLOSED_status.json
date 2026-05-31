@@ -1,0 +1,30 @@
+{
+  "gate": "S27_ZN_M1_STYLE_SIZING_LADDER_DEV_RECON_BACKTEST",
+  "status": "SUPERSEDED_FAIL_CLOSED_STALE_DAILY_RUNTIME_DEPENDENCY",
+  "supersedes_status_file": "docs/researchops/s26_s27_m1_ladder/ZN_S27/2022-01-01_2023-12-31/status/20260531_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_status.json",
+  "supersession_reason": "S27 forecast rows feeding the ladder used source_vqm_completed_trading_date=2020-12-21 for all 2022-2023 hourly rows, creating a 378-day stale runtime lag on the first 2022 row.",
+  "first_observed_fail_closed_row": {
+    "completed_trading_date": "2022-01-03",
+    "derived_completed_bar_end_utc": "2022-01-03T05:00:00Z",
+    "source_vqm_completed_trading_date": "2020-12-21",
+    "runtime_lag_days": 378
+  },
+  "runtime_lag_guard": {
+    "max_allowed_calendar_days": 10,
+    "patched_scripts": [
+      "tools/databento/carver_s27_candidate_comparison_2022_2023.py",
+      "tools/databento/carver_s27_zn_2022_2023_retargeted_dev_recon_backtest.py",
+      "tools/databento/carver_s27_zn_m1_ladder_dev_recon_backtest.py"
+    ]
+  },
+  "prior_numeric_result_disposition": "PRESERVED_AS_REJECTED_DIAGNOSTIC_TRAIL_ONLY_NOT_ACCEPTED_BACKTEST_EVIDENCE",
+  "provider_api_access": "NO",
+  "new_data_download": "NO",
+  "oos_access": "NO",
+  "lockbox_access": "NO",
+  "forward_access": "NO",
+  "deployment": "NO",
+  "trading": "NO",
+  "promotion": "NO",
+  "git_operations": "NO"
+}

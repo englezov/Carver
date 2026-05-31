@@ -1,0 +1,29 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTZ6"
+  ],
+  "result": {
+    "ZTZ6": [
+      {
+        "d0": "2015-09-16",
+        "d1": "2015-10-11",
+        "s": "283879"
+      },
+      {
+        "d0": "2016-03-17",
+        "d1": "2017-01-27",
+        "s": "740072"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTZ6"
+  ]
+}

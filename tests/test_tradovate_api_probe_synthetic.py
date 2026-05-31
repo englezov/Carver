@@ -27,7 +27,9 @@ from carver.spine.tradovate_api_probe import (  # noqa: E402
     _send_ws_request,
     build_s09_zn_tradovate_probe_config,
     load_tradovate_credentials,
+    run_s09_zn_tradovate_api_probe,
 )
+import carver.spine.tradovate_api_probe as tradovate_probe  # noqa: E402
 from carver.spine.web_chart_api import ChartBarType, normalize_bound_web_chart_response  # noqa: E402
 
 
@@ -60,6 +62,13 @@ class TradovateApiProbeSyntheticTests(unittest.TestCase):
             build_s09_zn_tradovate_probe_config(bad_credentials)
         with self.assertRaises(CarverBlocked):
             build_s09_zn_tradovate_probe_config(self.credentials(), Path("tmp/not-the-quarantine"))
+
+    def test_probe_execution_fails_closed_when_optional_websocket_client_is_missing(self) -> None:
+        if tradovate_probe.connect is not None:
+            self.skipTest("optional websockets package is installed")
+        config = build_s09_zn_tradovate_probe_config(self.credentials())
+        with self.assertRaises(CarverBlocked):
+            run_s09_zn_tradovate_api_probe(config)
 
     def test_only_authorized_tradovate_probe_endpoints_can_be_framed(self) -> None:
         sent: list[str] = []

@@ -1,0 +1,24 @@
+{
+  "end_date": "2017-05-05",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTH7"
+  ],
+  "result": {
+    "ZTH7": [
+      {
+        "d0": "2016-06-16",
+        "d1": "2017-05-05",
+        "s": "596182"
+      }
+    ]
+  },
+  "start_date": "2015-11-27",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTH7"
+  ]
+}

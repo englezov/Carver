@@ -1,0 +1,74 @@
+{
+  "active_run_candidates": [
+    "MNQ"
+  ],
+  "candidates": [
+    {
+      "asset_group": "bond",
+      "book_label": "2-year US",
+      "daily_history_start": "2011-01-01",
+      "etf_fee_per_side": 1.36,
+      "multiplier": 2000.0,
+      "root": "ZT",
+      "row_id": "APPENDIX_C_172_001"
+    },
+    {
+      "asset_group": "bond",
+      "book_label": "5-year US",
+      "daily_history_start": "2011-01-01",
+      "etf_fee_per_side": 1.41,
+      "multiplier": 1000.0,
+      "root": "ZF",
+      "row_id": "APPENDIX_C_172_003"
+    },
+    {
+      "asset_group": "bond",
+      "book_label": "10-year US",
+      "daily_history_start": "2011-01-01",
+      "etf_fee_per_side": 1.51,
+      "multiplier": 1000.0,
+      "root": "ZN",
+      "row_id": "APPENDIX_C_172_004"
+    },
+    {
+      "asset_group": "index",
+      "book_label": "S&P 500 (micro)",
+      "daily_history_start": "2019-01-01",
+      "etf_fee_per_side": 0.56,
+      "multiplier": 5.0,
+      "root": "MES",
+      "row_id": "APPENDIX_C_174_006"
+    },
+    {
+      "asset_group": "index",
+      "book_label": "Nasdaq (micro)",
+      "daily_history_start": "2019-01-01",
+      "etf_fee_per_side": 0.51,
+      "multiplier": 2.0,
+      "root": "MNQ",
+      "row_id": "APPENDIX_C_174_002"
+    }
+  ],
+  "comparison_policy": [
+    "SAME_S27_MACHINERY",
+    "SAME_2022_2023_DEV_RECON_WINDOW",
+    "SAME_UNIT_BASE_POSITION_PLUMBING",
+    "SAME_ETF_PER_SIDE_COMMISSION_ONLY_COST_MODEL",
+    "NO_TUNING_AFTER_RESULTS",
+    "NO_OOS_LOCKBOX_FORWARD",
+    "NO_PROMOTION"
+  ],
+  "daily_request_end_exclusive": "2024-01-01",
+  "daily_schema": "ohlcv-1d",
+  "dataset": "GLBX.MDP3",
+  "gate": "S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_DEV_RECON",
+  "hourly_request_end_utc": "2024-01-01T00:00:00Z",
+  "hourly_request_start_utc": "2021-12-31T00:00:00Z",
+  "hourly_schema": "ohlcv-1h",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "provider": "DATABENTO_HISTORICAL",
+  "requested_completed_trading_date_end": "2023-12-31",
+  "requested_completed_trading_date_start": "2022-01-01",
+  "run_id": "20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2",
+  "stype_in": "raw_symbol"
+}

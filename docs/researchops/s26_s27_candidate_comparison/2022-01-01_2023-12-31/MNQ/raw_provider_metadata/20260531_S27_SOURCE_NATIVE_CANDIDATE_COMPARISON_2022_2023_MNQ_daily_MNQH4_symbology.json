@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "MNQH4"
+  ],
+  "result": {
+    "MNQH4": [
+      {
+        "d0": "2022-12-04",
+        "d1": "2024-01-01",
+        "s": "7101"
+      }
+    ]
+  },
+  "start_date": "2019-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "MNQH4"
+  ]
+}

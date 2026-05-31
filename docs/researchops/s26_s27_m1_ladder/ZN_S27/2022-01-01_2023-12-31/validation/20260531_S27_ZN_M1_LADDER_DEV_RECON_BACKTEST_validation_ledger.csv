@@ -1,0 +1,11 @@
+check_name,check_status,observed_count
+source_forecast_rows_nonempty,PASS,11771
+source_hourly_rows_nonempty,PASS,11775
+forecast_timestamps_subset_of_hourly_lineage,PASS,11771
+source_daily_runtime_lag_within_policy,PASS,11771
+ladder_rows_match_forecast_rows,PASS,11771
+position_rows_match_ladder_rows,PASS,11771
+backtest_rows_nonempty,PASS,11770
+uses_existing_local_artifacts_only,PASS,0
+no_oos_lockbox_forward,PASS,0
+no_alpha_statistics,PASS,0

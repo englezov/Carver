@@ -1,0 +1,9 @@
+{
+  "commission_status": "BLOCKED_UNRESOLVED",
+  "cost_status": "FAIL_CLOSED_NO_COMMISSION_OR_SPREAD_COST_LOCK_NO_COSTS_APPLIED",
+  "dev_recon_backtest_cost_policy": "GROSS_NO_COST_PLUMBING_ONLY",
+  "execution_semantics": "S26_S27_LIMIT_STYLE_NO_BUFFERING_SOURCE_NOTE_PRESERVED",
+  "gate": "RETARGETED_S27_ZN_2022_2023_DEV_RECON_BACKTEST_EXECUTION",
+  "production_cost_status": "BLOCKED",
+  "spread_cost_status": "BLOCKED_UNRESOLVED"
+}

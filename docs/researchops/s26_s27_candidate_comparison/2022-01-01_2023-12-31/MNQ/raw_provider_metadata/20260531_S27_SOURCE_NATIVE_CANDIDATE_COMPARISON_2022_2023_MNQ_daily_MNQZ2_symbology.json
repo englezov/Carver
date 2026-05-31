@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "MNQZ2"
+  ],
+  "result": {
+    "MNQZ2": [
+      {
+        "d0": "2021-09-05",
+        "d1": "2022-12-25",
+        "s": "20332"
+      }
+    ]
+  },
+  "start_date": "2019-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "MNQZ2"
+  ]
+}
