@@ -4,7 +4,7 @@ Mode: automatic local lean hostile audit over generated ES source-native signal 
 
 CRITICAL: None for declared Development/Reconciliation scope.
 
-HIGH: None. ES is labelled as the base-futures signal authority, not a silent replacement for MES. MES remains the micro futures execution variant. ICMarkets CFD adapter remains fail-closed.
+HIGH: None. ES is labelled as the base-futures signal authority, not a silent replacement for MES. MES remains the micro futures execution variant. Any CFD adapter remains outside this source-native futures artifact and requires a separate explicit gate.
 
 MEDIUM: NQ to MNQ is not included in this ES-first result. The interrupted NQ attempt must remain outside interpretation until a separate bounded result exists.
 

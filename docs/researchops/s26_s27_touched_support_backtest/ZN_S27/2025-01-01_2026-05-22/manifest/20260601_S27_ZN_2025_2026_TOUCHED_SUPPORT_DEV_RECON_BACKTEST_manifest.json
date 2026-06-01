@@ -1,0 +1,78 @@
+{
+  "book_label": "10-year US",
+  "capital_usd": 100000.0,
+  "daily_runtime_source": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\local_extended_daily_runtime\\runtime_rows\\20260531_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_daily_runtime_rows.csv",
+  "dataset": "GLBX.MDP3",
+  "gate": "S27_ZN_2025_2026_TOUCHED_SUPPORT_DEVELOPMENT_RECONCILIATION_BACKTEST",
+  "hourly_contracts": [
+    {
+      "contract_year": 2025,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH5"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM5"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU5"
+    },
+    {
+      "contract_year": 2025,
+      "delivery_code": "Z",
+      "delivery_month": 12,
+      "raw_symbol": "ZNZ5"
+    },
+    {
+      "contract_year": 2026,
+      "delivery_code": "H",
+      "delivery_month": 3,
+      "raw_symbol": "ZNH6"
+    },
+    {
+      "contract_year": 2026,
+      "delivery_code": "M",
+      "delivery_month": 6,
+      "raw_symbol": "ZNM6"
+    },
+    {
+      "contract_year": 2026,
+      "delivery_code": "U",
+      "delivery_month": 9,
+      "raw_symbol": "ZNU6"
+    }
+  ],
+  "hourly_request_end_utc": "2026-05-23T00:00:00Z",
+  "hourly_request_start_utc": "2024-12-31T00:00:00Z",
+  "hourly_schema": "ohlcv-1h",
+  "idm": 1.0,
+  "instrument_weight": 1.0,
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "non_authorization": [
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_TUNING",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "recorded_fee_per_side_usd": 1.51,
+  "requested_window_end": "2026-05-22",
+  "requested_window_start": "2025-01-01",
+  "root": "ZN",
+  "row_id": "APPENDIX_C_172_004",
+  "run_id": "20260601_S27_ZN_2025_2026_TOUCHED_SUPPORT_DEV_RECON_BACKTEST",
+  "stage": "TOUCHED_SUPPORT_DEVELOPMENT_RECONCILIATION",
+  "stype_in": "raw_symbol",
+  "support_touch_status": "DAILY_RUNTIME_SUPPORT_ALREADY_TOUCHED_THROUGH_2026-05-22_NOT_PRISTINE_LOCKBOX",
+  "target_risk": 0.2,
+  "zn_multiplier": 1000.0
+}

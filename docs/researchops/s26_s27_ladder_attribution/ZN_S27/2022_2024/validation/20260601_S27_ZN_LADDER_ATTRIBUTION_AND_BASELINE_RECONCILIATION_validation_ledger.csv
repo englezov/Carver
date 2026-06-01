@@ -1,0 +1,9 @@
+check_name,check_status,observed_count
+same_input_rows_nonempty,PASS,17688
+both_windows_present,PASS,2
+three_summary_rows_per_window,PASS,6
+ladder_existing_backtest_recomputed_exactly,PASS,2
+2024_classification_decided,PASS,1
+lockbox_not_opened,PASS,0
+no_provider_api_or_new_data,PASS,0
+no_promotion,PASS,0

@@ -3,7 +3,7 @@
     "SAME_S27_MACHINERY_AS_ZN_DEV_RECON",
     "BASE_FUTURES_SIGNAL_AUTHORITY_WHEN_MICRO_HISTORY_IS_INSUFFICIENT",
     "MICRO_FUTURES_EXECUTION_VARIANT_USES_MICRO_HOURLY_BARS",
-    "CFD_ADAPTER_FAIL_CLOSED_PENDING_ICMARKETS_STATIC_SPEC_AND_DATA_GATE",
+    "CFD_ADAPTER_REQUIRES_SEPARATE_EXPLICIT_GATE_NOT_OPENED",
     "NO_TUNING_AFTER_RESULTS",
     "NO_OOS_LOCKBOX_FORWARD",
     "NO_PROMOTION"
@@ -16,10 +16,10 @@
   "hourly_request_end_utc": "2024-01-01T00:00:00Z",
   "hourly_request_start_utc": "2021-12-31T00:00:00Z",
   "hourly_schema": "ohlcv-1h",
-  "lane_class": "SOURCE_NATIVE_FUTURES_WITH_CFD_ADAPTER_PLACEHOLDER_FAIL_CLOSED",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
   "pairs": [
     {
-      "cfd_adapter_status": "ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+      "external_adapter_gate_status": "CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
       "execution_root": "MES",
       "execution_row_id": "APPENDIX_C_174_006",
       "pair_id": "ES_SIGNAL_TO_MES_EXECUTION",
@@ -28,7 +28,7 @@
       "source_family_lock_status": "LOCKED_CME_S_AND_P_500_INDEX_FUTURES_FAMILY_BASE_SIGNAL_TO_MICRO_EXECUTION_VARIANT_DEV_RECON_ONLY"
     },
     {
-      "cfd_adapter_status": "ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+      "external_adapter_gate_status": "CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
       "execution_root": "MNQ",
       "execution_row_id": "APPENDIX_C_174_002",
       "pair_id": "NQ_SIGNAL_TO_MNQ_EXECUTION",

@@ -9,11 +9,11 @@
     "NO_TRADING",
     "NO_PROMOTION",
     "NO_GIT_OPERATIONS",
-    "NO_ICMARKETS_CFD_DATA_ACCESS",
+    "NO_CFD_BROKER_DATA_ACCESS",
     "NO_CFD_ADAPTER_EXECUTION"
   ],
   "pair": {
-    "cfd_adapter_status": "ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+    "external_adapter_gate_status": "CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
     "execution": {
       "asset_group": "index_micro_execution",
       "book_label": "S&P 500 (micro) execution variant",
@@ -39,7 +39,7 @@
   "status": {
     "backtest_rows": 11775,
     "blocked_signal_dependency_rows": 4,
-    "cfd_adapter_status": "ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+    "external_adapter_gate_status": "CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
     "deployment": "NO",
     "diagnostics_run": "NO_SHARPE_NO_DRAWDOWN_NO_ALPHA_STATISTICS",
     "effective_backtest_end": "2023-12-29",

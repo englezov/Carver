@@ -1,0 +1,83 @@
+{
+  "candidate_lockbox_window": "NO_COMPLETED_UNTOUCHED_LOCKBOX_WINDOW_AVAILABLE_EARLIEST_STRICT_CANDIDATE_AFTER_2026-05-22",
+  "cost_readiness_status": "FAIL_CLOSED_FUTURES_REALISTIC_COST_READINESS_NOT_EXECUTED",
+  "created_at_utc": "2026-06-01T05:24:53.941291Z",
+  "data_access": "NO",
+  "decision": "DO_NOT_OPEN_LOCKBOX_EXECUTION_GATE_YET",
+  "deployment_trading_promotion": "NO",
+  "diagnostics_or_backtest_run": "NO",
+  "failing_cost_components": [
+    "exchange_fee",
+    "clearing_nfa_regulatory_fee",
+    "broker_commission",
+    "zn_tick_value_and_multiplier",
+    "spread_slippage_grid",
+    "limit_order_fill_model",
+    "routing_and_margin_funding",
+    "breakeven_cost_per_side",
+    "unit_and_m1_ladder_cost_sensitivity"
+  ],
+  "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+  "git_operations": "NO",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "lockbox_blocker": "FUTURES_REALISTIC_COST_READINESS_FAIL_CLOSED",
+  "lockbox_execution_gate_may_open": "NO",
+  "market_row_parsing": "NO",
+  "missing_freeze_artifacts": [],
+  "oos_lockbox_forward_access": "NO",
+  "predeclared_rule_count": 10,
+  "provider_api_access": "NO",
+  "run_id": "20260601_S27_ZN_LOCKBOX_READINESS_DECISION",
+  "touched_windows_excluded": [
+    "2022_2023_INITIAL_DEV_RECON",
+    "2024_VALIDATION_STYLE",
+    "2011_2026_DAILY_SIGNAL_RUNTIME_SUPPORT_HISTORY_THROUGH_2026-05-22"
+  ],
+  "variant_freeze_status": "PASS_FREEZE_COMPLETE",
+  "window_rows": [
+    {
+      "data_access_authorized": "NO",
+      "date_end": "2023-12-31",
+      "date_start": "2022-01-01",
+      "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+      "lane": "SOURCE_NATIVE_FUTURES",
+      "lockbox_eligible": "NO",
+      "notes": "Already touched by current S27 ZN development/reconciliation evidence stack.",
+      "window_label": "2022_2023_INITIAL_DEV_RECON",
+      "window_status": "TOUCHED_INITIAL_DEVELOPMENT_RECONCILIATION_NOT_LOCKBOX"
+    },
+    {
+      "data_access_authorized": "NO",
+      "date_end": "2024-12-31",
+      "date_start": "2024-01-01",
+      "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+      "lane": "SOURCE_NATIVE_FUTURES",
+      "lockbox_eligible": "NO",
+      "notes": "Already touched by current S27 ZN development/reconciliation evidence stack.",
+      "window_label": "2024_VALIDATION_STYLE",
+      "window_status": "TOUCHED_INFORMATIONAL_VALIDATION_STYLE_NOT_LOCKBOX"
+    },
+    {
+      "data_access_authorized": "NO",
+      "date_end": "2026-05-22",
+      "date_start": "2011-01-02",
+      "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+      "lane": "SOURCE_NATIVE_FUTURES",
+      "lockbox_eligible": "NO",
+      "notes": "Selected S27 ZN artifact scan found 5692 pre-existing '2025-' string matches; daily signal/runtime support history reaches this boundary.",
+      "window_label": "2011_2026_DAILY_SIGNAL_RUNTIME_SUPPORT_HISTORY",
+      "window_status": "TOUCHED_DAILY_SIGNAL_RUNTIME_SUPPORT_HISTORY_NOT_LOCKBOX_ELIGIBLE"
+    },
+    {
+      "data_access_authorized": "NO",
+      "date_end": "2026-12-31",
+      "date_start": "2026-05-23",
+      "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+      "lane": "SOURCE_NATIVE_FUTURES",
+      "lockbox_eligible": "CONDITIONALLY_YES_AFTER_COMPLETION_COST_READINESS_AND_SEPARATE_AUTHORIZATION",
+      "notes": "Earliest strict candidate after the current daily signal/runtime touch boundary; incomplete as of this gate and not executable now.",
+      "window_label": "2026_POST_TOUCH_FORWARD_LOCKBOX_ACCUMULATION_CANDIDATE",
+      "window_status": "FUTURE_INCOMPLETE_CANDIDATE_UNTOUCHED_NOT_AVAILABLE_FOR_EXECUTION"
+    }
+  ]
+}

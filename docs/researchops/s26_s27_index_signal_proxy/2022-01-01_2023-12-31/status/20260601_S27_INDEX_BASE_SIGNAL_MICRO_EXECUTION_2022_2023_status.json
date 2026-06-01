@@ -1,5 +1,5 @@
 {
-  "cfd_adapter_policy": "ICMARKETS_CFD_ADAPTER_FAIL_CLOSED_UNTIL_STATIC_SPEC_AND_CFD_DATA_GATE",
+  "external_adapter_policy": "CFD_ADAPTER_REQUIRES_SEPARATE_EXPLICIT_GATE_NOT_OPENED",
   "deployment": "NO",
   "fail_closed_count": 0,
   "forward_access": "NO",

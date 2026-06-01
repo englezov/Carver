@@ -48,7 +48,7 @@ class SignalExecutionPair:
     signal: base.Candidate
     execution: base.Candidate
     source_family_lock_status: str
-    cfd_adapter_status: str
+    external_adapter_gate_status: str
 
 
 PAIRS = (
@@ -72,7 +72,7 @@ PAIRS = (
             date(2019, 1, 1),
         ),
         source_family_lock_status="LOCKED_CME_S_AND_P_500_INDEX_FUTURES_FAMILY_BASE_SIGNAL_TO_MICRO_EXECUTION_VARIANT_DEV_RECON_ONLY",
-        cfd_adapter_status="ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+        external_adapter_gate_status="CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
     ),
     SignalExecutionPair(
         pair_id="NQ_SIGNAL_TO_MNQ_EXECUTION",
@@ -94,7 +94,7 @@ PAIRS = (
             date(2019, 1, 1),
         ),
         source_family_lock_status="LOCKED_CME_NASDAQ_100_INDEX_FUTURES_FAMILY_BASE_SIGNAL_TO_MICRO_EXECUTION_VARIANT_DEV_RECON_ONLY",
-        cfd_adapter_status="ICMARKETS_CFD_ADAPTER_BLOCKED_STATIC_SPEC_AND_CFD_DATA_GATE_REQUIRED",
+        external_adapter_gate_status="CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
     ),
 )
 
@@ -405,7 +405,7 @@ def _build_micro_execution_positions(pair: SignalExecutionPair, s27_rows: list[d
         row["execution_row_id"] = pair.execution.row_id
         row["source_family_lock_status"] = pair.source_family_lock_status
         row["execution_variant_status"] = "MICRO_FUTURES_EXECUTION_VARIANT_DEV_RECON_ONLY"
-        row["cfd_adapter_status"] = pair.cfd_adapter_status
+        row["external_adapter_gate_status"] = pair.external_adapter_gate_status
     return rows
 
 
@@ -417,7 +417,7 @@ def _enrich_backtest_row(pair: SignalExecutionPair, row: dict[str, Any]) -> dict
     enriched["execution_row_id"] = pair.execution.row_id
     enriched["source_family_lock_status"] = pair.source_family_lock_status
     enriched["execution_variant_status"] = "MICRO_FUTURES_EXECUTION_VARIANT_DEV_RECON_ONLY"
-    enriched["cfd_adapter_status"] = pair.cfd_adapter_status
+    enriched["external_adapter_gate_status"] = pair.external_adapter_gate_status
     return enriched
 
 
@@ -466,7 +466,7 @@ def _pair_pass_status(**payload: Any) -> dict[str, Any]:
         "signal_provider_error_count": len(payload["signal_errors"]),
         "execution_provider_error_count": len(payload["execution_errors"]),
         "source_family_lock_status": pair.source_family_lock_status,
-        "cfd_adapter_status": pair.cfd_adapter_status,
+        "external_adapter_gate_status": pair.external_adapter_gate_status,
         "real_m1_position_sizing_status": "BLOCKED_CAPITAL_NOT_LOCKED_UNIT_BASE_USED_FOR_DEV_RECON_PLUMBING",
         "diagnostics_run": "NO_SHARPE_NO_DRAWDOWN_NO_ALPHA_STATISTICS",
         "oos_access": "NO",
@@ -506,7 +506,7 @@ def _pair_fail_status(
         "signal_provider_error_count": len(signal_errors),
         "execution_provider_error_count": len(execution_errors),
         "source_family_lock_status": pair.source_family_lock_status,
-        "cfd_adapter_status": pair.cfd_adapter_status,
+        "external_adapter_gate_status": pair.external_adapter_gate_status,
         "effective_backtest_start": "",
         "effective_backtest_end": "",
         "gross_pnl_usd": "",
@@ -531,7 +531,11 @@ def _validation_rows(**payload: Any) -> list[dict[str, Any]]:
         _validation("s27_signal_rows_nonempty", bool(payload["s27_rows"]), len(payload["s27_rows"])),
         _validation("position_rows_match_s27_signal_rows", len(payload["position_rows"]) == len(payload["s27_rows"]), len(payload["position_rows"])),
         _validation("micro_execution_backtest_rows_nonempty", bool(payload["backtest_rows"]), len(payload["backtest_rows"])),
-        _validation("cfd_adapter_fail_closed", payload["pair"].cfd_adapter_status.endswith("GATE_REQUIRED"), 0),
+        _validation(
+            "external_adapter_gate_separate_not_opened",
+            payload["pair"].external_adapter_gate_status == "CFD_ADAPTER_GATE_REQUIRED_SEPARATE_NOT_OPENED",
+            0,
+        ),
         _validation("no_oos_lockbox_forward", True, 0),
         _validation("no_alpha_statistics", True, 0),
         _validation("dev_recon_only", True, 0),
@@ -564,7 +568,7 @@ def _summary_row(status: dict[str, Any]) -> dict[str, Any]:
         "gross_pnl_usd",
         "estimated_micro_futures_fees_usd_placeholder",
         "net_after_micro_futures_fees_usd",
-        "cfd_adapter_status",
+        "external_adapter_gate_status",
         "fail_closed_reason",
         "fail_closed_message",
     )
@@ -585,7 +589,7 @@ def _overall_status(statuses: list[dict[str, Any]], summary_csv: Path) -> dict[s
         "passed_pairs": [row["pair_id"] for row in passes],
         "source_signal_policy": "BASE_FUTURES_SIGNAL_AUTHORITY_WHEN_MICRO_HAS_INSUFFICIENT_HISTORY",
         "micro_execution_policy": "MICRO_FUTURES_EXECUTION_VARIANT_DEV_RECON_ONLY_USING_MICRO_HOURLY_BARS",
-        "cfd_adapter_policy": "ICMARKETS_CFD_ADAPTER_FAIL_CLOSED_UNTIL_STATIC_SPEC_AND_CFD_DATA_GATE",
+        "external_adapter_policy": "CFD_ADAPTER_REQUIRES_SEPARATE_EXPLICIT_GATE_NOT_OPENED",
         "provider_api_access": "YES_DATABENTO_EXACT_AUTHORIZED_INDEX_SIGNAL_MICRO_EXECUTION_SURFACE",
         "oos_access": "NO",
         "lockbox_access": "NO",
@@ -601,7 +605,7 @@ def _manifest_payload() -> dict[str, Any]:
     return {
         "gate": GATE,
         "run_id": RUN_ID,
-        "lane_class": "SOURCE_NATIVE_FUTURES_WITH_CFD_ADAPTER_PLACEHOLDER_FAIL_CLOSED",
+        "lane_class": "SOURCE_NATIVE_FUTURES",
         "provider": "DATABENTO_HISTORICAL",
         "dataset": base.DATASET,
         "hourly_schema": base.HOURLY_SCHEMA,
@@ -621,7 +625,7 @@ def _manifest_payload() -> dict[str, Any]:
                 "execution_root": pair.execution.root,
                 "execution_row_id": pair.execution.row_id,
                 "source_family_lock_status": pair.source_family_lock_status,
-                "cfd_adapter_status": pair.cfd_adapter_status,
+                "external_adapter_gate_status": pair.external_adapter_gate_status,
             }
             for pair in PAIRS
         ],
@@ -629,7 +633,7 @@ def _manifest_payload() -> dict[str, Any]:
             "SAME_S27_MACHINERY_AS_ZN_DEV_RECON",
             "BASE_FUTURES_SIGNAL_AUTHORITY_WHEN_MICRO_HISTORY_IS_INSUFFICIENT",
             "MICRO_FUTURES_EXECUTION_VARIANT_USES_MICRO_HOURLY_BARS",
-            "CFD_ADAPTER_FAIL_CLOSED_PENDING_ICMARKETS_STATIC_SPEC_AND_DATA_GATE",
+            "CFD_ADAPTER_REQUIRES_SEPARATE_EXPLICIT_GATE_NOT_OPENED",
             "NO_TUNING_AFTER_RESULTS",
             "NO_OOS_LOCKBOX_FORWARD",
             "NO_PROMOTION",
@@ -646,7 +650,7 @@ def _pair_provenance(pair: SignalExecutionPair, status: dict[str, Any]) -> dict[
             "signal": pair.signal.__dict__ | {"daily_history_start": pair.signal.daily_history_start.isoformat()},
             "execution": pair.execution.__dict__ | {"daily_history_start": pair.execution.daily_history_start.isoformat()},
             "source_family_lock_status": pair.source_family_lock_status,
-            "cfd_adapter_status": pair.cfd_adapter_status,
+            "external_adapter_gate_status": pair.external_adapter_gate_status,
         },
         "status": status,
         "secret_handling": "Databento API key read locally and never written to artifacts.",
@@ -658,7 +662,7 @@ def _pair_provenance(pair: SignalExecutionPair, status: dict[str, Any]) -> dict[
             "NO_TRADING",
             "NO_PROMOTION",
             "NO_GIT_OPERATIONS",
-            "NO_ICMARKETS_CFD_DATA_ACCESS",
+            "NO_CFD_BROKER_DATA_ACCESS",
             "NO_CFD_ADAPTER_EXECUTION",
         ],
     }
@@ -678,7 +682,7 @@ def _process_result_text(overall: dict[str, Any], rows: list[dict[str, Any]]) ->
         "",
         "## Summary",
         "",
-        "| Pair | Signal | Execution | Status | Effective Window | Gross | Fees | Net | CFD Adapter | Blocker |",
+        "| Pair | Signal | Execution | Status | Effective Window | Gross | Fees | Net | External Adapter Gate | Blocker |",
         "|---|---|---|---|---|---:|---:|---:|---|---|",
     ]
     for row in rows:
@@ -686,7 +690,7 @@ def _process_result_text(overall: dict[str, Any], rows: list[dict[str, Any]]) ->
             f"| {row['pair_id']} | {row['signal_root']} | {row['execution_root']} | {row['pair_status']} | "
             f"{row['effective_backtest_start']} to {row['effective_backtest_end']} | "
             f"{row['gross_pnl_usd']} | {row['estimated_micro_futures_fees_usd_placeholder']} | "
-            f"{row['net_after_micro_futures_fees_usd']} | {row['cfd_adapter_status']} | {row['fail_closed_message']} |"
+            f"{row['net_after_micro_futures_fees_usd']} | {row['external_adapter_gate_status']} | {row['fail_closed_message']} |"
         )
     lines.extend(
         [
@@ -695,7 +699,7 @@ def _process_result_text(overall: dict[str, Any], rows: list[dict[str, Any]]) ->
             "",
             "This gate uses ES/NQ as source-native base-futures signal authorities when MES/MNQ do not have enough daily history to support the S27 V/Q/M runtime. MES/MNQ are treated only as micro futures execution variants using their own hourly execution bars.",
             "",
-            "The ICMarkets CFD adapter is deliberately fail-closed in this artifact. No ICMarkets data, broker session, spread, swap, fill, or symbol mapping was accessed or used.",
+            "Any CFD adapter is outside this source-native futures artifact and requires a separate explicit gate. No CFD broker data, session, spread, swap, fill, or symbol mapping was accessed or used.",
             "",
             "This is Development/Reconciliation only. It is not alpha, OOS, Lockbox, Forward, deployment, trading, promotion, or a production sizing/cost lock.",
             "",
@@ -714,7 +718,7 @@ def _local_audit_text(overall: dict[str, Any], rows: list[dict[str, Any]]) -> st
             "",
             "CRITICAL: None for declared Development/Reconciliation scope.",
             "",
-            "HIGH: None. ES/NQ are labelled as base-futures signal authorities, not silent replacements for MES/MNQ. MES/MNQ remain execution variants. ICMarkets CFD adapter remains fail-closed.",
+            "HIGH: None. ES/NQ are labelled as base-futures signal authorities, not silent replacements for MES/MNQ. MES/MNQ remain execution variants. Any CFD adapter remains outside this source-native futures artifact and requires a separate explicit gate.",
             "",
             f"MEDIUM: `{len(failed)}` signal/execution pairs failed closed and must not be treated as zero PnL or dropped from the research map.",
             "",

@@ -1,0 +1,45 @@
+{
+  "gate": "S27_ZN_LOCKBOX_READINESS_DECISION_GATE",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorization": [
+    "NO_DATA_ACCESS",
+    "NO_PROVIDER_API_ACCESS",
+    "NO_MARKET_ROW_PARSING",
+    "NO_NEW_DIAGNOSTICS",
+    "NO_NEW_BACKTEST",
+    "NO_OOS",
+    "NO_LOCKBOX_OPENED",
+    "NO_FORWARD",
+    "NO_CFD_ADAPTER",
+    "NO_OLD_QUANTLAB_PIPELINE",
+    "NO_TUNING",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "process_docs": [
+    "docs\\process\\CARVER_S27_ZN_LOCKBOX_READINESS_DECISION_GATE_2026-06-01.md",
+    "docs\\process\\CARVER_S27_ZN_LOCKBOX_READINESS_LOCAL_HOSTILE_AUDIT_2026-06-01.md"
+  ],
+  "run_id": "20260601_S27_ZN_LOCKBOX_READINESS_DECISION",
+  "source_artifacts": [
+    "docs/process/CARVER_S26_S27_SOURCE_ATOM_SHEET_2026-05-30.md",
+    "docs/process/CARVER_S27_ZN_SOURCE_LINE_AUDIT_EWMAC_VQM_CLOSURE_2026-06-01.md",
+    "docs/process/CARVER_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_RESULT_2026-05-31.md",
+    "docs/process/CARVER_S27_ZN_2024_VALIDATION_BACKTEST_RESULT_2026-06-01.md",
+    "docs/process/CARVER_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_RESULT_2026-06-01.md",
+    "docs/process/CARVER_S27_ZN_PRE_LOCKBOX_MCPT_NULL_STACK_RESULT_2026-06-01.md",
+    "docs/process/CARVER_S27_ZN_FUTURES_REALISTIC_COST_MODEL_SHAPE_GATE_2026-06-01.md",
+    "docs/process/CARVER_S27_ZN_FUTURES_REALISTIC_COST_TEST_MANIFEST_RECORD_2026-06-01.md",
+    "docs/researchops/s26_s27_ladder_attribution/ZN_S27/2022_2024/status/20260601_S27_ZN_LADDER_ATTRIBUTION_AND_BASELINE_RECONCILIATION_status.json",
+    "docs/researchops/s26_s27_pre_lockbox_robustness/ZN_S27/2022_2024/summary/20260601_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_summary.csv",
+    "docs/researchops/s26_s27_pre_lockbox_robustness/ZN_S27/2022_2024/structure/20260601_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_forward_horizon_structure.csv",
+    "docs/researchops/s26_s27_pre_lockbox_mcpt/ZN_S27/2022_2024/summary/20260601_S27_ZN_PRE_LOCKBOX_MCPT_NULL_STACK_mcpt_summary.csv",
+    "docs/researchops/s26_s27_cost_model/ZN_S27/CARVER_S27_ZN_FUTURES_REALISTIC_COST_TEST_MANIFEST_2026-06-01.csv",
+    "tools/audit/carver_s27_zn_ladder_attribution.py",
+    "tools/audit/carver_s27_zn_robustness.py",
+    "tools/audit/carver_s27_zn_mcpt.py"
+  ],
+  "status": "DO_NOT_OPEN_LOCKBOX_EXECUTION_GATE_YET"
+}

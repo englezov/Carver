@@ -1,0 +1,4 @@
+gate,cost_component,cost_status,notes
+S27_ZN_TOUCHED_HISTORY_DEVELOPMENT_RECONCILIATION_BACKTEST,recorded_backtest_fee,RECORDED_ETF_PUBLIC_PER_SIDE_COMMISSION_ONLY_NO_SPREAD_NO_SLIPPAGE,Used only to reproduce existing touched-history artifacts; not futures-realistic Lockbox cost.
+S27_ZN_TOUCHED_HISTORY_DEVELOPMENT_RECONCILIATION_BACKTEST,futures_realistic_cost_readiness,FAIL_CLOSED_FUTURES_REALISTIC_COST_READINESS_NOT_EXECUTED,Lockbox readiness gate remains controlling for futures-realistic cost closure.
+S27_ZN_TOUCHED_HISTORY_DEVELOPMENT_RECONCILIATION_BACKTEST,failing_cost_components,FAIL_CLOSED_COMPONENTS_REMAIN,"[""exchange_fee"", ""clearing_nfa_regulatory_fee"", ""broker_commission"", ""zn_tick_value_and_multiplier"", ""spread_slippage_grid"", ""limit_order_fill_model"", ""routing_and_margin_funding"", ""breakeven_cost_per_side"", ""unit_and_m1_ladder_cost_sensitivity""]"
