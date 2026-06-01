@@ -1,171 +1,109 @@
-# Carver S26/S27 Source Atoms And Machine Path
+# S26/S27 Source Atoms And Machine Path
 
 Status:
 
 ```text
-SOURCE_NATIVE_FUTURES_S26_S27_MACHINE_PATH_AUDIT_PACKET
+SOURCE_ATOM_AND_MACHINE_PATH_SUMMARY_FOR_MECHANICAL_VERIFICATION_AUDIT
 ```
 
-## Book-Source Atoms To Verify
+## Locked Source Atoms Claimed By Current Implementation
 
-### Part Four Frequency Boundary
+S26:
 
-Carver Part Four controls both S26 and S27. The relevant source atom is that Part Four strategies use a modified Part One position-management framework, but forecasts are generated more frequently and backtested on hourly data.
+- Equilibrium is EWMA span 5 over hourly price.
+- Raw forecast is `equilibrium - price`.
+- Risk-adjusted forecast divides by sigma price.
+- Forecast scalar is `9.3` for S26.
+- Forecast cap is +/-20.
+- No FDM.
+- No buffering.
+- Hourly data required.
 
-Audit page reference:
+S27:
+
+- Uses S26 fast mean reversion as base.
+- Uses EWMAC(16,64) trend proxy.
+- Mean-reversion forecast must not oppose trend forecast.
+- Uses V/Q/M-style volatility attenuation.
+- Volatility multiplier is EWMA(10) of the attenuation term.
+- Forecast scalar is around `20` for S27 after trend overlay and volatility multiplier.
+- Forecast cap remains +/-20.
+
+## Scalar Blocker Disposition
+
+The stale concern that S27 might inherit the S26 scalar `9.3` was locally resolved on 2026-06-01 by direct source check:
 
 ```text
-00_Carver.pdf p.475
+S26 scalar: 9.3
+S27 scalar: around 20 / implemented as 20.0
+S27 cap: +/-20
+BACKTEST_RESULT_SCALAR_STATUS: NOT_FAILED_BY_SCALAR_ATOM
 ```
 
-Required interpretation:
+Artifact:
 
 ```text
-S26/S27 require hourly source-native futures bars for real-data forecast/backtest work.
-Daily Appendix C data alone is not source-frequency-compatible with S26/S27.
+docs/process/CARVER_S27_SCALAR_BLOCKER_DISPOSITION_2026-06-01.md
+SHA256: 848F2CDAE1BC5529B410F1DB5949C47E96BC2565B93A1ADE06FB1A7099E48033
 ```
 
-### S26 - Fast Mean Reversion
+Related code/source-lock patch:
 
-Book source atoms to verify:
+- `src/carver/spine/s26_s27.py` now labels the source lock as S27 scalar/cap status, not inherited S26 scalar.
+- `tests/test_s26_s27_fast_mean_reversion_synthetic.py` was updated accordingly.
+
+Verification after patch:
 
 ```text
-Strategy title: Strategy twenty-six: Fast mean reversion
-Equilibrium: EWMA span 5 of prices
-Raw forecast: Equilibrium - p_t
-Risk adjustment: raw forecast divided by sigma_price_i_t
-Forecast scalar: 9.3
-Forecast cap: +/-20
-No FDM: single rule
-No buffering: fast mean reversion execution differs from daily strategy machinery
-Execution note: limit-order style execution is source-relevant
+python -m unittest tests.test_s26_s27_fast_mean_reversion_synthetic -v
+42 passed
+
+python -m unittest discover -s tests -v
+198 passed, 1 skipped
 ```
 
-Audit page references:
+## Current Machine Path
+
+Current source-native ZN machine path:
 
 ```text
-00_Carver.pdf pp.476-481
+Databento dated contract OHLCV rows
+-> local dated-contract continuous lineage
+-> daily runtime rows: sigma, EWMAC16 trend proxy, V/Q/M multiplier
+-> hourly S26/S27 forecast rows
+-> M1-style ladder/base-position rows
+-> desired rounded position rows
+-> close-to-close hourly PnL rows
+-> ETF public per-side commission estimate
+-> mechanical verification replay and recomputation
 ```
 
-### S27 - Safer Fast Mean Reversion
+This is source-native futures Development/Reconciliation work. It is not a full Carver limit-order execution simulator and does not include spread, slippage, settlement substitution, prop-firm flattening, margin, carry, portfolio integration, OOS, Lockbox, Forward, deployment, trading, or promotion.
 
-Book source atoms to verify:
+## Position And Cost Constants Used In Current ZN Path
 
 ```text
-Strategy title: Strategy twenty-seven: Safer fast mean reversion
-S27 inherits S26 stages unless explicitly changed
-Trend overlay: EWMAC16, spans 16 and 64 days
-Mean-reversion forecast must not oppose trend forecast
-Volatility attenuation: S13-style V/Q/M dependency
-Forecast scalar: inherited 9.3
-Forecast cap: inherited +/-20
-No forecast-combination block with trend/carry daily sleeves
+capital_usd = 100000
+target_risk = 0.20
+instrument_weight = 1.0
+idm = 1.0
+fx_rate = 1.0
+zn_multiplier = 1000.0
+forecast_to_position_divisor = 10.0
+rounding_policy = NEAREST
+cost_model = ETF public per-side commission only
+ETF_ZN_FEE_PER_SIDE_USD = 1.51
 ```
 
-Audit page references:
+## Scripts Of Interest
 
-```text
-00_Carver.pdf pp.499-509
-```
+| Script | SHA256 |
+|---|---:|
+| `tools/audit/carver_s27_zn_mechanical_verifier.py` | `E426668D744D1010DF3003F8AAE48353171F02DBAD65005A9CF277D4738E1A4F` |
+| `tools/audit/carver_s27_zn_parity_verifier.py` | `EF217262CA9ACC0629FC75BEF826A5073D601D039223FA3A6ECAB2E2FC742C39` |
+| `tools/databento/carver_s27_zn_2024_validation_backtest.py` | `39A26DCE9D291FC2D3280DDB851E020EDF213B06C0CE0961F4ED753D5A2FE52D` |
+| `tools/databento/carver_s27_candidate_comparison_2022_2023.py` | `ADA1E91423DDAAF0594DA98CCBA5CAF2E74C8B0EB3054304C0F774633328EC79` |
 
-## Machine Path Summary
+## Main Hostile Question
 
-The current machine path is:
-
-```text
-source atoms -> synthetic conformance -> ZN hourly intake/readiness -> daily sigma/trend/V/Q/M runtime -> S27 forecast rows -> M1-style position ladder -> Development/Reconciliation backtest rows
-```
-
-Key implementation files:
-
-```text
-src/carver/spine/s26_s27.py
-tests/test_s26_s27_fast_mean_reversion_synthetic.py
-tools/databento/carver_s27_zn_local_extended_daily_runtime_2022_2023.py
-tools/databento/carver_s27_zn_2022_2023_retargeted_dev_recon_backtest.py
-tools/databento/carver_s27_zn_m1_ladder_dev_recon_backtest.py
-```
-
-Key process records:
-
-```text
-docs/process/CARVER_S26_S27_MEAN_REVERSION_OPUS_AUDIT_RESULT_2026-05-30.md
-docs/process/CARVER_S26_S27_SOURCE_ATOM_SHEET_2026-05-30.md
-docs/process/CARVER_S26_S27_SYNTHETIC_CONFORMANCE_IMPLEMENTATION_RESULT_2026-05-30.md
-docs/process/CARVER_S26_S27_COMPLETED_FORECAST_MACHINERY_LOCAL_HOSTILE_AUDIT_2026-05-31.md
-docs/process/CARVER_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_RESULT_2026-05-31.md
-docs/process/CARVER_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_EXECUTION_RESULT_2026-05-31.md
-docs/process/CARVER_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_RESULT_2026-05-31.md
-docs/process/CARVER_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_LOCAL_LEAN_HOSTILE_AUDIT_2026-05-31.md
-```
-
-## Important Machine Corrections Since Earlier Work
-
-The previous R2 comparison-fed M1 ladder result was rejected because the S27 forecast rows used stale daily runtime:
-
-```text
-source_vqm_completed_trading_date = 2020-12-21
-first observed 2022 row = 2022-01-03T05:00:00Z
-runtime lag = 378 days
-disposition = SUPERSEDED_FAIL_CLOSED_STALE_DAILY_RUNTIME_DEPENDENCY
-```
-
-Corrective machine guards:
-
-```text
-MAX_SOURCE_RUNTIME_LAG_DAYS = 10
-runtime_lag_days must be > 0
-runtime_lag_days must be <= 10
-accepted rows observed max lag = 1 day
-```
-
-Patched scripts containing stale-runtime guard:
-
-```text
-tools/databento/carver_s27_candidate_comparison_2022_2023.py
-tools/databento/carver_s27_zn_2022_2023_retargeted_dev_recon_backtest.py
-tools/databento/carver_s27_zn_m1_ladder_dev_recon_backtest.py
-```
-
-## Local Extended Daily Runtime
-
-A local extended daily runtime was built to support strict prior S13-style V/Q/M across the 2022-2023 hourly backtest window without new provider access.
-
-Artifact root:
-
-```text
-docs/researchops/s26_s27_backtest_readiness/ZN_S27_SINGLE_INSTRUMENT/2022-01-01_2023-12-31/local_extended_daily_runtime
-```
-
-Status:
-
-```text
-PASS_LOCAL_EXTENDED_DAILY_RUNTIME_DEV_RECON_ONLY
-```
-
-Critical caveat:
-
-```text
-This local extended daily runtime is Development/Reconciliation-only.
-It is not production continuous-contract authority.
-```
-
-Construction summary:
-
-```text
-pre-2015 support history: R2 deduped local continuous daily ZN history
-2015+ source: existing V/Q/M local continuous daily risk history
-bridge day: 2015-01-01
-constant bridge offset applied to pre-2015 support segment: -0.28125
-extended daily rows: 4750
-extended daily window: 2011-01-02 through 2026-05-22
-V/Q/M rows: 2157
-V/Q/M window: 2019-06-06 through 2026-05-22
-```
-
-Audit question:
-
-```text
-Is this support-history stitch clearly labeled as Dev/Reconciliation-only and not over-promoted?
-```
-
+The mechanical verifier now recomputes forecast, position, PnL, fees, roll/runtime alignment, and no-promotion boundaries from existing local artifacts. The audit should decide whether this is independent enough or still shares a blocking assumption with the original backtest path.

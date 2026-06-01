@@ -1,0 +1,22 @@
+{
+  "end_date": "2012-05-05",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ESH2": [
+      {
+        "d0": "2010-12-31",
+        "d1": "2012-04-15",
+        "s": "31747"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ESH2"
+  ]
+}

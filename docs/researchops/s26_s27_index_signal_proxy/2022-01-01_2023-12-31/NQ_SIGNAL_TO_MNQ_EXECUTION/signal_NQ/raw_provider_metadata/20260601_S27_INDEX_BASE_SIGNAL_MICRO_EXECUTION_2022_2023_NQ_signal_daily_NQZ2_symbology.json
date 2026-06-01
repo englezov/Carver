@@ -1,0 +1,24 @@
+{
+  "end_date": "2013-02-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "NQZ2"
+  ],
+  "result": {
+    "NQZ2": [
+      {
+        "d0": "2011-09-04",
+        "d1": "2013-01-17",
+        "s": "10016"
+      }
+    ]
+  },
+  "start_date": "2011-08-29",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "NQZ2"
+  ]
+}

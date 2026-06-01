@@ -1,0 +1,24 @@
+{
+  "end_date": "2012-11-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNU2"
+  ],
+  "result": {
+    "ZNU2": [
+      {
+        "d0": "2011-06-07",
+        "d1": "2012-11-04",
+        "s": "585392"
+      }
+    ]
+  },
+  "start_date": "2011-05-30",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNU2"
+  ]
+}

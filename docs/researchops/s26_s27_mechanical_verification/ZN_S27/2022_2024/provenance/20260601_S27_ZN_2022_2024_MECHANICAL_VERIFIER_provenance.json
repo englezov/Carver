@@ -1,0 +1,61 @@
+{
+  "created_at_utc": "2026-06-01T02:49:45.835705Z",
+  "input_artifacts": [
+    {
+      "backtest_csv": "docs\\researchops\\s26_s27_m1_ladder\\ZN_S27\\2022-01-01_2023-12-31\\backtest_rows\\20260531_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_ladder_backtest_rows.csv",
+      "backtest_sha256": "034C0491677E7676178D4E65F692E2AF338A7B163D352887B56809DDCF0D25CF",
+      "daily_runtime_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\daily_runtime_rows\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_daily_runtime_rows.csv",
+      "daily_runtime_sha256": "B2459874EB0E0798A45FCF10C2C6C70EF31DD2F75EA62CCD7F97E383E7E8B277",
+      "forecast_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\forecast_rows\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_s27_forecast_rows.csv",
+      "forecast_sha256": "6409165FAD733A77E1FF0E74683080C10D4AAD9A75AB5914A2E8FAB721BF1A9D",
+      "hourly_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\local_hourly_lineage\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_local_hourly_continuous_lineage.csv",
+      "hourly_sha256": "60D11EEADBFCCECA17CF443F4DA666DE6E1121BF5BD215DC11F9C069FD7622A9",
+      "period_label": "ZN_2022_2023_INITIAL_TEST"
+    },
+    {
+      "backtest_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\backtest_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_ladder_backtest_rows.csv",
+      "backtest_sha256": "090570A37969C7E454ABB0DDE5291DA9CFBE9FB22F78C5ECEB1BA72F20DCEAE9",
+      "daily_runtime_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\daily_runtime_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_daily_runtime_rows.csv",
+      "daily_runtime_sha256": "5E99B8A2E9DEBC23AF4658270D7908D4A0D7FA38BC65340E767A75D77AD08811",
+      "forecast_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\forecast_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_s27_forecast_rows.csv",
+      "forecast_sha256": "2AC7B79F509B2720D3B3CBE0206EEDD0E9AB8E5D212174EE8E82A57DFBF37970",
+      "hourly_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\local_lineage\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_hourly_continuous_lineage.csv",
+      "hourly_sha256": "290806DEFB9C074D5C06D0969A04E9748C0E97127C81BA11A23EAFF1060D5D20",
+      "period_label": "ZN_2024_VALIDATION"
+    }
+  ],
+  "non_authorization": [
+    "NO_PROVIDER_API_ACCESS",
+    "NO_NEW_DATA_DOWNLOAD",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_PARAMETER_TUNING"
+  ],
+  "run_id": "20260601_S27_ZN_2022_2024_MECHANICAL_VERIFIER",
+  "status": {
+    "blocking_findings": 0,
+    "check_rows": 80,
+    "deployment": "NO",
+    "episode_rows": 1716,
+    "fee_rows": 4815,
+    "forward_access": "NO",
+    "gate": "S27_ZN_MECHANICAL_VERIFICATION_BEFORE_ANY_LOCKBOX_OR_PROMOTION",
+    "lockbox_access": "NO",
+    "market_row_source": "EXISTING_LOCAL_ARTIFACTS_ONLY",
+    "new_data_download": "NO",
+    "oos_access": "NO",
+    "periods": [
+      "ZN_2022_2023_INITIAL_TEST",
+      "ZN_2024_VALIDATION"
+    ],
+    "promotion": "NO",
+    "provider_api_access": "NO",
+    "roll_rows": 17694,
+    "status": "PASS_S27_ZN_MECHANICAL_VERIFICATION_DEV_RECON",
+    "trading": "NO"
+  }
+}

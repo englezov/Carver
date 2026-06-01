@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-02-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNZ3"
+  ],
+  "result": {
+    "ZNZ3": [
+      {
+        "d0": "2023-03-08",
+        "d1": "2024-02-04",
+        "s": "12212"
+      }
+    ]
+  },
+  "start_date": "2022-08-28",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNZ3"
+  ]
+}

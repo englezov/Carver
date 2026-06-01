@@ -1,0 +1,24 @@
+{
+  "end_date": "2015-08-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "NQM5"
+  ],
+  "result": {
+    "NQM5": [
+      {
+        "d0": "2014-03-09",
+        "d1": "2015-07-05",
+        "s": "58385"
+      }
+    ]
+  },
+  "start_date": "2014-02-26",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "NQM5"
+  ]
+}

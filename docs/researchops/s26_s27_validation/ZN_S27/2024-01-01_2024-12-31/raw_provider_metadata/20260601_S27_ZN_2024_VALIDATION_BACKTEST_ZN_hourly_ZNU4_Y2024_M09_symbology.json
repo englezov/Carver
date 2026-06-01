@@ -1,0 +1,22 @@
+{
+  "end_date": "2025-01-01",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ZNU4": [
+      {
+        "d0": "2023-12-29",
+        "d1": "2024-09-26",
+        "s": "42002321"
+      }
+    ]
+  },
+  "start_date": "2023-12-31",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNU4"
+  ]
+}

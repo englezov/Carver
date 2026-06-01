@@ -1,0 +1,17 @@
+{
+  "gate": "S27_INDEX_BASE_SIGNAL_MICRO_FUTURES_EXECUTION_DEV_RECON",
+  "non_authorization": [
+    "NO_MARKET_ROW_USE_FROM_INCOMPLETE_DBN",
+    "NO_SILENT_OVERWRITE",
+    "NO_DIAGNOSTICS",
+    "NO_PROMOTION"
+  ],
+  "records": [
+    {
+      "original_path": "docs\\researchops\\s26_s27_index_signal_proxy\\2022-01-01_2023-12-31\\ES_SIGNAL_TO_MES_EXECUTION\\signal_ES\\raw_provider_output\\20260601_S27_INDEX_BASE_SIGNAL_MICRO_EXECUTION_2022_2023_ES_signal_daily_ESH6.incomplete_20260531T223347Z.incomplete_20260531T232235Z.incomplete_20260531T235346Z.incomplete_20260601T000455Z.dbn",
+      "preserved_path": "docs\\researchops\\s26_s27_index_signal_proxy\\2022-01-01_2023-12-31\\ES_SIGNAL_TO_MES_EXECUTION\\signal_ES\\raw_provider_output\\20260601_S27_INDEX_BASE_SIGNAL_MICRO_EXECUTION_2022_2023_ES_signal_daily_ESH6.incomplete_20260531T223347Z.incomplete_20260531T232235Z.incomplete_20260531T235346Z.incomplete_20260601T000455Z.incomplete_20260601T000648Z.dbn",
+      "reason": "DBN_EXISTS_WITHOUT_PROVIDER_CSV_AFTER_INTERRUPTED_OR_TIMED_OUT_RUN"
+    }
+  ],
+  "status": "PRESERVED_INCOMPLETE_RAW_OUTPUTS_BEFORE_RESUME"
+}

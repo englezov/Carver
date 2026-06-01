@@ -6,6 +6,7 @@ import json
 import math
 import os
 import sys
+from bisect import bisect_left, bisect_right, insort
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
@@ -316,10 +317,29 @@ def _request_ohlcv_rows(
     purpose: str,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     raw_symbol = contract["raw_symbol"]
+    contract_stem = _provider_contract_stem(contract)
     rows: list[dict[str, Any]] = []
     symbology_rows: list[dict[str, Any]] = []
     errors: list[dict[str, Any]] = []
     try:
+        raw_dbn = folders["raw"] / f"{RUN_ID}_{candidate.root}_{purpose}_{contract_stem}.dbn"
+        provider_csv = folders["raw"] / f"{RUN_ID}_{candidate.root}_{purpose}_{contract_stem}_provider.csv"
+        if provider_csv.exists():
+            source_sha = _sha256(provider_csv)
+            rows = _read_provider_rows(provider_csv, candidate, contract, schema, purpose, condition_by_date, source_sha)
+            symbology_rows.append(
+                {
+                    "root": candidate.root,
+                    "purpose": purpose,
+                    "raw_symbol": raw_symbol,
+                    "resolved_d0": "",
+                    "resolved_d1": "",
+                    "instrument_id": "",
+                    "symbology_status": "CACHED_PROVIDER_CSV_USED_SYMBOLOGY_NOT_REQUERIED",
+                }
+            )
+            return rows, symbology_rows, errors
+
         resolution = client.symbology.resolve(
             dataset=DATASET,
             symbols=[raw_symbol],
@@ -328,7 +348,7 @@ def _request_ohlcv_rows(
             start_date=start_dt.date().isoformat(),
             end_date=end_dt.date().isoformat(),
         )
-        _write_json(folders["metadata"] / f"{RUN_ID}_{candidate.root}_{purpose}_{raw_symbol}_symbology.json", resolution)
+        _write_json(folders["metadata"] / f"{RUN_ID}_{candidate.root}_{purpose}_{contract_stem}_symbology.json", resolution)
         resolved = resolution.get("result", {}).get(raw_symbol, [])
         symbology_rows.extend(
             {
@@ -345,8 +365,6 @@ def _request_ohlcv_rows(
             errors.append({"root": candidate.root, "purpose": purpose, "raw_symbol": raw_symbol, "error": "SYMBOL_NOT_RESOLVED"})
             return rows, symbology_rows, errors
 
-        raw_dbn = folders["raw"] / f"{RUN_ID}_{candidate.root}_{purpose}_{raw_symbol}.dbn"
-        provider_csv = folders["raw"] / f"{RUN_ID}_{candidate.root}_{purpose}_{raw_symbol}_provider.csv"
         if not provider_csv.exists():
             store = client.timeseries.get_range(
                 dataset=DATASET,
@@ -574,19 +592,20 @@ def _build_vqm_rows(sigma_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     smoothed: float | None = None
     alpha = 2.0 / (VQM_EWMA_SPAN + 1.0)
+    sigma_values = [float(row["sigma_i_t"]) for row in sigma_rows]
+    sigma_prefix = [0.0]
+    for value in sigma_values:
+        sigma_prefix.append(sigma_prefix[-1] + value)
+    historical_v_sorted: list[float] = []
     for index, sigma_row in enumerate(sigma_rows):
         if index < TEN_YEAR_SIGMA_ROWS:
             continue
-        prior = sigma_rows[index - TEN_YEAR_SIGMA_ROWS : index]
-        ten_year_average = sum(float(row["sigma_i_t"]) for row in prior) / TEN_YEAR_SIGMA_ROWS
-        sigma = float(sigma_row["sigma_i_t"])
+        ten_year_sum = sigma_prefix[index] - sigma_prefix[index - TEN_YEAR_SIGMA_ROWS]
+        ten_year_average = ten_year_sum / TEN_YEAR_SIGMA_ROWS
+        sigma = sigma_values[index]
         v = sigma / ten_year_average
-        historical_v = []
-        for j in range(TEN_YEAR_SIGMA_ROWS, index + 1):
-            prior_j = sigma_rows[j - TEN_YEAR_SIGMA_ROWS : j]
-            avg_j = sum(float(row["sigma_i_t"]) for row in prior_j) / TEN_YEAR_SIGMA_ROWS
-            historical_v.append(float(sigma_rows[j]["sigma_i_t"]) / avg_j)
-        q = _quantile_rank_including_current(historical_v, v)
+        insort(historical_v_sorted, v)
+        q = _quantile_rank_from_sorted_including_current(historical_v_sorted, v)
         raw_multiplier = 2.0 - 1.5 * q
         smoothed = raw_multiplier if smoothed is None else alpha * raw_multiplier + (1.0 - alpha) * smoothed
         rows.append(
@@ -595,7 +614,7 @@ def _build_vqm_rows(sigma_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "sigma_i_t": sigma,
                 "ten_year_average_sigma": ten_year_average,
                 "relative_volatility_v": v,
-                "historical_v_observation_count": len(historical_v),
+                "historical_v_observation_count": len(historical_v_sorted),
                 "quantile_q": q,
                 "raw_multiplier_2_minus_1_5q": raw_multiplier,
                 "vol_multiplier_m_ewma10": smoothed,
@@ -1146,6 +1165,15 @@ def _quantile_rank_including_current(values: list[float], current: float) -> flo
     return max(0.0, min(1.0, rank / (len(values) - 1)))
 
 
+def _quantile_rank_from_sorted_including_current(sorted_values: list[float], current: float) -> float:
+    if len(sorted_values) < 2:
+        return 0.5
+    less = bisect_left(sorted_values, current)
+    equal = bisect_right(sorted_values, current) - less
+    rank = less + 0.5 * max(equal - 1, 0)
+    return max(0.0, min(1.0, rank / (len(sorted_values) - 1)))
+
+
 def _blocked_row(row: dict[str, Any], reason: str) -> dict[str, Any]:
     return {
         "root": row["root"],
@@ -1276,6 +1304,14 @@ def _parse_ts(value: str) -> datetime:
 
 def _contract_key(contract: dict[str, Any]) -> str:
     return f"{contract['raw_symbol']}_{contract['contract_year']}"
+
+
+def _provider_contract_stem(contract: dict[str, Any]) -> str:
+    return (
+        f"{contract['raw_symbol']}"
+        f"_Y{int(contract['contract_year'])}"
+        f"_M{int(contract['delivery_month']):02d}"
+    )
 
 
 def _cap(value: float) -> float:

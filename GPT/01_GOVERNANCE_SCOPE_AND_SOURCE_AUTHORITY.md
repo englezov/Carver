@@ -1,130 +1,110 @@
-# Carver S26/S27 Machine And Backtest Audit Packet - Governance, Scope, Source Authority
+# Governance Scope And Source Authority
 
 Status:
 
 ```text
-OPUS_4_7_HOSTILE_AUDIT_PACKET_GOVERNANCE_SCOPE_NOT_AUTHORIZATION
-```
-
-Packet date: 2026-05-31
-
-## Packet Contents
-
-This GPT folder is intended to contain exactly:
-
-```text
-00_Carver.pdf
-01_GOVERNANCE_SCOPE_AND_SOURCE_AUTHORITY.md
-02_S26_S27_SOURCE_ATOMS_AND_MACHINE_PATH.md
-03_S27_ZN_2022_2023_BACKTEST_ARTIFACT_SUMMARY.md
-04_HOSTILE_AUDIT_CHECKLIST_AND_VERIFICATION_EVIDENCE.md
-```
-
-The audit prompt is not stored in this folder. It is supplied separately by the operator.
-
-## Audit Target
-
-Hostile read-only audit of the S26/S27 source-faithful machine and the corrected S27 ZN 100k Development/Reconciliation backtest path.
-
-Audit target status:
-
-```text
-PASS_S27_ZN_M1_STYLE_LADDER_DEV_RECON_BACKTEST_NOT_ALPHA
-```
-
-Corrected backtest scope:
-
-```text
-STRATEGY: Strategy 27, safer fast mean reversion
-INSTRUMENT: ZN / US 10-year Note futures
-LANE: SOURCE_NATIVE_FUTURES
-WINDOW_REQUESTED: 2022-01-01 through 2023-12-31
-WINDOW_EFFECTIVE: 2022-01-04 through 2023-12-29
-CAPITAL: 100000 USD
-POSITION_STYLE: M1-style Carver forecast-to-position ladder
-COSTS: ETF public per-side commission only
-STATUS: Development/Reconciliation only, not alpha, not production
+OPUS_PACKET_FOR_S27_ZN_MECHANICAL_VERIFICATION_AUDIT_READ_ONLY
 ```
 
 ## Source Authority
 
-Primary source authority:
+Primary book source:
 
 ```text
 00_Carver.pdf
 ```
 
-Source sections to verify directly in the book:
+Relevant book scope:
 
-```text
-Part Four framing: p.475
-Strategy twenty-six: Fast mean reversion: pp.476-489
-Strategy twenty-seven: Safer fast mean reversion: pp.499-509
-S26 equilibrium/raw/scalar/cap region: pp.479-481
-S27 EWMAC16 trend overlay: p.500
-S27 volatility attenuation / safer variant: pp.501-508
-S27 trading plan: p.508
-```
+- Strategy 26: Fast mean reversion.
+- Strategy 27: Safer fast mean reversion.
+- Part Four framing: hourly data; fast directional strategies; no buffering; fast mean reversion tries to use limit orders where possible.
+- S27 depends on S26, EWMAC(16,64) trend overlay, and V/Q/M-style volatility attenuation.
 
-The packet intentionally uses small source summaries and page references rather than long copied book passages.
+## Clean Workspace Rules
 
-## Current Governance Perimeter
-
-The active Carver workspace is:
+Active workspace:
 
 ```text
 C:\Users\openclaw\Desktop\Carver
 ```
 
-The archived old workspace is:
+Archived old workspace:
 
 ```text
 C:\Users\openclaw\Desktop\QuantLab_v3
 ```
 
-Old QuantLab status:
+The old workspace is `ARCHIVED_OPERATIONAL_BLOB_DO_NOT_PIPELINE`. It may be referenced only as read-only archaeology. It must not be treated as source-native futures authority, and its old code, broker-clock assumptions, CFD adapters, or pipeline state must not be imported into Carver.
+
+## Lane Classification
+
+Current S27 ZN work:
 
 ```text
-ARCHIVED_OPERATIONAL_BLOB_DO_NOT_PIPELINE
+SOURCE_NATIVE_FUTURES
 ```
 
-The audit must verify that the current S26/S27 machine and corrected backtest do not rely on old active QuantLab pipelines, old CFD adapter code, CFD broker-clock assumptions, CFD symbols, old OOS/Lockbox/Forward state, deployment state, or trading state.
+The current result uses Databento GLBX.MDP3 source-native futures data for ZN only, transformed through Carver-local Development/Reconciliation artifacts. It is not a CFD lane and not a deployment lane.
 
-## Non-Authorization
-
-This packet authorizes none of the following:
+The archived old QuantLab `US500` CFD result remains:
 
 ```text
-provider API access
-new data download
-new market-row parsing
-new diagnostics
-new backtests
-forecasts beyond the artifacts already created
-new position calculations
-new costs or tuning
-OOS
-Lockbox
-Forward
-CFD adapters
-old QuantLab active-pipeline use
-deployment
-trading
-promotion
-Git staging
-commit
-push
-PR update/opening
-remote operations
+CFD_DIRECT / archived anomaly only
 ```
 
-## Specific Governance Questions For Audit
+It is preserved as a future investigation lead, not as proof for source-native futures.
 
-1. Does the S26/S27 machine preserve source-native futures interpretation rather than CFD/adapted interpretation?
-2. Does the S27 ZN path use the book-native ZN / US 10-year Note family rather than substituting a different market?
-3. Does the corrected result remain Development/Reconciliation only?
-4. Is the stale prior R2-fed result explicitly superseded and fail-closed?
-5. Does any artifact imply OOS, Lockbox, Forward, production, deployment, trading, promotion, or alpha?
-6. Does any wording overstate the local extended daily runtime stitch as production continuous-contract authority?
-7. Are costs clearly limited to ETF per-side commission only, with spread/slippage/fill quality unresolved?
+## Current Question For Opus
 
+The previous Opus pass recommended a mechanical verification program for the strange positive S27 ZN result. That program has now been implemented locally.
+
+Please hostile-audit whether the implemented verification is enough to say:
+
+```text
+MECHANICALLY_VERIFIED_AT_DEVELOPMENT_RECONCILIATION_SCOPE
+```
+
+or whether it still misses a blocking bug path.
+
+Do not judge whether the strategy is good. Audit whether the current S27 ZN backtest machinery and verification evidence are mechanically credible at Development/Reconciliation scope only.
+
+## Hard Boundaries For This Audit
+
+This packet requests read-only audit only.
+
+Do not authorize or assume:
+
+- new data download;
+- provider/API access;
+- market-row parsing outside the packet;
+- new diagnostics or backtests;
+- OOS, Lockbox, or Forward;
+- tuning;
+- symbol/window/cost selection after seeing results;
+- strategy promotion;
+- CFD adapter execution;
+- old QuantLab active-pipeline use;
+- deployment;
+- trading;
+- Git operations.
+
+## Desired Verdict
+
+Please produce:
+
+```text
+BLOCKING_FINDINGS: YES/NO
+AUDIT_DISPOSITION: <specific disposition>
+RECOMMENDED_NEXT_GATE: <single next gate>
+```
+
+Also include:
+
+- CRITICAL/HIGH/MEDIUM/LOW findings;
+- whether the scalar issue is fully resolved or still risky;
+- whether input-lineage/no-lookahead checks are sufficient;
+- whether roll/back-adjustment and runtime alignment checks are sufficient;
+- whether independent forecast/position/PnL recomputation is independent enough;
+- whether fee/episode/null-test evidence is correctly scoped;
+- what remains closed.

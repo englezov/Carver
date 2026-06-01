@@ -1,0 +1,19 @@
+{
+  "blocking_findings": 0,
+  "deployment": "NO",
+  "forward_access": "NO",
+  "gate": "GATE_VERIFIER_INDEPENDENCE_AND_NULL_ATTRIBUTION_DR_CLOSE",
+  "import_independence_status": "PASS_NO_DISALLOWED_IMPORTS",
+  "lockbox_access": "NO",
+  "market_row_source": "EXISTING_LOCAL_ARTIFACTS_ONLY",
+  "new_data_download": "NO",
+  "oos_access": "NO",
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "roll_fee_reconciliation_status": "PASS_ALL_ROLL_EVENTS_RECONCILE",
+  "runtime_lag_status": "PASS_ALL_PERIODS_MIN_LAG_GE_1",
+  "scalar_heuristic_failures_recorded": 2,
+  "status": "PASS_OPUS_ROUND2_MECHANICAL_BLOCKERS_CLOSED_WITH_SCALAR_HEURISTIC_CAVEAT",
+  "trading": "NO",
+  "tuning": "NO"
+}

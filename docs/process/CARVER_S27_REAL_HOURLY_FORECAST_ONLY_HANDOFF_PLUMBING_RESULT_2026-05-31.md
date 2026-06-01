@@ -37,9 +37,17 @@ The handoff preserves the source design:
 ```text
 S27 depends on S26
 S27 mean-reversion forecast must not oppose trend
-S27 inherits S26 scalar 9.3 and cap +/-20
+S27 uses its Chapter 27 scalar around 20 and the common forecast cap +/-20
 S27 uses no forecast-combination FDM
 S27 remains forecast-only, not diagnostic/backtest/position output
+```
+
+2026-06-01 clarification:
+
+```text
+The previous phrase "inherits S26 scalar 9.3" was stale wording.
+S26 keeps scalar 9.3.
+S27 uses the Chapter 27 p. 502 scalar around 20 after the trend overlay and volatility multiplier.
 ```
 
 ## Runtime Lock Requirements

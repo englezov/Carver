@@ -1,0 +1,23 @@
+{
+  "aggregate_parity_rows": 12,
+  "blocking_findings": 0,
+  "deployment": "NO",
+  "forward_access": "NO",
+  "gate": "S27_ZN_BACKTEST_PARITY_VERIFICATION_BEFORE_LOCKBOX",
+  "lineage_rows": 16,
+  "lockbox_access": "NO",
+  "lookahead_rows": 12,
+  "new_data_download": "NO",
+  "null_tests_run": "YES_BUG_DETECTION_ONLY_NOT_TUNING",
+  "oos_access": "NO",
+  "period_count": 2,
+  "periods": [
+    "ZN_2022_2023_INITIAL_TEST",
+    "ZN_2024_VALIDATION"
+  ],
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "row_replay_rows": 80,
+  "status": "PASS_S27_ZN_BACKTEST_PARITY_VERIFIED_BEFORE_LOCKBOX",
+  "trading": "NO"
+}

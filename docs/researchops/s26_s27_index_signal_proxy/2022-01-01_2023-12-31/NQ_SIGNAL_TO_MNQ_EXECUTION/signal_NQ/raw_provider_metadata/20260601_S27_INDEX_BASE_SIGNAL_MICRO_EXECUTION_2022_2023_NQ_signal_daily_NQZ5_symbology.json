@@ -1,0 +1,24 @@
+{
+  "end_date": "2016-02-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "NQZ5"
+  ],
+  "result": {
+    "NQZ5": [
+      {
+        "d0": "2014-09-05",
+        "d1": "2016-01-11",
+        "s": "12809"
+      }
+    ]
+  },
+  "start_date": "2014-08-28",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "NQZ5"
+  ]
+}

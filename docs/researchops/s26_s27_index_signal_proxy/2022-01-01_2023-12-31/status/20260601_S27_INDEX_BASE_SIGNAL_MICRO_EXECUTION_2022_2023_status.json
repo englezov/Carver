@@ -1,0 +1,24 @@
+{
+  "cfd_adapter_policy": "ICMARKETS_CFD_ADAPTER_FAIL_CLOSED_UNTIL_STATIC_SPEC_AND_CFD_DATA_GATE",
+  "deployment": "NO",
+  "fail_closed_count": 0,
+  "forward_access": "NO",
+  "gate": "S27_INDEX_BASE_SIGNAL_MICRO_FUTURES_EXECUTION_DEV_RECON",
+  "git_operations": "NO",
+  "lockbox_access": "NO",
+  "micro_execution_policy": "MICRO_FUTURES_EXECUTION_VARIANT_DEV_RECON_ONLY_USING_MICRO_HOURLY_BARS",
+  "oos_access": "NO",
+  "pair_count": 1,
+  "pass_count": 1,
+  "passed_pairs": [
+    "ES_SIGNAL_TO_MES_EXECUTION"
+  ],
+  "promotion": "NO",
+  "provider_api_access": "YES_DATABENTO_EXACT_AUTHORIZED_INDEX_SIGNAL_MICRO_EXECUTION_SURFACE",
+  "requested_window_end": "2023-12-31",
+  "requested_window_start": "2022-01-01",
+  "source_signal_policy": "BASE_FUTURES_SIGNAL_AUTHORITY_WHEN_MICRO_HAS_INSUFFICIENT_HISTORY",
+  "status": "PASS_S27_INDEX_BASE_SIGNAL_MICRO_FUTURES_EXECUTION_DEV_RECON_ARTIFACTS_CREATED_NOT_ALPHA",
+  "summary_csv": "docs\\researchops\\s26_s27_index_signal_proxy\\2022-01-01_2023-12-31\\summary\\20260601_S27_INDEX_BASE_SIGNAL_MICRO_EXECUTION_2022_2023_summary.csv",
+  "trading": "NO"
+}

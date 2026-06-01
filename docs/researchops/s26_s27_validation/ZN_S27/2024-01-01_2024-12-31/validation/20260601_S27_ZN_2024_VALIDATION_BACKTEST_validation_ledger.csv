@@ -1,0 +1,10 @@
+check_name,check_status,observed_count
+hourly_source_rows_nonempty,PASS,10233
+hourly_continuous_rows_nonempty,PASS,5923
+daily_continuous_rows_nonempty,PASS,4322
+s27_forecast_rows_nonempty,PASS,5919
+ladder_rows_match_forecast_rows,PASS,5919
+position_rows_match_ladder_rows,PASS,5919
+backtest_rows_nonempty,PASS,5918
+no_oos_lockbox_forward,PASS,0
+no_alpha_statistics,PASS,0

@@ -673,7 +673,7 @@ class S27SourceLocks:
     vol_quantile_status: SourceRuleStatus = SourceRuleStatus.LOCKED
     vol_attenuation_status: SourceRuleStatus = SourceRuleStatus.LOCKED
     trend_interaction_status: SourceRuleStatus = SourceRuleStatus.LOCKED
-    inherited_scalar_cap_status: SourceRuleStatus = SourceRuleStatus.LOCKED
+    s27_scalar_and_cap_status: SourceRuleStatus = SourceRuleStatus.LOCKED
     no_forecast_combination_fdm_status: SourceRuleStatus = SourceRuleStatus.LOCKED
     output_boundary_status: SourceRuleStatus = SourceRuleStatus.LOCKED
 
@@ -684,7 +684,7 @@ class S27SourceLocks:
             ("relative volatility quantile", self.vol_quantile_status),
             ("EWMA(10) volatility attenuation", self.vol_attenuation_status),
             ("does-not-oppose-trend interaction", self.trend_interaction_status),
-            ("inherited scalar and cap", self.inherited_scalar_cap_status),
+            ("S27 scalar around 20 and forecast cap", self.s27_scalar_and_cap_status),
             ("no daily forecast-combination FDM", self.no_forecast_combination_fdm_status),
             ("S27 output boundary", self.output_boundary_status),
         ):
@@ -697,7 +697,7 @@ class S27RealHourlySourceLocks:
     s26_forecast_row_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     trend_overlay_runtime_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     vol_attenuation_runtime_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
-    inherited_scalar_cap_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
+    s27_scalar_and_cap_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     no_fdm_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     no_buffering_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
     output_boundary_status: SourceRuleStatus = SourceRuleStatus.UNRESOLVED
@@ -707,7 +707,7 @@ class S27RealHourlySourceLocks:
             ("S26 forecast row", self.s26_forecast_row_status),
             ("EWMAC16 trend overlay runtime", self.trend_overlay_runtime_status),
             ("V/Q/M volatility attenuation runtime", self.vol_attenuation_runtime_status),
-            ("S27 scalar and forecast cap", self.inherited_scalar_cap_status),
+            ("S27 scalar around 20 and forecast cap", self.s27_scalar_and_cap_status),
             ("no FDM rule", self.no_fdm_status),
             ("no buffering rule", self.no_buffering_status),
             ("S27 forecast-only output boundary", self.output_boundary_status),

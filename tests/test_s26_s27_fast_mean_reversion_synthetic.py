@@ -1454,7 +1454,7 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             s26_forecast_row_status=SourceRuleStatus.LOCKED,
             trend_overlay_runtime_status=SourceRuleStatus.LOCKED,
             vol_attenuation_runtime_status=SourceRuleStatus.LOCKED,
-            inherited_scalar_cap_status=SourceRuleStatus.LOCKED,
+            s27_scalar_and_cap_status=SourceRuleStatus.LOCKED,
             no_fdm_status=SourceRuleStatus.LOCKED,
             no_buffering_status=SourceRuleStatus.LOCKED,
             output_boundary_status=SourceRuleStatus.LOCKED,
