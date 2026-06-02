@@ -1,0 +1,20 @@
+{
+  "cache_file_count": 62,
+  "gate": "S27_PURE_NQ_SOURCE_NATIVE_FUTURES_CACHE_ONLY_TEST",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "new_data_download": "NO",
+  "non_authorization": [
+    "NO_PROVIDER_API_ACCESS",
+    "NO_NEW_DATA_DOWNLOAD",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION"
+  ],
+  "provider_api_access": "NO",
+  "run_id": "20260601_S27_PURE_NQ_CACHE_ONLY_TEST_2022_2023",
+  "source_cache_root": "docs\\researchops\\s26_s27_index_signal_proxy\\2022-01-01_2023-12-31\\NQ_SIGNAL_TO_MNQ_EXECUTION\\signal_NQ",
+  "status": "FAIL_CLOSED_S27_PURE_NQ_CACHE_ONLY_TEST_NOT_EXECUTABLE"
+}

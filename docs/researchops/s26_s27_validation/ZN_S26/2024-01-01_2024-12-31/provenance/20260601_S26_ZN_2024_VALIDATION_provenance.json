@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-06-01T07:14:03.895510Z",
+  "gate": "S26_ZN_2024_VALIDATION_EXISTING_LOCAL_ARTIFACTS_ONLY",
+  "lockbox_access": "NO",
+  "new_data_download": "NO_NEW_DATA_DOWNLOAD",
+  "promotion": "NO",
+  "provider_api_access": "NO_NEW_PROVIDER_ACCESS",
+  "run_id": "20260601_S26_ZN_2024_VALIDATION",
+  "source_files": {
+    "hourly_lineage_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\local_lineage\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_hourly_continuous_lineage.csv",
+    "s26_forecast_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\forecast_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_s26_forecast_rows.csv",
+    "s27_backtest_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\backtest_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_ladder_backtest_rows.csv",
+    "s27_status_json": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\status\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_status.json"
+  },
+  "source_sha256": {
+    "hourly_lineage_csv": "290806DEFB9C074D5C06D0969A04E9748C0E97127C81BA11A23EAFF1060D5D20",
+    "s26_forecast_csv": "0E88F8056A8ACB9E4188BE644312C43DBFC182849FB462A23241265B5EE6EA8B",
+    "s27_backtest_csv": "090570A37969C7E454ABB0DDE5291DA9CFBE9FB22F78C5ECEB1BA72F20DCEAE9",
+    "s27_status_json": "4368B134FEA369D2454CDFFA62C315BAD4A5222F3B6D0461776BD0CCEAEA0EC7"
+  },
+  "status": "PASS_S26_ZN_2024_VALIDATION_NOT_PROMOTION"
+}
