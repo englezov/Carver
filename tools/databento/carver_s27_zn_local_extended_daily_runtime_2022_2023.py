@@ -220,7 +220,7 @@ def _build_vqm_rows(sigma_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "quantile_q": q,
                 "raw_multiplier_2_minus_1_5q": raw_multiplier,
                 "vol_multiplier_m_ewma10": smoothed,
-                "method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+                "method_status": "LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME",
                 "no_lookahead_status": "PASS_NO_LOOKAHEAD_DAILY_RUNTIME",
             }
         )

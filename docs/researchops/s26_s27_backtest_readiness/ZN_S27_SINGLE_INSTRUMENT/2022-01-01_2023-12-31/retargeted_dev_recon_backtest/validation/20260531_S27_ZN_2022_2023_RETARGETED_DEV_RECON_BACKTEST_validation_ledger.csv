@@ -2,10 +2,10 @@ check_name,check_status,observed_count
 source_rows_provider_condition_available,PASS,20870
 continuous_rows_have_unique_timestamps,PASS,11775
 source_rows_accounted_by_active_plus_inactive_ledgers,PASS,20870
-s26_rows_nonempty,PASS,11771
-s27_rows_nonempty,PASS,11771
-position_rows_match_s27_rows,PASS,11771
-backtest_rows_use_prior_bar_positions,PASS,11770
+s26_rows_nonempty,PASS,11775
+s27_rows_nonempty,PASS,11775
+position_rows_match_s27_rows,PASS,11775
+backtest_rows_use_prior_bar_positions,PASS,11774
 no_provider_api_access,PASS,0
 no_oos_lockbox_forward,PASS,0
 costs_fail_closed,PASS,0

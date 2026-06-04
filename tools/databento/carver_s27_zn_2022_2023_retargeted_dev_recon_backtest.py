@@ -4,6 +4,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
@@ -16,11 +17,15 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.carver.spine.s26_s27 import (  # noqa: E402
-    S26_EQUILIBRIUM_EWMA_SPAN,
+    S26_DAILY_EQUILIBRIUM_METHOD_STATUS,
+    S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
     S26_FORECAST_SCALAR,
+    S26_ZN_SIGMA_RUNTIME_STATUS,
     S27_FORECAST_SCALAR,
-    S27_TREND_FAST_SPAN,
-    S27_TREND_SLOW_SPAN,
+    S27_DAILY_TREND_METHOD_STATUS,
+    S27_DAILY_VOL_ATTENUATION_METHOD_STATUS,
+    S27_TREND_RUNTIME_STATUS,
+    S27_VOL_ATTENUATION_RUNTIME_STATUS,
 )
 
 
@@ -40,13 +45,21 @@ CONTRACTS = [
     {"raw_symbol": "ZNH4", "contract_year": 2024, "delivery_month": 3, "delivery_code": "H"},
 ]
 ROLL_BUFFER_COMPLETED_DATES = 10
-SIGMA_EWMA_SPAN = 32
-SIGMA_WINDOW_ROWS = 34
-TRADING_DAYS_PER_YEAR = 256
 FORECAST_DIVISOR = 10.0
 ZN_CONTRACT_MULTIPLIER = 1000.0
 UNIT_BASE_POSITION_CONTRACTS = 1.0
 MAX_DAILY_RUNTIME_LAG_DAYS = 10
+AUTH_ENV_VAR = "CARVER_OPERATOR_AUTHORIZES_S27_BACKTEST"
+AUTH_ENV_VALUE = "AUTHORIZED_CORRECTED_S27_ZN_2022_2023_BACKTEST"
+BLOCKED_DEPENDENCY_FIELDNAMES = [
+    "row_id",
+    "author_market_code",
+    "raw_symbol",
+    "completed_trading_date",
+    "derived_completed_bar_end_utc",
+    "block_reason",
+    "block_status",
+]
 
 SOURCE_ROOT = (
     ROOT
@@ -62,18 +75,17 @@ HOURLY_SOURCE_STATUS = (
     SOURCE_ROOT
     / "status/20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_status.json"
 )
-VQM_ROOT = (
+CORRECTED_RUNTIME_ROOT = (
     ROOT
-    / "docs/researchops/s26_s27_backtest_readiness/ZN_S27_SINGLE_INSTRUMENT/2022-01-01_2023-12-31/"
-    / "local_extended_daily_runtime"
+    / "docs/researchops/s26_s27_backtest_readiness/ZN_S27_SINGLE_INSTRUMENT/"
+    / "2022-01-01_2023-12-31/corrected_runtime_ledgers"
 )
-DAILY_RISK_HISTORY_CSV = (
-    VQM_ROOT / "ledger/20260531_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_extended_local_continuous_daily_risk_history.csv"
+S26_SIGMA_RUNTIME_CSV = Path(os.environ.get("CARVER_S27_S26_SIGMA_RUNTIME_CSV", CORRECTED_RUNTIME_ROOT / "s26_sigma_runtime_rows.csv"))
+S26_DAILY_EQUILIBRIUM_RUNTIME_CSV = Path(
+    os.environ.get("CARVER_S27_S26_DAILY_EQUILIBRIUM_RUNTIME_CSV", CORRECTED_RUNTIME_ROOT / "s26_daily_ewma5_equilibrium_runtime_rows.csv")
 )
-VQM_DAILY_LEDGER_CSV = (
-    VQM_ROOT / "ledger/20260531_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_relative_vol_v_q_m_daily_ledger.csv"
-)
-VQM_STATUS_JSON = VQM_ROOT / "status/20260531_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_status.json"
+S27_TREND_RUNTIME_CSV = Path(os.environ.get("CARVER_S27_TREND_RUNTIME_CSV", CORRECTED_RUNTIME_ROOT / "s27_daily_ewmac16_64_trend_runtime_rows.csv"))
+S27_VOL_RUNTIME_CSV = Path(os.environ.get("CARVER_S27_VOL_RUNTIME_CSV", CORRECTED_RUNTIME_ROOT / "s27_daily_ten_year_vqm_runtime_rows.csv"))
 OUTPUT_ROOT = (
     ROOT
     / "docs/researchops/s26_s27_backtest_readiness/ZN_S27_SINGLE_INSTRUMENT/"
@@ -89,6 +101,7 @@ LOCAL_AUDIT_DOC = (
 
 
 def main() -> None:
+    _require_backtest_authorization()
     _require_inputs()
     folders = _folders()
     for folder in folders.values():
@@ -96,8 +109,8 @@ def main() -> None:
 
     hourly_rows = _read_hourly_rows()
     continuous_rows, inactive_rows, roll_plan = _build_hourly_continuous_rows(hourly_rows)
-    daily_runtime_rows = _build_daily_runtime_rows()
-    s26_rows, s27_rows, blocked_rows = _build_forecasts(continuous_rows, daily_runtime_rows)
+    runtime_ledgers = _read_runtime_ledgers()
+    s26_rows, s27_rows, blocked_rows, runtime_alignment_rows = _build_forecasts(continuous_rows, runtime_ledgers)
     position_rows = _build_positions(s27_rows)
     backtest_rows = _build_backtest_rows(continuous_rows, position_rows)
     validation_rows = _build_validation_rows(
@@ -113,10 +126,10 @@ def main() -> None:
     _write_csv(folders["lineage"] / f"{RUN_ID}_local_hourly_continuous_lineage.csv", continuous_rows)
     _write_csv(folders["lineage"] / f"{RUN_ID}_inactive_contract_rows_exclusion_ledger.csv", inactive_rows)
     _write_csv(folders["lineage"] / f"{RUN_ID}_roll_plan.csv", roll_plan)
-    _write_csv(folders["runtime"] / f"{RUN_ID}_daily_runtime_rows.csv", daily_runtime_rows)
+    _write_csv(folders["runtime"] / f"{RUN_ID}_corrected_runtime_alignment_rows.csv", runtime_alignment_rows)
     _write_csv(folders["forecasts"] / f"{RUN_ID}_s26_forecast_rows.csv", s26_rows)
     _write_csv(folders["forecasts"] / f"{RUN_ID}_s27_forecast_rows.csv", s27_rows)
-    _write_csv(folders["forecasts"] / f"{RUN_ID}_s27_blocked_dependency_rows.csv", blocked_rows)
+    _write_csv(folders["forecasts"] / f"{RUN_ID}_s27_blocked_dependency_rows.csv", blocked_rows, BLOCKED_DEPENDENCY_FIELDNAMES)
     _write_csv(folders["positions"] / f"{RUN_ID}_unit_position_rows.csv", position_rows)
     _write_csv(folders["backtest"] / f"{RUN_ID}_unit_no_cost_backtest_rows.csv", backtest_rows)
     _write_csv(folders["validation"] / f"{RUN_ID}_validation_ledger.csv", validation_rows)
@@ -128,7 +141,7 @@ def main() -> None:
         continuous_rows=continuous_rows,
         inactive_rows=inactive_rows,
         roll_plan=roll_plan,
-        daily_runtime_rows=daily_runtime_rows,
+        runtime_alignment_rows=runtime_alignment_rows,
         s26_rows=s26_rows,
         s27_rows=s27_rows,
         blocked_rows=blocked_rows,
@@ -153,7 +166,7 @@ def main() -> None:
 def _folders() -> dict[str, Path]:
     return {
         "lineage": OUTPUT_ROOT / "local_hourly_lineage",
-        "runtime": OUTPUT_ROOT / "daily_runtime_rows",
+        "runtime": OUTPUT_ROOT / "corrected_runtime_alignment_rows",
         "forecasts": OUTPUT_ROOT / "forecast_rows",
         "positions": OUTPUT_ROOT / "position_rows",
         "backtest": OUTPUT_ROOT / "backtest_rows",
@@ -166,9 +179,24 @@ def _folders() -> dict[str, Path]:
 
 
 def _require_inputs() -> None:
-    for path in (HOURLY_SOURCE_CSV, HOURLY_SOURCE_STATUS, DAILY_RISK_HISTORY_CSV, VQM_DAILY_LEDGER_CSV, VQM_STATUS_JSON):
+    for path in (
+        HOURLY_SOURCE_CSV,
+        HOURLY_SOURCE_STATUS,
+        S26_SIGMA_RUNTIME_CSV,
+        S26_DAILY_EQUILIBRIUM_RUNTIME_CSV,
+        S27_TREND_RUNTIME_CSV,
+        S27_VOL_RUNTIME_CSV,
+    ):
         if not path.exists():
             raise SystemExit(f"Fail closed: required local artifact missing: {path}")
+
+
+def _require_backtest_authorization() -> None:
+    if os.environ.get(AUTH_ENV_VAR) != AUTH_ENV_VALUE:
+        raise SystemExit(
+            f"Fail closed: corrected S27 backtest requires {AUTH_ENV_VAR}={AUTH_ENV_VALUE}; "
+            "runtime-ledger readiness alone is not backtest authorization"
+        )
 
 
 def _read_hourly_rows() -> list[dict[str, Any]]:
@@ -300,84 +328,105 @@ def _build_hourly_continuous_rows(
     return active_rows, inactive_rows, roll_plan
 
 
-def _build_daily_runtime_rows() -> list[dict[str, Any]]:
-    daily_rows = _read_csv(DAILY_RISK_HISTORY_CSV)
-    vqm_rows = _read_csv(VQM_DAILY_LEDGER_CSV)
-    if not daily_rows or not vqm_rows:
-        raise SystemExit("Fail closed: daily runtime dependency artifacts are empty")
-
-    closes = [float(row["continuous_close"]) for row in daily_rows]
-    dates = [row["completed_trading_date"] for row in daily_rows]
-    fast = _ewma_series(closes, S27_TREND_FAST_SPAN)
-    slow = _ewma_series(closes, S27_TREND_SLOW_SPAN)
-    sigma_by_date = _sigma_rows_from_daily(daily_rows)
-    vqm_by_date = {row["completed_trading_date"]: row for row in vqm_rows}
-    output: list[dict[str, Any]] = []
-    for index, day in enumerate(dates):
-        sigma = sigma_by_date.get(day)
-        vqm = vqm_by_date.get(day)
-        output.append(
-            {
-                "completed_trading_date": day,
-                "daily_continuous_close": closes[index],
-                "ewmac16_fast_ewma": fast[index],
-                "ewmac16_slow_ewma": slow[index],
-                "trend_forecast_proxy_fast_minus_slow": fast[index] - slow[index],
-                "sigma_i_t": sigma["sigma_i_t"] if sigma else "",
-                "sigma_source_window_start": sigma["source_window_start"] if sigma else "",
-                "sigma_source_window_end": sigma["source_window_end"] if sigma else "",
-                "source_vqm_completed_trading_date": day if vqm else "",
-                "relative_volatility_v": vqm["relative_volatility_v"] if vqm else "",
-                "quantile_q": vqm["quantile_q"] if vqm else "",
-                "vol_multiplier_m_ewma10": vqm["vol_multiplier_m_ewma10"] if vqm else "",
-                "runtime_status": "DAILY_RUNTIME_DEPENDENCY_LEDGER_STRICT_PRIOR_DATE_REQUIRED",
-            }
-        )
-    return output
+def _read_runtime_ledgers() -> dict[str, dict[str, dict[str, Any]]]:
+    sigma_rows = _read_csv(S26_SIGMA_RUNTIME_CSV)
+    equilibrium_rows = _read_csv(S26_DAILY_EQUILIBRIUM_RUNTIME_CSV)
+    trend_rows = _read_csv(S27_TREND_RUNTIME_CSV)
+    vol_rows = _read_csv(S27_VOL_RUNTIME_CSV)
+    return {
+        "sigma": _runtime_map_by_as_of("S26 sigma", sigma_rows),
+        "equilibrium": _runtime_map_by_as_of("S26 daily equilibrium", equilibrium_rows),
+        "trend": _runtime_map_by_as_of("S27 daily trend", trend_rows),
+        "vol": _runtime_map_by_as_of("S27 V/Q/M volatility", vol_rows),
+    }
 
 
 def _build_forecasts(
     continuous_rows: list[dict[str, Any]],
-    daily_runtime_rows: list[dict[str, Any]],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
-    runtime_by_date = {row["completed_trading_date"]: row for row in daily_runtime_rows}
-    runtime_dates = sorted(runtime_by_date)
+    runtime_ledgers: dict[str, dict[str, dict[str, Any]]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     source_sha = _sha256(HOURLY_SOURCE_CSV)
-    vqm_sha = _sha256(VQM_DAILY_LEDGER_CSV)
+    sigma_sha = _sha256(S26_SIGMA_RUNTIME_CSV)
+    equilibrium_sha = _sha256(S26_DAILY_EQUILIBRIUM_RUNTIME_CSV)
+    trend_sha = _sha256(S27_TREND_RUNTIME_CSV)
+    vol_sha = _sha256(S27_VOL_RUNTIME_CSV)
     s26_rows: list[dict[str, Any]] = []
     s27_rows: list[dict[str, Any]] = []
     blocked_rows: list[dict[str, Any]] = []
-    ewma = None
-    alpha = 2.0 / (S26_EQUILIBRIUM_EWMA_SPAN + 1.0)
-    for index, row in enumerate(continuous_rows):
+    runtime_alignment_rows: list[dict[str, Any]] = []
+    for row in continuous_rows:
         price = float(row["continuous_close"])
-        ewma = price if ewma is None else alpha * price + (1.0 - alpha) * ewma
-        if index < S26_EQUILIBRIUM_EWMA_SPAN - 1:
-            blocked_rows.append(_blocked_row(row, "BLOCKED_S26_EWMA5_WARMUP"))
-            continue
-        runtime = _latest_prior_runtime(row["completed_trading_date"], runtime_dates, runtime_by_date)
-        if runtime is None:
-            blocked_rows.append(_blocked_row(row, "BLOCKED_NO_PRIOR_DAILY_RUNTIME_ROW"))
-            continue
-        if runtime["sigma_i_t"] == "":
+        as_of = row["derived_completed_bar_end_utc"]
+        sigma_runtime = runtime_ledgers["sigma"].get(as_of)
+        equilibrium_runtime = runtime_ledgers["equilibrium"].get(as_of)
+        trend_runtime = runtime_ledgers["trend"].get(as_of)
+        vol_runtime = runtime_ledgers["vol"].get(as_of)
+        if sigma_runtime is None:
             blocked_rows.append(_blocked_row(row, "BLOCKED_NO_PRIOR_SIGMA_I_T"))
             continue
-        if runtime["vol_multiplier_m_ewma10"] == "":
+        if equilibrium_runtime is None:
+            blocked_rows.append(_blocked_row(row, "BLOCKED_NO_DAILY_EWMA5_EQUILIBRIUM_RUNTIME"))
+            continue
+        if trend_runtime is None:
+            blocked_rows.append(_blocked_row(row, "BLOCKED_NO_DAILY_EWMAC16_64_TREND_RUNTIME"))
+            continue
+        if vol_runtime is None:
             blocked_rows.append(_blocked_row(row, "BLOCKED_NO_PRIOR_V_Q_M_VOL_MULTIPLIER"))
             continue
-        runtime_lag_days = _runtime_lag_days(row["completed_trading_date"], runtime["completed_trading_date"])
-        if runtime_lag_days > MAX_DAILY_RUNTIME_LAG_DAYS:
-            blocked_rows.append(_blocked_row(row, "BLOCKED_STALE_DAILY_SIGMA_TREND_V_Q_M_RUNTIME"))
+
+        _validate_runtime_identity("S26 sigma", sigma_runtime, row)
+        _validate_runtime_identity("S26 daily equilibrium", equilibrium_runtime, row)
+        _validate_runtime_identity("S27 daily trend", trend_runtime, row)
+        _validate_runtime_identity("S27 V/Q/M volatility", vol_runtime, row)
+        _validate_runtime_status("S26 sigma", sigma_runtime, S26_ZN_SIGMA_RUNTIME_STATUS, None)
+        _validate_runtime_status(
+            "S26 daily equilibrium",
+            equilibrium_runtime,
+            S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
+            S26_DAILY_EQUILIBRIUM_METHOD_STATUS,
+        )
+        _validate_runtime_status("S27 daily trend", trend_runtime, S27_TREND_RUNTIME_STATUS, S27_DAILY_TREND_METHOD_STATUS)
+        _validate_runtime_status(
+            "S27 V/Q/M volatility",
+            vol_runtime,
+            S27_VOL_ATTENUATION_RUNTIME_STATUS,
+            S27_DAILY_VOL_ATTENUATION_METHOD_STATUS,
+        )
+        if _max_runtime_lag_days(row["completed_trading_date"], equilibrium_runtime, trend_runtime, vol_runtime) > MAX_DAILY_RUNTIME_LAG_DAYS:
+            blocked_rows.append(_blocked_row(row, "BLOCKED_STALE_CORRECTED_RUNTIME_LEDGER_ROW"))
             continue
-        sigma_percent = float(runtime["sigma_i_t"])
+
+        sigma_percent = _runtime_float(sigma_runtime, ("sigma_percent_t", "sigma_i_t", "value"))
         sigma_price = price * sigma_percent / 16.0
         if not math.isfinite(sigma_price) or sigma_price <= 0.0:
             blocked_rows.append(_blocked_row(row, "BLOCKED_INVALID_SIGMA_PRICE"))
             continue
-        raw_forecast = ewma - price
+        equilibrium = _runtime_float(equilibrium_runtime, ("equilibrium_ewma_5", "equilibrium_ewma5"))
+        raw_forecast = equilibrium - price
         risk_adjusted = raw_forecast / sigma_price
         scaled = risk_adjusted * S26_FORECAST_SCALAR
         capped = _cap(scaled)
+        source_dates = _runtime_source_dates(equilibrium_runtime, trend_runtime, vol_runtime)
+        max_lag_days = _max_runtime_lag_days(row["completed_trading_date"], equilibrium_runtime, trend_runtime, vol_runtime)
+        runtime_alignment_rows.append(
+            {
+                "row_id": row["row_id"],
+                "author_market_code": row["author_market_code"],
+                "instrument_id": row["instrument_id"],
+                "raw_symbol": row["raw_symbol"],
+                "as_of": as_of,
+                "completed_trading_date": row["completed_trading_date"],
+                "sigma_runtime_status": sigma_runtime["runtime_status"],
+                "equilibrium_runtime_status": equilibrium_runtime["runtime_status"],
+                "trend_runtime_status": trend_runtime["runtime_status"],
+                "vol_runtime_status": vol_runtime["runtime_status"],
+                "equilibrium_last_daily_row_used": source_dates["equilibrium"],
+                "trend_last_daily_row_used": source_dates["trend"],
+                "vol_source_completed_trading_date": source_dates["vol"],
+                "max_runtime_lag_days": max_lag_days,
+                "alignment_status": "PASS_CORRECTED_RUNTIME_ROWS_MATCH_FORECAST_TIMESTAMP",
+            }
+        )
         s26 = {
             "row_id": row["row_id"],
             "author_market_code": row["author_market_code"],
@@ -386,7 +435,7 @@ def _build_forecasts(
             "completed_trading_date": row["completed_trading_date"],
             "derived_completed_bar_end_utc": row["derived_completed_bar_end_utc"],
             "continuous_close": price,
-            "equilibrium_ewma5": ewma,
+            "equilibrium_ewma5": equilibrium,
             "raw_forecast_equilibrium_minus_price": raw_forecast,
             "sigma_percent_i_t": sigma_percent,
             "sigma_price_i_t": sigma_price,
@@ -394,15 +443,17 @@ def _build_forecasts(
             "forecast_scalar": S26_FORECAST_SCALAR,
             "scaled_forecast": scaled,
             "capped_forecast": capped,
-            "source_daily_runtime_completed_trading_date": runtime["completed_trading_date"],
-            "source_daily_runtime_lag_days": runtime_lag_days,
+            "source_daily_runtime_completed_trading_date": source_dates["equilibrium"],
+            "source_daily_runtime_lag_days": max_lag_days,
             "source_hourly_artifact_sha256": source_sha,
+            "source_sigma_artifact_sha256": sigma_sha,
+            "source_equilibrium_artifact_sha256": equilibrium_sha,
             "forecast_status": "PASS_S26_FORECAST_RUNTIME_DEV_RECON_ONLY",
         }
         s26_rows.append(s26)
 
-        trend = float(runtime["trend_forecast_proxy_fast_minus_slow"])
-        vol_multiplier = float(runtime["vol_multiplier_m_ewma10"])
+        trend = _runtime_float(trend_runtime, ("trend_forecast", "trend_forecast_proxy_fast_minus_slow"))
+        vol_multiplier = _runtime_float(vol_runtime, ("vol_multiplier", "vol_multiplier_m_ewma10"))
         opposes_trend = raw_forecast * trend < 0.0
         adjusted_raw = 0.0 if opposes_trend else raw_forecast * vol_multiplier
         s27_risk_adjusted = adjusted_raw / sigma_price
@@ -420,11 +471,11 @@ def _build_forecasts(
                 "s26_raw_forecast": raw_forecast,
                 "s27_trend_forecast_proxy_fast_minus_slow": trend,
                 "s27_opposes_trend": "YES" if opposes_trend else "NO",
-                "source_daily_runtime_completed_trading_date": runtime["completed_trading_date"],
-                "source_vqm_completed_trading_date": runtime["completed_trading_date"],
-                "source_daily_runtime_lag_days": runtime_lag_days,
-                "relative_volatility_v": runtime["relative_volatility_v"],
-                "quantile_q": runtime["quantile_q"],
+                "source_daily_runtime_completed_trading_date": source_dates["trend"],
+                "source_vqm_completed_trading_date": source_dates["vol"],
+                "source_daily_runtime_lag_days": max_lag_days,
+                "relative_volatility_v": _runtime_optional(vol_runtime, ("relative_volatility_v",)),
+                "quantile_q": _runtime_optional(vol_runtime, ("quantile_q",)),
                 "vol_multiplier_m_ewma10": vol_multiplier,
                 "adjusted_raw_forecast": adjusted_raw,
                 "sigma_price_i_t": sigma_price,
@@ -432,13 +483,14 @@ def _build_forecasts(
                 "forecast_scalar": S27_FORECAST_SCALAR,
                 "scaled_forecast": s27_scaled,
                 "capped_forecast": s27_capped,
-                "source_vqm_artifact_sha256": vqm_sha,
+                "source_trend_artifact_sha256": trend_sha,
+                "source_vqm_artifact_sha256": vol_sha,
                 "forecast_status": "PASS_S27_FORECAST_RUNTIME_DEV_RECON_ONLY",
             }
         )
     if not s27_rows:
         raise SystemExit("Fail closed: no S27 rows were eligible after daily runtime dependencies")
-    return s26_rows, s27_rows, blocked_rows
+    return s26_rows, s27_rows, blocked_rows, runtime_alignment_rows
 
 
 def _build_positions(s27_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -539,7 +591,7 @@ def _status_payload(**payload: Any) -> dict[str, Any]:
     continuous_rows = payload["continuous_rows"]
     inactive_rows = payload["inactive_rows"]
     roll_plan = payload["roll_plan"]
-    daily_runtime_rows = payload["daily_runtime_rows"]
+    runtime_alignment_rows = payload["runtime_alignment_rows"]
     s26_rows = payload["s26_rows"]
     s27_rows = payload["s27_rows"]
     blocked_rows = payload["blocked_rows"]
@@ -558,7 +610,7 @@ def _status_payload(**payload: Any) -> dict[str, Any]:
         "source_strategy_facing_window_end": max(row["completed_trading_date"] for row in hourly_rows),
         "effective_backtest_start": s27_rows[0]["completed_trading_date"],
         "effective_backtest_end": s27_rows[-1]["completed_trading_date"],
-        "effective_backtest_start_reason": "FIRST_ROW_WITH_STRICT_PRIOR_DAILY_SIGMA_TREND_AND_V_Q_M_RUNTIME",
+        "effective_backtest_start_reason": "FIRST_ROW_WITH_LOCKED_SIGMA_DAILY_EQUILIBRIUM_DAILY_TREND_AND_V_Q_M_RUNTIME",
         "source_hourly_rows": len(hourly_rows),
         "continuous_hourly_rows": len(continuous_rows),
         "inactive_contract_rows_explicitly_ledgered": len(inactive_rows),
@@ -568,7 +620,7 @@ def _status_payload(**payload: Any) -> dict[str, Any]:
             else "FAIL_SOURCE_ROW_ACCOUNTING_MISMATCH"
         ),
         "roll_transition_count": len(roll_plan),
-        "daily_runtime_rows": len(daily_runtime_rows),
+        "corrected_runtime_alignment_rows": len(runtime_alignment_rows),
         "s26_forecast_rows": len(s26_rows),
         "s27_forecast_rows": len(s27_rows),
         "blocked_dependency_rows": len(blocked_rows),
@@ -601,9 +653,10 @@ def _provenance_payload(status: dict[str, Any]) -> dict[str, Any]:
         "created_at_utc": _z(datetime.now(timezone.utc)),
         "source_hourly_csv": str(HOURLY_SOURCE_CSV.relative_to(ROOT)),
         "source_hourly_status": str(HOURLY_SOURCE_STATUS.relative_to(ROOT)),
-        "daily_risk_history_csv": str(DAILY_RISK_HISTORY_CSV.relative_to(ROOT)),
-        "vqm_daily_ledger_csv": str(VQM_DAILY_LEDGER_CSV.relative_to(ROOT)),
-        "vqm_status_json": str(VQM_STATUS_JSON.relative_to(ROOT)),
+        "s26_sigma_runtime_csv": str(S26_SIGMA_RUNTIME_CSV.relative_to(ROOT)),
+        "s26_daily_equilibrium_runtime_csv": str(S26_DAILY_EQUILIBRIUM_RUNTIME_CSV.relative_to(ROOT)),
+        "s27_trend_runtime_csv": str(S27_TREND_RUNTIME_CSV.relative_to(ROOT)),
+        "s27_vol_runtime_csv": str(S27_VOL_RUNTIME_CSV.relative_to(ROOT)),
         "status": status,
         "non_authorization": [
             "NO_PROVIDER_API_ACCESS",
@@ -643,6 +696,88 @@ def _blocked_row(row: dict[str, Any], reason: str) -> dict[str, Any]:
     }
 
 
+def _runtime_map_by_as_of(name: str, rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    if not rows:
+        raise SystemExit(f"Fail closed: {name} runtime ledger is empty")
+    out: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        as_of = row.get("as_of")
+        if not as_of:
+            raise SystemExit(f"Fail closed: {name} runtime row lacks as_of")
+        if as_of in out:
+            raise SystemExit(f"Fail closed: duplicate {name} runtime as_of {as_of}")
+        out[as_of] = row
+    return out
+
+
+def _validate_runtime_identity(name: str, runtime: dict[str, Any], hourly_row: dict[str, Any]) -> None:
+    for field in ("row_id", "author_market_code", "instrument_id", "raw_symbol"):
+        if str(runtime[field]) != str(hourly_row[field]):
+            raise SystemExit(f"Fail closed: {name} runtime {field} drift at {hourly_row['derived_completed_bar_end_utc']}")
+
+
+def _validate_runtime_status(
+    name: str,
+    runtime: dict[str, Any],
+    expected_runtime_status: str,
+    expected_method_status: str | None,
+) -> None:
+    if runtime.get("runtime_status") != expected_runtime_status:
+        raise SystemExit(f"Fail closed: {name} runtime status drift at {runtime.get('as_of')}")
+    if expected_method_status is not None and runtime.get("method_status") != expected_method_status:
+        raise SystemExit(f"Fail closed: {name} method status drift at {runtime.get('as_of')}")
+    if runtime.get("no_lookahead_status") not in ("PASS_NO_LOOKAHEAD", "PASS_NO_LOOKAHEAD_DAILY_RUNTIME"):
+        raise SystemExit(f"Fail closed: {name} no-lookahead status drift at {runtime.get('as_of')}")
+
+
+def _runtime_float(row: dict[str, Any], fields: tuple[str, ...]) -> float:
+    value = _runtime_optional(row, fields)
+    if value == "":
+        raise SystemExit(f"Fail closed: missing runtime numeric field from {fields}")
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise SystemExit(f"Fail closed: non-finite runtime numeric field from {fields}")
+    return parsed
+
+
+def _runtime_optional(row: dict[str, Any], fields: tuple[str, ...]) -> Any:
+    for field in fields:
+        value = row.get(field)
+        if value not in (None, ""):
+            return value
+    return ""
+
+
+def _runtime_source_dates(
+    equilibrium_runtime: dict[str, Any],
+    trend_runtime: dict[str, Any],
+    vol_runtime: dict[str, Any],
+) -> dict[str, str]:
+    return {
+        "equilibrium": str(_runtime_optional(equilibrium_runtime, ("last_daily_row_used", "source_completed_trading_date", "completed_trading_date"))),
+        "trend": str(_runtime_optional(trend_runtime, ("last_daily_row_used", "source_completed_trading_date", "completed_trading_date"))),
+        "vol": str(_runtime_optional(vol_runtime, ("source_vqm_completed_trading_date", "source_completed_trading_date", "completed_trading_date"))),
+    }
+
+
+def _max_runtime_lag_days(
+    completed_trading_date: str,
+    equilibrium_runtime: dict[str, Any],
+    trend_runtime: dict[str, Any],
+    vol_runtime: dict[str, Any],
+) -> int:
+    source_dates = _runtime_source_dates(equilibrium_runtime, trend_runtime, vol_runtime)
+    lags = []
+    for name, source_date in source_dates.items():
+        if not source_date:
+            raise SystemExit(f"Fail closed: missing {name} source date for runtime lag check")
+        lag = _runtime_lag_days(completed_trading_date, source_date)
+        if lag <= 0:
+            raise SystemExit(f"Fail closed: {name} runtime is not strict-prior to {completed_trading_date}")
+        lags.append(lag)
+    return max(lags)
+
+
 def _validation(name: str, passed: bool, observed_count: int) -> dict[str, Any]:
     return {
         "check_name": name,
@@ -651,45 +786,8 @@ def _validation(name: str, passed: bool, observed_count: int) -> dict[str, Any]:
     }
 
 
-def _latest_prior_runtime(day: str, dates: list[str], by_date: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
-    candidates = [candidate for candidate in dates if candidate < day]
-    if not candidates:
-        return None
-    return by_date[candidates[-1]]
-
-
 def _runtime_lag_days(day: str, runtime_day: str) -> int:
     return (date.fromisoformat(day) - date.fromisoformat(runtime_day)).days
-
-
-def _sigma_rows_from_daily(daily_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    out: dict[str, dict[str, Any]] = {}
-    closes = [float(row["continuous_close"]) for row in daily_rows]
-    dates = [row["completed_trading_date"] for row in daily_rows]
-    alpha = 2.0 / (SIGMA_EWMA_SPAN + 1.0)
-    for index in range(SIGMA_WINDOW_ROWS - 1, len(daily_rows)):
-        window = closes[index - SIGMA_WINDOW_ROWS + 1 : index + 1]
-        returns = [window[i] / window[i - 1] - 1.0 for i in range(1, len(window))]
-        variance = returns[0] * returns[0]
-        for value in returns[1:]:
-            variance = alpha * value * value + (1.0 - alpha) * variance
-        out[dates[index]] = {
-            "completed_trading_date": dates[index],
-            "sigma_i_t": math.sqrt(variance) * math.sqrt(TRADING_DAYS_PER_YEAR),
-            "source_window_start": dates[index - SIGMA_WINDOW_ROWS + 1],
-            "source_window_end": dates[index],
-        }
-    return out
-
-
-def _ewma_series(values: list[float], span: int) -> list[float]:
-    alpha = 2.0 / (span + 1.0)
-    current = values[0]
-    out = [current]
-    for value in values[1:]:
-        current = alpha * value + (1.0 - alpha) * current
-        out.append(current)
-    return out
 
 
 def _first_notice_proxy(contract: dict[str, Any], all_dates: list[str]) -> date:
@@ -736,12 +834,17 @@ def _read_csv(path: Path) -> list[dict[str, Any]]:
         return list(csv.DictReader(handle))
 
 
-def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+def _write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str] | None = None) -> None:
     if not rows:
-        path.write_text("", encoding="utf-8")
+        if fieldnames is None:
+            path.write_text("", encoding="utf-8")
+            return
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fieldnames)
+            writer.writeheader()
         return
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+        writer = csv.DictWriter(handle, fieldnames=fieldnames or list(rows[0].keys()))
         writer.writeheader()
         writer.writerows(rows)
 
@@ -751,9 +854,11 @@ def _write_json(path: Path, payload: Any) -> None:
 
 
 def _write_hashes(path: Path) -> None:
+    current_artifact_roots = _folders().values()
     hashes = {
         str(file.relative_to(ROOT)): _sha256(file)
-        for file in sorted(OUTPUT_ROOT.rglob("*"))
+        for folder in current_artifact_roots
+        for file in sorted(folder.rglob("*"))
         if file.is_file() and file != path
     }
     _write_json(path, hashes)

@@ -1,0 +1,59 @@
+{
+  "created_at_utc": "2026-06-04T10:43:24.721295Z",
+  "gate": "S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGER_PREP",
+  "hourly_source_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\provider_condition_resolution\\strategy_facing_hourly_bars\\20260531_S27_ZN_2022_2023_PROVIDER_CONDITION_OPTION_C_strategy_facing_available_ohlcv_1h.csv",
+  "hourly_source_sha256": "09A60516A82930FB648C8588B3E8CD20760651FD759812C7873E63CA1B360FBF",
+  "output_csvs": [
+    "s26_sigma_runtime_rows.csv",
+    "s26_daily_ewma5_equilibrium_runtime_rows.csv",
+    "s27_daily_ewmac16_64_trend_runtime_rows.csv",
+    "s27_daily_ten_year_vqm_runtime_rows.csv"
+  ],
+  "r2_daily_continuous_csv": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\local_lineage\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_daily_continuous_lineage.csv",
+  "r2_daily_continuous_sha256": "FFECE029996036CB4FEB7B7A3EE875EC89E6BDA5A9B58D577760241504E31BB7",
+  "source_method": "One strict-prior daily runtime row per hourly forecast target as_of; no forecast, position, diagnostic, or backtest output.",
+  "status": {
+    "backtest_run": "NO",
+    "daily_support_rows": 4750,
+    "deployment": "NO",
+    "diagnostics_run": "NO",
+    "forecast_target_end": "2023-12-29",
+    "forecast_target_rows": 11775,
+    "forecast_target_start": "2022-01-04",
+    "forward_access": "NO",
+    "gate": "S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGER_PREP",
+    "git_operations": "NO",
+    "inactive_rows_explicitly_ledgered_by_runner": 9095,
+    "lockbox_access": "NO",
+    "new_data_download": "NO",
+    "oos_access": "NO",
+    "position_output": "NO",
+    "promotion": "NO",
+    "provider_api_access": "NO",
+    "roll_transition_count": 8,
+    "runtime_ledger_lengths": {
+      "equilibrium": 11775,
+      "sigma": 11775,
+      "trend": 11775,
+      "vol": 11775
+    },
+    "runtime_rows_per_ledger": 11775,
+    "sigma_source_rows": 4717,
+    "status": "PASS_S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGERS_NOT_BACKTEST",
+    "trading": "NO",
+    "validation_status": "PASS",
+    "vqm_runtime_source_rows": 2157
+  },
+  "stitch_record": {
+    "bridge_day": "2015-01-01",
+    "from_2015_source": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S27_V_Q_M_VOL_ATTENUATION\\ten_year_vol_history_runtime_2026-05-31\\ledger\\20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv",
+    "gate": "S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_RECONSTRUCTION",
+    "pre_2015_bridge_offset_added_to_r2_history": -0.28125,
+    "pre_2015_source": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\local_lineage\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_daily_continuous_lineage.csv",
+    "r2_bridge_continuous_close": 119.734375,
+    "stitch_status": "PASS_EXPLICIT_CONSTANT_BRIDGE_OFFSET_DEV_RECON_ONLY",
+    "vqm_bridge_continuous_close": 119.453125
+  },
+  "vqm_daily_continuous_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S27_V_Q_M_VOL_ATTENUATION\\ten_year_vol_history_runtime_2026-05-31\\ledger\\20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv",
+  "vqm_daily_continuous_sha256": "5A34C9F0BAFB915A3584A089C7DE35EFC45FC1E6AA64046C3C6EFCDF202B4C1E"
+}

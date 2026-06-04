@@ -1,0 +1,32 @@
+{
+  "backtest_run": "NO",
+  "daily_support_rows": 4750,
+  "deployment": "NO",
+  "diagnostics_run": "NO",
+  "forecast_target_end": "2023-12-29",
+  "forecast_target_rows": 11775,
+  "forecast_target_start": "2022-01-04",
+  "forward_access": "NO",
+  "gate": "S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGER_PREP",
+  "git_operations": "NO",
+  "inactive_rows_explicitly_ledgered_by_runner": 9095,
+  "lockbox_access": "NO",
+  "new_data_download": "NO",
+  "oos_access": "NO",
+  "position_output": "NO",
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "roll_transition_count": 8,
+  "runtime_ledger_lengths": {
+    "equilibrium": 11775,
+    "sigma": 11775,
+    "trend": 11775,
+    "vol": 11775
+  },
+  "runtime_rows_per_ledger": 11775,
+  "sigma_source_rows": 4717,
+  "status": "PASS_S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGERS_NOT_BACKTEST",
+  "trading": "NO",
+  "validation_status": "PASS",
+  "vqm_runtime_source_rows": 2157
+}

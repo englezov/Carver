@@ -12,13 +12,13 @@ Gate: `RETARGETED_S27_ZN_2022_2023_DEV_RECON_BACKTEST_EXECUTION`
 
 - Requested archive window: `2022-01-01` through `2023-12-31`.
 - Effective backtest window: `2022-01-04` through `2023-12-29`.
-- Effective start reason: `FIRST_ROW_WITH_STRICT_PRIOR_DAILY_SIGMA_TREND_AND_V_Q_M_RUNTIME`.
+- Effective start reason: `FIRST_ROW_WITH_LOCKED_SIGMA_DAILY_EQUILIBRIUM_DAILY_TREND_AND_V_Q_M_RUNTIME`.
 - Source hourly rows: `20870`.
 - Local continuous hourly rows: `11775`.
 - Inactive dated-contract source rows explicitly ledgered: `9095`.
-- S27 forecast rows: `11771`.
-- Unit/no-cost backtest rows: `11770`.
-- Gross no-cost PnL USD, unit plumbing only: `2968.75`.
+- S27 forecast rows: `11775`.
+- Unit/no-cost backtest rows: `11774`.
+- Gross no-cost PnL USD, unit plumbing only: `531.25`.
 
 ## Boundary
 

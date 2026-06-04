@@ -445,7 +445,7 @@ def _build_relative_vol_rows(sigma_rows: list[dict[str, Any]]) -> list[dict[str,
                 "quantile_q": q,
                 "raw_multiplier_2_minus_1_5q": raw_multiplier,
                 "vol_multiplier_m_ewma10": smoothed,
-                "method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+                "method_status": "LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME",
                 "no_lookahead_status": "PASS_NO_LOOKAHEAD_DAILY_RUNTIME",
             }
         )
@@ -476,7 +476,7 @@ def _build_runtime_rows(forecast_rows: list[dict[str, str]], relative_rows: list
                 "quantile_q": runtime["quantile_q"],
                 "relative_volatility_v": runtime["relative_volatility_v"],
                 "runtime_status": S27_VOL_ATTENUATION_RUNTIME_STATUS,
-                "method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+                "method_status": "LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME",
                 "no_lookahead_status": "PASS_NO_LOOKAHEAD",
                 "source_artifact_sha256": source_sha,
             }

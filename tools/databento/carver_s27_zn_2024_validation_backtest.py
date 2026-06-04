@@ -74,6 +74,10 @@ ZN = base.Candidate(
 
 
 def main() -> None:
+    raise SystemExit(
+        "Fail closed: S27 2024 validation backtest is superseded by the 2026-06-04 book-faithfulness fix; "
+        "it depends on stale S26 hourly EWMA5 machinery and must be converted to locked daily EWMA5 equilibrium runtimes before use."
+    )
     _patch_base_globals()
     client = db.Historical(base._read_databento_key())
     folders = base._folders(OUTPUT_ROOT)
@@ -632,7 +636,7 @@ def _local_audit_text(status: dict[str, Any]) -> str:
             "",
             "CRITICAL: None for declared frozen ZN 2024 validation scope.",
             "",
-            "HIGH: None. The run is ZN only, uses the frozen M1-style sizing ladder constants from the initial ZN test, and does not open OOS, Lockbox, Forward, deployment, trading, promotion, CFD adapter, or old QuantLab active pipeline use.",
+            "HIGH: None. The run is ZN only, uses the frozen M1-style sizing ladder constants from the initial ZN test, and does not open OOS, Lockbox, Forward, deployment, trading, promotion, CFD adapter, or prior unsuitable workspace active pipeline use.",
             "",
             "MEDIUM: This remains a close-to-close hourly execution approximation with ETF public per-side commission only. It does not implement fast mean-reversion limit-order fill quality, spread, slippage, or prop-firm constraints.",
             "",

@@ -1,0 +1,14 @@
+check_name,check_status,observed_count
+forecast_target_rows_available,PASS,11775
+forecast_target_as_of_unique,PASS,11775
+inactive_rows_explicitly_ledgers_by_runner,PASS,9095
+roll_plan_available,PASS,8
+daily_support_rows_available,PASS,4750
+sigma_source_rows_available,PASS,4717
+vqm_runtime_rows_available,PASS,2157
+runtime_ledgers_match_forecast_rows,PASS,47100
+forecast_window_is_2022_2023_target,PASS,11775
+no_provider_api_access,PASS,0
+no_new_data_download,PASS,0
+no_diagnostics_or_backtest,PASS,0
+no_oos_lockbox_forward,PASS,0

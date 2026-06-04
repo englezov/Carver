@@ -26,12 +26,16 @@ S26_FORECAST_ONLY_STATUS = "S26_FORECAST_OUTPUT_ONLY_NOT_DIAGNOSTIC_NOT_BACKTEST
 S26_ZN_HOURLY_QUARANTINE_STATUS = "QUARANTINE_ONLY_NOT_FORECAST_READY"
 S26_ZN_FORECAST_INPUT_STATUS = "S26_FORECAST_INPUT_READY_QUARANTINE_ONLY"
 S26_ZN_SIGMA_RUNTIME_STATUS = "PREVALIDATED_S26_ZN_SIGMA_PERCENT_RUNTIME_VALUE"
+S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS = "PREVALIDATED_S26_DAILY_BACK_ADJUSTED_EWMA5_EQUILIBRIUM_RUNTIME_VALUE"
+S26_DAILY_EQUILIBRIUM_METHOD_STATUS = "LOCKED_DAILY_BACK_ADJUSTED_EWMA5_EQUILIBRIUM_RUNTIME"
 S26_ZN_FORECAST_HANDOFF_STATUS = "PASS_G_R1B_S26_ZN_HOURLY_FORECAST_OUTPUT_ONLY"
 S26_ZN_FORECAST_SERIES_STATUS = "PASS_G_R1C_S26_ZN_HOURLY_FORECAST_SERIES_ONLY"
 S26_EXECUTION_SEMANTICS_SOURCE_LOCK_STATUS = "PASS_S26_EXECUTION_SEMANTICS_SOURCE_LOCK_DESIGN_ONLY_NOT_TEST_NOT_BACKTEST"
 S27_FORECAST_ONLY_STATUS = "S27_FORECAST_OUTPUT_ONLY_NOT_DIAGNOSTIC_NOT_BACKTEST_NOT_POSITION"
 S27_TREND_RUNTIME_STATUS = "PREVALIDATED_S27_EWMAC16_TREND_RUNTIME_VALUE"
 S27_VOL_ATTENUATION_RUNTIME_STATUS = "PREVALIDATED_S27_V_Q_M_VOL_ATTENUATION_RUNTIME_VALUE"
+S27_DAILY_TREND_METHOD_STATUS = "LOCKED_DAILY_EWMAC16_64_TREND_OVERLAY_RUNTIME"
+S27_DAILY_VOL_ATTENUATION_METHOD_STATUS = "LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME"
 S27_FORECAST_HANDOFF_STATUS = "PASS_S27_REAL_HOURLY_FORECAST_ONLY_HANDOFF_PLUMBING"
 S27_FORECAST_SERIES_STATUS = "PASS_S27_REAL_HOURLY_FORECAST_SERIES_ONLY_HANDOFF_PLUMBING"
 S27_TREND_RUNTIME_LEDGER_STATUS = "PASS_S27_EWMAC16_TREND_RUNTIME_LEDGER_PLUMBING_PREVALIDATED_ONLY"
@@ -39,6 +43,7 @@ S27_VOL_ATTENUATION_RUNTIME_LEDGER_STATUS = "PASS_S27_V_Q_M_VOL_ATTENUATION_RUNT
 S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_STATUS = (
     "PASS_S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_NOT_BACKTEST"
 )
+S27_STALE_BACKTEST_EXECUTABLES_STATUS = "FAIL_CLOSED_STALE_S27_EXECUTABLES_PENDING_DAILY_RUNTIME_CONVERSION"
 S27_ZN_BACKTEST_READINESS_GATE_STATUS = "PASS_S27_ZN_SINGLE_INSTRUMENT_BACKTEST_READINESS_GATE_NOT_BACKTEST"
 S27_ZN_BACKTEST_HOURLY_ARCHIVE_WINDOW_MANIFEST_STATUS = (
     "PROCESS_ONLY_S27_ZN_BACKTEST_HOURLY_ARCHIVE_WINDOW_MANIFEST_NOT_DATA_AUTHORIZATION"
@@ -619,7 +624,13 @@ class S27ZNSingleInstrumentBacktestReadinessGate:
     row_id: str
     author_market_code: str
     forecast_series_status: str
+    daily_equilibrium_runtime_status: str
+    trend_runtime_status: str
+    trend_runtime_method_status: str
+    vol_attenuation_runtime_status: str
+    vol_attenuation_method_status: str
     hostile_audit_status: str
+    stale_backtest_executables_status: str
     position_execution_cost_status: str
     hourly_archive_manifest_status: str
     first_backtest_scope: str
@@ -641,7 +652,33 @@ class S27ZNSingleInstrumentBacktestReadinessGate:
         _require_exact("S27 ZN readiness row id", self.row_id, S26_ZN_WORKED_EXAMPLE_ROW_ID)
         _require_exact("S27 ZN readiness author market code", self.author_market_code, S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE)
         _require_exact("S27 ZN readiness forecast series status", self.forecast_series_status, S27_FORECAST_SERIES_STATUS)
+        _require_exact(
+            "S27 ZN readiness daily EWMA5 equilibrium runtime status",
+            self.daily_equilibrium_runtime_status,
+            S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
+        )
+        _require_exact("S27 ZN readiness trend runtime status", self.trend_runtime_status, S27_TREND_RUNTIME_STATUS)
+        _require_exact(
+            "S27 ZN readiness trend runtime method status",
+            self.trend_runtime_method_status,
+            S27_DAILY_TREND_METHOD_STATUS,
+        )
+        _require_exact(
+            "S27 ZN readiness volatility attenuation runtime status",
+            self.vol_attenuation_runtime_status,
+            S27_VOL_ATTENUATION_RUNTIME_STATUS,
+        )
+        _require_exact(
+            "S27 ZN readiness volatility attenuation method status",
+            self.vol_attenuation_method_status,
+            S27_DAILY_VOL_ATTENUATION_METHOD_STATUS,
+        )
         _require_exact("S27 ZN readiness hostile audit status", self.hostile_audit_status, "PASS_LOCAL_HOSTILE_AUDIT_NO_BLOCKING_FINDINGS")
+        _require_exact(
+            "S27 ZN readiness stale backtest executables status",
+            self.stale_backtest_executables_status,
+            S27_STALE_BACKTEST_EXECUTABLES_STATUS,
+        )
         _require_exact(
             "S27 ZN readiness position/execution/cost status",
             self.position_execution_cost_status,
@@ -773,7 +810,7 @@ class S27TrendOverlayRuntimeValue:
         _require_finite("S27 trend slow EWMA", self.trend_slow_ewma)
         _require_finite("S27 trend forecast", self.trend_forecast)
         _require_exact("S27 trend runtime status", self.runtime_status, S27_TREND_RUNTIME_STATUS)
-        _require_exact("S27 trend method status", self.method_status, "LOCKED_EWMAC16_TREND_OVERLAY_RUNTIME")
+        _require_exact("S27 trend method status", self.method_status, S27_DAILY_TREND_METHOD_STATUS)
         _require_exact("S27 trend no-lookahead status", self.no_lookahead_status, "PASS_NO_LOOKAHEAD")
         _require_sha256_text("S27 trend source artifact sha256", self.source_artifact_sha256)
 
@@ -797,16 +834,39 @@ class S27VolAttenuationRuntimeValue:
         if self.vol_multiplier < 0.5 or self.vol_multiplier > 2.0:
             raise CarverBlocked("S27 volatility multiplier must remain inside the V/Q/M [0.5, 2.0] envelope")
         _require_exact("S27 volatility runtime status", self.runtime_status, S27_VOL_ATTENUATION_RUNTIME_STATUS)
-        _require_exact("S27 volatility method status", self.method_status, "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME")
+        _require_exact("S27 volatility method status", self.method_status, S27_DAILY_VOL_ATTENUATION_METHOD_STATUS)
         _require_exact("S27 volatility no-lookahead status", self.no_lookahead_status, "PASS_NO_LOOKAHEAD")
         _require_sha256_text("S27 volatility source artifact sha256", self.source_artifact_sha256)
 
 
 @dataclass(frozen=True)
+class S26DailyEquilibriumRuntimeValue:
+    row_id: str
+    author_market_code: str
+    instrument_id: int
+    raw_symbol: str
+    as_of: datetime
+    equilibrium_ewma_5: float
+    runtime_status: str
+    method_status: str
+    no_lookahead_status: str
+    source_artifact_sha256: str
+
+    def validate(self, forecast_as_of: datetime) -> None:
+        _require_exact_datetime("S26 daily equilibrium runtime as_of", self.as_of, forecast_as_of)
+        require_finite_positive("S26 daily EWMA5 equilibrium", self.equilibrium_ewma_5)
+        _require_exact("S26 daily equilibrium runtime status", self.runtime_status, S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS)
+        _require_exact("S26 daily equilibrium method status", self.method_status, S26_DAILY_EQUILIBRIUM_METHOD_STATUS)
+        _require_exact("S26 daily equilibrium no-lookahead status", self.no_lookahead_status, "PASS_NO_LOOKAHEAD")
+        _require_sha256_text("S26 daily equilibrium source artifact sha256", self.source_artifact_sha256)
+
+
+@dataclass(frozen=True)
 class S26FastMeanReversionRequest:
-    prices: tuple[SyntheticHourlyPrice, ...]
+    current_price: SyntheticHourlyPrice
     as_of: datetime
     sigma_percent: TimedValue
+    daily_equilibrium_runtime: S26DailyEquilibriumRuntimeValue
     source_locks: S26SourceLocks = S26SourceLocks()
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
 
@@ -864,6 +924,7 @@ class S26QuarantinedHourlyForecastRequest:
     bars: tuple[S26QuarantinedHourlyZNBar, ...]
     as_of: datetime
     sigma_percent: TimedValue
+    daily_equilibrium_runtime: S26DailyEquilibriumRuntimeValue
     source_locks: S26QuarantinedHourlySourceLocks
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
 
@@ -886,6 +947,9 @@ class S26QuarantinedHourlyForecastResult:
     forecast_scalar: float
     scaled_forecast: float
     capped_forecast: float
+    equilibrium_runtime_status: str
+    equilibrium_method_status: str
+    equilibrium_source_artifact_sha256: str
     source_locks_status: str
     forecast_output_status: str = S26_FORECAST_ONLY_STATUS
     diagnostics_outputs: tuple[str, ...] = ()
@@ -897,6 +961,7 @@ class S26QuarantinedHourlyForecastResult:
 class S26QuarantinedHourlyForecastSeriesRequest:
     bars: tuple[S26QuarantinedHourlyOHLCVBar, ...]
     sigma_runtimes: tuple[S26SigmaPercentRuntimeValue, ...]
+    daily_equilibrium_runtimes: tuple[S26DailyEquilibriumRuntimeValue, ...]
     source_locks: S26QuarantinedHourlySourceLocks
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
 
@@ -919,10 +984,12 @@ class S26QuarantinedHourlyForecastSeriesResult:
 
 @dataclass(frozen=True)
 class S27SaferFastMeanReversionRequest:
-    prices: tuple[SyntheticHourlyPrice, ...]
+    current_price: SyntheticHourlyPrice
     as_of: datetime
     sigma_percent: TimedValue
-    vol_quantiles: tuple[SyntheticQuantilePoint, ...]
+    daily_equilibrium_runtime: S26DailyEquilibriumRuntimeValue
+    trend_runtime: S27TrendOverlayRuntimeValue
+    vol_runtime: S27VolAttenuationRuntimeValue
     s26_source_locks: S26SourceLocks = S26SourceLocks()
     s27_source_locks: S27SourceLocks = S27SourceLocks()
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES
@@ -1152,11 +1219,17 @@ def s26_fast_mean_reversion_forecast(request: S26FastMeanReversionRequest) -> S2
     require_source_native(request.lane_class)
     request.source_locks.validate()
     _validate_hourly_timestamp(request.as_of)
-    _validate_synthetic_prices(request.prices, request.as_of, minimum_count=S26_EQUILIBRIUM_EWMA_SPAN)
+    request.current_price.validate()
+    _require_exact_datetime("S26 synthetic current price timestamp", request.current_price.timestamp, request.as_of)
+    request.daily_equilibrium_runtime.validate(request.as_of)
     _validate_timed_sigma_percent(request.sigma_percent, request.as_of)
 
-    prices = tuple(point.price for point in request.prices)
-    result = _s26_result_from_prices(prices, request.as_of, request.sigma_percent.value)
+    result = _s26_result_from_equilibrium(
+        current_price=request.current_price.price,
+        equilibrium=request.daily_equilibrium_runtime.equilibrium_ewma_5,
+        as_of=request.as_of,
+        sigma_percent=request.sigma_percent.value,
+    )
     _validate_no_strategy_outputs("S26", result.fdm_used, result.buffering_used, result.performance_metrics, result.position_outputs)
     return result
 
@@ -1311,6 +1384,7 @@ def s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
     bars: tuple[S26QuarantinedHourlyOHLCVBar, ...],
     *,
     sigma_runtime: S26SigmaPercentRuntimeValue,
+    daily_equilibrium_runtime: S26DailyEquilibriumRuntimeValue,
     as_of: datetime,
     source_locks: S26QuarantinedHourlySourceLocks,
     lane_class: LaneClass = LaneClass.SOURCE_NATIVE_FUTURES,
@@ -1337,6 +1411,7 @@ def s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
             bars=forecast_bars,
             as_of=as_of,
             sigma_percent=sigma_percent,
+            daily_equilibrium_runtime=daily_equilibrium_runtime,
             source_locks=source_locks,
             lane_class=lane_class,
         )
@@ -1360,6 +1435,8 @@ def s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
     )
     if len(request.sigma_runtimes) != len(forecast_as_ofs):
         raise CarverBlocked("S26 G_R1C requires exactly one sigma runtime per forecast row")
+    if len(request.daily_equilibrium_runtimes) != len(forecast_as_ofs):
+        raise CarverBlocked("S26 G_R1C requires exactly one daily EWMA5 equilibrium runtime per forecast row")
     runtime_by_as_of = {}
     for runtime in request.sigma_runtimes:
         if runtime.as_of in runtime_by_as_of:
@@ -1367,6 +1444,13 @@ def s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
         runtime_by_as_of[runtime.as_of] = runtime
     if tuple(runtime_by_as_of) != forecast_as_ofs:
         raise CarverBlocked("S26 G_R1C sigma runtime timestamps must match forecast row timestamps in order")
+    equilibrium_by_as_of = {}
+    for runtime in request.daily_equilibrium_runtimes:
+        if runtime.as_of in equilibrium_by_as_of:
+            raise CarverBlocked("S26 G_R1C daily EWMA5 equilibrium runtimes must be unique by as_of")
+        equilibrium_by_as_of[runtime.as_of] = runtime
+    if tuple(equilibrium_by_as_of) != forecast_as_ofs:
+        raise CarverBlocked("S26 G_R1C daily EWMA5 equilibrium runtime timestamps must match forecast row timestamps in order")
 
     forecasts = []
     for offset, as_of in enumerate(forecast_as_ofs, start=S26_EQUILIBRIUM_EWMA_SPAN):
@@ -1374,6 +1458,7 @@ def s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
             s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
                 request.bars[:offset],
                 sigma_runtime=runtime_by_as_of[as_of],
+                daily_equilibrium_runtime=equilibrium_by_as_of[as_of],
                 as_of=as_of,
                 source_locks=request.source_locks,
                 lane_class=request.lane_class,
@@ -1501,7 +1586,13 @@ def build_s27_zn_single_instrument_backtest_readiness_gate() -> S27ZNSingleInstr
         row_id=S26_ZN_WORKED_EXAMPLE_ROW_ID,
         author_market_code=S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE,
         forecast_series_status=S27_FORECAST_SERIES_STATUS,
+        daily_equilibrium_runtime_status=S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
+        trend_runtime_status=S27_TREND_RUNTIME_STATUS,
+        trend_runtime_method_status=S27_DAILY_TREND_METHOD_STATUS,
+        vol_attenuation_runtime_status=S27_VOL_ATTENUATION_RUNTIME_STATUS,
+        vol_attenuation_method_status=S27_DAILY_VOL_ATTENUATION_METHOD_STATUS,
         hostile_audit_status="PASS_LOCAL_HOSTILE_AUDIT_NO_BLOCKING_FINDINGS",
+        stale_backtest_executables_status=S27_STALE_BACKTEST_EXECUTABLES_STATUS,
         position_execution_cost_status=S27_ZN_POSITION_EXECUTION_COST_SEMANTICS_LOCK_STATUS,
         hourly_archive_manifest_status=S27_ZN_BACKTEST_HOURLY_ARCHIVE_WINDOW_MANIFEST_STATUS,
         first_backtest_scope="QUARANTINED_DEV_RECON_ZN_ONLY_S27_NO_OOS_NO_LOCKBOX_NO_PROMOTION",
@@ -1522,10 +1613,16 @@ def s26_forecast_only_from_quarantined_zn_hourly_bars(
     _validate_real_hourly_timestamp("S26 forecast as_of", request.as_of)
     _validate_timed_sigma_percent(request.sigma_percent, request.as_of)
     _validate_quarantined_hourly_zn_bars(request.bars, request.as_of)
+    request.daily_equilibrium_runtime.validate(request.as_of)
+    _validate_s26_daily_equilibrium_identity(request.daily_equilibrium_runtime, request.bars[-1])
 
-    prices = tuple(bar.close for bar in request.bars)
-    s26 = _s26_result_from_prices(prices, request.as_of, request.sigma_percent.value)
     last = request.bars[-1]
+    s26 = _s26_result_from_equilibrium(
+        current_price=last.close,
+        equilibrium=request.daily_equilibrium_runtime.equilibrium_ewma_5,
+        as_of=request.as_of,
+        sigma_percent=request.sigma_percent.value,
+    )
     result = S26QuarantinedHourlyForecastResult(
         row_id=last.row_id,
         author_market_code=last.author_market_code,
@@ -1543,6 +1640,9 @@ def s26_forecast_only_from_quarantined_zn_hourly_bars(
         forecast_scalar=s26.scalar,
         scaled_forecast=s26.scaled_forecast,
         capped_forecast=s26.capped_forecast,
+        equilibrium_runtime_status=request.daily_equilibrium_runtime.runtime_status,
+        equilibrium_method_status=request.daily_equilibrium_runtime.method_status,
+        equilibrium_source_artifact_sha256=request.daily_equilibrium_runtime.source_artifact_sha256,
         source_locks_status="LOCKED_QUARANTINE_HOURLY_ZN_S26_FORECAST_ONLY",
     )
     _validate_forecast_only_output(result)
@@ -1556,29 +1656,21 @@ def s27_safer_fast_mean_reversion_forecast(
     request.s27_source_locks.validate()
     s26 = s26_fast_mean_reversion_forecast(
         S26FastMeanReversionRequest(
-            prices=request.prices,
+            current_price=request.current_price,
             as_of=request.as_of,
             sigma_percent=request.sigma_percent,
+            daily_equilibrium_runtime=request.daily_equilibrium_runtime,
             source_locks=request.s26_source_locks,
             lane_class=request.lane_class,
         )
     )
-    _validate_synthetic_prices(request.prices, request.as_of, minimum_count=S27_TREND_SLOW_SPAN)
-    _validate_synthetic_quantiles(request.vol_quantiles, request.as_of, minimum_count=S27_VOL_ATTENUATION_SPAN)
+    request.trend_runtime.validate(request.as_of)
+    request.vol_runtime.validate(request.as_of)
+    _validate_s27_runtime_identity("S27 synthetic trend runtime", request.trend_runtime, request.daily_equilibrium_runtime)
+    _validate_s27_runtime_identity("S27 synthetic volatility runtime", request.vol_runtime, request.daily_equilibrium_runtime)
 
-    prices = tuple(point.price for point in request.prices)
-    trend_fast = _recursive_ewma(prices, S27_TREND_FAST_SPAN)
-    trend_slow = _recursive_ewma(prices, S27_TREND_SLOW_SPAN)
-    trend_forecast = trend_fast - trend_slow
-    _require_finite("S27 trend forecast", trend_forecast)
-    vol_inputs = tuple(2.0 - 1.5 * point.quantile for point in request.vol_quantiles)
-    vol_multiplier = _recursive_ewma(vol_inputs, S27_VOL_ATTENUATION_SPAN, require_positive_inputs=False)
-    _require_finite("S27 volatility multiplier", vol_multiplier)
-    if vol_multiplier < 0.0:
-        raise CarverBlocked("S27 volatility multiplier must not be negative")
-
-    opposes = s26.raw_forecast * trend_forecast < 0.0
-    adjusted_raw = 0.0 if opposes else s26.raw_forecast * vol_multiplier
+    opposes = s26.raw_forecast * request.trend_runtime.trend_forecast < 0.0
+    adjusted_raw = 0.0 if opposes else s26.raw_forecast * request.vol_runtime.vol_multiplier
     risk_adjusted = adjusted_raw / s26.sigma_price
     _require_finite("S27 risk-adjusted forecast", risk_adjusted)
     scaled = risk_adjusted * S27_FORECAST_SCALAR
@@ -1586,10 +1678,10 @@ def s27_safer_fast_mean_reversion_forecast(
     result = S27SaferFastMeanReversionResult(
         as_of=request.as_of,
         s26_raw_forecast=s26.raw_forecast,
-        trend_fast_ewma=trend_fast,
-        trend_slow_ewma=trend_slow,
-        trend_forecast=trend_forecast,
-        vol_multiplier=vol_multiplier,
+        trend_fast_ewma=request.trend_runtime.trend_fast_ewma,
+        trend_slow_ewma=request.trend_runtime.trend_slow_ewma,
+        trend_forecast=request.trend_runtime.trend_forecast,
+        vol_multiplier=request.vol_runtime.vol_multiplier,
         opposes_trend=opposes,
         trend_interaction_policy="ZERO_OPPOSING_MEAN_REVERSION_FORECAST",
         adjusted_raw_forecast=adjusted_raw,
@@ -1790,6 +1882,23 @@ def s27_vol_attenuation_runtime_ledger_from_prevalidated_rows(
 def _s26_result_from_prices(prices: tuple[float, ...], as_of: datetime, sigma_percent: float) -> S26FastMeanReversionResult:
     current_price = prices[-1]
     equilibrium = _recursive_ewma(prices, S26_EQUILIBRIUM_EWMA_SPAN)
+    return _s26_result_from_equilibrium(
+        current_price=current_price,
+        equilibrium=equilibrium,
+        as_of=as_of,
+        sigma_percent=sigma_percent,
+    )
+
+
+def _s26_result_from_equilibrium(
+    *,
+    current_price: float,
+    equilibrium: float,
+    as_of: datetime,
+    sigma_percent: float,
+) -> S26FastMeanReversionResult:
+    require_finite_positive("S26 current price", current_price)
+    require_finite_positive("S26 daily EWMA5 equilibrium", equilibrium)
     raw_forecast = equilibrium - current_price
     _require_finite("S26 raw forecast", raw_forecast)
     sigma_price = current_price * sigma_percent / 16.0
@@ -1934,6 +2043,9 @@ def _validate_forecast_only_output(result: S26QuarantinedHourlyForecastResult) -
         raise CarverBlocked("S26 real-hourly output must remain forecast-only")
     if result.diagnostics_outputs or result.backtest_outputs or result.position_outputs:
         raise CarverBlocked("S26 real-hourly forecast output must not emit diagnostics, backtests, or positions")
+    _require_exact("S26 daily equilibrium runtime status", result.equilibrium_runtime_status, S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS)
+    _require_exact("S26 daily equilibrium method status", result.equilibrium_method_status, S26_DAILY_EQUILIBRIUM_METHOD_STATUS)
+    _require_sha256_text("S26 daily equilibrium source artifact sha256", result.equilibrium_source_artifact_sha256)
 
 
 def _validate_s26_forecast_row_for_s27_handoff(result: S26QuarantinedHourlyForecastResult) -> None:
@@ -2054,13 +2166,24 @@ def _runtime_map_by_as_of(name: str, runtimes: tuple[S27TrendOverlayRuntimeValue
 def _validate_s27_runtime_identity(
     name: str,
     runtime: S27TrendOverlayRuntimeValue | S27VolAttenuationRuntimeValue,
-    s26_forecast: S26QuarantinedHourlyForecastResult,
+    s26_forecast: S26QuarantinedHourlyForecastResult | S26DailyEquilibriumRuntimeValue,
 ) -> None:
     _require_exact(f"{name} row id", runtime.row_id, s26_forecast.row_id)
     _require_exact(f"{name} author market code", runtime.author_market_code, s26_forecast.author_market_code)
     if runtime.instrument_id != s26_forecast.instrument_id:
         raise CarverBlocked(f"{name} instrument id must match S26 forecast row")
     _require_exact(f"{name} raw symbol", runtime.raw_symbol, s26_forecast.raw_symbol)
+
+
+def _validate_s26_daily_equilibrium_identity(
+    runtime: S26DailyEquilibriumRuntimeValue,
+    bar: S26QuarantinedHourlyZNBar,
+) -> None:
+    _require_exact("S26 daily equilibrium row id", runtime.row_id, bar.row_id)
+    _require_exact("S26 daily equilibrium author market code", runtime.author_market_code, bar.author_market_code)
+    if runtime.instrument_id != bar.instrument_id:
+        raise CarverBlocked("S26 daily equilibrium instrument id must match S26 hourly forecast row")
+    _require_exact("S26 daily equilibrium raw symbol", runtime.raw_symbol, bar.raw_symbol)
 
 
 def _validate_ohlcv_shape(open_price: float, high: float, low: float, close: float, volume: float) -> None:

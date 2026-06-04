@@ -99,6 +99,10 @@ CANDIDATES = tuple(
 
 
 def main() -> None:
+    raise SystemExit(
+        "Fail closed: S27 candidate comparison is superseded by the 2026-06-04 book-faithfulness fix; "
+        "it recomputes S26 EWMA5 from hourly rows and must be converted to locked daily EWMA5 equilibrium runtimes before use."
+    )
     if os.environ.get("CARVER_S27_COMBINE_ONLY") == "1":
         _combine_existing_statuses()
         return
@@ -618,7 +622,7 @@ def _build_vqm_rows(sigma_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "quantile_q": q,
                 "raw_multiplier_2_minus_1_5q": raw_multiplier,
                 "vol_multiplier_m_ewma10": smoothed,
-                "method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+                "method_status": "LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME",
                 "no_lookahead_status": "PASS_NO_LOOKAHEAD_DAILY_RUNTIME",
             }
         )
@@ -1257,7 +1261,7 @@ def _local_audit_text(overall: dict[str, Any], rows: list[dict[str, Any]]) -> st
             "",
             "CRITICAL: None for declared Development/Reconciliation scope.",
             "",
-            "HIGH: None. No OOS, Lockbox, Forward, deployment, trading, promotion, Git operation, CFD adapter, or old QuantLab active pipeline use is authorized or observed.",
+            "HIGH: None. No OOS, Lockbox, Forward, deployment, trading, promotion, Git operation, CFD adapter, or prior unsuitable workspace active pipeline use is authorized or observed.",
             "",
             f"MEDIUM: `{len(failed)}` candidates failed closed and must not be treated as zero PnL or dropped from the research map.",
             "",

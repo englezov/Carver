@@ -15,6 +15,7 @@ from carver.spine.m1 import RoundingPolicy, TimedValue  # noqa: E402
 from carver.spine.m2 import FORECAST_CAP  # noqa: E402
 from carver.spine.s26_s27 import (  # noqa: E402
     S26_EQUILIBRIUM_EWMA_SPAN,
+    S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
     S26_EXECUTION_SEMANTICS_SOURCE_LOCK_STATUS,
     S26_FORECAST_SCALAR,
     S27_FORECAST_SCALAR,
@@ -25,6 +26,9 @@ from carver.spine.s26_s27 import (  # noqa: E402
     S27_FORECAST_HANDOFF_STATUS,
     S27_FORECAST_ONLY_STATUS,
     S27_FORECAST_SERIES_STATUS,
+    S27_DAILY_TREND_METHOD_STATUS,
+    S27_DAILY_VOL_ATTENUATION_METHOD_STATUS,
+    S27_STALE_BACKTEST_EXECUTABLES_STATUS,
     S27_TREND_RUNTIME_LEDGER_STATUS,
     S27_TREND_RUNTIME_STATUS,
     S27_VOL_ATTENUATION_RUNTIME_LEDGER_STATUS,
@@ -64,6 +68,7 @@ from carver.spine.s26_s27 import (  # noqa: E402
     S27_VOL_ATTENUATION_SPAN,
     S26DatabentoHourlyIntakeRequestManifest,
     S26DatabentoHourlyOHLCVRawRow,
+    S26DailyEquilibriumRuntimeValue,
     S26ExecutionSemanticsSourceLock,
     S26ExtendedHourlyForecastOnlyCoverageManifest,
     S26FastMeanReversionRequest,
@@ -122,16 +127,18 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         self.start = datetime(2026, 5, 18, tzinfo=timezone.utc)
 
     def test_s26_reproduces_equilibrium_raw_sigma_scalar_and_cap(self) -> None:
-        prices = self.prices((100.0, 110.0, 105.0, 95.0, 100.0))
+        prices = self.prices((125.0, 130.0, 115.0, 90.0, 100.0))
+        daily_closes = (100.0, 110.0, 105.0, 95.0, 100.0)
+        equilibrium = self.ewma(daily_closes, S26_EQUILIBRIUM_EWMA_SPAN)
         request = S26FastMeanReversionRequest(
-            prices=prices,
+            current_price=prices[-1],
             as_of=prices[-1].timestamp,
             sigma_percent=TimedValue(0.16, prices[-1].timestamp),
+            daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(prices[-1].timestamp, equilibrium=equilibrium),
         )
 
         result = s26_fast_mean_reversion_forecast(request)
 
-        equilibrium = self.ewma(tuple(point.price for point in prices), S26_EQUILIBRIUM_EWMA_SPAN)
         raw = equilibrium - 100.0
         sigma_price = 100.0 * 0.16 / 16.0
         risk_adjusted = raw / sigma_price
@@ -161,40 +168,61 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         with self.assertRaises(CarverBlocked):
             s26_fast_mean_reversion_forecast(
                 S26FastMeanReversionRequest(
-                    prices=(replace(prices[0], label="provider_row"),) + prices[1:],
+                    current_price=replace(prices[-1], label="provider_row"),
                     as_of=prices[-1].timestamp,
                     sigma_percent=TimedValue(0.16, prices[-1].timestamp),
+                    daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(prices[-1].timestamp, equilibrium=104.0),
                 )
             )
         with self.assertRaises(CarverBlocked):
             s26_fast_mean_reversion_forecast(
                 S26FastMeanReversionRequest(
-                    prices=prices,
+                    current_price=prices[-1],
                     as_of=prices[-1].timestamp,
                     sigma_percent=TimedValue(0.16, prices[-1].timestamp),
+                    daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(prices[-1].timestamp, equilibrium=104.0),
                     source_locks=replace(S26SourceLocks(), scalar_status=SourceRuleStatus.UNRESOLVED),
                 )
             )
         with self.assertRaises(CarverBlocked):
             s26_fast_mean_reversion_forecast(
                 S26FastMeanReversionRequest(
-                    prices=prices,
+                    current_price=prices[-1],
                     as_of=prices[-1].timestamp,
                     sigma_percent=TimedValue(0.16, prices[-1].timestamp),
+                    daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(prices[-1].timestamp, equilibrium=104.0),
                     lane_class=LaneClass.CFD_ADAPTER,
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s26_fast_mean_reversion_forecast(
+                S26FastMeanReversionRequest(
+                    current_price=prices[-1],
+                    as_of=prices[-1].timestamp,
+                    sigma_percent=TimedValue(0.16, prices[-1].timestamp),
+                    daily_equilibrium_runtime=replace(
+                        self.locked_daily_equilibrium_runtime(prices[-1].timestamp, equilibrium=104.0),
+                        method_status="LOCKED_HOURLY_EWMA5_EQUILIBRIUM_RUNTIME",
+                    ),
                 )
             )
 
     def test_s27_allows_same_sign_forecasts_and_zeroes_opposing_forecasts(self) -> None:
         cases = (
-            ("positive_raw_positive_trend", self.uptrend_with_final(140.0), False),
-            ("negative_raw_negative_trend", self.downtrend_with_final(160.0), False),
-            ("positive_raw_negative_trend", self.downtrend_with_final(130.0), True),
-            ("negative_raw_positive_trend", self.uptrend_with_final(180.0), True),
+            ("positive_raw_positive_trend", 100.0, 104.0, 1.25, False),
+            ("negative_raw_negative_trend", 100.0, 96.0, -1.25, False),
+            ("positive_raw_negative_trend", 100.0, 104.0, -1.25, True),
+            ("negative_raw_positive_trend", 100.0, 96.0, 1.25, True),
         )
-        for label, prices, should_oppose in cases:
+        for label, current_price, equilibrium, trend_forecast, should_oppose in cases:
             with self.subTest(label=label):
-                result = s27_safer_fast_mean_reversion_forecast(self.s27_request(prices))
+                result = s27_safer_fast_mean_reversion_forecast(
+                    self.s27_request(
+                        current_price=current_price,
+                        equilibrium=equilibrium,
+                        trend_forecast=trend_forecast,
+                    )
+                )
                 self.assertEqual(result.opposes_trend, should_oppose)
                 self.assertEqual(result.trend_interaction_policy, "ZERO_OPPOSING_MEAN_REVERSION_FORECAST")
                 if should_oppose:
@@ -209,13 +237,14 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
                 self.assertEqual(result.position_outputs, ())
 
     def test_s27_reproduces_vol_attenuation_and_uses_s27_scalar_cap(self) -> None:
-        prices = self.uptrend_with_final(140.0)
-        quantiles = tuple(
-            SyntheticQuantilePoint("synthetic_high_vol_quantile", price.timestamp, 0.8)
-            for price in prices[-S27_VOL_ATTENUATION_SPAN:]
-        )
         result = s27_safer_fast_mean_reversion_forecast(
-            self.s27_request(prices, vol_quantiles=quantiles, sigma_percent=0.05)
+            self.s27_request(
+                current_price=100.0,
+                equilibrium=104.0,
+                trend_forecast=1.0,
+                vol_multiplier=2.0 - 1.5 * 0.8,
+                sigma_percent=0.05,
+            )
         )
 
         self.assertAlmostEqual(result.vol_multiplier, 2.0 - 1.5 * 0.8)
@@ -223,22 +252,33 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         self.assertLessEqual(abs(result.capped_forecast), FORECAST_CAP)
 
     def test_s27_fails_closed_on_unresolved_dependency_bad_quantile_and_short_history(self) -> None:
-        prices = self.uptrend_with_final(140.0)
         with self.assertRaises(CarverBlocked):
             s27_safer_fast_mean_reversion_forecast(
                 self.s27_request(
-                    prices,
+                    current_price=100.0,
+                    equilibrium=104.0,
+                    trend_forecast=1.0,
                     s27_source_locks=replace(S27SourceLocks(), trend_overlay_status=SourceRuleStatus.UNRESOLVED),
                 )
             )
-        bad_quantiles = tuple(
-            SyntheticQuantilePoint("synthetic_bad_quantile", price.timestamp, 1.5)
-            for price in prices[-S27_VOL_ATTENUATION_SPAN:]
-        )
         with self.assertRaises(CarverBlocked):
-            s27_safer_fast_mean_reversion_forecast(self.s27_request(prices, vol_quantiles=bad_quantiles))
+            s27_safer_fast_mean_reversion_forecast(
+                self.s27_request(
+                    current_price=100.0,
+                    equilibrium=104.0,
+                    trend_forecast=1.0,
+                    vol_multiplier=2.5,
+                )
+            )
         with self.assertRaises(CarverBlocked):
-            s27_safer_fast_mean_reversion_forecast(self.s27_request(prices[: S27_TREND_SLOW_SPAN - 1]))
+            s27_safer_fast_mean_reversion_forecast(
+                self.s27_request(
+                    current_price=100.0,
+                    equilibrium=104.0,
+                    trend_forecast=1.0,
+                    trend_runtime_method_status="LOCKED_EWMAC16_TREND_OVERLAY_RUNTIME",
+                )
+            )
 
     def test_gate_docs_preserve_book_instrument_and_no_real_data_boundaries(self) -> None:
         source_atoms = (ROOT / "docs" / "process" / "CARVER_S26_S27_SOURCE_ATOM_SHEET_2026-05-30.md").read_text(
@@ -256,17 +296,22 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         self.assertIn("no backtests", gate.lower())
 
     def test_s26_quarantined_zn_hourly_forecast_only_boundary_reuses_formula(self) -> None:
-        bars = self.zn_quarantined_bars((100.0, 110.0, 105.0, 95.0, 100.0))
+        bars = self.zn_quarantined_bars((125.0, 130.0, 115.0, 90.0, 100.0))
+        daily_closes = (100.0, 110.0, 105.0, 95.0, 100.0)
+        equilibrium = self.ewma(daily_closes, S26_EQUILIBRIUM_EWMA_SPAN)
         result = s26_forecast_only_from_quarantined_zn_hourly_bars(
             S26QuarantinedHourlyForecastRequest(
                 bars=bars,
                 as_of=bars[-1].derived_completed_bar_end_utc,
                 sigma_percent=TimedValue(0.16, bars[-1].derived_completed_bar_end_utc),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(
+                    bars[-1].derived_completed_bar_end_utc,
+                    equilibrium=equilibrium,
+                ),
                 source_locks=self.locked_quarantined_source_locks(),
             )
         )
 
-        equilibrium = self.ewma(tuple(bar.close for bar in bars), S26_EQUILIBRIUM_EWMA_SPAN)
         raw = equilibrium - 100.0
         sigma_price = 100.0 * 0.16 / 16.0
         risk_adjusted = raw / sigma_price
@@ -288,12 +333,17 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
 
     def test_s26_quarantined_zn_hourly_forecast_fails_closed_without_locks_or_with_wrong_symbol(self) -> None:
         bars = self.zn_quarantined_bars((100.0, 101.0, 102.0, 103.0, 104.0))
+        daily_equilibrium = self.locked_daily_equilibrium_runtime(
+            bars[-1].derived_completed_bar_end_utc,
+            equilibrium=102.0,
+        )
         with self.assertRaises(CarverBlocked):
             s26_forecast_only_from_quarantined_zn_hourly_bars(
                 S26QuarantinedHourlyForecastRequest(
                     bars=bars,
                     as_of=bars[-1].derived_completed_bar_end_utc,
                     sigma_percent=TimedValue(0.16, bars[-1].derived_completed_bar_end_utc),
+                    daily_equilibrium_runtime=daily_equilibrium,
                     source_locks=S26QuarantinedHourlySourceLocks(),
                 )
             )
@@ -303,6 +353,17 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
                     bars=(replace(bars[0], raw_symbol="ZTM6"),) + bars[1:],
                     as_of=bars[-1].derived_completed_bar_end_utc,
                     sigma_percent=TimedValue(0.16, bars[-1].derived_completed_bar_end_utc),
+                    daily_equilibrium_runtime=daily_equilibrium,
+                    source_locks=self.locked_quarantined_source_locks(),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s26_forecast_only_from_quarantined_zn_hourly_bars(
+                S26QuarantinedHourlyForecastRequest(
+                    bars=bars,
+                    as_of=bars[-1].derived_completed_bar_end_utc,
+                    sigma_percent=TimedValue(0.16, bars[-1].derived_completed_bar_end_utc),
+                    daily_equilibrium_runtime=replace(daily_equilibrium, raw_symbol="ZTM6"),
                     source_locks=self.locked_quarantined_source_locks(),
                 )
             )
@@ -506,6 +567,12 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         self.assertEqual(validated.row_id, S26_ZN_WORKED_EXAMPLE_ROW_ID)
         self.assertEqual(validated.author_market_code, S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE)
         self.assertEqual(validated.forecast_series_status, S27_FORECAST_SERIES_STATUS)
+        self.assertEqual(validated.daily_equilibrium_runtime_status, S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS)
+        self.assertEqual(validated.trend_runtime_status, S27_TREND_RUNTIME_STATUS)
+        self.assertEqual(validated.trend_runtime_method_status, S27_DAILY_TREND_METHOD_STATUS)
+        self.assertEqual(validated.vol_attenuation_runtime_status, S27_VOL_ATTENUATION_RUNTIME_STATUS)
+        self.assertEqual(validated.vol_attenuation_method_status, S27_DAILY_VOL_ATTENUATION_METHOD_STATUS)
+        self.assertEqual(validated.stale_backtest_executables_status, S27_STALE_BACKTEST_EXECUTABLES_STATUS)
         self.assertEqual(validated.first_backtest_scope, "QUARANTINED_DEV_RECON_ZN_ONLY_S27_NO_OOS_NO_LOCKBOX_NO_PROMOTION")
         self.assertEqual(validated.promotion_boundary_status, "NO_ALPHA_CLAIM_NO_DEPLOYMENT_NO_TRADING")
         self.assertEqual(validated.backtest_outputs, ())
@@ -521,7 +588,13 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             replace(gate, strategy_id="S26_FAST_MEAN_REVERSION_ZN"),
             replace(gate, row_id="APPENDIX_C_174_006"),
             replace(gate, forecast_series_status="UNLOCKED"),
+            replace(gate, daily_equilibrium_runtime_status="HOURLY_EWMA5"),
+            replace(gate, trend_runtime_status="UNLOCKED"),
+            replace(gate, trend_runtime_method_status="LOCKED_EWMAC16_TREND_OVERLAY_RUNTIME"),
+            replace(gate, vol_attenuation_runtime_status="UNLOCKED"),
+            replace(gate, vol_attenuation_method_status="LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME"),
             replace(gate, hostile_audit_status="NOT_AUDITED"),
+            replace(gate, stale_backtest_executables_status="STALE_EXECUTABLES_ALLOWED"),
             replace(gate, position_execution_cost_status="UNLOCKED"),
             replace(gate, hourly_archive_manifest_status="DATA_AUTHORIZED"),
             replace(gate, first_backtest_scope="PORTFOLIO_BACKTEST"),
@@ -728,6 +801,10 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
                 bars=bars,
                 as_of=bars[-1].derived_completed_bar_end_utc,
                 sigma_percent=TimedValue(0.16, bars[-1].derived_completed_bar_end_utc),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(
+                    bars[-1].derived_completed_bar_end_utc,
+                    equilibrium=102.0,
+                ),
                 source_locks=self.locked_quarantined_source_locks(),
             )
         )
@@ -798,11 +875,12 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         result = s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
             bars,
             sigma_runtime=self.locked_sigma_runtime(as_of, value=0.16),
+            daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(as_of, equilibrium=101.5),
             as_of=as_of,
             source_locks=self.locked_quarantined_source_locks(),
         )
 
-        equilibrium = self.ewma(tuple(bar.close for bar in bars), S26_EQUILIBRIUM_EWMA_SPAN)
+        equilibrium = 101.5
         self.assertAlmostEqual(result.equilibrium_ewma_5, equilibrium)
         self.assertEqual(result.forecast_output_status, S26_FORECAST_ONLY_STATUS)
         self.assertEqual(result.diagnostics_outputs, ())
@@ -816,6 +894,7 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
                 bars,
                 sigma_runtime=replace(self.locked_sigma_runtime(as_of), no_lookahead_status="UNRESOLVED"),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(as_of, equilibrium=102.0),
                 as_of=as_of,
                 source_locks=self.locked_quarantined_source_locks(),
             )
@@ -823,6 +902,7 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
                 (replace(bars[0], provider_condition_status="PROVIDER_CONDITION_DEGRADED"),) + bars[1:],
                 sigma_runtime=self.locked_sigma_runtime(as_of),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(as_of, equilibrium=102.0),
                 as_of=as_of,
                 source_locks=self.locked_quarantined_source_locks(),
             )
@@ -830,6 +910,7 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
                 bars,
                 sigma_runtime=replace(self.locked_sigma_runtime(as_of), source_artifact_sha256="not_a_sha256"),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(as_of, equilibrium=102.0),
                 as_of=as_of,
                 source_locks=self.locked_quarantined_source_locks(),
             )
@@ -840,11 +921,16 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             self.locked_sigma_runtime(bar.derived_completed_bar_end_utc, value=0.16)
             for bar in bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :]
         )
+        equilibrium_runtimes = tuple(
+            self.locked_daily_equilibrium_runtime(bar.derived_completed_bar_end_utc, equilibrium=101.0 + index)
+            for index, bar in enumerate(bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :])
+        )
 
         result = s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
             S26QuarantinedHourlyForecastSeriesRequest(
                 bars=bars,
                 sigma_runtimes=runtimes,
+                daily_equilibrium_runtimes=equilibrium_runtimes,
                 source_locks=self.locked_quarantined_source_locks(),
             )
         )
@@ -869,12 +955,17 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             self.locked_sigma_runtime(bar.derived_completed_bar_end_utc)
             for bar in bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :]
         )
+        equilibrium_runtimes = tuple(
+            self.locked_daily_equilibrium_runtime(bar.derived_completed_bar_end_utc, equilibrium=102.0)
+            for bar in bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :]
+        )
 
         with self.assertRaises(CarverBlocked):
             s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
                 S26QuarantinedHourlyForecastSeriesRequest(
                     bars=bars,
                     sigma_runtimes=runtimes[:1],
+                    daily_equilibrium_runtimes=equilibrium_runtimes,
                     source_locks=self.locked_quarantined_source_locks(),
                 )
             )
@@ -884,6 +975,19 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
                     bars=bars,
                     sigma_runtimes=(replace(runtimes[0], as_of=runtimes[0].as_of + timedelta(hours=99)),)
                     + runtimes[1:],
+                    daily_equilibrium_runtimes=equilibrium_runtimes,
+                    source_locks=self.locked_quarantined_source_locks(),
+                )
+            )
+        with self.assertRaises(CarverBlocked):
+            s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
+                S26QuarantinedHourlyForecastSeriesRequest(
+                    bars=bars,
+                    sigma_runtimes=runtimes,
+                    daily_equilibrium_runtimes=(
+                        replace(equilibrium_runtimes[0], as_of=equilibrium_runtimes[0].as_of + timedelta(hours=99)),
+                    )
+                    + equilibrium_runtimes[1:],
                     source_locks=self.locked_quarantined_source_locks(),
                 )
             )
@@ -1387,31 +1491,41 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
 
     def s26_for_values(self, values: tuple[float, ...], *, sigma_percent: float):
         prices = self.prices(values)
+        equilibrium = self.ewma(values, S26_EQUILIBRIUM_EWMA_SPAN)
         return s26_fast_mean_reversion_forecast(
             S26FastMeanReversionRequest(
-                prices=prices,
+                current_price=prices[-1],
                 as_of=prices[-1].timestamp,
                 sigma_percent=TimedValue(sigma_percent, prices[-1].timestamp),
+                daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(
+                    prices[-1].timestamp,
+                    equilibrium=equilibrium,
+                ),
             )
         )
 
     def s27_request(
         self,
-        prices: tuple[SyntheticHourlyPrice, ...],
         *,
-        vol_quantiles: tuple[SyntheticQuantilePoint, ...] | None = None,
+        current_price: float,
+        equilibrium: float,
+        trend_forecast: float,
+        vol_multiplier: float = 1.25,
         sigma_percent: float = 0.16,
+        trend_runtime_method_status: str = "LOCKED_DAILY_EWMAC16_64_TREND_OVERLAY_RUNTIME",
         s27_source_locks: S27SourceLocks | None = None,
     ) -> S27SaferFastMeanReversionRequest:
+        as_of = self.start
         return S27SaferFastMeanReversionRequest(
-            prices=prices,
-            as_of=prices[-1].timestamp,
-            sigma_percent=TimedValue(sigma_percent, prices[-1].timestamp),
-            vol_quantiles=vol_quantiles
-            or tuple(
-                SyntheticQuantilePoint("synthetic_mid_vol_quantile", price.timestamp, 0.5)
-                for price in prices[-S27_VOL_ATTENUATION_SPAN:]
+            current_price=SyntheticHourlyPrice("synthetic_current_price", as_of, current_price),
+            as_of=as_of,
+            sigma_percent=TimedValue(sigma_percent, as_of),
+            daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(as_of, equilibrium=equilibrium),
+            trend_runtime=replace(
+                self.locked_s27_trend_runtime(as_of, trend_forecast=trend_forecast),
+                method_status=trend_runtime_method_status,
             ),
+            vol_runtime=self.locked_s27_vol_runtime(as_of, vol_multiplier=vol_multiplier),
             s27_source_locks=s27_source_locks or S27SourceLocks(),
         )
 
@@ -1487,7 +1601,7 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             trend_slow_ewma=101.0,
             trend_forecast=trend_forecast,
             runtime_status=S27_TREND_RUNTIME_STATUS,
-            method_status="LOCKED_EWMAC16_TREND_OVERLAY_RUNTIME",
+            method_status="LOCKED_DAILY_EWMAC16_64_TREND_OVERLAY_RUNTIME",
             no_lookahead_status="PASS_NO_LOOKAHEAD",
             source_artifact_sha256="B" * 64,
         )
@@ -1501,9 +1615,23 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             as_of=as_of,
             vol_multiplier=vol_multiplier,
             runtime_status=S27_VOL_ATTENUATION_RUNTIME_STATUS,
-            method_status="LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+            method_status="LOCKED_DAILY_S13_TEN_YEAR_V_Q_M_ATTENUATION_RUNTIME",
             no_lookahead_status="PASS_NO_LOOKAHEAD",
             source_artifact_sha256="C" * 64,
+        )
+
+    def locked_daily_equilibrium_runtime(self, as_of: datetime, *, equilibrium: float) -> S26DailyEquilibriumRuntimeValue:
+        return S26DailyEquilibriumRuntimeValue(
+            row_id=S26_ZN_WORKED_EXAMPLE_ROW_ID,
+            author_market_code=S26_ZN_WORKED_EXAMPLE_AUTHOR_MARKET_CODE,
+            instrument_id=S26_ZN_WORKED_EXAMPLE_DATABENTO_INSTRUMENT_ID,
+            raw_symbol=S26_ZN_WORKED_EXAMPLE_DATABENTO_RAW_SYMBOL,
+            as_of=as_of,
+            equilibrium_ewma_5=equilibrium,
+            runtime_status=S26_DAILY_EQUILIBRIUM_RUNTIME_STATUS,
+            method_status="LOCKED_DAILY_BACK_ADJUSTED_EWMA5_EQUILIBRIUM_RUNTIME",
+            no_lookahead_status="PASS_NO_LOOKAHEAD",
+            source_artifact_sha256="F" * 64,
         )
 
     def locked_s27_base_position(self, as_of: datetime, *, base_unrounded_contracts: float) -> S27ZNPrevalidatedBasePosition:
@@ -1524,6 +1652,10 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
         return s26_forecast_only_from_quarantined_zn_hourly_ohlcv_bars(
             bars,
             sigma_runtime=self.locked_sigma_runtime(as_of, value=sigma_percent),
+            daily_equilibrium_runtime=self.locked_daily_equilibrium_runtime(
+                as_of,
+                equilibrium=self.ewma(closes, S26_EQUILIBRIUM_EWMA_SPAN),
+            ),
             as_of=as_of,
             source_locks=self.locked_quarantined_source_locks(),
         )
@@ -1534,10 +1666,18 @@ class S26S27FastMeanReversionSyntheticTests(unittest.TestCase):
             self.locked_sigma_runtime(bar.derived_completed_bar_end_utc, value=sigma_percent)
             for bar in bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :]
         )
+        equilibrium_runtimes = tuple(
+            self.locked_daily_equilibrium_runtime(
+                bar.derived_completed_bar_end_utc,
+                equilibrium=self.ewma(closes[:offset], S26_EQUILIBRIUM_EWMA_SPAN),
+            )
+            for offset, bar in enumerate(bars[S26_EQUILIBRIUM_EWMA_SPAN - 1 :], start=S26_EQUILIBRIUM_EWMA_SPAN)
+        )
         return s26_forecast_series_only_from_quarantined_zn_hourly_ohlcv_bars(
             S26QuarantinedHourlyForecastSeriesRequest(
                 bars=bars,
                 sigma_runtimes=runtimes,
+                daily_equilibrium_runtimes=equilibrium_runtimes,
                 source_locks=self.locked_quarantined_source_locks(),
             )
         )

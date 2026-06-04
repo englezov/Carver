@@ -89,6 +89,10 @@ PERIODS = (
 
 
 def main() -> None:
+    raise SystemExit(
+        "Fail closed: S27 mechanical verifier is superseded by the 2026-06-04 book-faithfulness fix; "
+        "it recomputes S26 EWMA5 from hourly rows and must be converted to locked daily EWMA5 equilibrium runtimes before use."
+    )
     folders = _folders()
     for folder in folders.values():
         folder.mkdir(parents=True, exist_ok=True)
