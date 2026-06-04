@@ -1,0 +1,7 @@
+component,status,evidence_basis,blocker_or_note,next_required_action
+historical_fee_source_location,LOCKED_SOURCE_LOCATION_ONLY,"CME historical fees source-location extract","Historical fee schedules are located but actual MES fee values were not extracted.","Open cost-value extraction gate and freeze/hash fee schedule rows."
+current_fee_source_location,LOCKED_SOURCE_LOCATION_ONLY,"CME current fees source-location extract","Current fee source family is located but is not historical 2022-2023 cost evidence.","Use only as source-location context."
+exchange_fee_value,FAIL_CLOSED_S09_MES_EXCHANGE_FEE_VALUE_NOT_EXTRACTED,"No fee value extracted.","Cannot compute risk-adjusted cost.","Extract historical MES exchange fee values."
+broker_commission_value,FAIL_CLOSED_S09_MES_BROKER_COMMISSION_NOT_LOCKED,"No broker-specific source named.","Cannot compute source-native all-in cost.","Name and hash broker commission source or choose explicit fail-closed no-broker-cost policy."
+spread_slippage_policy,FAIL_CLOSED_S09_MES_SPREAD_SLIPPAGE_POLICY_NOT_LOCKED,"No spread/slippage source or conservative policy locked.","Cannot perform S09 cost eligibility.","Lock spread/slippage treatment before cost computation."
+cost_value_status,FAIL_CLOSED_S09_MES_HISTORICAL_COST_VALUES_NOT_EXTRACTED,"Source locations only.","No cost computation authorized.","Extract values under a later gate."

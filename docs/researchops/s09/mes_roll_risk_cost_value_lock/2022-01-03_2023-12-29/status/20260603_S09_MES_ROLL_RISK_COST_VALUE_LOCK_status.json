@@ -1,0 +1,16 @@
+{
+  "annual_risk_runtime_value_status": "FAIL_CLOSED_S09_MES_ANNUAL_RISK_RUNTIME_VALUES_NOT_EXECUTED",
+  "annual_risk_source_method_status": "LOCKED_SOURCE_METHOD_PART_ONE_S03_VARIABLE_RISK_FAMILY",
+  "cost_value_status": "FAIL_CLOSED_S09_MES_HISTORICAL_COST_VALUES_NOT_EXTRACTED",
+  "daily_price_risk_conversion_source_status": "LOCKED_BOOK_SOURCE_ATOM",
+  "databento_api_access": "NO",
+  "eligible_speed_set_status": "FAIL_CLOSED_S09_MES_ELIGIBLE_SPEED_SET_NOT_LOCKED",
+  "historical_contract_lifecycle_status": "LOCKED_DERIVED_THIRD_FRIDAY_RULE_FROM_GENERIC_CME_STATIC_SOURCE",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "risk_adjusted_cost_status": "FAIL_CLOSED_S09_MES_RISK_ADJUSTED_COST_NOT_COMPUTABLE",
+  "roll_trading_day_semantics_status": "FAIL_CLOSED_S09_MES_PROVIDER_DATE_SUNDAY_ROWS_NOT_NORMALIZED_TO_EXCHANGE_COMPLETED_TRADING_DAY",
+  "speed_cost_eligibility_status": "FAIL_CLOSED_S09_MES_SPEED_COST_ELIGIBILITY_NOT_COMPUTABLE",
+  "status": "PARTIAL_LOCK_S09_MES_RISK_METHOD_LIFECYCLE_DATES_STRATEGY_INPUT_FAIL_CLOSED",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY"
+}

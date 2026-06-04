@@ -1,0 +1,10 @@
+{
+  "backtest_csv": "docs/researchops/s09/mes_test_window_backtest/2020-04-06_2022-02-08/backtest/20260604_S09_MES_TEST_WINDOW_BACKTEST_CLEAN_RERUN_AFTER_OPUS_REMEDIATION_backtest_rows.csv",
+  "backtest_execution_count": 1,
+  "execution_receipt_status": "CLEAN_TEST_BACKTEST_RECEIPT_AFTER_REMEDIATION_GUARDS",
+  "run_id": "20260604_S09_MES_TEST_WINDOW_BACKTEST_CLEAN_RERUN_AFTER_OPUS_REMEDIATION",
+  "status": "CLEAN_S09_MES_TEST_BACKTEST_WRITTEN_AFTER_REMEDIATION_GUARDS_NOT_PROMOTION",
+  "summary_csv": "docs/researchops/s09/mes_test_window_backtest/2020-04-06_2022-02-08/backtest/20260604_S09_MES_TEST_WINDOW_BACKTEST_CLEAN_RERUN_AFTER_OPUS_REMEDIATION_summary.csv",
+  "window_end": "2022-02-08",
+  "window_start": "2020-04-06"
+}

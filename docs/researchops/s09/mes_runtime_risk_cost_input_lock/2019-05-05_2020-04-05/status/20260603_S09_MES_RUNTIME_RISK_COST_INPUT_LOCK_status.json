@@ -1,0 +1,18 @@
+{
+  "backtests_run": "NO",
+  "databento_api_access": "NO",
+  "design_ordering": "oldest authorized completed source-native data first",
+  "diagnostics_run": "NO",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_RUNTIME_RISK_COST_INPUT_LOCK_GATE",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "machinery_development_slice": "2019-05-05 through 2020-04-05",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "runtime_input_lock_scope": "oldest minimum machinery-development slice only",
+  "status": "FAIL_CLOSED_S09_MES_RUNTIME_RISK_COST_INPUT_LOCK_NOT_STRATEGY_READY",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY",
+  "test_validation_lockbox_forward_access": "NO"
+}
