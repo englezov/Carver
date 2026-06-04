@@ -1,0 +1,11 @@
+check_name,check_status,observed_count
+operator_authorized_exactly_one_validation_window_download,PASS,1
+provider_errors_absent,PASS,0
+source_native_mes_only,PASS,1940
+all_requested_symbols_have_rows,PASS,9
+first_sanitized_completed_date_matches_validation_start,PASS,1
+last_sanitized_completed_date_matches_validation_end,PASS,1
+no_out_of_window_completed_dates,PASS,0
+duplicate_provider_timestamps_absent,PASS,0
+no_forecasts_positions_costs_diagnostics_or_backtests,PASS,0
+no_lockbox_forward_access,PASS,0
