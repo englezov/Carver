@@ -1181,6 +1181,307 @@ The post-pass next-gate queue, conditional on a future GPT external `PASS`, is:
 docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2026-06-08.md
 ```
 
+Because GPT Extended Pro remained unavailable, the operator used Opus 4.8 Max as an alternate external auditor against GitHub commit `9db6c30`. Opus returned `PASS`: no P0/P1/P2/P3 findings. Opus confirmed the runtime-history level-compatibility authority binding, fill source-input/source-row authority binding, builder-emission-to-phase-input binding, exact planned evidence artifact coverage, inert/fail-closed behavior, and absence of forbidden execution surfaces. The Opus alternate external re-audit synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_OPUS_ALTERNATE_CONSTRUCTION_INTERFACE_REAUDIT_SYNTHESIS_2026-06-08.md
+```
+
+The construction-interface P1 authority patch may now be treated as externally clean for this narrow construction-interface scope based on alternate Opus evidence. GPT Extended Pro re-audit remains pending only as optional later confirmation when limits reset.
+
+The operator then provided a regular GPT model focused static re-audit of the same construction-interface P1 authority source packet. The audit reported the matching packet hash `4FDCC8D8A92E66AE7225909CFE4BB4FFA44BA5BCE511ACD41E06EEC33D202B34` and returned `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. This corroborates the alternate Opus external `PASS` but does not claim GPT Extended Pro `PASS`. The synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_GPT_REGULAR_CONSTRUCTION_INTERFACE_REAUDIT_SYNTHESIS_2026-06-08.md
+```
+
+The operator then authorized the next inert parser/file replay pre-implementation planning slice. The planning slice identified the minimum remaining non-executing scaffold before actual parser/file replay implementation authorization as:
+
+```text
+S27_V2_PARSER_FILE_REPLAY_IMPLEMENTATION_BOUNDARY_AND_PHASE_REGISTRY
+```
+
+The planning record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_PARSER_FILE_REPLAY_PRE_IMPLEMENTATION_PLANNING_SLICE_2026-06-08.md
+```
+
+The operator then authorized the inert implementation-boundary and phase-registry code scaffold. The scaffold was added in:
+
+```text
+src/carver/spine/s27_v2_replay/implementation_boundary.py
+```
+
+The scaffold record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_IMPLEMENTATION_BOUNDARY_PHASE_REGISTRY_SCAFFOLD_RECORD_2026-06-08.md
+```
+
+The local hostile audit of the implementation-boundary and phase-registry scaffold returned `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The local audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_IMPLEMENTATION_BOUNDARY_PHASE_REGISTRY_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The operator then authorized an actual parser/file replay implementation planning gate only. The planning gate defined the first consolidated implementation authorization needed to move from inert scaffolds into controlled local file/hash/parser/ledger construction work. The planning record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_ACTUAL_PARSER_FILE_REPLAY_IMPLEMENTATION_PLANNING_GATE_2026-06-08.md
+```
+
+The operator then authorized `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_1`, limited to controlled local-only implementation code and local verification for declared S27 V2 ZN input files under the audited construction-interface and implementation-boundary scaffolds. The implementation slice added:
+
+```text
+src/carver/spine/s27_v2_replay/local_replay.py
+```
+
+The slice constructs only early local replay artifacts:
+
+```text
+declared local files -> byte hashes -> structural source rows -> raw/parser/source-row-batch contracts
+```
+
+The implementation slice record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE1_RECORD_2026-06-08.md
+```
+
+The local hostile audit loop found and patched multiple stale-authority and declared-byte provenance gaps. The final local hostile re-audit returned `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The local verification result is:
+
+```text
+17 passed
+```
+
+The final local audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE1_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The operator then authorized preparing a GPT/alternate external hostile-audit handoff packet for the locally passed slice 1 implementation. The `C:\Users\apops\Desktop\GPT` folder was cleaned and repopulated with a 5-file packet excluding `Carver.pdf`, because the operator stated the book is already in the GPT app library. The source zip hash is:
+
+```text
+6DB3D56B69BD7C41E45EA91264ABE62295840A889FD479BFC6B035EA6988CE1E
+```
+
+The external handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE1_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md
+```
+
+GPT returned `PASS` on the slice 1 external hostile audit. The audit confirmed the packet hash `6DB3D56B69BD7C41E45EA91264ABE62295840A889FD479BFC6B035EA6988CE1E`, found no P0/P1/P2/P3 findings, confirmed the prior local P2 classes appear closed, found no forbidden provider/API/download/backtest/OOS/Lockbox/Forward/Git/adapter/deployment/trading/promotion surface, and stated that the project may proceed to the next narrow implementation slice only after separate explicit operator authorization.
+
+The external audit synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE1_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md
+```
+
+## S27_V2 Local-Only Parser/File Replay Slice 2 Status
+
+After explicit operator authorization, the next narrow local-only parser/file replay implementation slice was implemented for downstream construction scaffolding from audited Slice 1 source-row-batch outputs toward source-row-selection authority and source-input manifest construction.
+
+Implemented code:
+
+```text
+src/carver/spine/s27_v2_replay/local_replay.py
+```
+
+Focused verification:
+
+```text
+tests/test_s27_v2_local_replay_slice1.py
+```
+
+The implementation record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE2_RECORD_2026-06-08.md
+```
+
+The local hostile audit found and patched one P1 direct-artifact selected-row authority anchoring issue and one P2 policy/proof hash-binding issue. The local hostile re-audit returned `PASS`. The audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE2_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The focused local verification result is:
+
+```text
+25 passed
+```
+
+This slice constructs deterministic local-only source-row-selection authority, source-input role selection, and source-input manifest contract artifacts. The source-input manifest public active-trust `validate()` route remains fail-closed; this slice does not construct active trust-root/evidence-manifest authority and does not claim source-faithful replay evidence.
+
+The focused GPT/alternate external hostile audit for Slice 2 returned `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The audit explicitly marked closed the direct-artifact forged selected-row authority issue and the policy/proof hash-binding omission issue. The synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE2_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md
+```
+
+## S27_V2 Local-Only Parser/File Replay Slice 3 Status
+
+After explicit operator authorization, the next narrow local-only parser/file replay implementation slice was implemented for downstream construction scaffolding from audited source-input manifest outputs toward level-compatibility and runtime-history construction.
+
+Implemented code:
+
+```text
+src/carver/spine/s27_v2_replay/local_replay.py
+```
+
+Focused verification:
+
+```text
+tests/test_s27_v2_local_replay_slice1.py
+```
+
+The implementation record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE3_RECORD_2026-06-08.md
+```
+
+The local hostile audit found and patched one P1 runtime-history expected selected-row/locator map issue and one P2 top-level input policy hash-binding issue. The local hostile re-audit returned `PASS`. The audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE3_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The focused local verification result is:
+
+```text
+32 passed
+```
+
+This slice constructs deterministic local-only level-compatibility input, inert level-compatibility contract, runtime-history input, and inert runtime-history contract artifacts. The level-compatibility and runtime-history input public active-trust `validate()` routes remain fail-closed; this slice does not claim source-faithful replay evidence.
+
+The focused GPT/alternate external hostile audit for Slice 3 returned `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The audit explicitly marked closed the runtime-history selected-row/locator expected-map issue and the top-level level/runtime input policy hash-binding issue. The synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE3_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md
+```
+
+## S27_V2 Local-Only Parser/File Replay Slice 4 Status
+
+After explicit operator authorization, the next narrow local-only parser/file replay implementation slice was implemented for downstream construction scaffolding from audited runtime-history and level-compatibility outputs toward forecast, desired-position, and order/transition construction.
+
+Implemented code:
+
+```text
+src/carver/spine/s27_v2_replay/local_replay.py
+```
+
+Focused verification:
+
+```text
+tests/test_s27_v2_local_replay_slice1.py
+```
+
+The implementation record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE4_RECORD_2026-06-08.md
+```
+
+The local hostile audit returned `PASS`: no P0/P1/P2 findings and no forbidden execution surface. It left one non-blocking P3 test-coverage note that not every analogous forged map/hash permutation across position/order expected-source maps and bundle hashes is exhaustively tested. The audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE4_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The focused GPT/alternate external hostile-audit handoff packet for Slice 4 was prepared in `C:\Users\apops\Desktop\GPT` with 20 files and no `Carver.pdf`, because the operator stated the book is already in the GPT library. The handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md
+```
+
+The first Slice 4 external hostile audit returned `FAIL` for packet completeness only: the auditor reported that the mounted attachment set omitted the current `position_input_contract.py`, blocking verification of desired-position input authority routing. The fail synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_AUDIT_FAIL_SYNTHESIS_2026-06-08.md
+```
+
+A corrected Slice 4 external re-audit packet was prepared in `C:\Users\apops\Desktop\GPT` with 20 files and no `Carver.pdf`. The corrected packet makes the required position input contract the first short-named file:
+
+```text
+00_REQUIRED_position_input_contract.py
+```
+
+The corrected re-audit handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_REAUDIT_HANDOFF_2026-06-08.md
+```
+
+The corrected Slice 4 external hostile re-audit returned `PASS`: no P0/P1/P2 findings and no blocking P3 findings. It closed the prior packet-completeness blocker and confirmed desired-position input authority routing, position input fail-closed behavior, active forecast-derived expected-source maps, position dependency/hash binding, direct stale/forged position input rejection through Slice 4 artifact validation, clean forecast routing, clean order/transition routing, and absence of forbidden execution surfaces. The synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_REAUDIT_SYNTHESIS_2026-06-08.md
+```
+
+This is only a Slice 4 external re-audit pass. It is not a full machinery pass, not a final Carver.pdf source-faithfulness pass, not a replay-result pass, and not source-faithful replay evidence.
+
+The focused local verification result is:
+
+```text
+38 passed
+```
+
+This slice constructs deterministic local-only forecast input, inert forecast contract, desired-position input, inert desired-position contract, order/transition input, and inert order/transition contract artifacts. The forecast, position, and order input public active-authority `validate()` routes remain fail-closed; this slice does not claim source-faithful replay evidence.
+
+## S27_V2 Local-Only Parser/File Replay Slice 5 Status
+
+After explicit operator authorization, the next narrow local-only parser/file replay implementation slice was implemented for downstream construction scaffolding from audited order/transition outputs toward fill construction.
+
+Implemented code:
+
+```text
+src/carver/spine/s27_v2_replay/local_replay.py
+```
+
+Focused verification:
+
+```text
+tests/test_s27_v2_local_replay_slice1.py
+```
+
+The implementation record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE5_RECORD_2026-06-08.md
+```
+
+The local hostile audit returned `PASS`: no P0/P1/P2 findings and no forbidden execution surface. It left one non-blocking P3 note that `_validate_fill_input_contract_local_only()` does not explicitly check `FillInputContractBundle.non_authorizations`, while the authority-bearing public path does. The audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE5_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+The focused GPT/alternate external hostile-audit handoff packet for Slice 5 was prepared in `C:\Users\apops\Desktop\GPT` with 20 files and no `Carver.pdf`, because the operator stated the book is already in the GPT library. The packet makes the required fill contract files first:
+
+```text
+00_REQUIRED_fill_input_contract.py
+01_REQUIRED_fill_contract.py
+```
+
+The handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE5_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md
+```
+
+The focused local verification result is:
+
+```text
+43 passed
+```
+
+This slice constructs deterministic local-only fill input and inert fill contract artifacts. The fill input public active-authority `validate()` route remains fail-closed; this slice does not claim source-faithful replay evidence.
+
 ## Decision Queue
 
 1. Treat `P1-004-A` as externally closed for the current contract/input authority scaffold.
@@ -1212,12 +1513,38 @@ docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2
 27. Treat the construction-interface external audit as failed on two P1 authority omissions and one P3 planned-evidence note.
 28. Treat the construction-interface P1 authority patch as locally hostile re-audited cleanly.
 29. Treat the focused GPT Extended Pro external hostile re-audit handoff packet for the locally passed construction-interface P1 authority patch as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_P1_AUTHORITY_EXTERNAL_REAUDIT_HANDOFF_2026-06-08.md`.
-30. Next checkpoint is to consume the GPT Extended Pro external re-audit result for the construction-interface P1 authority patch.
-31. Until GPT Extended Pro is available, treat the construction-interface P1 authority patch as `LOCAL_PASS_PENDING_EXTERNAL_REAUDIT`, preserving the prepared GPT packet without mutation. The continuity record is `docs/process/CARVER_S27_ZN_V2_LOCAL_PASS_PENDING_EXTERNAL_REAUDIT_CONTINUITY_2026-06-08.md`.
-32. After a future GPT external `PASS`, use `docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2026-06-08.md` to avoid jumping directly into parser/file replay implementation or backtesting.
-33. Keep all unresolved gates fail-closed in any future code work: Strategy 3 sigma, ZN tick rounding, working-limit lifecycle, overnight recompute, nonzero roll bridge, session/roll calendars, spread/commission policy, capacity/speed interpretation, and stale-evidence manifest.
-34. Do not execute parser work, file replay, diagnostics, backtests, OOS, Lockbox, Forward, provider/API calls, downloads, Git actions, adapter work, deployment, trading, promotion, or result interpretation from this current-state record.
-35. Reserve Opus for a later scarce final verdict after code scaffolding or implementation artifacts exist.
+30. Treat the Opus alternate external construction-interface re-audit as `PASS` for the narrow construction-interface P1 authority patch scope. The synthesis is `docs/process/CARVER_S27_ZN_V2_OPUS_ALTERNATE_CONSTRUCTION_INTERFACE_REAUDIT_SYNTHESIS_2026-06-08.md`.
+31. Treat the regular GPT model construction-interface re-audit as corroborating `PASS` evidence for the same narrow construction-interface P1 authority packet. The synthesis is `docs/process/CARVER_S27_ZN_V2_GPT_REGULAR_CONSTRUCTION_INTERFACE_REAUDIT_SYNTHESIS_2026-06-08.md`.
+32. Treat GPT Extended Pro re-audit as optional later confirmation rather than the active blocker for this narrow construction-interface patch.
+33. Use `docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2026-06-08.md` to avoid jumping directly into parser/file replay implementation or backtesting.
+34. Treat the inert parser/file replay pre-implementation planning slice as completed. The planning record is `docs/process/CARVER_S27_ZN_V2_PARSER_FILE_REPLAY_PRE_IMPLEMENTATION_PLANNING_SLICE_2026-06-08.md`.
+35. Treat the inert `S27_V2_PARSER_FILE_REPLAY_IMPLEMENTATION_BOUNDARY_AND_PHASE_REGISTRY` code scaffold as locally hostile audited cleanly. The scaffold record is `docs/process/CARVER_S27_ZN_V2_IMPLEMENTATION_BOUNDARY_PHASE_REGISTRY_SCAFFOLD_RECORD_2026-06-08.md`; the local audit result is `docs/process/CARVER_S27_ZN_V2_IMPLEMENTATION_BOUNDARY_PHASE_REGISTRY_LOCAL_AUDIT_RESULT_2026-06-08.md`.
+36. Treat the actual parser/file replay implementation planning gate as completed. The planning record is `docs/process/CARVER_S27_ZN_V2_ACTUAL_PARSER_FILE_REPLAY_IMPLEMENTATION_PLANNING_GATE_2026-06-08.md`.
+37. Treat `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_1` as locally implemented and locally hostile audited cleanly for the early declared-file/raw-parser/source-row-batch contract construction scope only.
+38. Treat the external hostile audit handoff packet for the locally passed slice 1 implementation as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE1_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
+39. Treat the slice 1 external hostile audit as `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE1_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md`.
+40. Treat `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_2` as locally implemented and locally hostile re-audited cleanly for the source-row-selection authority and source-input manifest construction scope only.
+41. Treat the Slice 2 external hostile audit as `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE2_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md`.
+42. Treat `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_3` as locally implemented and locally hostile re-audited cleanly for the level-compatibility/runtime-history construction scaffold scope only.
+43. Treat the Slice 3 external hostile audit as `PASS`: no P0/P1/P2/P3 findings and no forbidden execution surface. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE3_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md`.
+44. Treat `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_4` as locally implemented and locally hostile audited cleanly for the forecast/desired-position/order-transition construction scaffold scope only.
+45. Treat the focused GPT/alternate external hostile-audit handoff packet for Slice 4 as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
+46. Treat the first Slice 4 external audit as failed for packet completeness only. The fail synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_AUDIT_FAIL_SYNTHESIS_2026-06-08.md`.
+47. Treat the corrected Slice 4 external re-audit packet as prepared, with `00_REQUIRED_position_input_contract.py` first. The corrected handoff record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_REAUDIT_HANDOFF_2026-06-08.md`.
+48. Treat the corrected Slice 4 external hostile re-audit as `PASS` for the forecast/desired-position/order-transition construction scaffold scope only. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE4_EXTERNAL_REAUDIT_SYNTHESIS_2026-06-08.md`.
+49. Treat `S27_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_IMPLEMENTATION_SLICE_5` as locally implemented and locally hostile audited cleanly for the fill construction scaffold scope only, carrying one non-blocking P3 metadata-hardening note.
+50. Treat the focused GPT/alternate external hostile-audit handoff packet for Slice 5 as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE5_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
+51. Treat the Slice 5 external hostile audit as `PASS`: no P0/P1/P2 findings and no forbidden execution surface. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_SLICE5_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md`.
+52. Carry forward the Slice 5 non-blocking P3 metadata-hardening note: `_validate_fill_input_contract_local_only()` does not explicitly check `FillInputContractBundle.non_authorizations`, while the public authority-aware validation path does.
+53. Under consolidated operator authorization, treat the local-only parser/file replay completion loop as implemented and locally hostile-audited cleanly for the current inert scaffold-construction scope. The implementation record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_COMPLETION_LOOP_RECORD_2026-06-08.md`; the local audit result is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_COMPLETION_LOOP_LOCAL_AUDIT_RESULT_2026-06-08.md`.
+54. The focused local verification result is `49 passed`.
+55. Treat the focused GPT/alternate external hostile-audit handoff packet for the locally passed completion loop as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_COMPLETION_LOOP_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
+56. Treat the completion-loop external hostile audit as `PASS` for the local-only inert scaffold completion scope only: no P0/P1/P2/P3 findings and no forbidden execution surface. The synthesis is `docs/process/CARVER_S27_ZN_V2_LOCAL_ONLY_PARSER_FILE_REPLAY_COMPLETION_LOOP_EXTERNAL_AUDIT_SYNTHESIS_2026-06-08.md`.
+57. This is not a full machinery pass, not a final Carver.pdf source-faithfulness pass, not a replay-result pass, and not source-faithful replay evidence.
+58. The next checkpoint is an operator decision on the next gate. Candidate paths are: package/commit/push the audited local-only machinery checkpoint, or authorize the next controlled local-only replay/verification step. Either path requires separate explicit operator authorization.
+59. Keep all unresolved gates fail-closed in any future code work: Strategy 3 sigma, ZN tick rounding, working-limit lifecycle, overnight recompute, nonzero roll bridge, session/roll calendars, spread/commission policy, capacity/speed interpretation, and stale-evidence manifest.
+60. Do not execute parser work beyond separately authorized local slices, file replay beyond audited slices, diagnostics, backtests, OOS, Lockbox, Forward, provider/API calls, downloads, Git actions, adapter work, deployment, trading, promotion, or result interpretation from this current-state record.
+61. Reserve Opus final verdict for a later full machinery audit after implementation and replay/backtest artifacts exist.
 
 ## Non-Authorizations
 

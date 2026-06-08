@@ -533,13 +533,23 @@ class CostInputContractBundle:
             != REQUIRED_COST_COMPONENT_FAMILIES
         ):
             raise CarverBlocked("S27 v2 cost component dependencies must match locked components")
+        component_binding_hash_by_label = {
+            binding.dependency_label: binding.dependency_binding_contract_hash
+            for binding in self.component_dependency_bindings
+        }
         seen_components: set[str] = set()
         for binding in self.component_dependency_bindings:
             binding.validate_component()
             if binding.dependency_label in seen_components:
                 raise CarverBlocked("S27 v2 cost component dependency bindings must be unique")
             seen_components.add(binding.dependency_label)
-            self._require_matching_dependency_hashes(binding, dependency_hash_by_label)
+            self._require_matching_dependency_hashes(
+                binding,
+                {
+                    **component_binding_hash_by_label,
+                    **dependency_hash_by_label,
+                },
+            )
             dependency_hash_by_label[binding.dependency_label] = binding.dependency_binding_contract_hash
 
     def _validate_invariant_dependencies(self, dependency_hash_by_label: dict[str, str]) -> None:
