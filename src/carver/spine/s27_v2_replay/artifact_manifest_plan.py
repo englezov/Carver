@@ -43,9 +43,8 @@ class PlannedEvidenceManifest:
             if artifact.artifact_type in active_types:
                 raise CarverBlocked("S27 v2 planned active artifact types must be unique")
             active_types.add(artifact.artifact_type)
-        missing = set(REQUIRED_EVIDENCE_MANIFEST_ARTIFACT_TYPES) - active_types
-        if missing:
-            raise CarverBlocked("S27 v2 planned evidence manifest missing required artifact types")
+        if tuple(artifact.artifact_type for artifact in self.active_artifacts) != REQUIRED_EVIDENCE_MANIFEST_ARTIFACT_TYPES:
+            raise CarverBlocked("S27 v2 planned evidence manifest active artifact types must match locked tuple")
         require_tuple("S27 v2 planned superseded evidence artifacts", self.superseded_artifacts)
         for artifact in self.superseded_artifacts:
             artifact.validate()

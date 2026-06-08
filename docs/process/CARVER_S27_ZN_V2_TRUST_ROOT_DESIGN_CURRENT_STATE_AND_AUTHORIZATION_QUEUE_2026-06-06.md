@@ -1119,6 +1119,68 @@ The local hostile audit of that construction-scaffold P3 hardening patch returne
 docs/process/CARVER_S27_ZN_V2_CONSTRUCTION_SCAFFOLD_P3_HARDENING_LOCAL_AUDIT_RESULT_2026-06-08.md
 ```
 
+The operator then authorized the next inert local-row replay construction scaffold slice, limited to non-executing construction interfaces and contract-binding hardening after the pushed scaffold checkpoint. Under that gate, the replay construction-interface scaffold was added. `ReplayConstructionInterfaceBundle` derives active phase input authority from validated planning config, construction contract, builder plan, and artifact manifest plan objects rather than from caller-supplied active maps. The scaffold record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_SCAFFOLD_RECORD_2026-06-08.md
+```
+
+The first local hostile audit returned `P2 FAIL` because standalone phase validation still accepted caller-supplied active authority maps. The patch changed standalone validation for construction input bindings, output declarations, and phase interfaces to fail closed, leaving `ReplayConstructionInterfaceBundle.validate()` as the only authoritative validation route. The local hostile re-audit then returned `PASS`: no P0/P1/P2/P3 findings and no execution surface. The local audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_LOCAL_AUDIT_RESULT_2026-06-08.md
+```
+
+This construction-interface scaffold is locally hostile audited cleanly but not yet externally audited.
+
+Under the consolidated gate, a GPT Extended Pro external hostile-audit handoff packet was prepared for the locally passed replay construction-interface scaffold. The `C:\Users\apops\Desktop\GPT` folder was cleaned and repopulated with a 10-file packet excluding `Carver.pdf`, because GPT already has the book in the app library. The source zip hash is `18CE2328EBD63D96D17B25D865492A64680948ED1B25C390A14BD9D453080933`. The handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md
+```
+
+GPT Extended Pro returned `FAIL` on that construction-interface external audit: no P0 findings and no execution surface, but two P1 construction-interface authority omissions remained and one P3 planned-evidence hardening note was reported. The fail synthesis is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_EXTERNAL_AUDIT_FAIL_SYNTHESIS_2026-06-08.md
+```
+
+Under the consolidated gate, the P1 authority patch was added. Runtime-history construction now binds the produced level-compatibility artifact; fill construction now binds source-input manifest and source-row-selection authority; builder ledger emissions must bind phase inputs; and planned evidence manifest active artifact types must exactly match the locked tuple. The patch record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_P1_AUTHORITY_PATCH_RECORD_2026-06-08.md
+```
+
+The local hostile re-audit of the P1 authority patch returned `PASS`: no P0/P1/P2/P3 findings and no execution surface. The local re-audit result is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_P1_AUTHORITY_LOCAL_REAUDIT_RESULT_2026-06-08.md
+```
+
+Under the consolidated gate, a focused GPT Extended Pro external hostile re-audit packet was prepared for the locally passed construction-interface P1 authority patch. The `C:\Users\apops\Desktop\GPT` folder was cleaned and repopulated with a 10-file packet excluding `Carver.pdf`, because GPT already has the book in the app library. The source zip hash is `4FDCC8D8A92E66AE7225909CFE4BB4FFA44BA5BCE511ACD41E06EEC33D202B34`. The handoff record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_P1_AUTHORITY_EXTERNAL_REAUDIT_HANDOFF_2026-06-08.md
+```
+
+The operator then reported GPT Extended Pro is unavailable until the usage reset on 2026-06-11. The current construction-interface P1 authority patch is therefore held as:
+
+```text
+LOCAL_PASS_PENDING_EXTERNAL_REAUDIT
+```
+
+The continuity record is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_LOCAL_PASS_PENDING_EXTERNAL_REAUDIT_CONTINUITY_2026-06-08.md
+```
+
+The post-pass next-gate queue, conditional on a future GPT external `PASS`, is:
+
+```text
+docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2026-06-08.md
+```
+
 ## Decision Queue
 
 1. Treat `P1-004-A` as externally closed for the current contract/input authority scaffold.
@@ -1145,9 +1207,17 @@ docs/process/CARVER_S27_ZN_V2_CONSTRUCTION_SCAFFOLD_P3_HARDENING_LOCAL_AUDIT_RES
 22. Treat the focused GPT Extended Pro external hostile-audit handoff packet for the locally passed construction-scaffold checkpoint as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_CONSTRUCTION_SCAFFOLD_CHECKPOINT_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
 23. Treat the construction-scaffold checkpoint as externally audited cleanly for the audited scope, with two non-blocking P3 notes carried forward: exact active evidence artifact coverage and parser-name-to-output-row-family binding.
 24. Treat the construction-scaffold P3 hardening patch as locally audited cleanly, closing both carried GPT P3 notes locally.
-25. Keep all unresolved gates fail-closed in any future code work: Strategy 3 sigma, ZN tick rounding, working-limit lifecycle, overnight recompute, nonzero roll bridge, session/roll calendars, spread/commission policy, capacity/speed interpretation, and stale-evidence manifest.
-26. Do not execute parser work, file replay, diagnostics, backtests, OOS, Lockbox, Forward, provider/API calls, downloads, Git actions, adapter work, deployment, trading, promotion, or result interpretation from this current-state record.
-27. Reserve Opus for a later scarce final verdict after code scaffolding or implementation artifacts exist.
+25. Treat the replay construction-interface scaffold as locally hostile audited cleanly after one scoped P2 patch.
+26. Treat the GPT Extended Pro external hostile-audit handoff packet for the locally passed construction-interface scaffold as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_EXTERNAL_AUDIT_HANDOFF_2026-06-08.md`.
+27. Treat the construction-interface external audit as failed on two P1 authority omissions and one P3 planned-evidence note.
+28. Treat the construction-interface P1 authority patch as locally hostile re-audited cleanly.
+29. Treat the focused GPT Extended Pro external hostile re-audit handoff packet for the locally passed construction-interface P1 authority patch as prepared. The handoff record is `docs/process/CARVER_S27_ZN_V2_REPLAY_CONSTRUCTION_INTERFACE_P1_AUTHORITY_EXTERNAL_REAUDIT_HANDOFF_2026-06-08.md`.
+30. Next checkpoint is to consume the GPT Extended Pro external re-audit result for the construction-interface P1 authority patch.
+31. Until GPT Extended Pro is available, treat the construction-interface P1 authority patch as `LOCAL_PASS_PENDING_EXTERNAL_REAUDIT`, preserving the prepared GPT packet without mutation. The continuity record is `docs/process/CARVER_S27_ZN_V2_LOCAL_PASS_PENDING_EXTERNAL_REAUDIT_CONTINUITY_2026-06-08.md`.
+32. After a future GPT external `PASS`, use `docs/process/CARVER_S27_ZN_V2_POST_CONSTRUCTION_INTERFACE_PASS_NEXT_GATE_QUEUE_2026-06-08.md` to avoid jumping directly into parser/file replay implementation or backtesting.
+33. Keep all unresolved gates fail-closed in any future code work: Strategy 3 sigma, ZN tick rounding, working-limit lifecycle, overnight recompute, nonzero roll bridge, session/roll calendars, spread/commission policy, capacity/speed interpretation, and stale-evidence manifest.
+34. Do not execute parser work, file replay, diagnostics, backtests, OOS, Lockbox, Forward, provider/API calls, downloads, Git actions, adapter work, deployment, trading, promotion, or result interpretation from this current-state record.
+35. Reserve Opus for a later scarce final verdict after code scaffolding or implementation artifacts exist.
 
 ## Non-Authorizations
 
