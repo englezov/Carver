@@ -8,7 +8,7 @@ CARVER_CLEAN_WORKSPACE_LOCAL_MISSION_SHELL_NOT_PIPELINE_AUTHORIZATION
 
 This folder is the clean local workspace for dissecting the Carver book and turning its strategies into disciplined source-native research candidates.
 
-The old workspace at `C:\Users\openclaw\Desktop\QuantLab_v3` is archived as an operationally contaminated blob. It may be used only as read-only archaeology. No active pipeline work should run there.
+The old workspace at `archived prior workspace` is archived as an operationally contaminated blob. It may be used only as read-only archaeology. No active pipeline work should run there.
 
 ## Mission
 

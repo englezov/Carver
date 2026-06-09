@@ -10,7 +10,7 @@ PROCESS_ONLY_CARVER_SOURCE_NATIVE_RESEARCH_CHARTER_NOT_PIPELINE_AUTHORIZATION
 
 ## Purpose
 
-This charter defines the clean Carver research mission after retiring the messy local `QuantLab_v3` workspace from active pipeline use.
+This charter defines the clean Carver research mission after retiring the messy local `archived prior workspace` workspace from active pipeline use.
 
 The mission is not to rescue old candidates. The mission is to dissect the Carver book systematically, map its strategies and portfolios, and test them through a clean source-native futures-first process.
 

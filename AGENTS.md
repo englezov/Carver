@@ -10,7 +10,7 @@ Before any task in this folder, read:
 Core rules:
 
 - This folder is the clean active Carver research workspace.
-- The old `C:\Users\openclaw\Desktop\QuantLab_v3` folder is archived and must not be used for active pipelines.
+- The old `archived prior workspace` folder is archived and must not be used for active pipelines.
 - Do not copy or resurrect old adapter code, old CFD broker-clock assumptions, old data-prep scripts, or stale pipeline state.
 - Every future lane must declare `SOURCE_NATIVE_FUTURES`, `CFD_DIRECT`, or `CFD_ADAPTER` before data work.
 - Source-native futures discovery must remain source-native and must not borrow CFD assumptions.
@@ -23,7 +23,8 @@ Core rules:
 - Use completed bars only.
 - Do not tune parameters, thresholds, filters, exits, symbols, costs, or windows after seeing results.
 - Do not trade, deploy, promote, or claim alpha from this workspace without explicit locked authorization.
-- Carver must use a distinct GitHub repository. Do not push to or reuse the old `QuantLab_v3` remote, branches, PRs, Actions state, releases, tags, deployment environments, or secrets. See `docs/process/CARVER_REMOTE_ISOLATION_RULE_2026-05-29.md`.
-- Routine local hostile audits are agent/subagent work and do not require operator approval. Operator approval is reserved for critical gates, data access/download/parsing, provider/API use, risky stage transitions, credentials, GitHub publication, destructive operations, deployment, trading, or promotion.
+- Carver must use a distinct GitHub repository. Do not push to or reuse the old `archived prior workspace` remote, branches, PRs, Actions state, releases, tags, deployment environments, or secrets. See `docs/process/CARVER_REMOTE_ISOLATION_RULE_2026-05-29.md`.
+- Hostile audits are pre-approved operator work and should be done by spawning subagents. Only large final audits require operator assistance. Large final audits include GPT Extended Pro / GPT-5.5 with GitHub access and Opus 4. Large hostile-audit prompts must be provided in the agent response, not written into a file. Operator approval is still reserved for critical gates, data access/download/parsing, provider/API use, risky stage transitions, credentials, GitHub publication, destructive operations, deployment, trading, or promotion.
+- The desktop `C:\Users\apops\Desktop\GPT` folder is the hostile-audit handoff folder for GPT Extended Pro through the app. Clean it before each handoff and place no more than 20 focused files in it. Opus 4 hostile-audit handoffs have a 5-file limit. See `docs/process/CARVER_GPT_HOSTILE_AUDIT_HANDOFF_FOLDER_RULE_2026-06-04.md`.
 
 For any risky action, ambiguous stage transition, data-window question, destructive operation, credential exposure risk, GitHub push, or governance conflict, stop and ask the operator.

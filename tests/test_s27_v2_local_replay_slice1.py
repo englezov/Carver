@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from hashlib import sha256
+import json
 from pathlib import Path
 import sys
 
@@ -26,6 +27,17 @@ from carver.spine.s27_v2_replay.file_contract import (
     RawSourceFileDeclaration,
     ReplayInputDirectoryDeclaration,
     RuntimeDependencyDeclaration,
+)
+from carver.spine.s27_v2_replay.executable_replay import (
+    EXECUTABLE_LEDGER_LABELS,
+    PHASE2_LEVEL_COMPATIBILITY_FAIL_STATUS,
+    PHASE2_LEVEL_COMPATIBILITY_PASS_STATUS,
+    PHASE2_RUNTIME_HISTORY_FAIL_STATUS,
+    REQUIRED_CONSTRUCTION_RUN_ARTIFACT_FILES,
+    _phase2_level_row_hash_payload,
+    _phase2_runtime_row_hash_payload,
+    build_fail_closed_executable_replay_ledgers,
+    build_phase2_executable_replay_ledgers,
 )
 from carver.spine.s27_v2_replay.local_replay import (
     LocalParserFileReplaySlice1Inputs,
@@ -161,6 +173,580 @@ def test_declared_file_parser_builds_structural_rows_and_content_hashes(tmp_path
     assert parsed.rows[0].row_locator == "dc-1"
     assert parsed.row_hashes == (parsed.rows[0].row_hash,)
     parsed.validate()
+
+
+def test_phase1_fail_closed_executable_replay_emits_no_result_rows(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+
+    bundle = build_fail_closed_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    bundle.validate()
+    assert bundle.status == "S27_V2_EXECUTABLE_REPLAY_TRUSTED_BUNDLE_FAIL_CLOSED_NOT_EVIDENCE"
+    assert bundle.validation_ledger.status == "S27_V2_EXECUTABLE_REPLAY_VALIDATION_LEDGER_FAIL_CLOSED_ONLY"
+    assert tuple(row.ledger_label for row in bundle.validation_ledger.gate_rows) == EXECUTABLE_LEDGER_LABELS
+    assert all(row.executable_row_emitted is False for row in bundle.validation_ledger.gate_rows)
+    assert bundle.validation_ledger.forecast_rows_emitted is False
+    assert bundle.validation_ledger.order_rows_emitted is False
+    assert bundle.validation_ledger.fill_rows_emitted is False
+    assert bundle.validation_ledger.cost_rows_emitted is False
+    assert bundle.validation_ledger.pnl_rows_emitted is False
+    assert bundle.validation_ledger.result_scored_run_emitted is False
+    assert bundle.validation_ledger.source_faithful_evidence_claimed is False
+    assert "BLOCKED_SOURCE_UNRESOLVED_FORECAST_HISTORY_STATE_HASHES" in (
+        bundle.validation_ledger.required_unresolved_gate_labels
+    )
+    assert "BLOCKED_SOURCE_UNRESOLVED_TRUSTED_COST_ROW_AMOUNT_UNIT_SCHEMA" in (
+        bundle.validation_ledger.required_unresolved_gate_labels
+    )
+
+
+def test_phase1_fail_closed_executable_replay_binds_active_construction_artifacts(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    stale_artifacts = replace(
+        construction_artifacts,
+        trusted_bundle_contract=replace(
+            construction_artifacts.trusted_bundle_contract,
+            trusted_bundle_contract_hash=_h("stale-trusted-bundle"),
+        ),
+    )
+
+    with pytest.raises(CarverBlocked):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            stale_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+        )
+
+
+def test_phase1_fail_closed_executable_replay_hashes_are_content_bound(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_fail_closed_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    forged_validation = replace(
+        bundle.validation_ledger,
+        forecast_rows_emitted=True,
+    )
+    forged_bundle = replace(bundle, validation_ledger=forged_validation)
+
+    with pytest.raises(CarverBlocked, match="result or evidence rows"):
+        forged_bundle.validate()
+
+
+def test_phase1_fail_closed_executable_replay_rejects_stale_manifest_bytes(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    stale_manifest = json.loads(_construction_manifest_bytes(fixtures, construction_artifacts).decode("utf-8"))
+    stale_manifest["trusted_bundle_contract_hash"] = _h("stale-trusted-bundle")
+
+    with pytest.raises(CarverBlocked, match="manifest must bind active construction artifacts"):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            construction_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=json.dumps(stale_manifest).encode("utf-8"),
+        )
+
+
+def test_phase1_fail_closed_executable_replay_rejects_manifest_boundary_contradictions(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    contradictory_manifest = json.loads(
+        _construction_manifest_bytes(fixtures, construction_artifacts).decode("utf-8")
+    )
+    contradictory_manifest["boundaries"]["no_pnl_rows_or_result_scores_written"] = False
+
+    with pytest.raises(CarverBlocked, match="boundaries must match locked non-result claims"):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            construction_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=json.dumps(contradictory_manifest).encode("utf-8"),
+        )
+
+
+def test_phase1_fail_closed_executable_replay_rejects_manifest_row_summary_drift(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    stale_manifest = json.loads(_construction_manifest_bytes(fixtures, construction_artifacts).decode("utf-8"))
+    stale_manifest["row_family_summary"][0]["row_hashes"] = [_h("forged-row-hash")]
+
+    with pytest.raises(CarverBlocked, match="row-family summary must bind parsed rows"):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            construction_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=json.dumps(stale_manifest).encode("utf-8"),
+        )
+
+
+def test_phase1_fail_closed_executable_replay_rejects_manifest_artifact_file_hash_drift(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    manifest_bytes = _construction_manifest_bytes(fixtures, construction_artifacts)
+    artifact_path = (
+        Path(fixtures.input_directory.declared_path)
+        / "construction"
+        / "artifacts"
+        / "30_construction_contract.json"
+    )
+    artifact_path.write_text("tampered construction artifact\n", encoding="utf-8")
+
+    with pytest.raises(CarverBlocked, match="artifact file hash must match bytes"):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            construction_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=manifest_bytes,
+        )
+
+
+def test_phase1_manifest_artifact_file_hash_type_fails_closed_cleanly(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    manifest = json.loads(_construction_manifest_bytes(fixtures, construction_artifacts).decode("utf-8"))
+    manifest["artifact_files"][0]["sha256"] = 123
+
+    with pytest.raises(CarverBlocked, match="artifact file hash is unresolved"):
+        build_fail_closed_executable_replay_ledgers(
+            fixtures,
+            construction_artifacts,
+            input_pack_path=str(tmp_path),
+            construction_output_path=str(tmp_path / "construction"),
+            construction_run_manifest_bytes=json.dumps(manifest).encode("utf-8"),
+        )
+
+
+def test_phase1_manifest_row_family_summary_accepts_uppercase_hash_text(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    manifest = json.loads(_construction_manifest_bytes(fixtures, construction_artifacts).decode("utf-8"))
+    for row_entry in manifest["row_family_summary"]:
+        row_entry["file_sha256"] = row_entry["file_sha256"].upper()
+        row_entry["parsed_output_batch_hash"] = row_entry["parsed_output_batch_hash"].upper()
+        row_entry["row_hashes"] = [
+            row_hash.upper()
+            for row_hash in row_entry["row_hashes"]
+        ]
+
+    bundle = build_fail_closed_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=json.dumps(manifest).encode("utf-8"),
+    )
+
+    bundle.validate()
+
+
+def test_phase1_fail_closed_executable_replay_rejects_forged_gate_semantics(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_fail_closed_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    pnl_gate = next(row for row in bundle.validation_ledger.gate_rows if row.ledger_label == "PNL_LEDGER")
+
+    forged_pnl_gate = replace(
+        pnl_gate,
+        blocked_gate_labels=("BLOCKED_SOURCE_UNRESOLVED_FORECAST_HISTORY_STATE_HASHES",),
+    )
+
+    with pytest.raises(CarverBlocked, match="blocked gates must match locked ledger label"):
+        forged_pnl_gate.validate()
+
+
+def test_phase1_fail_closed_executable_replay_rejects_forged_unresolved_gate_set(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_fail_closed_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    forged_validation = replace(
+        bundle.validation_ledger,
+        required_unresolved_gate_labels=("BLOCKED_SOURCE_UNRESOLVED_FORECAST_HISTORY_STATE_HASHES",),
+    )
+
+    with pytest.raises(CarverBlocked, match="unresolved gate set must match gate rows exactly"):
+        forged_validation.validate()
+
+
+def test_phase2_executable_runtime_surfaces_fail_closed_on_one_row_pack(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    bundle.validate()
+    assert bundle.level_compatibility_row.row_status == PHASE2_LEVEL_COMPATIBILITY_FAIL_STATUS
+    assert bundle.runtime_history_row.row_status == PHASE2_RUNTIME_HISTORY_FAIL_STATUS
+    assert bundle.runtime_history_row.observed_daily_continuous_rows == 1
+    assert bundle.runtime_history_row.runtime_numeric_values_emitted is False
+    assert "BLOCKED_SOURCE_UNRESOLVED_DAILY_HOURLY_LEVEL_COMPATIBILITY_PROOF" in (
+        bundle.phase2_unresolved_gate_labels
+    )
+    assert "BLOCKED_SOURCE_UNRESOLVED_FORECAST_HISTORY_STATE_HASHES" in (
+        bundle.phase2_unresolved_gate_labels
+    )
+    assert bundle.forecast_rows_emitted is False
+    assert bundle.order_rows_emitted is False
+    assert bundle.fill_rows_emitted is False
+    assert bundle.cost_rows_emitted is False
+    assert bundle.pnl_rows_emitted is False
+    assert bundle.result_scored_run_emitted is False
+    assert bundle.source_faithful_evidence_claimed is False
+
+
+def test_phase2_level_compatibility_pass_requires_identical_same_level_prices(tmp_path):
+    same_price = "111.75"
+    overrides = {
+        "DAILY_CONTINUOUS_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,"
+            "annual_percentage_sigma,readiness_status\n"
+            f"2024-01-02T21:00:00Z,2024-01-02,ZNM24,dc-1,{same_price},8.2,READY_COMPLETED_BAR\n"
+        ),
+        "DAILY_CURRENT_CONTRACT_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,"
+            "annual_percentage_sigma,readiness_status\n"
+            f"2024-01-02T21:00:00Z,2024-01-02,ZNM24,dcc-1,{same_price},8.2,READY_COMPLETED_BAR\n"
+        ),
+        "HOURLY_DECISION_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,session_id,row_locator,"
+            "close_price,readiness_status\n"
+            f"2024-01-02T14:00:00Z,2024-01-02,ZNM24,RTH,hd-1,{same_price},READY_COMPLETED_BAR\n"
+        ),
+        "HOURLY_FILL_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,session_id,row_locator,"
+            "close_price,readiness_status\n"
+            f"2024-01-02T15:00:00Z,2024-01-02,ZNM24,RTH,hf-1,{same_price},READY_COMPLETED_BAR\n"
+        ),
+    }
+    fixtures = _build_slice1_fixtures(tmp_path, overrides)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    assert bundle.level_compatibility_row.row_status == PHASE2_LEVEL_COMPATIBILITY_PASS_STATUS
+    assert "BLOCKED_SOURCE_UNRESOLVED_DAILY_HOURLY_LEVEL_COMPATIBILITY_PROOF" not in (
+        bundle.phase2_unresolved_gate_labels
+    )
+    assert bundle.runtime_history_row.row_status == PHASE2_RUNTIME_HISTORY_FAIL_STATUS
+    assert bundle.runtime_history_row.runtime_numeric_values_emitted is False
+
+
+def test_phase2_rejects_forged_runtime_surface_hashes_and_unresolved_gates(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    forged_level = replace(bundle.level_compatibility_row, row_hash=_h("forged-level-row"))
+    forged_bundle = replace(bundle, level_compatibility_row=forged_level)
+    with pytest.raises(CarverBlocked, match="level row hash must be content-bound"):
+        forged_bundle.validate()
+
+    forged_runtime = replace(bundle.runtime_history_row, runtime_numeric_values_emitted=True)
+    with pytest.raises(CarverBlocked, match="must not emit runtime numeric values"):
+        forged_runtime.validate()
+
+    forged_unresolved_bundle = replace(
+        bundle,
+        phase2_unresolved_gate_labels=("BLOCKED_SOURCE_UNRESOLVED_ZN_TICK_ROUNDING_POLICY",),
+    )
+    with pytest.raises(CarverBlocked, match="unresolved gates must match runtime rows exactly"):
+        forged_unresolved_bundle.validate()
+
+
+def test_phase2_rejects_self_consistent_forged_runtime_surface_authority(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    forged_level = replace(
+        bundle.level_compatibility_row,
+        row_status=PHASE2_LEVEL_COMPATIBILITY_PASS_STATUS,
+        reason_code="SAME_LEVEL_COMPATIBLE",
+        source_input_manifest_hash=_h("forged-source-input-manifest"),
+        level_compatibility_contract_hash=_h("forged-level-contract"),
+        daily_continuous_row_hash=_h("forged-daily-continuous-row"),
+        daily_current_contract_row_hash=_h("forged-daily-current-row"),
+        hourly_decision_row_hash=_h("forged-hourly-decision-row"),
+        hourly_fill_row_hash=_h("forged-hourly-fill-row"),
+        daily_continuous_close_price=111.0,
+        daily_current_contract_close_price=111.0,
+        hourly_decision_close_price=111.0,
+        hourly_fill_close_price=111.0,
+    )
+    forged_level = replace(
+        forged_level,
+        row_hash=canonical_sha256(_phase2_level_row_hash_payload(forged_level)),
+    )
+    forged_runtime = replace(
+        bundle.runtime_history_row,
+        row_status="RUNTIME_HISTORY_INPUT_HISTORY_SUFFICIENT_NOT_FORECAST_EVIDENCE",
+        reason_code="STRICT_PRIOR_HISTORY_COUNT_SUFFICIENT_RUNTIME_VALUES_NOT_EMITTED_IN_PHASE2",
+        source_input_manifest_hash=_h("forged-source-input-manifest"),
+        runtime_history_contract_hash=_h("forged-runtime-contract"),
+        level_compatibility_row_hash=forged_level.row_hash,
+        level_compatibility_passed=True,
+        daily_continuous_row_hashes=tuple(_h(f"forged-daily-{idx}") for idx in range(64)),
+        hourly_decision_row_hashes=(_h("forged-hourly-decision"),),
+        observed_daily_continuous_rows=64,
+    )
+    forged_runtime = replace(
+        forged_runtime,
+        row_hash=canonical_sha256(_phase2_runtime_row_hash_payload(forged_runtime)),
+    )
+    forged_bundle = replace(
+        bundle,
+        level_compatibility_row=forged_level,
+        runtime_history_row=forged_runtime,
+        phase2_unresolved_gate_labels=(
+            "BLOCKED_SOURCE_UNRESOLVED_ZN_TICK_ROUNDING_POLICY",
+            "BLOCKED_SOURCE_UNRESOLVED_TRUSTED_COST_ROW_AMOUNT_UNIT_SCHEMA",
+        ),
+    )
+
+    with pytest.raises(CarverBlocked, match="must bind active phase 1 source manifest"):
+        forged_bundle.validate()
+
+
+def test_phase2_rejects_active_authority_fake_close_price_status(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    forged_level = replace(
+        bundle.level_compatibility_row,
+        row_status=PHASE2_LEVEL_COMPATIBILITY_PASS_STATUS,
+        reason_code="SAME_LEVEL_COMPATIBLE",
+        daily_continuous_close_price=111.0,
+        daily_current_contract_close_price=111.0,
+        hourly_decision_close_price=111.0,
+        hourly_fill_close_price=111.0,
+    )
+    forged_level = replace(
+        forged_level,
+        row_hash=canonical_sha256(_phase2_level_row_hash_payload(forged_level)),
+    )
+    forged_runtime = replace(
+        bundle.runtime_history_row,
+        level_compatibility_row_hash=forged_level.row_hash,
+        level_compatibility_passed=True,
+    )
+    forged_runtime = replace(
+        forged_runtime,
+        row_hash=canonical_sha256(_phase2_runtime_row_hash_payload(forged_runtime)),
+    )
+    forged_bundle = replace(
+        bundle,
+        level_compatibility_row=forged_level,
+        runtime_history_row=forged_runtime,
+        phase2_unresolved_gate_labels=(
+            "BLOCKED_SOURCE_UNRESOLVED_FORECAST_HISTORY_STATE_HASHES",
+            "BLOCKED_SOURCE_UNRESOLVED_STRATEGY3_SIGMA_PROVENANCE",
+            "BLOCKED_SOURCE_UNRESOLVED_ZN_TICK_ROUNDING_POLICY",
+            "BLOCKED_SOURCE_UNRESOLVED_TRUSTED_COST_ROW_AMOUNT_UNIT_SCHEMA",
+        ),
+    )
+
+    with pytest.raises(CarverBlocked, match="price must bind active daily continuous row"):
+        forged_bundle.validate()
+
+
+@pytest.mark.parametrize(
+    ("row_family", "level_hash_field", "match_text"),
+    (
+        (
+            "DAILY_CONTINUOUS_COMPLETED_BAR",
+            "daily_continuous_row_hash",
+            "daily continuous",
+        ),
+        (
+            "DAILY_CURRENT_CONTRACT_COMPLETED_BAR",
+            "daily_current_contract_row_hash",
+            "daily current-contract",
+        ),
+        (
+            "HOURLY_DECISION_COMPLETED_BAR",
+            "hourly_decision_row_hash",
+            "hourly decision",
+        ),
+        (
+            "HOURLY_FILL_COMPLETED_BAR",
+            "hourly_fill_row_hash",
+            "hourly fill",
+        ),
+    ),
+)
+def test_phase2_level_price_binds_exact_indexed_row_hash(
+    tmp_path,
+    row_family,
+    level_hash_field,
+    match_text,
+):
+    overrides = {
+        "DAILY_CONTINUOUS_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,"
+            "annual_percentage_sigma,readiness_status\n"
+            "2024-01-02T21:00:00Z,2024-01-02,ZNM24,dc-1,111.0,8.2,READY_COMPLETED_BAR\n"
+            "2024-01-01T21:00:00Z,2024-01-01,ZNM24,dc-2,112.0,8.3,READY_COMPLETED_BAR\n"
+        ),
+        "DAILY_CURRENT_CONTRACT_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,"
+            "annual_percentage_sigma,readiness_status\n"
+            "2024-01-02T21:00:00Z,2024-01-02,ZNM24,dcc-1,111.0,8.2,READY_COMPLETED_BAR\n"
+            "2024-01-01T21:00:00Z,2024-01-01,ZNM24,dcc-2,112.0,8.3,READY_COMPLETED_BAR\n"
+        ),
+        "HOURLY_DECISION_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,session_id,row_locator,"
+            "close_price,readiness_status\n"
+            "2024-01-02T14:00:00Z,2024-01-02,ZNM24,RTH,hd-1,111.0,READY_COMPLETED_BAR\n"
+            "2024-01-02T13:00:00Z,2024-01-02,ZNM24,RTH,hd-2,112.0,READY_COMPLETED_BAR\n"
+        ),
+        "HOURLY_FILL_COMPLETED_BAR": (
+            "completed_timestamp_utc,trading_date,raw_symbol,session_id,row_locator,"
+            "close_price,readiness_status\n"
+            "2024-01-02T15:00:00Z,2024-01-02,ZNM24,RTH,hf-1,111.0,READY_COMPLETED_BAR\n"
+            "2024-01-02T14:00:00Z,2024-01-02,ZNM24,RTH,hf-2,112.0,READY_COMPLETED_BAR\n"
+        ),
+    }
+    fixtures = _build_slice1_fixtures(tmp_path, overrides)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    row_hashes_by_family = dict(bundle.phase1_fail_closed_bundle.provenance_ledger.row_family_hashes)
+    forged_level = replace(
+        bundle.level_compatibility_row,
+        **{level_hash_field: row_hashes_by_family[row_family][1]},
+    )
+    forged_level = replace(
+        forged_level,
+        row_hash=canonical_sha256(_phase2_level_row_hash_payload(forged_level)),
+    )
+    forged_runtime = replace(
+        bundle.runtime_history_row,
+        level_compatibility_row_hash=forged_level.row_hash,
+    )
+    forged_runtime = replace(
+        forged_runtime,
+        row_hash=canonical_sha256(_phase2_runtime_row_hash_payload(forged_runtime)),
+    )
+
+    with pytest.raises(CarverBlocked, match=f"price must bind active {match_text} row"):
+        replace(
+            bundle,
+            level_compatibility_row=forged_level,
+            runtime_history_row=forged_runtime,
+        ).validate()
+
+
+def test_phase2_runtime_level_pass_flag_must_bind_active_level_status(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+    forged_runtime = replace(
+        bundle.runtime_history_row,
+        level_compatibility_passed=True,
+    )
+    forged_runtime = replace(
+        forged_runtime,
+        row_hash=canonical_sha256(_phase2_runtime_row_hash_payload(forged_runtime)),
+    )
+
+    with pytest.raises(CarverBlocked, match="runtime row must bind active level status"):
+        replace(bundle, runtime_history_row=forged_runtime).validate()
+
+
+def test_phase2_rejects_forged_result_emission_flags(tmp_path):
+    fixtures = _build_slice1_fixtures(tmp_path)
+    construction_artifacts = build_local_parser_file_replay_completion(fixtures)
+    bundle = build_phase2_executable_replay_ledgers(
+        fixtures,
+        construction_artifacts,
+        input_pack_path=str(tmp_path),
+        construction_output_path=str(tmp_path / "construction"),
+        construction_run_manifest_bytes=_construction_manifest_bytes(fixtures, construction_artifacts),
+    )
+
+    for flag_name in (
+        "forecast_rows_emitted",
+        "order_rows_emitted",
+        "fill_rows_emitted",
+        "cost_rows_emitted",
+        "pnl_rows_emitted",
+        "result_scored_run_emitted",
+        "source_faithful_evidence_claimed",
+    ):
+        with pytest.raises(CarverBlocked, match="must not emit forecast/order/fill/cost/PnL/result/evidence"):
+            replace(bundle, **{flag_name: True}).validate()
 
 
 def test_slice1_constructs_raw_parser_output_and_source_row_batch_contracts(tmp_path):
@@ -1573,6 +2159,119 @@ def _canonical_policy() -> CanonicalSerializationPolicy:
         hash_payload_version_policy_hash=_h("payload-version"),
         canonical_serialization_policy_hash=CANONICAL_POLICY_HASH,
     )
+
+
+def _construction_manifest_bytes(
+    fixtures: LocalParserFileReplaySlice1Inputs,
+    construction_artifacts,
+) -> bytes:
+    slice1 = (
+        construction_artifacts.slice7_artifacts.slice6_artifacts.slice5_artifacts
+        .slice4_artifacts.slice3_artifacts.slice2_artifacts.slice1_artifacts
+    )
+    source_manifest = (
+        construction_artifacts.slice7_artifacts.slice6_artifacts.slice5_artifacts
+        .slice4_artifacts.slice3_artifacts.slice2_artifacts.source_input_manifest_contract
+    )
+    expected_hash_field_by_file = {
+        "artifacts/07_parser_output_contract.json": (
+            "parser_output_contract_hash",
+            slice1.parser_output_contract.parser_output_contract_hash,
+        ),
+        "artifacts/08_source_row_batch_contract.json": (
+            "source_row_batch_contract_hash",
+            slice1.source_row_batch_contract.source_row_batch_contract_hash,
+        ),
+        "artifacts/11_source_input_manifest_contract.json": (
+            "source_input_manifest_hash",
+            source_manifest.source_input_manifest_hash,
+        ),
+        "artifacts/30_construction_contract.json": (
+            "construction_contract_hash",
+            construction_artifacts.construction_contract.construction_contract_hash,
+        ),
+        "artifacts/31_validation_input_contract.json": (
+            "validation_input_contract_hash",
+            construction_artifacts.validation_input_contract.validation_input_contract_hash,
+        ),
+        "artifacts/32_validation_contract.json": (
+            "validation_contract_bundle_hash",
+            construction_artifacts.validation_contract.validation_contract_bundle_hash,
+        ),
+        "artifacts/33_trusted_bundle_contract.json": (
+            "trusted_bundle_contract_hash",
+            construction_artifacts.trusted_bundle_contract.trusted_bundle_contract_hash,
+        ),
+    }
+    construction_output_path = Path(fixtures.input_directory.declared_path) / "construction"
+    artifact_files = []
+    for file_name in REQUIRED_CONSTRUCTION_RUN_ARTIFACT_FILES:
+        artifact_path = construction_output_path / file_name
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_payload = {"fixture_file": file_name}
+        if file_name in expected_hash_field_by_file:
+            field_name, field_hash = expected_hash_field_by_file[file_name]
+            artifact_payload[field_name] = field_hash
+        artifact_bytes = json.dumps(artifact_payload, sort_keys=True).encode("utf-8")
+        artifact_path.write_bytes(artifact_bytes)
+        artifact_files.append({"file": file_name, "sha256": sha256(artifact_bytes).hexdigest()})
+    return json.dumps(
+        {
+            "artifact": "S27_V2_CONTROLLED_LOCAL_REPLAY_CONSTRUCTION_RUN_MANIFEST",
+            "artifact_files": artifact_files,
+            "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_REPLAY_CONSTRUCTION_RUN_DECLARED_ZN_INPUT_PACK",
+            "boundaries": {
+                "cost_rows_are_policy_hashes_only": True,
+                "no_pnl_rows_or_result_scores_written": True,
+                "pnl_contract_is_inert_contract_scaffold": True,
+            },
+            "construction_contract_hash": construction_artifacts.construction_contract.construction_contract_hash,
+            "input_directory_declaration_hash": fixtures.input_directory.input_directory_declaration_hash,
+            "input_pack": str(Path(fixtures.input_directory.declared_path)),
+            "non_authorizations": [
+                "NO_PROVIDER_API",
+                "NO_DOWNLOADS",
+                "NO_NEW_DATA_ACQUISITION",
+                "NO_OOS",
+                "NO_LOCKBOX",
+                "NO_FORWARD",
+                "NO_BACKTESTS",
+                "NO_RESULT_SCORED_RUNS",
+                "NO_RESULT_INTERPRETATION",
+                "NO_PNL_EVALUATION",
+                "NO_TUNING",
+                "NO_ADAPTER_WORK",
+                "NO_DEPLOYMENT",
+                "NO_TRADING",
+                "NO_PROMOTION",
+                "NO_GIT_ACTIONS",
+                "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM",
+            ],
+            "output_directory": str(Path(fixtures.input_directory.declared_path) / "construction"),
+            "parser_plan_bundle_hash": fixtures.parser_plan_bundle.parser_plan_bundle_hash,
+            "raw_file_hash_set_hash": fixtures.input_directory.raw_file_hash_set_hash,
+            "row_family_summary": [
+                {
+                    "file_sha256": parsed.file_sha256,
+                    "parsed_output_batch_hash": parsed.parsed_output_batch_hash,
+                    "row_count": len(parsed.rows),
+                    "row_family": parsed.row_family,
+                    "row_hashes": list(parsed.row_hashes),
+                }
+                for parsed in slice1.parsed_files
+            ],
+            "row_locator_hash": fixtures.input_directory.row_locator_hash,
+            "source_universe_manifest_hash": fixtures.input_directory.source_universe_manifest_hash,
+            "status": "LOCAL_REPLAY_CONSTRUCTION_ARTIFACTS_BUILT_AND_VALIDATED_NOT_EVIDENCE",
+            "trusted_bundle_contract_hash": construction_artifacts.trusted_bundle_contract.trusted_bundle_contract_hash,
+            "validation_contract_bundle_hash": construction_artifacts.validation_contract.validation_contract_bundle_hash,
+            "verification": {
+                "build_local_parser_file_replay_completion": "PASS",
+                "completion_validate": "PASS",
+                "inputs_validate": "PASS",
+            },
+        },
+    ).encode("utf-8")
 
 
 def _h(label: str) -> str:
