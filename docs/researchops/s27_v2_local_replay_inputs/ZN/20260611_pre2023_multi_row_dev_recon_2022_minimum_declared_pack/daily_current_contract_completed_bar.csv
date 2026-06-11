@@ -1,0 +1,2 @@
+completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,readiness_status
+2021-12-31T00:00:00Z,2021-12-31,ZNH2,S27V2_PRE2023_ZN_DAILY_CURRENT_20211231_0001,130.34375,READY_COMPLETED_BAR_DATABENTO_PRE2023_DEV_RECON

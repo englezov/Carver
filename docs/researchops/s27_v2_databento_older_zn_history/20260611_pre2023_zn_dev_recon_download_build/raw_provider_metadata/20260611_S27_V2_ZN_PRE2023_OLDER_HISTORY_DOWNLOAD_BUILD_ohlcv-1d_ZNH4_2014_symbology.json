@@ -1,0 +1,24 @@
+{
+  "end_date": "2014-05-05",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNH4"
+  ],
+  "result": {
+    "ZNH4": [
+      {
+        "d0": "2012-12-05",
+        "d1": "2014-05-05",
+        "s": "381207"
+      }
+    ]
+  },
+  "start_date": "2012-11-26",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNH4"
+  ]
+}

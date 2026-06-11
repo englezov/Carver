@@ -1,0 +1,10 @@
+{
+  "artifact": "S27_V2_CONTROLLED_LOCAL_ONLY_PRE2023_TRUSTED_BUNDLE_METADATA",
+  "evidence_manifest_hash": "79186a22fb88c93888f5b3502090f8f8c5dd73facf62490162f6a514a139ecc6",
+  "provenance_row_hash": "5dae41cf964eb5ad1ed8aa53cba06b13b2be0b6107f88d702c4099c3ebf8701b",
+  "result_status": "FAIL_CLOSED_RESULT_ROW_NOT_EMITTED_NOT_AUTHORIZED",
+  "run_manifest_hash": "a72939853fc3acffcb48122dec689fd22dbc30bcc2136cb142007a41acd28553",
+  "source_faithful_evidence_claimed": false,
+  "status": "LOCAL_TRUSTED_BUNDLE_METADATA_NOT_RESULT_NOT_PROMOTION",
+  "validation_row_hash": "1595ad4af99078d1139a6837f74083fbe2ad17ddb39df92491b201a83106f2f8"
+}

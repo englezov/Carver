@@ -1,0 +1,24 @@
+{
+  "end_date": "2020-11-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNU0"
+  ],
+  "result": {
+    "ZNU0": [
+      {
+        "d0": "2019-12-06",
+        "d1": "2020-10-07",
+        "s": "421732"
+      }
+    ]
+  },
+  "start_date": "2019-05-30",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNU0"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "artifact": "S27_V2_CONTROLLED_LOCAL_ONLY_PRE2023_DEVELOPMENT_RECON_RUN_MANIFEST",
+  "artifact_files": [
+    "source_input_manifest.csv",
+    "level_compatibility_ledger.csv",
+    "runtime_history_ledger.csv",
+    "forecast_replay_ledger.csv",
+    "desired_position_ledger.csv",
+    "limit_order_ledger.csv",
+    "market_order_ledger.csv",
+    "working_order_transition_ledger.csv",
+    "fill_ledger.csv",
+    "commission_ledger.csv",
+    "spread_cost_ledger.csv",
+    "pnl_ledger.csv",
+    "validation_ledger.csv",
+    "provenance_and_hash_ledger.csv"
+  ],
+  "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_DEVELOPMENT_RECON_RUN_PRE2023_ZN",
+  "input_manifest_sha256": "CB8CCD4B2433BAB8255246BDE84D406F994495E5880099D2F5AD7BF766BB0504",
+  "input_pack_path": "C:\\Users\\apops\\Desktop\\Carver\\docs\\researchops\\s27_v2_local_replay_inputs\\ZN\\20260611_pre2023_oldest_dev_recon_2022_declared_pack",
+  "instrument": "ZN",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_SCORED_RUN",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION_BEYOND_MECHANICAL_ROW_CONSTRUCTION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "result_interpretation": "NO",
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "21c4a80aa4e5e149829cb995fd49bfc74d1463f0bf948bc03f9e8db266c44b56"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 64,
+      "sha256": "5cca506733fe6e31d998cf0cf343042c9e595eb6c6ff355fb6e43e33d9c3ccd8"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "53d8f5cc6df9b5cf778751d73e6ce9c410d609c32df78cc4bd1eb97c0c5da60c"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "eb98e5dbc69ef86ed478a956fefd20cb824363c2da48b54e571b2373b223af7c"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "8141cce9c6c8288aa03efb0314c9e15fea3531c9194aef40c3309db30e98f767"
+    },
+    "roll_calendar.csv": {
+      "row_count": 46,
+      "sha256": "eef62be7bceed1309beb35df203c154e8ce2c778612a805d4f8a21751b73fa50"
+    },
+    "session_calendar.csv": {
+      "row_count": 1,
+      "sha256": "0281fdd1ddb6941a8d300c18c188956a263cf7753f5cff90c2ac1e36144914ec"
+    }
+  },
+  "selected_decision_timestamp_utc": "2022-01-03T01:00:00Z",
+  "selected_fill_timestamp_utc": "2022-01-03T02:00:00Z",
+  "selected_raw_symbol": "ZNH2",
+  "source_faithful_evidence_claim": "NO",
+  "status": "S27_V2_CONTROLLED_DEV_RECON_RUN_EMITTED_NOT_RESULT_NOT_PROMOTION",
+  "strategy_id": "S27_V2_ZN"
+}

@@ -1,0 +1,16 @@
+{
+  "artifact": "S27_V2_PRE2023_MULTI_ROW_DEVELOPMENT_RECON_EVIDENCE_MANIFEST",
+  "ledger_hashes": {
+    "cost_ledger.csv": "640c6440988bcc4406a4d4392719b43716927ba30f5c5fe82e469ce391170572",
+    "desired_position_ledger.csv": "7b814646ef32706b45eba6eb0105bf778aedc86b4542b438158f77a484a08875",
+    "fill_ledger.csv": "67328591f0f7de11816dfd4278e0d7a85b9d7e7db7980e3177b6155539545e44",
+    "forecast_replay_ledger.csv": "82cb10527681430d7e3739917df402719bf189bb04ec1973fa187642d27140cb",
+    "limit_order_ledger.csv": "8c028e57113c04fd0922949bfab1e1ae3b42b76fbdba0175bb653f81abd045c6",
+    "pnl_ledger.csv": "656de194da0435782b3533c895ea6268e334ca76a3931ccf79bbc24ef5671d29",
+    "runtime_history_ledger.csv": "c0e4989f53166025887b86551088efd0ef50302b50ea4cab347f5ca48a0147c8",
+    "validation_ledger.csv": "13f0283b66d1efdb3ec55c328ab5c1b7dda4f822fd0fa317654e1b287de72f18",
+    "working_order_transition_ledger.csv": "b657afd63435c07d69340dacf1d4a3d4b8c360c3f87c5c5c69e8307e6bfdedb5"
+  },
+  "run_manifest_hash": "df80a2ee5b4215ba67d370e02cc893c71857525794fbfa9094fc7a6f707b4b07",
+  "status": "LOCAL_MULTI_ROW_EVIDENCE_MANIFEST_METADATA_NOT_RESULT"
+}

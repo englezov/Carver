@@ -1,0 +1,106 @@
+{
+  "artifact": "S27_V2_PRE2023_MULTI_ROW_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_PRE2023_LOCAL_ONLY_MULTI_ROW_DEVELOPMENT_RECON_PACK_AND_RUNNER_IMPLEMENTATION_GATE",
+  "decision_fill_mark_plan": [
+    {
+      "decision_source_row_hash": "F4533B96BC37C0F66133A457F26AB05B14716317F3C2EE721581464FBF5C69DC",
+      "decision_timestamp_utc": "2022-01-03T01:00:00Z",
+      "fill_source_row_hash": "402C77D28F8A0230AE1AD0C5E526E14CA352EE9370D9A221C1A4C5701CAD01A3",
+      "fill_timestamp_utc": "2022-01-03T02:00:00Z",
+      "raw_symbol": "ZNH2",
+      "row_index": 1,
+      "same_session": "YES",
+      "strict_timestamp_order": "YES",
+      "valuation_mark_timestamp_utc": "2022-01-03T03:00:00Z",
+      "valuation_source_row_hash": "2E7662267801758B123116984798FF52ADD1F6D0D2F422178CB56DFFB3C2408A"
+    },
+    {
+      "decision_source_row_hash": "2E7662267801758B123116984798FF52ADD1F6D0D2F422178CB56DFFB3C2408A",
+      "decision_timestamp_utc": "2022-01-03T03:00:00Z",
+      "fill_source_row_hash": "0514882F2B30667627E6F371004334B3F83687F497DBA8CF590BD0DCD646DC06",
+      "fill_timestamp_utc": "2022-01-03T04:00:00Z",
+      "raw_symbol": "ZNH2",
+      "row_index": 2,
+      "same_session": "YES",
+      "strict_timestamp_order": "YES",
+      "valuation_mark_timestamp_utc": "2022-01-03T05:00:00Z",
+      "valuation_source_row_hash": "223AB61CE0F7AB5203C7E04CAD0CD12D809ED8BB0A870B604F68851BCE252F7B"
+    }
+  ],
+  "explicitly_excluded_data": [
+    "NO_2023_TEST_DATA",
+    "NO_VALIDATION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD"
+  ],
+  "history_evidence": {
+    "daily_continuous_rows": "64",
+    "daily_history_status": "COPIED_FROM_LOCALLY_AUDITED_PRE2023_ONE_ROW_PACK",
+    "future_roll_deltas_after_cutoff_excluded": "YES",
+    "point_in_time_roll_cutoff_date": "2021-12-31",
+    "selected_previous_daily_timestamp_utc": "2021-12-31T00:00:00Z",
+    "selected_sigma_percent_t": "0.04668909552506636",
+    "selected_vqm_multiplier_m": "0.9047281454440286",
+    "valuation_policy_status": "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT",
+    "working_order_lifecycle_status": "FIRST_ROW_EMPTY_THEN_RUNNER_CARRIES_POSITION_AND_WORKING_STATE"
+  },
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION_BEYOND_MECHANICAL_ROW_CONSTRUCTION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "5D197C95F494FC4A1466360D27C4C6EEF6079046592FB187D32A883D08EBA88A"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 64,
+      "sha256": "404D1A1D17849BB7B2F11E86EA19A3C8BA1146FBFA2D0F227633A7F8D9A786DA"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "76F4C555C52706797C0B75C113956C4A501E9951D5CEE6E0872E953DB8B973EC"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 2,
+      "sha256": "4C4A7B763E3A83FBEF8C5060AE31E99A175A7E30D3E9D29B715A1B98400AC36A"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 2,
+      "sha256": "C320AE9C48E7A03802B1C473EB8BAF518537A4FB048A579A724CF46C14A21B65"
+    },
+    "roll_calendar.csv": {
+      "row_count": 46,
+      "sha256": "9471CD7C7990294BFDE8CF0E6E8C5FC277E73BE3DBE90CD41723B56B4261B3B1"
+    },
+    "session_calendar.csv": {
+      "row_count": 1,
+      "sha256": "6DA7098BF85D305B95DBAD4804211584FD592DBA7655940A7015464B96D0C662"
+    },
+    "valuation_mark_completed_bar.csv": {
+      "row_count": 2,
+      "sha256": "5D5995E663C1825A7A2DF3E724E7EFE8F73A0566A226557AB18B4CF2D73265D9"
+    }
+  },
+  "selected_slice_rule": "MINIMUM_OLDEST_2022_MULTI_ROW_DEV_RECON_AFTER_WARMUPS_PRESERVE_2023_FOR_TEST",
+  "source_hourly_ledger": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_strategy_facing_hourly_available_bars.csv",
+  "source_one_row_pack": "docs\\researchops\\s27_v2_local_replay_inputs\\ZN\\20260611_pre2023_oldest_dev_recon_2022_declared_pack",
+  "status": "LOCAL_PRE2023_MULTI_ROW_DEV_RECON_PACK_DECLARED_NOT_RESULT"
+}

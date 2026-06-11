@@ -1,0 +1,22 @@
+{
+  "end_date": "2022-05-05",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ZNH2": [
+      {
+        "d0": "2021-12-31",
+        "d1": "2022-05-05",
+        "s": "768155"
+      }
+    ]
+  },
+  "start_date": "2021-12-31",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNH2"
+  ]
+}
