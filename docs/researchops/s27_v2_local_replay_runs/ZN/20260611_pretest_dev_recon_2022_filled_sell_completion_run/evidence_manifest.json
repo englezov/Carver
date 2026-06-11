@@ -1,0 +1,18 @@
+{
+  "artifact": "S27_V2_PRETEST_DEV_RECON_FILLED_SELL_COMPLETION_EVIDENCE_MANIFEST",
+  "input_manifest_hash": "e2977b8667da225b431e42a381ba3f06676d0a05b8bdde0e0c2d7282a5aa172e",
+  "ledger_hashes": {
+    "cost_ledger.csv": "2d3f95e04287836188ca72aed3f8df3845e16eeed17124c73405cb66a5a7a929",
+    "desired_position_ledger.csv": "7cc1e4a17c03d302f61a66289e8c5cf83859f7942ca8e2536ee3d05b947eda37",
+    "fill_ledger.csv": "48877f13ec4f44cb38f0ea9f02347744f8a768820c222cdf87d40304f2663922",
+    "forecast_replay_ledger.csv": "5190f01cf4eff4fe6a7c97741f0e2ddd388cb5ae4ef092499a301ab757e839cb",
+    "limit_order_ledger.csv": "f8f645afd988aefe5426545ac7fa9a98defd90bacbdfbef67730b982f4ca6ed9",
+    "no_market_order_ledger.csv": "d10ab93b178395367e989106b8139dc7619d6cbe7559c8feb44fa821ee5d470e",
+    "pnl_ledger.csv": "0f3ee302f65d3f0489d021bda5f08a5c30d693e138e619cbc3424949049baa3c",
+    "runtime_history_ledger.csv": "34671ccc0cd223a96ddacd2702e83807fa8c1fda401c73ef109ad99006bca664",
+    "validation_ledger.csv": "4e8b04b3e765b616745999ab61c02a9261636b2e07f2127d528f8bc9071b15b0",
+    "working_order_transition_ledger.csv": "4be8357c68d4f8fce7e915536e99676cc7f207a32ee66f8e6852cce8fffeb5a1"
+  },
+  "run_manifest_hash": "18061e34fe965f6a43c57190e3d16ce8606e86daaf9b4b014571f34ba4088f9b",
+  "status": "LOCAL_PRETEST_DEV_RECON_EVIDENCE_MANIFEST_METADATA_NOT_RESULT"
+}

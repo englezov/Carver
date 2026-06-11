@@ -1,0 +1,9 @@
+{
+  "artifact": "S27_V2_PRE2023_SELL_REDUCTION_DEVELOPMENT_RECON_TRUSTED_BUNDLE_METADATA",
+  "evidence_manifest_hash": "ed497b806447e3c6741e881c3ed5de430b4147ba4d60d80491f83503dc8de3c2",
+  "final_pnl_row_hash": "4d1fd989bfd1a3b870187cddd404d0bd0d3b95b538be14bc8ce2c80e1f43b72a",
+  "result_status": "FAIL_CLOSED_RESULT_ROW_NOT_EMITTED_NOT_AUTHORIZED",
+  "run_manifest_hash": "fda1ea56acfa253c6804b15f8f018668904a1040b1cfd4879334be9819f1708c",
+  "source_faithful_evidence_claimed": false,
+  "status": "LOCAL_SELL_REDUCTION_DEV_RECON_TRUSTED_BUNDLE_METADATA_NOT_RESULT_NOT_PROMOTION"
+}

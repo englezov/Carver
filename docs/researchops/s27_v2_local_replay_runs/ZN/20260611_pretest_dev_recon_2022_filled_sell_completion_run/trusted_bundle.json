@@ -1,0 +1,10 @@
+{
+  "artifact": "S27_V2_PRETEST_DEV_RECON_FILLED_SELL_COMPLETION_TRUSTED_BUNDLE_METADATA",
+  "evidence_manifest_hash": "df167d8d303a439b707440052fa2fb628c6fa467dc26195d5fbcd6450bbe30e1",
+  "final_pnl_row_hash": "8c050ea939a6d00f6e6a987d8b9a50b3ccc218dbfe54024fe1ea6eeac4273045",
+  "first_filled_sell_row_index": 46,
+  "result_status": "FAIL_CLOSED_RESULT_ROW_NOT_EMITTED_NOT_AUTHORIZED",
+  "run_manifest_hash": "18061e34fe965f6a43c57190e3d16ce8606e86daaf9b4b014571f34ba4088f9b",
+  "source_faithful_evidence_claimed": false,
+  "status": "LOCAL_PRETEST_DEV_RECON_TRUSTED_BUNDLE_METADATA_NOT_RESULT_NOT_PROMOTION"
+}
