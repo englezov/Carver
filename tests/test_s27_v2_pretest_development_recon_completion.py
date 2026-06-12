@@ -26,6 +26,7 @@ from carver.spine.s27_v2_replay.pretest_development_recon_completion_run import 
     _validate_manifest_summaries,
     run_pretest_development_recon_completion,
 )
+from carver.spine.s27_v2_replay.pretest_machine_freeze import validate_pretest_machine_freeze_rows
 
 
 PACK_ROOT = ROOT / DEFAULT_PACK_RELATIVE_PATH
@@ -54,6 +55,31 @@ def _sha256(path: Path) -> str:
 
 def _rehash_bundle(bundle):
     return replace(bundle, bundle_hash=canonical_sha256(_bundle_payload(bundle)))
+
+
+def _active_pack_and_computed_rows():
+    manifest = _read_json(
+        PACK_ROOT / "S27_V2_PRETEST_DEV_RECON_FILLED_SELL_COMPLETION_DECLARED_INPUT_PACK_MANIFEST.json"
+    )
+    rows = {
+        name: _read_csv_rows(PACK_ROOT / name)
+        for name in (
+            "runtime_evidence_ledger.csv",
+            "daily_continuous_completed_bar.csv",
+            "daily_current_contract_completed_bar.csv",
+            "hourly_decision_completed_bar.csv",
+            "hourly_fill_completed_bar.csv",
+            "valuation_mark_completed_bar.csv",
+            "session_calendar.csv",
+            "roll_calendar.csv",
+            "cost_parameter.csv",
+        )
+    }
+    return rows, _compute_rows(manifest, rows)
+
+
+def _clone(value):
+    return json.loads(json.dumps(value))
 
 
 def test_completion_pack_declares_first_organic_filled_sell_completion():
@@ -288,3 +314,212 @@ def test_completion_run_rejects_manifest_summary_forgery():
     forged_manifest["decision_fill_mark_plan"][8]["valuation_mark_timestamp_utc"] = "2099-01-01T00:00:00Z"
     with pytest.raises(CarverBlocked, match="decision/fill/valuation summary must match active selected rows"):
         _validate_manifest_summaries(forged_manifest, rows, computed)
+
+
+def test_pretest_machine_freeze_accepts_current_repaired_checkpoint():
+    rows, computed = _active_pack_and_computed_rows()
+
+    validate_pretest_machine_freeze_rows(rows, computed)
+
+
+@pytest.mark.parametrize(
+    ("family", "field_name", "forged_value", "message"),
+    (
+        ("market", "market_order_required", True, "market-order-required"),
+        ("market", "market_order_rows_emitted", True, "market-order row emission"),
+        ("cost", "spread_cost_amount", 1.0, "market-spread costs"),
+    ),
+)
+def test_pretest_machine_freeze_rejects_unresolved_market_and_spread_states(
+    family, field_name, forged_value, message
+):
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    forged[family][0][field_name] = forged_value
+
+    with pytest.raises(CarverBlocked, match=message):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_filled_order_cross_session_state():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    filled_index = next(index for index, row in enumerate(forged["fill"]) if row["fill_executed"] is True)
+    forged["transition"][filled_index]["same_session"] = False
+
+    with pytest.raises(CarverBlocked, match="session/EOD"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_unfilled_limit_without_fail_closed_working_state():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    unfilled_index = next(
+        index
+        for index, (order, fill) in enumerate(zip(forged["order"], forged["fill"], strict=True))
+        if order["order_side"] != "NONE" and fill["fill_executed"] is False
+    )
+    forged["transition"][unfilled_index]["working_state_after"] = "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION"
+
+    with pytest.raises(CarverBlocked, match="working state"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_roll_boundary_live_order():
+    rows, computed = _active_pack_and_computed_rows()
+    forged_rows = _clone(rows)
+    unfilled_index = next(
+        index
+        for index, (order, fill) in enumerate(zip(computed["order"], computed["fill"], strict=True))
+        if order["order_side"] != "NONE" and fill["fill_executed"] is False
+    )
+    forged_rows["roll_calendar.csv"][0]["roll_transition_date"] = forged_rows["hourly_decision_completed_bar.csv"][
+        unfilled_index
+    ]["trading_date"]
+
+    with pytest.raises(CarverBlocked, match="roll-boundary"):
+        validate_pretest_machine_freeze_rows(forged_rows, computed)
+
+
+def test_pretest_machine_freeze_rejects_cross_contract_row_chain():
+    rows, computed = _active_pack_and_computed_rows()
+    forged_rows = _clone(rows)
+    forged_rows["hourly_fill_completed_bar.csv"][0]["raw_symbol"] = "FORGED"
+
+    with pytest.raises(CarverBlocked, match="cross-contract"):
+        validate_pretest_machine_freeze_rows(forged_rows, computed)
+
+
+def test_pretest_machine_freeze_rejects_degraded_declared_rows():
+    rows, computed = _active_pack_and_computed_rows()
+    forged_rows = _clone(rows)
+    forged_rows["hourly_decision_completed_bar.csv"][0]["readiness_status"] = "DEGRADED_PROVIDER_CONDITION"
+
+    with pytest.raises(CarverBlocked, match="degraded"):
+        validate_pretest_machine_freeze_rows(forged_rows, computed)
+
+
+@pytest.mark.parametrize(
+    ("family", "field_name"),
+    (
+        ("daily_continuous_completed_bar.csv", "provider_condition_status"),
+        ("daily_current_contract_completed_bar.csv", "readiness_status"),
+        ("cost_parameter.csv", "cost_policy_status"),
+    ),
+)
+def test_pretest_machine_freeze_rejects_degraded_status_in_any_declared_family(family, field_name):
+    rows, computed = _active_pack_and_computed_rows()
+    forged_rows = _clone(rows)
+    forged_rows[family][0][field_name] = "DEGRADED_PROVIDER_CONDITION"
+
+    with pytest.raises(CarverBlocked, match="degraded"):
+        validate_pretest_machine_freeze_rows(forged_rows, computed)
+
+
+def test_pretest_machine_freeze_rejects_pending_declared_status():
+    rows, computed = _active_pack_and_computed_rows()
+    forged_rows = _clone(rows)
+    forged_rows["session_calendar.csv"][0]["calendar_status"] = "PENDING_SESSION_EVIDENCE"
+
+    with pytest.raises(CarverBlocked, match="degraded"):
+        validate_pretest_machine_freeze_rows(forged_rows, computed)
+
+
+def test_pretest_machine_freeze_rejects_zero_side_position_change():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    no_order_index = next(index for index, row in enumerate(forged["order"]) if row["order_side"] == "NONE")
+    forged["position"][no_order_index]["desired_position_contracts"] = (
+        forged["position"][no_order_index]["starting_position_contracts"] + 1
+    )
+
+    with pytest.raises(CarverBlocked, match="zero-side"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_zero_side_market_fallback_drift():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    no_order_index = next(index for index, row in enumerate(forged["order"]) if row["order_side"] == "NONE")
+    forged["market"][no_order_index]["market_fallback_status"] = "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+
+    with pytest.raises(CarverBlocked, match="no-order market fallback"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_fractional_contract_fields():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    no_order_index = next(index for index, row in enumerate(forged["order"]) if row["order_side"] == "NONE")
+    forged["order"][no_order_index]["order_quantity"] = "0.5"
+
+    with pytest.raises(CarverBlocked, match="integer ledger fields"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+@pytest.mark.parametrize(
+    ("family", "field_name"),
+    (
+        ("position", "starting_position_contracts"),
+        ("position", "desired_position_contracts"),
+        ("position", "position_change_contracts"),
+        ("order", "order_quantity"),
+        ("order", "adjacent_target_position"),
+        ("transition", "starting_position_contracts"),
+        ("transition", "ending_position_contracts"),
+        ("fill", "fill_quantity"),
+        ("fill", "position_after_fill"),
+        ("pnl", "ending_position_contracts"),
+    ),
+)
+def test_pretest_machine_freeze_rejects_fractional_contract_fields_globally(family, field_name):
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    forged[family][0][field_name] = "1.5"
+
+    with pytest.raises(CarverBlocked, match="integer ledger fields"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_allows_fractional_base_position_as_finite_continuous_sizing_field():
+    rows, computed = _active_pack_and_computed_rows()
+
+    assert computed["position"][0]["base_position_contracts"] == pytest.approx(16.432147617721743)
+    validate_pretest_machine_freeze_rows(rows, computed)
+
+
+@pytest.mark.parametrize("forged_value", ("nan", "inf", "-inf", "NOT_NUMERIC"))
+def test_pretest_machine_freeze_rejects_non_finite_base_position_continuous_sizing_field(forged_value):
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    forged["position"][0]["base_position_contracts"] = forged_value
+
+    with pytest.raises(CarverBlocked, match="numeric ledger fields"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+@pytest.mark.parametrize(
+    ("family", "field_name", "forged_value"),
+    (
+        ("market", "market_order_required", "YES"),
+        ("market", "market_order_rows_emitted", "1"),
+        ("fill", "fill_executed", "PENDING"),
+        ("transition", "same_session", "YES"),
+    ),
+)
+def test_pretest_machine_freeze_rejects_malformed_boolean_fields(family, field_name, forged_value):
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    forged[family][0][field_name] = forged_value
+
+    with pytest.raises(CarverBlocked, match="boolean ledger fields"):
+        validate_pretest_machine_freeze_rows(rows, forged)
+
+
+def test_pretest_machine_freeze_rejects_non_finite_spread_cost():
+    rows, computed = _active_pack_and_computed_rows()
+    forged = _clone(computed)
+    forged["cost"][0]["spread_cost_amount"] = "nan"
+
+    with pytest.raises(CarverBlocked, match="numeric ledger fields"):
+        validate_pretest_machine_freeze_rows(rows, forged)

@@ -22,6 +22,7 @@ from .development_recon_run import (
     ZN_TICK_SIZE,
 )
 from .local_replay import canonical_sha256
+from .pretest_machine_freeze import validate_pretest_machine_freeze_rows
 from .validation import require_hash
 
 
@@ -189,6 +190,7 @@ def run_pretest_development_recon_completion(
         rows["valuation_mark_completed_bar.csv"],
     )
     computed = _compute_rows(manifest, rows)
+    validate_pretest_machine_freeze_rows(rows, computed)
     _validate_manifest_summaries(manifest, rows, computed)
     _write_artifacts(output_root, pack_path, manifest, computed)
     bundle = PretestDevelopmentReconCompletionRunBundle(
