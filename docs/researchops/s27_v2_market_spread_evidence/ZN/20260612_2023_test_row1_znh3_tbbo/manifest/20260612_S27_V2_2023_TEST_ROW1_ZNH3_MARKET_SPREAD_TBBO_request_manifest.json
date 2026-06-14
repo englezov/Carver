@@ -1,0 +1,19 @@
+{
+  "authorization": "S27_V2_BOUNDED_DATABENTO_ROW1_MARKET_SPREAD_EVIDENCE_ACQUISITION",
+  "broader_test_continuation": "NO",
+  "cost_pnl_result_emission": "NO",
+  "dataset": "GLBX.MDP3",
+  "fill_timestamp_utc": "2023-01-03T01:00:00Z",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "provider": "DATABENTO_HISTORICAL",
+  "raw_symbol": "ZNH3",
+  "request_count": 1,
+  "request_end_utc": "2023-01-03T01:00:05Z",
+  "request_start_utc": "2023-01-03T00:59:55Z",
+  "run_id": "20260612_S27_V2_2023_TEST_ROW1_ZNH3_MARKET_SPREAD_TBBO",
+  "schema": "tbbo",
+  "scope": "BOUNDED_ROW1_MARKET_ORDER_SPREAD_EVIDENCE_ONLY",
+  "source_faithful_evidence_claim": "NO",
+  "stype_in": "raw_symbol",
+  "validation_oos_lockbox_forward_access": "NO"
+}

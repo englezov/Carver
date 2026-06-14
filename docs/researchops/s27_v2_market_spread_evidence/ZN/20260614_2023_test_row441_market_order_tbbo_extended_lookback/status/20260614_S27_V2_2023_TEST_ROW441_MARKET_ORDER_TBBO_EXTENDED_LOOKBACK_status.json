@@ -1,0 +1,23 @@
+{
+  "ask_px_00": 114.375,
+  "authorization": "S27_V2_2023_TEST_ROW441_EMPTY_TBBO_EXTENDED_BOUND_REQUEST",
+  "bid_px_00": 114.359375,
+  "downloads": "ROW441_ONLY_BOUNDED_TBBO_WINDOW",
+  "failed_row_count": 0,
+  "failed_row_indices": [],
+  "provider_api_access": "ROW441_ONLY_BOUNDED_DATABENTO_TBBO_EXTENDED_LOOKBACK",
+  "provider_condition_status": "PASS_FRESH_NON_CROSSED_TBBO_QUOTE_SELECTED",
+  "quote_age_seconds": 174.34714,
+  "quote_rows_returned": 6,
+  "request_end_utc": "2023-01-31T05:00:05Z",
+  "request_start_utc": "2023-01-31T04:55:00Z",
+  "result_interpretation": "NO",
+  "row_index": "441",
+  "selected_executable_market_fill_price": 114.359375,
+  "selected_quote_ts_event": "2023-01-31T04:57:05.652860819Z",
+  "selected_row_count": 1,
+  "selection_status": "PASS_ROW441_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO_SELECTED_NOT_RESULT",
+  "source_faithful_evidence_claim": "NO",
+  "status": "PASS_ROW441_EXTENDED_LOOKBACK_DATABENTO_TBBO_SELECTED_NOT_RESULT",
+  "validation_oos_lockbox_forward_access": "NO"
+}

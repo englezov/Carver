@@ -1,0 +1,27 @@
+{
+  "authorization": "S27_V2_2023_TEST_ROW438_BOUNDED_MARKET_ORDER_TBBO_FAILED_WINDOW_RETRY_GATE",
+  "broader_provider_api_access": "NO",
+  "dataset": "GLBX.MDP3",
+  "failed_row_indices": [
+    "438"
+  ],
+  "general_historical_download": "NO",
+  "lookahead_seconds": 5,
+  "lookback_seconds": 60,
+  "max_selected_quote_age_seconds": 60.0,
+  "pnl_result_emission": "NO",
+  "post_fill_quote_selection": "DISALLOWED_TO_AVOID_LOOKAHEAD",
+  "provider": "DATABENTO_HISTORICAL",
+  "request_count": 1,
+  "requirements_ledger": "docs/researchops/s27_v2_market_spread_evidence/ZN/20260612_2023_test_market_order_tbbo_requirements_discovery/market_order_tbbo_requirements.csv",
+  "requirements_ledger_sha256": "163239EAA3DD11099441F2D5CC5F37D82653081DF42B5BEE43B4DF7A88FD69BB",
+  "run_id": "20260613_S27_V2_2023_TEST_ROW438_MARKET_ORDER_TBBO_FAILED_WINDOW_RETRY",
+  "schema": "tbbo",
+  "selection_rule": "LATEST_NON_CROSSED_POSITIVE_TBBO_AT_OR_BEFORE_FILL_TIMESTAMP",
+  "source_faithful_evidence_claim": "NO",
+  "standing_authorization": "S27_V2_STANDING_BOUNDED_MARKET_ORDER_TBBO_SPREAD_EVIDENCE_POLICY",
+  "standing_batch_status": "docs/researchops/s27_v2_market_spread_evidence/ZN/20260613_2023_test_row438_market_order_tbbo/status/20260613_S27_V2_2023_TEST_ROW438_MARKET_ORDER_TBBO_status.json",
+  "standing_batch_status_sha256": "94971CF0E3A7C8EB23EF3169873C637523B7AE278B5534FB191C2F119D1EAE9A",
+  "stype_in": "raw_symbol",
+  "validation_oos_lockbox_forward_access": "NO"
+}

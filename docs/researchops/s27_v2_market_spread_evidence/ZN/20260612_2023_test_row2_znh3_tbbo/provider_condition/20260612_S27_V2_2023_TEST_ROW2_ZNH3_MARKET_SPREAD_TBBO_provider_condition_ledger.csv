@@ -1,0 +1,2 @@
+provider,dataset,schema,raw_symbol,market_order_side,fill_timestamp_utc,request_start_utc,request_end_utc,quote_rows_returned,max_selected_quote_age_seconds,selected_quote_ts_event,quote_age_seconds,provider_condition_status,provider_error_count,provider_error_summary
+DATABENTO_HISTORICAL,GLBX.MDP3,tbbo,ZNH3,SELL,2023-01-03T02:00:00Z,2023-01-03T01:59:55Z,2023-01-03T02:00:05Z,2,5.0,2023-01-03T01:59:56.651440427Z,3.34856,PASS_SELECTED_FRESH_TBBO_QUOTE_AT_OR_BEFORE_FILL,0,

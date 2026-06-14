@@ -1,0 +1,2 @@
+provider,dataset,schema,raw_symbol,fill_timestamp_utc,request_start_utc,request_end_utc,quote_rows_returned,selected_quote_ts_event,provider_condition_status,provider_error_count,provider_error_summary
+DATABENTO_HISTORICAL,GLBX.MDP3,tbbo,ZNH3,2023-01-03T01:00:00Z,2023-01-03T00:59:55Z,2023-01-03T01:00:05Z,10,2023-01-03T00:59:57.009985Z,PASS_SELECTED_TBBO_QUOTE_AT_OR_BEFORE_FILL,0,

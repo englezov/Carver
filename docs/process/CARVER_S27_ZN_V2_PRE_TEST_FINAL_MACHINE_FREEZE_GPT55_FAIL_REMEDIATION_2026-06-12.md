@@ -130,7 +130,7 @@ Record:
 docs/process/CARVER_S27_ZN_V2_PRE_TEST_FINAL_MACHINE_FREEZE_GPT55_SECOND_REAUDIT_PASS_2026-06-12.md
 ```
 
-GPT concluded that the remediation is clean enough to request a separate scoped GitHub push authorization and then a GitHub-head/book-attached audit before any TEST authorization.
+GPT concluded that the remediation was clean enough to request a separate scoped GitHub push authorization and then a GitHub-head/book-attached audit before any TEST authorization.
 
 Local status after remediation:
 
@@ -138,7 +138,7 @@ Local status after remediation:
 LOCAL_REMEDIATION_GPT55_SECOND_REAUDIT_PASS_NOT_TEST_AUTHORIZATION_NOT_GIT_AUTHORIZATION
 ```
 
-The GPT fail must be externally re-audited before any scoped GitHub push or TEST authorization. Git actions still require separate explicit operator authorization.
+The GPT fail has now been externally re-audited and remediated through the second GPT 5.5 PASS. Git actions and TEST authorization remain separate gates.
 
 ## Non-Authorization
 

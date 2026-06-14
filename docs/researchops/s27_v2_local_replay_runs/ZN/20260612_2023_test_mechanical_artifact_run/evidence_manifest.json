@@ -1,0 +1,21 @@
+{
+  "artifact": "S27_V2_2023_TEST_EVIDENCE_MANIFEST_METADATA",
+  "input_manifest_hash": "929c08328235595bef035952f431644e233a7945bfad42bbde74596778f8c2cc",
+  "ledger_hashes": {
+    "cost_ledger.csv": "2fd421b1df4ec47408a18f0c09759a8e58d91b906f3c31ef7f9141575a0c3c33",
+    "desired_position_ledger.csv": "af79c6e78632d1d0b93ad22a9297ab75be5593ea9d3f0099f01c7b814b301a69",
+    "fail_closed_ledger.csv": "808a18d25dcfd2682add8c8e313b43ee65677a458f394dbcdc8ecfa0a9f9d7c7",
+    "fill_ledger.csv": "ff4952615463cbdc6290e45710efb1f2d8ddf841619e308bb4a76147bdf79193",
+    "forecast_replay_ledger.csv": "434ac14db6c0e2f067cfb01fd413358d1296663f91f1c753168fb4dddb5fb884",
+    "limit_order_ledger.csv": "85f867c621815cee7adf7deea6f3483095ea7e3f8dcca8656a86c37164667529",
+    "market_fill_metadata_ledger.csv": "686f9f77ec793416f3147f4fdf1d364f7e45dd3f3d3a30f4d389f68531157ed6",
+    "market_order_ledger.csv": "15d9c45d72fa2a359bee800059c93e2524b8f5bdbb48cc77248cc9d2c5377fc6",
+    "no_market_order_ledger.csv": "525025f5e375334b1cfa7227a4bb7bf0cafab3a07a7b519b53a59b00cc3265b0",
+    "pnl_ledger.csv": "5023600976a3c8464919bbd503af92b8ddf3527bdb40a9be1909c4bb519b4492",
+    "runtime_history_ledger.csv": "ada33fcd10fa2d4fba86530ccabcbc2438a15cc21c90b3c69c15c08f2e0c1d9e",
+    "validation_ledger.csv": "282333bc6baf1e254048cdbf2e078b74cc36765025b40ad5c9fb9506c06475e7",
+    "working_order_transition_ledger.csv": "92cc727f85c1829d30fabe929c32b8f13c65286efa7bd693a8baf31c7a660e30"
+  },
+  "run_manifest_hash": "d6494e86973164006cd2381577cec5390f8b528e4d78c28c2174ce34a51ee17f",
+  "status": "LOCAL_2023_TEST_EVIDENCE_MANIFEST_METADATA_FAIL_CLOSED_NOT_RESULT"
+}

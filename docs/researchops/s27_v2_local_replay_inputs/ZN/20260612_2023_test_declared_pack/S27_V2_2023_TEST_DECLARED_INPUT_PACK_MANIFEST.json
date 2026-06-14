@@ -1,0 +1,89 @@
+{
+  "artifact": "S27_V2_2023_TEST_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_2023_TEST_INPUT_PACK_AND_MECHANICAL_ARTIFACT_RUN_GATE",
+  "candidate_row_count": 704,
+  "explicitly_excluded_data": [
+    "NO_VALIDATION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD"
+  ],
+  "fail_closed_blocker": {
+    "adjacent_target_position": -11,
+    "decision_timestamp_utc": "2023-02-16T04:00:00Z",
+    "desired_position_contracts": -14,
+    "formula_status": "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT",
+    "order_side": "SELL",
+    "position_change_contracts": -4,
+    "raw_symbol": "ZNM3",
+    "row_index": 704,
+    "starting_position_contracts": -10
+  },
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION_BEYOND_MECHANICAL_ROW_CONSTRUCTION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "dd1e938397eed2f24f637b0afdefd84458c62cf27c212ec124e1b118cc937763"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 33,
+      "sha256": "3564994854cd32c670c65f75bbf3beec38cef9d6eeef21480733f0147e68f900"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 704,
+      "sha256": "9527f67e2e91a8f65fa98134112c799cd179f40599e31c6396faa3dac1366c5a"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 704,
+      "sha256": "f881e90d081f5b8962bee8ccccacda088d6a5c91838e170c25252265be74b17d"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 704,
+      "sha256": "cda2a1282f234e49032509282f2ec7be041f492f1a5d07597a44f722fa133c3d"
+    },
+    "roll_calendar.csv": {
+      "row_count": 50,
+      "sha256": "050a42980d05e0cdf4c65ef459bb752759df5c3439975cc76eba63860dfa0f6a"
+    },
+    "runtime_evidence_ledger.csv": {
+      "row_count": 704,
+      "sha256": "007ededaa1306ed9e4e5f1b90821962f57189842f5be22d2bf53f8861c1f6cdb"
+    },
+    "session_calendar.csv": {
+      "row_count": 39,
+      "sha256": "8bd1865aa5ffd71aa067f09d534257edf8c0cc0af8e0a93509edcf44506af6f3"
+    },
+    "valuation_mark_completed_bar.csv": {
+      "row_count": 704,
+      "sha256": "b2b84fb523b022baf6688cf028362f4a72d8bf0c0bbca9adf20864fa81440f33"
+    }
+  },
+  "selected_slice_rule": "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_UNTIL_FIRST_AUDITED_FAIL_CLOSED_EXECUTION_BLOCKER",
+  "source_continuous_daily_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_continuous_daily.csv",
+  "source_hourly_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_hourly_available.csv",
+  "source_roll_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_roll_plan.csv",
+  "source_selection_exclusion_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_source_exclusions.csv",
+  "status": "LOCAL_2023_TEST_DECLARED_INPUT_PACK_BUILT_FROM_ALREADY_LOCAL_SOURCE_NOT_RESULT",
+  "supported_mechanical_row_count": 703,
+  "test_window_end_status": "FAIL_CLOSED_BEFORE_FULL_2023_COMPLETION_NO_RESULT",
+  "test_window_fail_closed_timestamp": "2023-02-16T04:00:00Z",
+  "test_window_start": "2023-01-03T00:00:00Z"
+}

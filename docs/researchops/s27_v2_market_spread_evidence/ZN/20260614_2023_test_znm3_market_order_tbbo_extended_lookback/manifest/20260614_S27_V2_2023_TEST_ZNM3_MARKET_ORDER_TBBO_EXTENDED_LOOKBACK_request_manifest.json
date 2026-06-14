@@ -1,0 +1,58 @@
+{
+  "authorization": "S27_V2_2023_TEST_ZNM3_EXTENDED_LOOKBACK_TBBO_EVIDENCE_AND_CONTINUATION_GATE",
+  "broader_provider_api_access": "NO",
+  "dataset": "GLBX.MDP3",
+  "general_historical_download": "NO",
+  "lookahead_seconds": 5,
+  "lookback_seconds": 300,
+  "max_selected_quote_age_seconds": 300.0,
+  "pnl_result_emission": "NO",
+  "policy_record": "docs/process/CARVER_S27_ZN_V2_2023_TEST_ZNM3_EMPTY_TBBO_POLICY_DECISION_2026-06-14.md",
+  "policy_record_sha256": "497888992218780B4825E031A8F2D893841E08DFB7F3A6066A1C8D47C8B1EC2B",
+  "post_fill_quote_selection": "DISALLOWED_TO_AVOID_LOOKAHEAD",
+  "provider": "DATABENTO_HISTORICAL",
+  "raw_symbol": "ZNM3",
+  "request_windows": [
+    {
+      "request_end_utc": "2023-02-16T03:00:05Z",
+      "request_start_utc": "2023-02-16T02:55:00Z",
+      "row_index": "702"
+    },
+    {
+      "request_end_utc": "2023-02-16T04:00:05Z",
+      "request_start_utc": "2023-02-16T03:55:00Z",
+      "row_index": "703"
+    },
+    {
+      "request_end_utc": "2023-02-16T05:00:05Z",
+      "request_start_utc": "2023-02-16T04:55:00Z",
+      "row_index": "704"
+    },
+    {
+      "request_end_utc": "2023-02-16T09:00:05Z",
+      "request_start_utc": "2023-02-16T08:55:00Z",
+      "row_index": "708"
+    },
+    {
+      "request_end_utc": "2023-02-24T02:00:05Z",
+      "request_start_utc": "2023-02-24T01:55:00Z",
+      "row_index": "829"
+    }
+  ],
+  "requirements_ledger": "docs/researchops/s27_v2_market_spread_evidence/ZN/20260612_2023_test_market_order_tbbo_requirements_discovery/market_order_tbbo_requirements.csv",
+  "requirements_ledger_sha256": "EAE90646CD9CCCE0EFD8DB5211BB96BB3444CB676A18757ECB95A96A31AD80B6",
+  "row_indices": [
+    "702",
+    "703",
+    "704",
+    "708",
+    "829"
+  ],
+  "run_id": "20260614_S27_V2_2023_TEST_ZNM3_MARKET_ORDER_TBBO_EXTENDED_LOOKBACK",
+  "schema": "tbbo",
+  "scope": "FIVE_ROW_ZNM3_ONLY_EXTENDED_LOOKBACK_2023_TEST_MARKET_ORDER_TBBO_REQUIREMENTS",
+  "selection_rule": "LATEST_NON_CROSSED_POSITIVE_TBBO_AT_OR_BEFORE_FILL_TIMESTAMP",
+  "source_faithful_evidence_claim": "NO",
+  "stype_in": "raw_symbol",
+  "validation_oos_lockbox_forward_access": "NO"
+}
