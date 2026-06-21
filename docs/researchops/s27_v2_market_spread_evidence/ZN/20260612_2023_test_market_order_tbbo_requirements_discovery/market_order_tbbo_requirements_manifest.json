@@ -1,12 +1,12 @@
 {
-  "already_bound_tbbo_count": 157,
+  "already_bound_tbbo_count": 255,
   "artifact": "S27_V2_2023_TEST_MARKET_ORDER_TBBO_REQUIREMENTS_DISCOVERY_MANIFEST",
   "authorization": "S27_V2_LOCAL_ONLY_2023_TEST_MARKET_ORDER_TBBO_REQUIREMENTS_DISCOVERY_GATE",
   "downloads": "NO",
-  "first_missing_row_index": "704",
+  "first_missing_row_index": "1378",
   "lane": "SOURCE_NATIVE_FUTURES",
-  "last_missing_row_index": "704",
-  "missing_tbbo_requirement_count": 1,
+  "last_missing_row_index": "1544",
+  "missing_tbbo_requirement_count": 17,
   "non_authorizations": [
     "NO_PROVIDER_API",
     "NO_DOWNLOADS",
@@ -27,7 +27,7 @@
   ],
   "provider_api_access": "NO",
   "requirements_ledger": "market_order_tbbo_requirements.csv",
-  "requirements_ledger_sha256": "2ea9babf1ac40fdffd6dbde2cd9ba993b18c53e17e763e53e95012e4705b3518",
+  "requirements_ledger_sha256": "d6bd76625d7491981d246a88826ee03e2963292d5bdf378690146099469ab870",
   "result_interpretation": "NO",
   "source_continuous_daily_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_continuous_daily.csv",
   "source_faithful_evidence_claim": "NO",
@@ -35,5 +35,5 @@
   "source_roll_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_roll_plan.csv",
   "status": "LOCAL_ONLY_2023_TEST_MARKET_ORDER_TBBO_REQUIREMENTS_DISCOVERED_NOT_PROVIDER_NOT_RESULT",
   "terminal_status": "STOPPED_ON_NEW_BLOCKER_CLASS_SECONDARY_FILLED_ORDER_ACROSS_UNRESOLVED_SESSION_EOD_GAP_NOT_RESULT",
-  "total_market_order_rows": 158
+  "total_market_order_rows": 272
 }

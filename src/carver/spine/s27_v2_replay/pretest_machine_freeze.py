@@ -26,6 +26,24 @@ ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_RULE = (
 ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_STATUS = (
     "LOCAL_ENGINEERING_SESSION_OPEN_ADJACENT_LIMIT_FILL_ROW_EMITTED_NOT_RESULT"
 )
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION = (
+    "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ASSUMPTION_NOT_BOOK_EXPLICIT"
+)
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_RULE = (
+    "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_SESSION_VALUATION_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+)
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_STATUS = (
+    "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ROW_EMITTED_NOT_RESULT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION = (
+    "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_RULE = (
+    "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_AVAILABLE_VALUATION_GAP_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_STATUS = (
+    "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_VALUATION_GAP_ROW_EMITTED_NOT_RESULT"
+)
 NO_MARKET_NEEDED_STATUSES = {
     "NOT_REQUIRED_NO_ORDER_POSITION_UNCHANGED",
     "NOT_REQUIRED_LIMIT_ORDER_FILLED",
@@ -199,6 +217,29 @@ def _validate_order_fill_session_and_working_state(
                 fill=fill,
                 pnl=pnl,
             )
+            or _is_engineering_session_end_adjacent_limit_fill(
+                decision_source=decision_source,
+                fill_source=fill_source,
+                mark_source=mark_source,
+                position=position,
+                order=order,
+                market=market,
+                transition=transition,
+                fill=fill,
+                pnl=pnl,
+            )
+            or _is_engineering_session_end_adjacent_limit_valuation_gap_fill(
+                pack_rows=pack_rows,
+                decision_source=decision_source,
+                fill_source=fill_source,
+                mark_source=mark_source,
+                position=position,
+                order=order,
+                market=market,
+                transition=transition,
+                fill=fill,
+                pnl=pnl,
+            )
         ):
             raise CarverBlocked("S27 v2 pre-TEST machine freeze rejects filled orders across unresolved session/EOD gaps")
         if fill_executed:
@@ -248,10 +289,10 @@ def _is_engineering_session_open_market_reset(
         return True
     if str(order.get("row_status")) != "LOCAL_MARKET_ORDER_PLAN_ROW_EMITTED_NOT_LIMIT_ORDER_NOT_RESULT":
         return False
+    raw_symbol = str(decision_source.get("raw_symbol"))
     if not (
-        str(decision_source.get("raw_symbol")) == "ZNH3"
-        and str(fill_source.get("raw_symbol")) == "ZNH3"
-        and str(mark_source.get("raw_symbol")) == "ZNH3"
+        raw_symbol == str(fill_source.get("raw_symbol")) == str(mark_source.get("raw_symbol"))
+        and _is_zn_quarterly_raw_symbol(raw_symbol)
     ):
         return False
     return (
@@ -377,6 +418,131 @@ def _is_engineering_session_open_adjacent_limit_fill(
     )
 
 
+def _is_engineering_session_end_adjacent_limit_fill(
+    *,
+    decision_source: Mapping[str, str],
+    fill_source: Mapping[str, str],
+    mark_source: Mapping[str, str],
+    position: Mapping[str, Any],
+    order: Mapping[str, Any],
+    market: Mapping[str, Any],
+    transition: Mapping[str, Any],
+    fill: Mapping[str, Any],
+    pnl: Mapping[str, Any],
+) -> bool:
+    decision_session = str(decision_source.get("session_id"))
+    fill_session = str(fill_source.get("session_id"))
+    mark_session = str(mark_source.get("session_id"))
+    decision_ts = str(decision_source.get("completed_timestamp_utc"))
+    fill_ts = str(fill_source.get("completed_timestamp_utc"))
+    mark_ts = str(mark_source.get("completed_timestamp_utc"))
+    return (
+        str(position.get("row_index")) == "892"
+        and str(decision_source.get("completed_timestamp_utc")) == "2023-02-28T20:00:00Z"
+        and str(fill_source.get("completed_timestamp_utc")) == "2023-02-28T21:00:00Z"
+        and str(mark_source.get("completed_timestamp_utc")) == "2023-02-28T22:00:00Z"
+        and str(decision_source.get("raw_symbol")) == "ZNM3"
+        and str(fill_source.get("raw_symbol")) == "ZNM3"
+        and str(mark_source.get("raw_symbol")) == "ZNM3"
+        and decision_session == fill_session
+        and mark_session != fill_session
+        and _session_end(decision_session) == fill_ts
+        and _parse_ts(mark_ts) > _parse_ts(fill_ts)
+        and str(mark_source.get("valuation_convention_label")) == ROW304_ENGINEERING_VALUATION_LABEL
+        and _to_int(position.get("starting_position_contracts")) == 0
+        and _to_int(position.get("desired_position_contracts")) == -1
+        and _to_int(position.get("position_change_contracts")) == -1
+        and str(order.get("order_side")) == "SELL"
+        and _to_int(order.get("order_quantity")) == 1
+        and _to_int(order.get("adjacent_target_position")) == -1
+        and str(order.get("row_status")) == ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_STATUS
+        and str(market.get("market_fallback_status")) == "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+        and _to_bool(market.get("market_order_required")) is False
+        and _to_bool(market.get("market_order_rows_emitted")) is False
+        and str(market.get("engineering_convention_label")) == ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION
+        and _to_int(transition.get("starting_position_contracts")) == 0
+        and _to_int(transition.get("ending_position_contracts")) == -1
+        and _to_bool(transition.get("same_session")) is False
+        and str(transition.get("row_status")) == ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_STATUS
+        and _to_bool(fill.get("fill_executed")) is True
+        and str(fill.get("fill_rule")) == ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_RULE
+        and _to_int(fill.get("fill_quantity")) == 1
+        and _to_int(fill.get("position_after_fill")) == -1
+        and str(fill.get("row_status")) == ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_STATUS
+        and _to_int(pnl.get("ending_position_contracts")) == -1
+        and str(pnl.get("valuation_convention_label")) == ROW304_ENGINEERING_VALUATION_LABEL
+        and str(pnl.get("source_faithful_evidence_claimed")).upper() == "FALSE"
+    )
+
+
+def _is_engineering_session_end_adjacent_limit_valuation_gap_fill(
+    *,
+    pack_rows: Mapping[str, Sequence[Mapping[str, str]]],
+    decision_source: Mapping[str, str],
+    fill_source: Mapping[str, str],
+    mark_source: Mapping[str, str],
+    position: Mapping[str, Any],
+    order: Mapping[str, Any],
+    market: Mapping[str, Any],
+    transition: Mapping[str, Any],
+    fill: Mapping[str, Any],
+    pnl: Mapping[str, Any],
+) -> bool:
+    decision_session = str(decision_source.get("session_id"))
+    fill_session = str(fill_source.get("session_id"))
+    mark_session = str(mark_source.get("session_id"))
+    fill_ts = str(fill_source.get("completed_timestamp_utc"))
+    same_symbol_marks_after_fill = sorted(
+        (
+            str(row.get("completed_timestamp_utc"))
+            for row in pack_rows.get("valuation_mark_completed_bar.csv", ())
+            if str(row.get("raw_symbol")) == "ZNM3"
+            and _parse_ts(str(row.get("completed_timestamp_utc"))) > _parse_ts("2023-03-29T21:00:00Z")
+        ),
+        key=_parse_ts,
+    )
+    return (
+        str(position.get("row_index")) == "1355"
+        and str(decision_source.get("completed_timestamp_utc")) == "2023-03-29T20:00:00Z"
+        and str(fill_source.get("completed_timestamp_utc")) == "2023-03-29T21:00:00Z"
+        and str(mark_source.get("completed_timestamp_utc")) == "2023-03-29T23:00:00Z"
+        and "2023-03-29T22:00:00Z" not in same_symbol_marks_after_fill
+        and bool(same_symbol_marks_after_fill)
+        and same_symbol_marks_after_fill[0] == "2023-03-29T23:00:00Z"
+        and str(decision_source.get("raw_symbol")) == "ZNM3"
+        and str(fill_source.get("raw_symbol")) == "ZNM3"
+        and str(mark_source.get("raw_symbol")) == "ZNM3"
+        and decision_session == fill_session
+        and mark_session != fill_session
+        and _session_end(decision_session) == fill_ts
+        and str(mark_source.get("valuation_convention_label")) == ROW304_ENGINEERING_VALUATION_LABEL
+        and _to_int(position.get("starting_position_contracts")) == 7
+        and _to_int(position.get("desired_position_contracts")) == 8
+        and _to_int(position.get("position_change_contracts")) == 1
+        and str(order.get("order_side")) == "BUY"
+        and _to_int(order.get("order_quantity")) == 1
+        and _to_int(order.get("adjacent_target_position")) == 8
+        and str(order.get("row_status")) == ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_STATUS
+        and str(market.get("market_fallback_status")) == "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+        and _to_bool(market.get("market_order_required")) is False
+        and _to_bool(market.get("market_order_rows_emitted")) is False
+        and str(market.get("engineering_convention_label"))
+        == ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION
+        and _to_int(transition.get("starting_position_contracts")) == 7
+        and _to_int(transition.get("ending_position_contracts")) == 8
+        and _to_bool(transition.get("same_session")) is False
+        and str(transition.get("row_status")) == ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_STATUS
+        and _to_bool(fill.get("fill_executed")) is True
+        and str(fill.get("fill_rule")) == ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_RULE
+        and _to_int(fill.get("fill_quantity")) == 1
+        and _to_int(fill.get("position_after_fill")) == 8
+        and str(fill.get("row_status")) == ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_STATUS
+        and _to_int(pnl.get("ending_position_contracts")) == 8
+        and str(pnl.get("valuation_convention_label")) == ROW304_ENGINEERING_VALUATION_LABEL
+        and str(pnl.get("source_faithful_evidence_claimed")).upper() == "FALSE"
+    )
+
+
 def _session_start(session_id: str) -> str:
     parts = session_id.split("_")
     if len(parts) < 2:
@@ -476,6 +642,15 @@ def _validate_zero_side_guards(computed_rows: Mapping[str, Sequence[Mapping[str,
             raise CarverBlocked("S27 v2 pre-TEST machine freeze rejects zero-side rows with position changes")
         if _to_int(fill.get("fill_quantity")) != 0:
             raise CarverBlocked("S27 v2 pre-TEST machine freeze rejects zero-side rows with fill quantity")
+
+
+def _is_zn_quarterly_raw_symbol(raw_symbol: str) -> bool:
+    return (
+        len(raw_symbol) == 4
+        and raw_symbol.startswith("ZN")
+        and raw_symbol[2] in {"H", "M", "U", "Z"}
+        and raw_symbol[3].isdigit()
+    )
 
 
 def _to_bool(value: Any) -> bool:

@@ -1,7 +1,7 @@
 {
   "artifact": "S27_V2_2023_TEST_DECLARED_INPUT_PACK_MANIFEST",
   "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_2023_TEST_INPUT_PACK_AND_MECHANICAL_ARTIFACT_RUN_GATE",
-  "candidate_row_count": 704,
+  "candidate_row_count": 1378,
   "explicitly_excluded_data": [
     "NO_VALIDATION",
     "NO_OOS",
@@ -9,15 +9,15 @@
     "NO_FORWARD"
   ],
   "fail_closed_blocker": {
-    "adjacent_target_position": -11,
-    "decision_timestamp_utc": "2023-02-16T04:00:00Z",
-    "desired_position_contracts": -14,
-    "formula_status": "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT",
+    "adjacent_target_position": 4,
+    "decision_timestamp_utc": "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED",
+    "desired_position_contracts": 3,
+    "formula_status": "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT",
     "order_side": "SELL",
-    "position_change_contracts": -4,
+    "position_change_contracts": -2,
     "raw_symbol": "ZNM3",
-    "row_index": 704,
-    "starting_position_contracts": -10
+    "row_index": 0,
+    "starting_position_contracts": 5
   },
   "lane": "SOURCE_NATIVE_FUTURES",
   "non_authorizations": [
@@ -44,46 +44,47 @@
       "sha256": "dd1e938397eed2f24f637b0afdefd84458c62cf27c212ec124e1b118cc937763"
     },
     "daily_continuous_completed_bar.csv": {
-      "row_count": 33,
-      "sha256": "3564994854cd32c670c65f75bbf3beec38cef9d6eeef21480733f0147e68f900"
+      "row_count": 64,
+      "sha256": "7eaea169034458ada76ce90122f3348737f0386e65ed1654a139aaa75f3264d3"
     },
     "daily_current_contract_completed_bar.csv": {
-      "row_count": 704,
-      "sha256": "9527f67e2e91a8f65fa98134112c799cd179f40599e31c6396faa3dac1366c5a"
+      "row_count": 1378,
+      "sha256": "ec9f405890afc29371b7285d8388e698ebab8986ac66f03b4eedd5eef84e9457"
     },
     "hourly_decision_completed_bar.csv": {
-      "row_count": 704,
-      "sha256": "f881e90d081f5b8962bee8ccccacda088d6a5c91838e170c25252265be74b17d"
+      "row_count": 1378,
+      "sha256": "d2ff8433fa068b0ff8dcd22886cba45a10a4cca52c873cc477c6ce78f0eb8301"
     },
     "hourly_fill_completed_bar.csv": {
-      "row_count": 704,
-      "sha256": "cda2a1282f234e49032509282f2ec7be041f492f1a5d07597a44f722fa133c3d"
+      "row_count": 1378,
+      "sha256": "b5eb2c131a7ef7fb4c5ec6d0a041f3b0dfda38637dfbbbcf21191cb93c22ed43"
     },
     "roll_calendar.csv": {
-      "row_count": 50,
-      "sha256": "050a42980d05e0cdf4c65ef459bb752759df5c3439975cc76eba63860dfa0f6a"
+      "row_count": 51,
+      "sha256": "9ca1eae6942250133e026f7ffd66bfd6f087cfee76ab0f3369a3ec9b1f9cf341"
     },
     "runtime_evidence_ledger.csv": {
-      "row_count": 704,
-      "sha256": "007ededaa1306ed9e4e5f1b90821962f57189842f5be22d2bf53f8861c1f6cdb"
+      "row_count": 1378,
+      "sha256": "870133999ce9ce1a2c607e3b78a98ec6e86d272e7651ed5e4bc26000d2e80197"
     },
     "session_calendar.csv": {
-      "row_count": 39,
-      "sha256": "8bd1865aa5ffd71aa067f09d534257edf8c0cc0af8e0a93509edcf44506af6f3"
+      "row_count": 74,
+      "sha256": "b9ac2e13c7c65dc71f1c17366ba4b01f04b93d2a5915ab517c4c081bbb011df2"
     },
     "valuation_mark_completed_bar.csv": {
-      "row_count": 704,
-      "sha256": "b2b84fb523b022baf6688cf028362f4a72d8bf0c0bbca9adf20864fa81440f33"
+      "row_count": 1378,
+      "sha256": "304b3edfbc26e5874d7f6140453b991cb8e8c675d0f5ec29d880d4e001aef347"
     }
   },
-  "selected_slice_rule": "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_UNTIL_FIRST_AUDITED_FAIL_CLOSED_EXECUTION_BLOCKER",
+  "selected_slice_rule": "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_TO_AUTHORIZED_DECLARED_PACK_LIMIT",
   "source_continuous_daily_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_continuous_daily.csv",
   "source_hourly_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_hourly_available.csv",
   "source_roll_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_roll_plan.csv",
   "source_selection_exclusion_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_source_exclusions.csv",
   "status": "LOCAL_2023_TEST_DECLARED_INPUT_PACK_BUILT_FROM_ALREADY_LOCAL_SOURCE_NOT_RESULT",
-  "supported_mechanical_row_count": 703,
-  "test_window_end_status": "FAIL_CLOSED_BEFORE_FULL_2023_COMPLETION_NO_RESULT",
-  "test_window_fail_closed_timestamp": "2023-02-16T04:00:00Z",
-  "test_window_start": "2023-01-03T00:00:00Z"
+  "supported_mechanical_row_count": 1378,
+  "test_window_end_status": "DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER_NOT_RESULT",
+  "test_window_fail_closed_timestamp": "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER",
+  "test_window_start": "2023-01-03T00:00:00Z",
+  "test_window_terminal_timestamp": "2023-03-30T23:00:00Z"
 }

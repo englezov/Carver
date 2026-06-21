@@ -57,6 +57,18 @@ FAIL_CLOSED_UNSUPPORTED_MARKET_CONTINUATION_STATUS = (
 FAIL_CLOSED_CAP_BOUND_MARKET_CONTINUATION_STATUS = (
     "FAIL_CLOSED_CAP_BOUND_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT"
 )
+FAIL_CLOSED_STALE_MARKET_SPREAD_EVIDENCE_STATUS = (
+    "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_STALE_OR_SIDE_MISMATCH_FOR_CONTINUATION_NOT_RESULT"
+)
+FAIL_CLOSED_LIVE_ORDER_ROLL_BOUNDARY_STATUS = (
+    "FAIL_CLOSED_LIVE_ORDER_ON_UNRESOLVED_ROLL_BOUNDARY_DATE_NOT_RESULT"
+)
+ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION = (
+    "LOCAL_ONLY_ENGINEERING_ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ASSUMPTION_NOT_BOOK_EXPLICIT_NOT_SOURCE_FAITHFUL"
+)
+ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS = (
+    "LOCAL_ENGINEERING_ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSED_ROW_EMITTED_NOT_RESULT"
+)
 CAP_BOUND_MARKET_ORDER_PLAN_PRICE_LABEL = "NOT_APPLICABLE_CAP_BOUND_MARKET_ORDER_LIMIT_SIDE_NOT_PLACED"
 MARKET_TBBO_SPREAD_EVIDENCE_RELATIVE_PATH = (
     "docs/researchops/s27_v2_market_spread_evidence/ZN/20260612_2023_test_row1_znh3_tbbo/"
@@ -111,6 +123,38 @@ ZNM3_EXTENDED_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
     "docs/researchops/s27_v2_market_spread_evidence/ZN/20260614_2023_test_znm3_market_order_tbbo_extended_lookback/"
     "ledger/20260614_S27_V2_2023_TEST_ZNM3_MARKET_ORDER_TBBO_EXTENDED_LOOKBACK_selected_spread_registry.csv"
 )
+ROW704_MBP1_TOP_OF_BOOK_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260614_2023_test_row704_mbp1_top_of_book_evidence/"
+    "ledger/20260614_S27_V2_2023_TEST_ROW704_MBP1_TOP_OF_BOOK_EVIDENCE_selected_spread_registry.csv"
+)
+ROW1356_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260616_2023_test_row1356_post_fill_tbbo_engineering_convention/"
+    "ledger/20260616_S27_V2_2023_TEST_ROW1356_POST_FILL_TBBO_ENGINEERING_selected_spread_registry.csv"
+)
+ROW1364_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260617_2023_test_row1364_market_order_tbbo/"
+    "ledger/20260617_S27_V2_2023_TEST_ROW1364_MARKET_ORDER_TBBO_selected_spread_registry.csv"
+)
+ROW1366_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260617_2023_test_row1366_market_order_tbbo/"
+    "ledger/20260617_S27_V2_2023_TEST_ROW1366_MARKET_ORDER_TBBO_selected_spread_registry.csv"
+)
+ROW1369_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260617_2023_test_row1369_market_order_tbbo/"
+    "ledger/20260617_S27_V2_2023_TEST_ROW1369_MARKET_ORDER_TBBO_selected_spread_registry.csv"
+)
+ROW1370_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260620_2023_test_row1370_market_order_tbbo/"
+    "ledger/20260620_S27_V2_2023_TEST_ROW1370_MARKET_ORDER_TBBO_selected_spread_registry.csv"
+)
+ROW1374_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260620_2023_test_row1374_market_order_tbbo/"
+    "ledger/20260620_S27_V2_2023_TEST_ROW1374_MARKET_ORDER_TBBO_selected_spread_registry.csv"
+)
+ROW1378_MARKET_TBBO_SELECTED_RELATIVE_PATH = (
+    "docs/researchops/s27_v2_market_spread_evidence/ZN/20260621_2023_test_row1378_post_fill_tbbo_engineering_convention/"
+    "ledger/20260621_S27_V2_2023_TEST_ROW1378_POST_FILL_TBBO_ENGINEERING_selected_spread_registry.csv"
+)
 MARKET_TBBO_SPREAD_EVIDENCE_BY_ROW = {
     1: {
         "path": MARKET_TBBO_SPREAD_EVIDENCE_RELATIVE_PATH,
@@ -160,6 +204,7 @@ MARKET_TBBO_SPREAD_EVIDENCE_BY_ROW = {
         "selected_spread_ledger_sha256": "aa1240a937ef7a4be30c1851ee708c26b2a4d7d6e7c30f518efa85e008079be8",
     },
 }
+_EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE: dict[str, Any] | None = None
 ROW215_ENGINEERING_TBBO_EVIDENCE = {
     "path": MARKET_TBBO_FAILED_RETRY_SELECTED_RELATIVE_PATH,
     "policy_record_path": MARKET_TBBO_ROW215_POLICY_RECORD_RELATIVE_PATH,
@@ -195,6 +240,12 @@ ROW303_SESSION_END_MARKET_FILL_POLICY_STATUS = (
 ROW391_SESSION_END_MARKET_FILL_POLICY_STATUS = (
     "ROW391_SESSION_END_MARKET_FILL_ALLOWED_WITH_NEXT_SESSION_ENGINEERING_VALUATION_NOT_RESULT"
 )
+ROW1113_SESSION_END_MARKET_VALUATION_GAP_CONVENTION = (
+    "SOURCE_NATIVE_ENGINEERING_SESSION_END_MARKET_ORDER_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+)
+ROW1113_SESSION_END_MARKET_VALUATION_GAP_POLICY_STATUS = (
+    "ROW1113_SESSION_END_MARKET_FILL_ALLOWED_WITH_NEXT_AVAILABLE_VALUATION_GAP_ENGINEERING_VALUATION_NOT_RESULT"
+)
 ROW304_ENGINEERING_SESSION_OPEN_MARKET_RESET_CONVENTION = (
     "SOURCE_NATIVE_ENGINEERING_SESSION_OPEN_MARKET_RESET_ASSUMPTION_NOT_BOOK_EXPLICIT"
 )
@@ -210,6 +261,24 @@ ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_RULE = (
 ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_ROW_STATUS = (
     "LOCAL_ENGINEERING_SESSION_OPEN_ADJACENT_LIMIT_FILL_ROW_EMITTED_NOT_RESULT"
 )
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION = (
+    "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ASSUMPTION_NOT_BOOK_EXPLICIT"
+)
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_RULE = (
+    "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_SESSION_VALUATION_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+)
+ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS = (
+    "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ROW_EMITTED_NOT_RESULT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION = (
+    "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_RULE = (
+    "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_AVAILABLE_VALUATION_GAP_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+)
+ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS = (
+    "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_VALUATION_GAP_ROW_EMITTED_NOT_RESULT"
+)
 SESSION_MARKET_TBBO_EVIDENCE_TYPES = (
     "BATCH_AT_OR_BEFORE_FILL_TBBO",
     "DIRECT_AT_OR_BEFORE_FILL_TBBO",
@@ -223,6 +292,14 @@ SESSION_MARKET_TBBO_EVIDENCE_TYPES = (
     "ROW441_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO",
     "ROW547_CAP_BOUND_AT_OR_BEFORE_FILL_TBBO",
     "ZNM3_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO",
+    "ROW704_ALTERNATIVE_SOURCE_NATIVE_MBP1_TOP_OF_BOOK_AT_OR_BEFORE_FILL",
+    "ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
+    "ROW1364_AT_OR_BEFORE_FILL_TBBO",
+    "ROW1366_AT_OR_BEFORE_FILL_TBBO",
+    "ROW1369_AT_OR_BEFORE_FILL_TBBO",
+    "ROW1370_AT_OR_BEFORE_FILL_TBBO",
+    "ROW1374_AT_OR_BEFORE_FILL_TBBO",
+    "ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
 )
 MARKET_TBBO_SELECTION_STATUSES = (
     "PASS_FRESH_NON_CROSSED_TBBO_QUOTE_SELECTED_NOT_RESULT",
@@ -230,6 +307,9 @@ MARKET_TBBO_SELECTION_STATUSES = (
     "PASS_ROW215_ENGINEERING_AFTER_FILL_TBBO_QUOTE_SELECTED_NOT_RESULT",
     "PASS_ROW441_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO_SELECTED_NOT_RESULT",
     "PASS_ZNM3_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO_SELECTED_NOT_RESULT",
+    "PASS_ROW704_MBP1_TOP_OF_BOOK_AT_OR_BEFORE_FILL_SELECTED_NOT_RESULT",
+    "PASS_ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_QUOTE_SELECTED_NOT_RESULT",
+    "PASS_ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_QUOTE_SELECTED_NOT_RESULT",
 )
 FAIL_CLOSED_ADJACENT_LIMIT_FORMULA_STATUS = (
     "FAIL_CLOSED_ADJACENT_LIMIT_FORMULA_UNSUPPORTED_TARGET_POSITION_ZERO_NOT_RESULT"
@@ -297,6 +377,8 @@ ROW_FAMILY_FILES = (
     "roll_calendar.csv",
     "cost_parameter.csv",
 )
+
+AUTHORIZED_2023_TEST_DECLARED_PACK_ROW_LIMIT = 1378
 
 RUN_LEDGER_FIELDNAMES = {
     "runtime_history_ledger.csv": ("row_index", "runtime_evidence_row_hash", "ewma5", "trend", "sigma", "vqm_multiplier_m", "row_status", "row_hash"),
@@ -379,6 +461,10 @@ class TestMechanicalRunBundle:
         evidence = _safe_read_json(output_root / "evidence_manifest.json", "S27 v2 2023 TEST evidence manifest")
         trusted = _safe_read_json(output_root / "trusted_bundle.json", "S27 v2 2023 TEST trusted bundle")
         pnl_rows = _safe_read_csv_rows(output_root / "pnl_ledger.csv", "S27 v2 2023 TEST pnl ledger")
+        position_rows = _safe_read_csv_rows(
+            output_root / "desired_position_ledger.csv",
+            "S27 v2 2023 TEST desired-position ledger",
+        )
         market_order_rows = _safe_read_csv_rows(
             output_root / "market_order_ledger.csv",
             "S27 v2 2023 TEST market-order ledger",
@@ -461,6 +547,13 @@ class TestMechanicalRunBundle:
             raise CarverBlocked("S27 v2 2023 TEST supported market state must bind market order and fill metadata rows")
         if emitted_market_indices - actual_cost_indices:
             raise CarverBlocked("S27 v2 2023 TEST supported market state must bind same-row cost rows")
+        position_by_index = {str(row["row_index"]): row for row in position_rows}
+        no_market_by_index = {str(row["row_index"]): row for row in no_market_rows}
+        order_by_index = {str(row["row_index"]): row for row in order_rows}
+        cost_by_index = {str(row["row_index"]): row for row in cost_rows}
+        transition_by_index = {str(row["row_index"]): row for row in transition_rows}
+        fill_by_index = {str(row["row_index"]): row for row in fill_rows}
+        pnl_by_index = {str(row["row_index"]): row for row in pnl_rows}
         if market_order_rows or market_fill_metadata_rows:
             if len(market_order_rows) != len(emitted_market_indices) or len(market_fill_metadata_rows) != len(emitted_market_indices):
                 raise CarverBlocked("S27 v2 2023 TEST supported market rows must bind every emitted market order and fill metadata row")
@@ -468,12 +561,6 @@ class TestMechanicalRunBundle:
                 raise CarverBlocked("S27 v2 2023 TEST supported market rows must bind at least one cost row")
             market_order_by_index = {str(row["row_index"]): row for row in market_order_rows}
             market_fill_by_index = {str(row["row_index"]): row for row in market_fill_metadata_rows}
-            no_market_by_index = {str(row["row_index"]): row for row in no_market_rows}
-            order_by_index = {str(row["row_index"]): row for row in order_rows}
-            cost_by_index = {str(row["row_index"]): row for row in cost_rows}
-            transition_by_index = {str(row["row_index"]): row for row in transition_rows}
-            fill_by_index = {str(row["row_index"]): row for row in fill_rows}
-            pnl_by_index = {str(row["row_index"]): row for row in pnl_rows}
             for row_index in sorted(emitted_market_indices, key=int):
                 market_order = market_order_by_index[row_index]
                 market_fill = market_fill_by_index[row_index]
@@ -577,6 +664,45 @@ class TestMechanicalRunBundle:
                     cost=cost_by_index.get("391", {}),
                     pnl=pnl_by_index.get("391", {}),
                 )
+        if self.supported_mechanical_row_count >= 701:
+            _validate_row701_roll_boundary_no_new_order_suppression_artifacts(
+                input_pack_root=Path(self.input_pack_path).resolve(),
+                position=position_by_index.get("701", {}),
+                order=order_by_index.get("701", {}),
+                no_market=no_market_by_index.get("701", {}),
+                transition=transition_by_index.get("701", {}),
+                fill=fill_by_index.get("701", {}),
+                cost=cost_by_index.get("701", {}),
+                pnl=pnl_by_index.get("701", {}),
+                market_order_present="701" in actual_market_indices,
+                market_fill_present="701" in actual_fill_metadata_indices,
+            )
+        if self.supported_mechanical_row_count >= 892:
+            _validate_row892_session_end_adjacent_limit_artifacts(
+                input_pack_root=Path(self.input_pack_path).resolve(),
+                position=position_by_index.get("892", {}),
+                order=order_by_index.get("892", {}),
+                no_market=no_market_by_index.get("892", {}),
+                transition=transition_by_index.get("892", {}),
+                fill=fill_by_index.get("892", {}),
+                cost=cost_by_index.get("892", {}),
+                pnl=pnl_by_index.get("892", {}),
+                market_order_present="892" in actual_market_indices,
+                market_fill_present="892" in actual_fill_metadata_indices,
+            )
+        if self.supported_mechanical_row_count >= 1355:
+            _validate_row1355_session_end_adjacent_limit_valuation_gap_artifacts(
+                input_pack_root=Path(self.input_pack_path).resolve(),
+                position=position_by_index.get("1355", {}),
+                order=order_by_index.get("1355", {}),
+                no_market=no_market_by_index.get("1355", {}),
+                transition=transition_by_index.get("1355", {}),
+                fill=fill_by_index.get("1355", {}),
+                cost=cost_by_index.get("1355", {}),
+                pnl=pnl_by_index.get("1355", {}),
+                market_order_present="1355" in actual_market_indices,
+                market_fill_present="1355" in actual_fill_metadata_indices,
+            )
         if fail_rows and self.fail_closed_reason == FAIL_CLOSED_BLOCKER_STATUS:
             if str(fail_rows[0]["market_order_rows_emitted"]) != "TRUE":
                 raise CarverBlocked("S27 v2 2023 TEST fail row must bind emitted market-order row")
@@ -828,6 +954,440 @@ def _validate_row304_engineering_session_open_artifacts(
         or str(pnl.get("row_status")) != "LOCAL_MARKET_ORDER_MECHANICAL_PNL_ROW_EMITTED_NOT_RESULT"
     ):
         raise CarverBlocked("S27 v2 2023 TEST row-304 engineering session-open pnl must bind valuation and non-result boundary")
+
+
+def _validate_row701_roll_boundary_no_new_order_suppression_artifacts(
+    *,
+    input_pack_root: Path,
+    position: Mapping[str, str],
+    order: Mapping[str, str],
+    no_market: Mapping[str, str],
+    transition: Mapping[str, str],
+    fill: Mapping[str, str],
+    cost: Mapping[str, str],
+    pnl: Mapping[str, str],
+    market_order_present: bool,
+    market_fill_present: bool,
+) -> None:
+    decisions = _safe_read_csv_rows(
+        input_pack_root / "hourly_decision_completed_bar.csv",
+        "S27 v2 2023 TEST hourly decision pack rows",
+    )
+    fills = _safe_read_csv_rows(
+        input_pack_root / "hourly_fill_completed_bar.csv",
+        "S27 v2 2023 TEST hourly fill pack rows",
+    )
+    marks = _safe_read_csv_rows(
+        input_pack_root / "valuation_mark_completed_bar.csv",
+        "S27 v2 2023 TEST valuation mark pack rows",
+    )
+    rolls = _safe_read_csv_rows(
+        input_pack_root / "roll_calendar.csv",
+        "S27 v2 2023 TEST roll-calendar rows",
+    )
+    if len(decisions) < 701 or len(fills) < 701 or len(marks) < 701:
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression guard requires declared source rows")
+    decision_source = decisions[700]
+    fill_source = fills[700]
+    mark_source = marks[700]
+    roll_source = next((row for row in rolls if str(row.get("roll_transition_date")) == "2023-02-16"), None)
+    if roll_source is None:
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression requires declared roll-transition date")
+    if (
+        str(decision_source.get("completed_timestamp_utc")) != "2023-02-16T01:00:00Z"
+        or str(fill_source.get("completed_timestamp_utc")) != "2023-02-16T02:00:00Z"
+        or str(mark_source.get("completed_timestamp_utc")) != "2023-02-16T03:00:00Z"
+        or str(decision_source.get("trading_date")) != "2023-02-16"
+        or str(fill_source.get("trading_date")) != "2023-02-16"
+        or str(mark_source.get("trading_date")) != "2023-02-16"
+        or str(decision_source.get("raw_symbol")) != "ZNM3"
+        or str(fill_source.get("raw_symbol")) != "ZNM3"
+        or str(mark_source.get("raw_symbol")) != "ZNM3"
+        or str(decision_source.get("session_id")) != "UTC_ZN_2023_TEST_2023-02-15T22:00:00Z_2023-02-16T21:00:00Z"
+        or str(fill_source.get("session_id")) != "UTC_ZN_2023_TEST_2023-02-15T22:00:00Z_2023-02-16T21:00:00Z"
+        or str(mark_source.get("session_id")) != "UTC_ZN_2023_TEST_2023-02-15T22:00:00Z_2023-02-16T21:00:00Z"
+        or not str(decision_source.get("readiness_status", "")).startswith("READY_")
+        or not str(fill_source.get("readiness_status", "")).startswith("READY_")
+        or not str(mark_source.get("readiness_status", "")).startswith("READY_")
+        or str(mark_source.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression source rows must bind exact same-symbol roll-date case")
+    if (
+        str(roll_source.get("roll_id")) != "20260612_S27_V2_2023_TEST_MECHANICAL_ROLL_0051_20230216"
+        or str(roll_source.get("old_contract_key")) != "ZNH3_2023"
+        or str(roll_source.get("new_contract_key")) != "ZNM3_2023"
+        or str(roll_source.get("additive_delta_to_prior_history")) != "0.484375"
+        or str(roll_source.get("readiness_status")) != "READY_DATABENTO_2023_TEST_ROLL_CONTEXT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression roll calendar must bind declared transition")
+    if market_order_present or market_fill_present:
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression must not emit market-order rows")
+    if (
+        str(position.get("starting_position_contracts")) != "0"
+        or str(position.get("desired_position_contracts")) != "0"
+        or str(position.get("position_change_contracts")) != "0"
+        or str(position.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression position must remain flat")
+    if (
+        str(order.get("order_side")) != "NONE"
+        or str(order.get("order_quantity")) != "0"
+        or str(order.get("adjacent_target_position")) != "0"
+        or str(order.get("formula_limit_price")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION
+        or str(order.get("limit_order_price")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION
+        or str(order.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression order must bind no-new-order convention")
+    if (
+        str(no_market.get("market_order_required")).upper() != "FALSE"
+        or str(no_market.get("market_order_rows_emitted")).upper() != "FALSE"
+        or str(no_market.get("market_fallback_status")) != "NOT_REQUIRED_NO_ORDER_POSITION_UNCHANGED"
+        or str(no_market.get("engineering_convention_label")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION
+        or str(no_market.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression no-market state must bind convention")
+    if (
+        str(transition.get("starting_position_contracts")) != "0"
+        or str(transition.get("ending_position_contracts")) != "0"
+        or str(transition.get("working_state_before")) != "NO_OPEN_WORKING_ORDER_CARRIED"
+        or str(transition.get("working_state_after")) != "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION"
+        or str(transition.get("same_session")).upper() != "TRUE"
+        or str(transition.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression transition must bind empty working state")
+    if (
+        str(fill.get("fill_executed")).upper() != "FALSE"
+        or str(fill.get("fill_rule")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION
+        or float(fill.get("fill_candidate_close", "nan")) != 112.671875
+        or float(fill.get("fill_price", "nan")) != 0.0
+        or str(fill.get("fill_quantity")) != "0"
+        or str(fill.get("position_after_fill")) != "0"
+        or str(fill.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression fill must bind no-fill metadata")
+    if (
+        str(cost.get("cost_policy_id")) != "S27_V2_ZN_ACCEPTED_INFERRED_RETAIL_FUTURES_COST_2026_06_11"
+        or float(cost.get("commission_amount", "nan")) != 0.0
+        or float(cost.get("spread_cost_amount", "nan")) != 0.0
+        or float(cost.get("total_cost_amount", "nan")) != 0.0
+        or str(cost.get("currency")) != "USD"
+        or str(cost.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression cost must bind zero cost")
+    if (
+        str(pnl.get("valuation_mark_timestamp_utc")) != "2023-02-16T03:00:00Z"
+        or float(pnl.get("valuation_mark_close_price", "nan")) != 112.71875
+        or str(pnl.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+        or float(pnl.get("row_gross_pnl_amount", "nan")) != 0.0
+        or float(pnl.get("row_net_pnl_amount", "nan")) != 0.0
+        or str(pnl.get("ending_position_contracts")) != "0"
+        or str(pnl.get("result_status")) != RESULT_STATUS
+        or str(pnl.get("backtest_status")) != BACKTEST_STATUS
+        or str(pnl.get("pnl_evaluation_status")) != PNL_EVALUATION_STATUS
+        or str(pnl.get("source_faithful_evidence_claimed")).upper() != "FALSE"
+        or str(pnl.get("row_status")) != ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-701 suppression pnl must bind zero mechanical non-result row")
+
+
+def _validate_row892_session_end_adjacent_limit_artifacts(
+    *,
+    input_pack_root: Path,
+    position: Mapping[str, str],
+    order: Mapping[str, str],
+    no_market: Mapping[str, str],
+    transition: Mapping[str, str],
+    fill: Mapping[str, str],
+    cost: Mapping[str, str],
+    pnl: Mapping[str, str],
+    market_order_present: bool,
+    market_fill_present: bool,
+) -> None:
+    decisions = _safe_read_csv_rows(
+        input_pack_root / "hourly_decision_completed_bar.csv",
+        "S27 v2 2023 TEST hourly decision pack rows",
+    )
+    fills = _safe_read_csv_rows(
+        input_pack_root / "hourly_fill_completed_bar.csv",
+        "S27 v2 2023 TEST hourly fill pack rows",
+    )
+    marks = _safe_read_csv_rows(
+        input_pack_root / "valuation_mark_completed_bar.csv",
+        "S27 v2 2023 TEST valuation mark pack rows",
+    )
+    sessions = _safe_read_csv_rows(
+        input_pack_root / "session_calendar.csv",
+        "S27 v2 2023 TEST session-calendar rows",
+    )
+    rolls = _safe_read_csv_rows(
+        input_pack_root / "roll_calendar.csv",
+        "S27 v2 2023 TEST roll-calendar rows",
+    )
+    if len(decisions) < 892 or len(fills) < 892 or len(marks) < 892:
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit guard requires declared source rows")
+    decision_source = decisions[891]
+    fill_source = fills[891]
+    mark_source = marks[891]
+    execution_session = next(
+        (
+            row
+            for row in sessions
+            if str(row.get("session_id")) == "UTC_ZN_2023_TEST_2023-02-27T22:00:00Z_2023-02-28T21:00:00Z"
+        ),
+        None,
+    )
+    next_session = next(
+        (
+            row
+            for row in sessions
+            if str(row.get("session_id")) == "UTC_ZN_2023_TEST_2023-02-28T22:00:00Z_2023-03-01T21:00:00Z"
+        ),
+        None,
+    )
+    if execution_session is None or next_session is None:
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit requires declared sessions")
+    if any(str(row.get("roll_transition_date")) == "2023-02-28" for row in rolls):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit rejects roll-boundary rows")
+    if (
+        str(decision_source.get("completed_timestamp_utc")) != "2023-02-28T20:00:00Z"
+        or str(fill_source.get("completed_timestamp_utc")) != "2023-02-28T21:00:00Z"
+        or str(mark_source.get("completed_timestamp_utc")) != "2023-02-28T22:00:00Z"
+        or str(decision_source.get("raw_symbol")) != "ZNM3"
+        or str(fill_source.get("raw_symbol")) != "ZNM3"
+        or str(mark_source.get("raw_symbol")) != "ZNM3"
+        or str(decision_source.get("session_id")) != str(execution_session.get("session_id"))
+        or str(fill_source.get("session_id")) != str(execution_session.get("session_id"))
+        or str(mark_source.get("session_id")) != str(next_session.get("session_id"))
+        or str(execution_session.get("session_end_utc")) != "2023-02-28T21:00:00Z"
+        or str(next_session.get("session_start_utc")) != "2023-02-28T22:00:00Z"
+        or str(mark_source.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+        or not str(decision_source.get("readiness_status", "")).startswith("READY_")
+        or not str(fill_source.get("readiness_status", "")).startswith("READY_")
+        or not str(mark_source.get("readiness_status", "")).startswith("READY_")
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit source rows must bind exact bounded case")
+    if market_order_present or market_fill_present:
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit must not emit market rows")
+    if (
+        str(position.get("starting_position_contracts")) != "0"
+        or str(position.get("desired_position_contracts")) != "-1"
+        or str(position.get("position_change_contracts")) != "-1"
+        or str(position.get("row_status")) != "LOCAL_POSITION_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit position must bind SELL 1")
+    if (
+        str(order.get("order_side")) != "SELL"
+        or str(order.get("order_quantity")) != "1"
+        or str(order.get("adjacent_target_position")) != "-1"
+        or abs(float(order.get("formula_limit_price", "nan")) - 111.6707138465356) > 1e-12
+        or float(order.get("limit_order_price", "nan")) != 111.671875
+        or str(order.get("row_status")) != ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit order must bind exact SELL 1")
+    if (
+        str(no_market.get("market_order_required")).upper() != "FALSE"
+        or str(no_market.get("market_order_rows_emitted")).upper() != "FALSE"
+        or str(no_market.get("market_fallback_status")) != "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+        or str(no_market.get("engineering_convention_label")) != ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION
+        or str(no_market.get("row_status")) != "LOCAL_NO_MARKET_ORDER_METADATA_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit no-market state must bind convention")
+    if (
+        str(transition.get("starting_position_contracts")) != "0"
+        or str(transition.get("ending_position_contracts")) != "-1"
+        or str(transition.get("working_state_before")) != "NO_OPEN_WORKING_ORDER_CARRIED"
+        or str(transition.get("working_state_after")) != "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION"
+        or str(transition.get("same_session")).upper() != "FALSE"
+        or str(transition.get("row_status")) != ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit transition must bind next-session valuation boundary")
+    if (
+        str(fill.get("fill_executed")).upper() != "TRUE"
+        or str(fill.get("fill_rule")) != ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_RULE
+        or float(fill.get("fill_candidate_close", "nan")) != 111.671875
+        or float(fill.get("fill_price", "nan")) != 111.671875
+        or str(fill.get("fill_quantity")) != "1"
+        or str(fill.get("position_after_fill")) != "-1"
+        or str(fill.get("row_status")) != ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit fill must bind session-end close-only fill")
+    if (
+        str(cost.get("cost_policy_id")) != "S27_V2_ZN_ACCEPTED_INFERRED_RETAIL_FUTURES_COST_2026_06_11"
+        or float(cost.get("commission_amount", "nan")) != ACCEPTED_COMMISSION_PER_CONTRACT
+        or float(cost.get("spread_cost_amount", "nan")) != 0.0
+        or float(cost.get("total_cost_amount", "nan")) != ACCEPTED_COMMISSION_PER_CONTRACT
+        or str(cost.get("currency")) != "USD"
+        or str(cost.get("row_status")) != "LOCAL_COST_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit cost must bind commission-only limit fill")
+    if (
+        str(pnl.get("valuation_mark_timestamp_utc")) != "2023-02-28T22:00:00Z"
+        or float(pnl.get("valuation_mark_close_price", "nan")) != 111.546875
+        or str(pnl.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+        or str(pnl.get("ending_position_contracts")) != "-1"
+        or str(pnl.get("result_status")) != RESULT_STATUS
+        or str(pnl.get("backtest_status")) != BACKTEST_STATUS
+        or str(pnl.get("pnl_evaluation_status")) != PNL_EVALUATION_STATUS
+        or str(pnl.get("source_faithful_evidence_claimed")).upper() != "FALSE"
+        or str(pnl.get("row_status")) != "LOCAL_MECHANICAL_PNL_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-892 session-end limit pnl must bind next-session valuation and non-result boundary")
+
+
+def _validate_row1355_session_end_adjacent_limit_valuation_gap_artifacts(
+    *,
+    input_pack_root: Path,
+    position: Mapping[str, str],
+    order: Mapping[str, str],
+    no_market: Mapping[str, str],
+    transition: Mapping[str, str],
+    fill: Mapping[str, str],
+    cost: Mapping[str, str],
+    pnl: Mapping[str, str],
+    market_order_present: bool,
+    market_fill_present: bool,
+) -> None:
+    decisions = _safe_read_csv_rows(
+        input_pack_root / "hourly_decision_completed_bar.csv",
+        "S27 v2 2023 TEST hourly decision pack rows",
+    )
+    fills = _safe_read_csv_rows(
+        input_pack_root / "hourly_fill_completed_bar.csv",
+        "S27 v2 2023 TEST hourly fill pack rows",
+    )
+    marks = _safe_read_csv_rows(
+        input_pack_root / "valuation_mark_completed_bar.csv",
+        "S27 v2 2023 TEST valuation mark pack rows",
+    )
+    sessions = _safe_read_csv_rows(
+        input_pack_root / "session_calendar.csv",
+        "S27 v2 2023 TEST session-calendar rows",
+    )
+    rolls = _safe_read_csv_rows(
+        input_pack_root / "roll_calendar.csv",
+        "S27 v2 2023 TEST roll-calendar rows",
+    )
+    if len(decisions) < 1355 or len(fills) < 1355 or len(marks) < 1355:
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit guard requires declared source rows")
+    decision_source = decisions[1354]
+    fill_source = fills[1354]
+    mark_source = marks[1354]
+    execution_session = next(
+        (
+            row
+            for row in sessions
+            if str(row.get("session_id")) == "UTC_ZN_2023_TEST_2023-03-28T22:00:00Z_2023-03-29T21:00:00Z"
+        ),
+        None,
+    )
+    next_session = next(
+        (
+            row
+            for row in sessions
+            if str(row.get("session_id")) == "UTC_ZN_2023_TEST_2023-03-29T22:00:00Z_2023-03-30T21:00:00Z"
+        ),
+        None,
+    )
+    same_symbol_marks_after_fill = sorted(
+        (
+            str(row.get("completed_timestamp_utc"))
+            for row in marks
+            if str(row.get("raw_symbol")) == "ZNM3"
+            and _parse_timestamp(str(row.get("completed_timestamp_utc"))) > _parse_timestamp("2023-03-29T21:00:00Z")
+        ),
+        key=_parse_timestamp,
+    )
+    if execution_session is None or next_session is None:
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit requires declared sessions")
+    if any(str(row.get("roll_transition_date")) in {"2023-03-29", "2023-03-30"} for row in rolls):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit rejects roll-boundary rows")
+    if (
+        str(decision_source.get("completed_timestamp_utc")) != "2023-03-29T20:00:00Z"
+        or str(fill_source.get("completed_timestamp_utc")) != "2023-03-29T21:00:00Z"
+        or str(mark_source.get("completed_timestamp_utc")) != "2023-03-29T23:00:00Z"
+        or "2023-03-29T22:00:00Z" in same_symbol_marks_after_fill
+        or not same_symbol_marks_after_fill
+        or same_symbol_marks_after_fill[0] != "2023-03-29T23:00:00Z"
+        or str(decision_source.get("raw_symbol")) != "ZNM3"
+        or str(fill_source.get("raw_symbol")) != "ZNM3"
+        or str(mark_source.get("raw_symbol")) != "ZNM3"
+        or str(decision_source.get("session_id")) != str(execution_session.get("session_id"))
+        or str(fill_source.get("session_id")) != str(execution_session.get("session_id"))
+        or str(mark_source.get("session_id")) != str(next_session.get("session_id"))
+        or str(execution_session.get("session_end_utc")) != "2023-03-29T21:00:00Z"
+        or str(next_session.get("session_start_utc")) != "2023-03-29T22:00:00Z"
+        or str(mark_source.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+        or not str(decision_source.get("readiness_status", "")).startswith("READY_")
+        or not str(fill_source.get("readiness_status", "")).startswith("READY_")
+        or not str(mark_source.get("readiness_status", "")).startswith("READY_")
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit source rows must bind exact bounded case")
+    if market_order_present or market_fill_present:
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit must not emit market rows")
+    if (
+        str(position.get("starting_position_contracts")) != "7"
+        or str(position.get("desired_position_contracts")) != "8"
+        or str(position.get("position_change_contracts")) != "1"
+        or str(position.get("row_status")) != "LOCAL_POSITION_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit position must bind BUY 1")
+    if (
+        str(order.get("order_side")) != "BUY"
+        or str(order.get("order_quantity")) != "1"
+        or str(order.get("adjacent_target_position")) != "8"
+        or abs(float(order.get("formula_limit_price", "nan")) - 114.49366645867451) > 1e-12
+        or float(order.get("limit_order_price", "nan")) != 114.484375
+        or str(order.get("row_status")) != ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit order must bind exact BUY 1")
+    if (
+        str(no_market.get("market_order_required")).upper() != "FALSE"
+        or str(no_market.get("market_order_rows_emitted")).upper() != "FALSE"
+        or str(no_market.get("market_fallback_status")) != "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+        or str(no_market.get("engineering_convention_label")) != ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION
+        or str(no_market.get("row_status")) != "LOCAL_NO_MARKET_ORDER_METADATA_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit no-market state must bind convention")
+    if (
+        str(transition.get("starting_position_contracts")) != "7"
+        or str(transition.get("ending_position_contracts")) != "8"
+        or str(transition.get("working_state_before")) != "NO_OPEN_WORKING_ORDER_CARRIED"
+        or str(transition.get("working_state_after")) != "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION"
+        or str(transition.get("same_session")).upper() != "FALSE"
+        or str(transition.get("row_status")) != ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit transition must bind next-available valuation boundary")
+    if (
+        str(fill.get("fill_executed")).upper() != "TRUE"
+        or str(fill.get("fill_rule")) != ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_RULE
+        or float(fill.get("fill_candidate_close", "nan")) != 114.46875
+        or float(fill.get("fill_price", "nan")) != 114.484375
+        or str(fill.get("fill_quantity")) != "1"
+        or str(fill.get("position_after_fill")) != "8"
+        or str(fill.get("row_status")) != ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit fill must bind session-end close-only fill")
+    if (
+        str(cost.get("cost_policy_id")) != "S27_V2_ZN_ACCEPTED_INFERRED_RETAIL_FUTURES_COST_2026_06_11"
+        or float(cost.get("commission_amount", "nan")) != ACCEPTED_COMMISSION_PER_CONTRACT
+        or float(cost.get("spread_cost_amount", "nan")) != 0.0
+        or float(cost.get("total_cost_amount", "nan")) != ACCEPTED_COMMISSION_PER_CONTRACT
+        or str(cost.get("currency")) != "USD"
+        or str(cost.get("row_status")) != "LOCAL_COST_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit cost must bind commission-only limit fill")
+    if (
+        str(pnl.get("valuation_mark_timestamp_utc")) != "2023-03-29T23:00:00Z"
+        or float(pnl.get("valuation_mark_close_price", "nan")) != 114.5
+        or str(pnl.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
+        or str(pnl.get("ending_position_contracts")) != "8"
+        or str(pnl.get("result_status")) != RESULT_STATUS
+        or str(pnl.get("backtest_status")) != BACKTEST_STATUS
+        or str(pnl.get("pnl_evaluation_status")) != PNL_EVALUATION_STATUS
+        or str(pnl.get("source_faithful_evidence_claimed")).upper() != "FALSE"
+        or str(pnl.get("row_status")) != "LOCAL_MECHANICAL_PNL_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST row-1355 valuation-gap limit pnl must bind next-available valuation and non-result boundary")
 
 
 def _validate_row346_target_zero_adjacent_limit_artifacts(
@@ -1217,6 +1777,8 @@ def _validate_market_execution_session_class(
         raise CarverBlocked("S27 v2 2023 TEST market execution valuation class must preserve engineering valuation label")
     if str(market_order.get("engineering_convention_label")) != engineering_label:
         raise CarverBlocked("S27 v2 2023 TEST market execution convention labels must agree")
+    if str(market_fill.get("fill_timestamp_utc")) != fill_ts:
+        raise CarverBlocked("S27 v2 2023 TEST market execution fill timestamp must bind declared fill source row")
     if str(market_fill.get("fill_source_row_hash")) != str(fill_source.get("source_row_hash")):
         raise CarverBlocked("S27 v2 2023 TEST market execution fill must bind declared fill source row")
     selection_status = str(market_spread_evidence.get("selection_status"))
@@ -1228,9 +1790,10 @@ def _validate_market_execution_session_class(
         raise CarverBlocked("S27 v2 2023 TEST market execution row-215 engineering TBBO status is row-bounded")
     if str(market_spread_evidence.get("source_evidence_type")) not in SESSION_MARKET_TBBO_EVIDENCE_TYPES and index != 215:
         raise CarverBlocked("S27 v2 2023 TEST market execution session class must use at-or-before-fill TBBO evidence")
+    order_side = str(market_order.get("order_side"))
     target_position = str(market_order.get("target_position_after_fill"))
     quantity = str(market_order.get("order_quantity"))
-    expected_fill_price = _market_fill_price_from_evidence(dict(market_spread_evidence), str(market_order.get("order_side")))
+    expected_fill_price = _market_fill_price_from_evidence(dict(market_spread_evidence), order_side)
     expected_same_session = "TRUE" if decision_session == fill_session else "FALSE"
     if (
         str(no_market.get("market_order_required")).upper() != "TRUE"
@@ -1246,8 +1809,20 @@ def _validate_market_execution_session_class(
     ):
         raise CarverBlocked("S27 v2 2023 TEST market execution transition must bind target position and session state")
     if (
+        str(market_fill.get("order_side")) != order_side
+        or str(market_fill.get("fill_quantity")) != quantity
+        or float(market_fill.get("fill_price", "nan")) != expected_fill_price
+        or str(market_fill.get("fill_price_provenance")) != MARKET_FILL_PRICE_PROVENANCE_BY_SIDE[order_side]
+        or str(market_fill.get("same_session")).upper() != expected_same_session
+        or str(market_fill.get("position_after_fill")) != target_position
+        or str(market_fill.get("market_spread_cost_status")) != MARKET_SPREAD_COST_STATUS_BY_SIDE[order_side]
+        or str(market_fill.get("pnl_emission_status")) != "LOCAL_MARKET_ORDER_MECHANICAL_PNL_ROW_EMITTED_NOT_RESULT"
+        or str(market_fill.get("row_status")) != "LOCAL_MARKET_FILL_METADATA_ROW_EMITTED_NOT_RESULT"
+    ):
+        raise CarverBlocked("S27 v2 2023 TEST market fill metadata must bind TBBO price, side, quantity, and target position")
+    if (
         str(fill.get("fill_executed")).upper() != "TRUE"
-        or str(fill.get("fill_rule")) != MARKET_FILL_PRICE_PROVENANCE_BY_SIDE[str(market_order.get("order_side"))]
+        or str(fill.get("fill_rule")) != MARKET_FILL_PRICE_PROVENANCE_BY_SIDE[order_side]
         or float(fill.get("fill_candidate_close", "nan")) != float(fill_source.get("close_price"))
         or float(fill.get("fill_price", "nan")) != expected_fill_price
         or str(fill.get("fill_quantity")) != quantity
@@ -1258,6 +1833,7 @@ def _validate_market_execution_session_class(
     if (
         str(pnl.get("valuation_mark_timestamp_utc")) != mark_ts
         or float(pnl.get("valuation_mark_close_price", "nan")) != float(mark_source.get("close_price"))
+        or str(pnl.get("valuation_convention_label")) != VALUATION_CONVENTION_LABEL
         or str(pnl.get("ending_position_contracts")) != target_position
         or str(pnl.get("result_status")) != RESULT_STATUS
         or str(pnl.get("backtest_status")) != BACKTEST_STATUS
@@ -1270,6 +1846,47 @@ def _validate_market_execution_session_class(
             raise CarverBlocked("S27 v2 2023 TEST same-session market execution must not claim engineering session reset")
         return
     if decision_session == fill_session and mark_session != fill_session:
+        expected_immediate_mark_ts = _z(_parse_timestamp(fill_ts) + timedelta(hours=1))
+        same_symbol_marks_after_fill = sorted(
+            (
+                str(row.get("completed_timestamp_utc"))
+                for row in marks
+                if str(row.get("raw_symbol")) == str(decision_source.get("raw_symbol"))
+                and _parse_timestamp(str(row.get("completed_timestamp_utc"))) > _parse_timestamp(fill_ts)
+            ),
+            key=_parse_timestamp,
+        )
+        row1113_valuation_gap_case = (
+            index == 1113
+            and engineering_label == ROW1113_SESSION_END_MARKET_VALUATION_GAP_CONVENTION
+            and str(decision_source.get("completed_timestamp_utc")) == "2023-03-14T20:00:00Z"
+            and fill_ts == "2023-03-14T21:00:00Z"
+            and mark_ts == "2023-03-14T23:00:00Z"
+            and str(decision_source.get("raw_symbol")) == "ZNM3"
+            and fill_ts == decision_session_end
+            and expected_immediate_mark_ts == "2023-03-14T22:00:00Z"
+            and expected_immediate_mark_ts not in same_symbol_marks_after_fill
+            and same_symbol_marks_after_fill
+            and same_symbol_marks_after_fill[0] == mark_ts
+            and str(market_spread_evidence.get("source_evidence_type")) == "STANDING_BATCH_AT_OR_BEFORE_FILL_TBBO"
+            and str(market_spread_evidence.get("selected_quote_ts_event")) == "2023-03-14T20:59:59.840382723Z"
+            and float(market_spread_evidence.get("ask_px_00", "nan")) == 113.46875
+        )
+        if row1113_valuation_gap_case:
+            if (
+                str(market_order.get("current_position_before_order")) != "-17"
+                or str(market_order.get("target_position_after_fill")) != "-15"
+                or str(market_order.get("order_side")) != "BUY"
+                or str(market_order.get("order_quantity")) != "2"
+                or str(market_fill.get("same_session")).upper() != "TRUE"
+                or str(transition.get("same_session")).upper() != "TRUE"
+                or str(fill.get("position_after_fill")) != str(market_order.get("target_position_after_fill"))
+                or str(pnl.get("result_status")) != RESULT_STATUS
+                or str(pnl.get("backtest_status")) != BACKTEST_STATUS
+                or str(pnl.get("source_faithful_evidence_claimed")).upper() != "FALSE"
+            ):
+                raise CarverBlocked("S27 v2 2023 TEST row-1113 valuation-gap market execution must bind bounded facts")
+            return
         if (
             engineering_label != "NOT_APPLICABLE"
             or str(market_fill.get("same_session")).upper() != "TRUE"
@@ -1422,6 +2039,8 @@ def run_2023_test_mechanical_artifacts(
 
 
 def build_2023_test_combined_market_tbbo_registry() -> dict[str, Any]:
+    global _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE
+    _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE = None
     output_root = (_REPO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_RELATIVE_PATH).resolve()
     output_root.mkdir(parents=True, exist_ok=True)
     rows = _active_combined_market_tbbo_rows()
@@ -1561,6 +2180,7 @@ def _select_2023_test_rows(
     cache: dict[str, tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]] = {}
     current_position = 0
     selected: list[dict[str, Any]] = []
+    roll_dates = {row["roll_transition_date"] for row in rolls}
     for decision in sorted(hourly, key=lambda row: row["derived_completed_bar_end_utc"]):
         fill_ts = _z(_parse_timestamp(decision["derived_completed_bar_end_utc"]) + timedelta(hours=1))
         fill = hourly_by_symbol_ts.get((decision["raw_symbol"], fill_ts))
@@ -1598,10 +2218,34 @@ def _select_2023_test_rows(
             mark=mark,
             runtime=runtime,
         )
+        live_order_roll_dates = _live_order_roll_boundary_dates(
+            decision,
+            fill,
+            mark,
+            mechanics.get("order_side", "NONE"),
+            roll_dates,
+        )
+        if live_order_roll_dates and _roll_boundary_no_new_order_suppression_applies(
+            decision=decision,
+            fill=fill,
+            mark=mark,
+            mechanics=mechanics,
+            roll_boundary_dates=live_order_roll_dates,
+        ):
+            mechanics = _suppressed_roll_boundary_mechanics(mechanics, live_order_roll_dates)
+        elif live_order_roll_dates:
+            mechanics = {
+                **mechanics,
+                "formula_status": FAIL_CLOSED_LIVE_ORDER_ROLL_BOUNDARY_STATUS,
+                "roll_boundary_dates": sorted(live_order_roll_dates),
+                "signed_fill_quantity": 0,
+            }
         selected.append({"decision": decision, "fill": fill, "mark": mark, "runtime": runtime, "mechanics": mechanics})
         if mechanics["formula_status"] != "PASS_FORMULA_SUPPORTED":
             return selected
         current_position += int(mechanics["signed_fill_quantity"])
+        if len(selected) >= AUTHORIZED_2023_TEST_DECLARED_PACK_ROW_LIMIT:
+            return selected
     raise CarverBlocked("S27 v2 2023 TEST did not encounter the expected fail-closed blocker")
 
 
@@ -1619,6 +2263,7 @@ def _discover_market_order_tbbo_requirement_rows(
     current_position = 0
     requirements: list[dict[str, Any]] = []
     processed_rows = 0
+    roll_dates = {row["roll_transition_date"] for row in rolls}
     for decision in sorted(hourly, key=lambda row: row["derived_completed_bar_end_utc"]):
         fill_ts = _z(_parse_timestamp(decision["derived_completed_bar_end_utc"]) + timedelta(hours=1))
         fill = hourly_by_symbol_ts.get((decision["raw_symbol"], fill_ts))
@@ -1658,6 +2303,24 @@ def _discover_market_order_tbbo_requirement_rows(
             runtime=runtime,
         )
         processed_rows += 1
+        live_order_roll_dates = _live_order_roll_boundary_dates(
+            decision,
+            fill,
+            mark,
+            mechanics.get("order_side", "NONE"),
+            roll_dates,
+        )
+        if live_order_roll_dates and _roll_boundary_no_new_order_suppression_applies(
+            decision=decision,
+            fill=fill,
+            mark=mark,
+            mechanics=mechanics,
+            roll_boundary_dates=live_order_roll_dates,
+        ):
+            current_position += 0
+            continue
+        if live_order_roll_dates:
+            return requirements, f"STOPPED_ON_NEW_BLOCKER_CLASS_{FAIL_CLOSED_LIVE_ORDER_ROLL_BOUNDARY_STATUS}"
         if bool(mechanics.get("market_order_required")):
             requirements.append(
                 _tbbo_requirement_row(
@@ -1667,7 +2330,7 @@ def _discover_market_order_tbbo_requirement_rows(
                     mechanics=mechanics,
                     evidence_status=(
                         "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE"
-                        if _market_spread_evidence_is_bound(row_index)
+                        if _market_spread_evidence_matches(row_index, str(mechanics["order_side"]), fill["derived_completed_bar_end_utc"])
                         else "REQUIRES_BOUNDED_DATABENTO_TBBO_EVIDENCE"
                     ),
                 )
@@ -1740,11 +2403,90 @@ def _tbbo_requirement_max_selected_quote_age(known: Mapping[str, str]) -> str:
     evidence_type = str(known.get("source_evidence_type", ""))
     if "RETRY" in evidence_type:
         return "60.0"
-    if "ROW441_EXTENDED_LOOKBACK" in evidence_type or "ZNM3_EXTENDED_LOOKBACK" in evidence_type:
+    if (
+        "ROW441_EXTENDED_LOOKBACK" in evidence_type
+        or "ZNM3_EXTENDED_LOOKBACK" in evidence_type
+        or "ROW704_ALTERNATIVE_SOURCE_NATIVE_MBP1_TOP_OF_BOOK" in evidence_type
+    ):
         return "300.0"
     if "ROW215_ENGINEERING_AFTER_FILL" in evidence_type:
         return "ROW215_ENGINEERING_AFTER_FILL_POLICY_NOT_AT_OR_BEFORE_FILL"
     return "5.0"
+
+
+def _live_order_roll_boundary_dates(
+    decision: Mapping[str, Any],
+    fill: Mapping[str, Any],
+    mark: Mapping[str, Any],
+    side: Any,
+    roll_dates: set[str],
+) -> set[str]:
+    if str(side) == "NONE":
+        return set()
+    selected_dates = {
+        str(decision.get("completed_trading_date") or decision.get("trading_date")),
+        str(fill.get("completed_trading_date") or fill.get("trading_date")),
+        str(mark.get("completed_trading_date") or mark.get("trading_date")),
+    }
+    return {date for date in selected_dates if date in roll_dates}
+
+
+def _roll_boundary_no_new_order_suppression_applies(
+    *,
+    decision: Mapping[str, Any],
+    fill: Mapping[str, Any],
+    mark: Mapping[str, Any],
+    mechanics: Mapping[str, Any],
+    roll_boundary_dates: set[str],
+) -> bool:
+    if not roll_boundary_dates:
+        return False
+    if str(mechanics.get("order_side")) not in {"BUY", "SELL"}:
+        return False
+    if int(mechanics.get("starting_position_contracts", 0)) != 0:
+        return False
+    if int(mechanics.get("position_change_contracts", 0)) == 0:
+        return False
+    if str(decision.get("raw_symbol")) != str(fill.get("raw_symbol")):
+        return False
+    if str(decision.get("raw_symbol")) != str(mark.get("raw_symbol")):
+        return False
+    if not _row_has_available_provider_condition(decision):
+        return False
+    if not _row_has_available_provider_condition(fill):
+        return False
+    if not _row_has_available_provider_condition(mark):
+        return False
+    return True
+
+
+def _row_has_available_provider_condition(row: Mapping[str, Any]) -> bool:
+    if str(row.get("provider_condition_status")) == "PROVIDER_CONDITION_AVAILABLE":
+        return True
+    return str(row.get("readiness_status", "")).startswith("READY_")
+
+
+def _suppressed_roll_boundary_mechanics(
+    mechanics: Mapping[str, Any],
+    roll_boundary_dates: set[str],
+) -> dict[str, Any]:
+    starting_position = int(mechanics["starting_position_contracts"])
+    return {
+        **mechanics,
+        "formula_status": "PASS_FORMULA_SUPPORTED",
+        "desired_position_contracts": starting_position,
+        "position_change_contracts": 0,
+        "order_side": "NONE",
+        "order_quantity": 0,
+        "adjacent_target_position": starting_position,
+        "formula_limit_price": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+        "limit_order_price": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+        "fill_executed": False,
+        "fill_quantity": 0,
+        "roll_boundary_dates": sorted(roll_boundary_dates),
+        "roll_boundary_no_new_order_suppression": True,
+        "signed_fill_quantity": 0,
+    }
 
 
 def _empty_tbbo_requirement_row() -> dict[str, Any]:
@@ -1821,11 +2563,26 @@ def _row_mechanics(
     )
     if market_order_required:
         if _market_spread_evidence_is_bound(row_index):
-            market_spread_evidence = _load_market_spread_evidence(
-                row_index,
-                side,
-                fill["derived_completed_bar_end_utc"],
-            )
+            try:
+                market_spread_evidence = _load_market_spread_evidence(
+                    row_index,
+                    side,
+                    fill["derived_completed_bar_end_utc"],
+                )
+            except CarverBlocked:
+                return {
+                    "formula_status": FAIL_CLOSED_STALE_MARKET_SPREAD_EVIDENCE_STATUS,
+                    "starting_position_contracts": current_position,
+                    "desired_position_contracts": desired_position,
+                    "position_change_contracts": position_change,
+                    "order_side": side,
+                    "order_quantity": abs(position_change),
+                    "adjacent_target_position": adjacent_target,
+                    "market_order_required": True,
+                    "market_order_rows_emitted": False,
+                    "market_order_reason": market_order_reason,
+                    "signed_fill_quantity": 0,
+                }
             same_session = _same_execution_and_valuation_session(decision, fill, mark)
             session_end_market_case = _is_session_end_market_case(
                 decision=decision,
@@ -1865,10 +2622,20 @@ def _row_mechanics(
                 side=side,
                 market_spread_evidence=market_spread_evidence,
             )
+            row1113_valuation_gap_case = _is_row1113_session_end_market_valuation_gap_case(
+                row_index=row_index,
+                decision=decision,
+                fill=fill,
+                mark=mark,
+                position_change=position_change,
+                side=side,
+                market_spread_evidence=market_spread_evidence,
+            )
             if (
                 not same_session
                 and not session_end_market_case
                 and not session_open_market_reset_case
+                and not row1113_valuation_gap_case
             ):
                 return {
                     "formula_status": SECONDARY_SESSION_EOD_BLOCKER_STATUS,
@@ -1895,6 +2662,8 @@ def _row_mechanics(
                     if row303_session_end_case
                     else ROW391_SESSION_END_MARKET_FILL_POLICY_STATUS
                     if row391_session_end_case
+                    else ROW1113_SESSION_END_MARKET_VALUATION_GAP_POLICY_STATUS
+                    if row1113_valuation_gap_case
                     else ROW304_ENGINEERING_SESSION_OPEN_MARKET_RESET_CONVENTION
                     if session_open_market_reset_case
                     else "CLASS_LEVEL_SESSION_END_MARKET_FILL_ALLOWED_WITH_NEXT_COMPLETED_ENGINEERING_VALUATION_NOT_RESULT"
@@ -1956,7 +2725,37 @@ def _row_mechanics(
         side=side,
         fill_executed=fill_executed,
     )
-    if fill_executed and not same_session and not session_open_limit_fill_case:
+    row892_session_end_limit_fill_case = _is_row892_session_end_adjacent_limit_fill_case(
+        row_index=row_index,
+        decision=decision,
+        fill=fill,
+        mark=mark,
+        position_change=position_change,
+        side=side,
+        fill_executed=fill_executed,
+        fill_close=fill_close,
+        formula_limit=formula_limit,
+        limit_price=limit_price,
+    )
+    row1355_session_end_limit_valuation_gap_case = _is_row1355_session_end_adjacent_limit_valuation_gap_case(
+        row_index=row_index,
+        decision=decision,
+        fill=fill,
+        mark=mark,
+        position_change=position_change,
+        side=side,
+        fill_executed=fill_executed,
+        fill_close=fill_close,
+        formula_limit=formula_limit,
+        limit_price=limit_price,
+    )
+    if (
+        fill_executed
+        and not same_session
+        and not session_open_limit_fill_case
+        and not row892_session_end_limit_fill_case
+        and not row1355_session_end_limit_valuation_gap_case
+    ):
         return {
             "formula_status": SECONDARY_SESSION_EOD_BLOCKER_STATUS,
             "starting_position_contracts": current_position,
@@ -1988,6 +2787,10 @@ def _row_mechanics(
         "session_open_limit_fill_policy_status": (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_CONVENTION
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION
+            if row1355_session_end_limit_valuation_gap_case
             else "NOT_APPLICABLE"
         ),
         "signed_fill_quantity": signed_fill_quantity,
@@ -2003,6 +2806,9 @@ def _write_pack(pack_root: Path, source_root: Path, selection: list[dict[str, An
     _write_csv(pack_root / "daily_current_contract_completed_bar.csv", _daily_current_rows(selection))
     _write_csv(pack_root / "session_calendar.csv", _session_rows(selection))
     cutoff = selection[-1]["runtime"]["previous_daily_trading_date"]
+    roll_boundary_dates = selection[-1]["mechanics"].get("roll_boundary_dates", ())
+    if roll_boundary_dates:
+        cutoff = max([cutoff, *roll_boundary_dates])
     _write_csv(pack_root / "roll_calendar.csv", _roll_rows(rolls, cutoff))
     _write_csv(pack_root / "cost_parameter.csv", _cost_rows())
     del source_root
@@ -2014,32 +2820,57 @@ def _manifest(pack_root: Path, source_root: Path, selection: list[dict[str, Any]
         for path in sorted(pack_root.glob("*.csv"))
     }
     blocker = selection[-1]
+    pack_exhausted = (
+        len(selection) >= AUTHORIZED_2023_TEST_DECLARED_PACK_ROW_LIMIT
+        and blocker["mechanics"]["formula_status"] == "PASS_FORMULA_SUPPORTED"
+    )
     return {
         "artifact": "S27_V2_2023_TEST_DECLARED_INPUT_PACK_MANIFEST",
         "authorization": AUTHORIZATION,
         "status": PACK_STATUS,
         "lane": S27_V2_LANE,
-        "selected_slice_rule": "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_UNTIL_FIRST_AUDITED_FAIL_CLOSED_EXECUTION_BLOCKER",
+        "selected_slice_rule": (
+            "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_TO_AUTHORIZED_DECLARED_PACK_LIMIT"
+            if pack_exhausted
+            else "CONTROLLED_LOCAL_ONLY_2023_TEST_COMPLETED_ROWS_UNTIL_FIRST_AUDITED_FAIL_CLOSED_EXECUTION_BLOCKER"
+        ),
         "test_window_start": selection[0]["decision"]["derived_completed_bar_end_utc"],
-        "test_window_fail_closed_timestamp": blocker["decision"]["derived_completed_bar_end_utc"],
-        "test_window_end_status": "FAIL_CLOSED_BEFORE_FULL_2023_COMPLETION_NO_RESULT",
+        "test_window_fail_closed_timestamp": (
+            "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER"
+            if pack_exhausted
+            else blocker["decision"]["derived_completed_bar_end_utc"]
+        ),
+        "test_window_terminal_timestamp": blocker["decision"]["derived_completed_bar_end_utc"],
+        "test_window_end_status": (
+            "DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER_NOT_RESULT"
+            if pack_exhausted
+            else "FAIL_CLOSED_BEFORE_FULL_2023_COMPLETION_NO_RESULT"
+        ),
         "source_continuous_daily_ledger": str((source_root / SOURCE_CONTINUOUS_NAME).relative_to(_REPO_ROOT)),
         "source_roll_ledger": str((source_root / SOURCE_ROLL_NAME).relative_to(_REPO_ROOT)),
         "source_hourly_ledger": str((source_root / SOURCE_HOURLY_NAME).relative_to(_REPO_ROOT)),
         "source_selection_exclusion_ledger": str((source_root / SOURCE_EXCLUSION_NAME).relative_to(_REPO_ROOT)),
         "row_family_files": row_family_files,
         "candidate_row_count": len(selection),
-        "supported_mechanical_row_count": len(selection) - 1,
+        "supported_mechanical_row_count": len(selection) if pack_exhausted else len(selection) - 1,
         "fail_closed_blocker": {
-            "row_index": len(selection),
-            "decision_timestamp_utc": blocker["decision"]["derived_completed_bar_end_utc"],
+            "row_index": 0 if pack_exhausted else len(selection),
+            "decision_timestamp_utc": (
+                "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED"
+                if pack_exhausted
+                else blocker["decision"]["derived_completed_bar_end_utc"]
+            ),
             "raw_symbol": blocker["decision"]["raw_symbol"],
             "starting_position_contracts": blocker["mechanics"]["starting_position_contracts"],
             "desired_position_contracts": blocker["mechanics"]["desired_position_contracts"],
             "position_change_contracts": blocker["mechanics"]["position_change_contracts"],
             "order_side": blocker["mechanics"]["order_side"],
             "adjacent_target_position": blocker["mechanics"]["adjacent_target_position"],
-            "formula_status": blocker["mechanics"]["formula_status"],
+            "formula_status": (
+                NO_FAIL_CLOSED_BLOCKER_PACK_EXHAUSTED_STATUS
+                if pack_exhausted
+                else blocker["mechanics"]["formula_status"]
+            ),
         },
         "explicitly_excluded_data": ["NO_VALIDATION", "NO_OOS", "NO_LOCKBOX", "NO_FORWARD"],
         "non_authorizations": list(NON_AUTHORIZATIONS),
@@ -2189,6 +3020,29 @@ def _active_combined_market_tbbo_rows() -> list[dict[str, str]]:
             "ZNM3_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO",
         )
     )
+    rows.extend(
+        _optional_selected_registry_rows(
+            ROW704_MBP1_TOP_OF_BOOK_SELECTED_RELATIVE_PATH,
+            "ROW704_ALTERNATIVE_SOURCE_NATIVE_MBP1_TOP_OF_BOOK_AT_OR_BEFORE_FILL",
+        )
+    )
+    rows.extend(
+        _optional_selected_registry_rows(
+            ROW1356_MARKET_TBBO_SELECTED_RELATIVE_PATH,
+            "ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
+        )
+    )
+    rows.extend(_optional_selected_registry_rows(ROW1364_MARKET_TBBO_SELECTED_RELATIVE_PATH, "ROW1364_AT_OR_BEFORE_FILL_TBBO"))
+    rows.extend(_optional_selected_registry_rows(ROW1366_MARKET_TBBO_SELECTED_RELATIVE_PATH, "ROW1366_AT_OR_BEFORE_FILL_TBBO"))
+    rows.extend(_optional_selected_registry_rows(ROW1369_MARKET_TBBO_SELECTED_RELATIVE_PATH, "ROW1369_AT_OR_BEFORE_FILL_TBBO"))
+    rows.extend(_optional_selected_registry_rows(ROW1370_MARKET_TBBO_SELECTED_RELATIVE_PATH, "ROW1370_AT_OR_BEFORE_FILL_TBBO"))
+    rows.extend(_optional_selected_registry_rows(ROW1374_MARKET_TBBO_SELECTED_RELATIVE_PATH, "ROW1374_AT_OR_BEFORE_FILL_TBBO"))
+    rows.extend(
+        _optional_selected_registry_rows(
+            ROW1378_MARKET_TBBO_SELECTED_RELATIVE_PATH,
+            "ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
+        )
+    )
     dedup: dict[int, dict[str, str]] = {}
     for row in rows:
         row_index = int(row["row_index"])
@@ -2206,6 +3060,14 @@ def _active_combined_market_tbbo_rows() -> list[dict[str, str]]:
         | _selected_registry_indices(ROW441_MARKET_TBBO_EXTENDED_SELECTED_RELATIVE_PATH, optional=True)
         | _selected_registry_indices(ROW547_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
         | _selected_registry_indices(ZNM3_EXTENDED_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW704_MBP1_TOP_OF_BOOK_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1356_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1364_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1366_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1369_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1370_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1374_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
+        | _selected_registry_indices(ROW1378_MARKET_TBBO_SELECTED_RELATIVE_PATH, optional=True)
         | {215}
     )
     if set(dedup) != expected_indices:
@@ -2354,13 +3216,39 @@ def _validate_selected_tbbo_row_against_raw(row: dict[str, str], source_path: Pa
         raise CarverBlocked(f"S27 v2 2023 TEST {evidence_type} raw CSV hash drift")
     if _sha256(raw_dbn_path).upper() != str(expected_dbn_hash).upper():
         raise CarverBlocked(f"S27 v2 2023 TEST {evidence_type} raw DBN hash drift")
-    selected = _select_tbbo_from_raw_csv(raw_csv_path, row, _max_quote_age_for_evidence(evidence_type))
+    selected = (
+        _select_first_post_fill_tbbo_from_raw_csv(raw_csv_path, row, evidence_type)
+        if evidence_type
+        in {
+            "ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
+            "ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION",
+        }
+        else _select_tbbo_from_raw_csv(raw_csv_path, row, _max_quote_age_for_evidence(evidence_type))
+    )
     if selected is None:
         raise CarverBlocked(f"S27 v2 2023 TEST {evidence_type} raw CSV does not support selected quote")
     _require_tbbo_selected_value(row, "selected_quote_ts_event", selected["selected_quote_ts_event"], evidence_type)
     _require_tbbo_selected_value(row, "bid_px_00", selected["bid_px_00"], evidence_type)
     _require_tbbo_selected_value(row, "ask_px_00", selected["ask_px_00"], evidence_type)
     _require_tbbo_selected_value(row, "quote_age_seconds", selected["quote_age_seconds"], evidence_type)
+    if evidence_type == "ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION":
+        if str(row.get("row_index")) != "1356":
+            raise CarverBlocked("S27 v2 2023 TEST row-1356 engineering TBBO evidence is row-bounded")
+        if str(row.get("spread_source")) != "ROW1356_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT":
+            raise CarverBlocked("S27 v2 2023 TEST row-1356 engineering TBBO label drift")
+        if str(row.get("post_fill_quote_selection")) != "ROW1356_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT":
+            raise CarverBlocked("S27 v2 2023 TEST row-1356 engineering TBBO post-fill policy label drift")
+        if str(row.get("selected_executable_market_fill_price")) != "114.484375":
+            raise CarverBlocked("S27 v2 2023 TEST row-1356 engineering TBBO must bind selected SELL bid")
+    if evidence_type == "ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION":
+        if str(row.get("row_index")) != "1378":
+            raise CarverBlocked("S27 v2 2023 TEST row-1378 engineering TBBO evidence is row-bounded")
+        if str(row.get("spread_source")) != "ROW1378_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT":
+            raise CarverBlocked("S27 v2 2023 TEST row-1378 engineering TBBO label drift")
+        if str(row.get("post_fill_quote_selection")) != "ROW1378_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT":
+            raise CarverBlocked("S27 v2 2023 TEST row-1378 engineering TBBO post-fill policy label drift")
+        if str(row.get("selected_executable_market_fill_price")) != "114.515625":
+            raise CarverBlocked("S27 v2 2023 TEST row-1378 engineering TBBO must bind selected SELL bid")
 
 
 def _raw_output_registry_for_selected_registry(source_path: Path) -> Path | None:
@@ -2395,7 +3283,11 @@ def _raw_path_from_registry(row: dict[str, str], *keys: str) -> Path:
 
 
 def _max_quote_age_for_evidence(evidence_type: str) -> float:
-    if "ROW441_EXTENDED_LOOKBACK" in evidence_type or "ZNM3_EXTENDED_LOOKBACK" in evidence_type:
+    if (
+        "ROW441_EXTENDED_LOOKBACK" in evidence_type
+        or "ZNM3_EXTENDED_LOOKBACK" in evidence_type
+        or "ROW704_ALTERNATIVE_SOURCE_NATIVE_MBP1_TOP_OF_BOOK" in evidence_type
+    ):
         return 300.0
     if "RETRY" in evidence_type:
         return 60.0
@@ -2427,6 +3319,68 @@ def _select_tbbo_from_raw_csv(raw_csv_path: Path, selected_row: dict[str, str], 
     if not candidates:
         return None
     return sorted(candidates, key=lambda item: item[0])[-1][1]
+
+
+_FIRST_POST_FILL_TBBO_EXPECTED_FACTS = {
+    "ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION": {
+        "row_index": "1356",
+        "fill_timestamp_utc": "2023-03-30T00:00:00Z",
+        "selected_quote_ts_event": "2023-03-30T00:00:00.099806785Z",
+        "bid_px_00": "114.484375",
+        "ask_px_00": "114.5",
+    },
+    "ROW1378_FIRST_POST_FILL_TBBO_ENGINEERING_CONVENTION": {
+        "row_index": "1378",
+        "fill_timestamp_utc": "2023-03-31T00:00:00Z",
+        "selected_quote_ts_event": "2023-03-31T00:00:00.183796035Z",
+        "bid_px_00": "114.515625",
+        "ask_px_00": "114.53125",
+    },
+}
+
+
+def _select_first_post_fill_tbbo_from_raw_csv(
+    raw_csv_path: Path,
+    selected_row: dict[str, str],
+    evidence_type: str,
+) -> dict[str, str] | None:
+    expected = _FIRST_POST_FILL_TBBO_EXPECTED_FACTS[evidence_type]
+    row_index = expected["row_index"]
+    if str(selected_row.get("row_index")) != row_index:
+        raise CarverBlocked(f"S27 v2 2023 TEST row-{row_index} engineering TBBO selector is row-bounded")
+    if str(selected_row.get("fill_timestamp_utc")) != expected["fill_timestamp_utc"]:
+        raise CarverBlocked(f"S27 v2 2023 TEST row-{row_index} engineering TBBO fill timestamp drift")
+    fill_time = _parse_timestamp(expected["fill_timestamp_utc"])
+    candidates: list[tuple[datetime, dict[str, str]]] = []
+    for raw_row in _safe_read_csv_rows(raw_csv_path, f"S27 v2 2023 TEST row-{row_index} raw TBBO CSV"):
+        bid = _float_from_raw_tbbo(raw_row.get("bid_px_00", raw_row.get("bid_px_0", raw_row.get("bid_px", ""))))
+        ask = _float_from_raw_tbbo(raw_row.get("ask_px_00", raw_row.get("ask_px_0", raw_row.get("ask_px", ""))))
+        if bid is None or ask is None or bid <= 0.0 or ask <= 0.0 or ask < bid:
+            continue
+        ts_event = _parse_raw_tbbo_timestamp(raw_row.get("ts_event", ""))
+        lag_seconds = (ts_event - fill_time).total_seconds()
+        if 0.0 < lag_seconds <= 1.0:
+            candidates.append(
+                (
+                    ts_event,
+                    {
+                        "selected_quote_ts_event": _normalise_raw_tbbo_timestamp_text(raw_row.get("ts_event", "")),
+                        "quote_age_seconds": _csv_value(lag_seconds),
+                        "bid_px_00": _csv_value(bid),
+                        "ask_px_00": _csv_value(ask),
+                    },
+                )
+            )
+    if not candidates:
+        return None
+    selected = sorted(candidates, key=lambda item: item[0])[0][1]
+    if (
+        selected["selected_quote_ts_event"] != expected["selected_quote_ts_event"]
+        or selected["bid_px_00"] != expected["bid_px_00"]
+        or selected["ask_px_00"] != expected["ask_px_00"]
+    ):
+        raise CarverBlocked(f"S27 v2 2023 TEST row-{row_index} engineering TBBO selected quote drift")
+    return selected
 
 
 def _parse_raw_tbbo_timestamp(value: str) -> datetime:
@@ -2478,12 +3432,26 @@ def _expected_market_spread_evidence(row_index: int) -> dict[str, str]:
     registry = (_REPO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_RELATIVE_PATH / COMBINED_MARKET_TBBO_REGISTRY_NAME).resolve()
     if not registry.exists():
         build_2023_test_combined_market_tbbo_registry()
+    registry_sha = _sha256(registry)
+    global _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE
+    if (
+        _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE is not None
+        and _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE["registry_sha"] == registry_sha
+    ):
+        try:
+            return dict(_EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE["rows_by_index"][row_index])
+        except KeyError as exc:
+            raise CarverBlocked(f"S27 v2 2023 TEST market TBBO spread evidence is not bound for row {row_index}") from exc
     active = _active_combined_market_tbbo_rows()
     registry_rows = _safe_read_csv_rows(registry, "S27 v2 2023 TEST combined market TBBO registry")
     active_by_index = {int(row["row_index"]): row for row in active}
     registry_by_index = {int(row["row_index"]): row for row in registry_rows}
     if registry_by_index != active_by_index:
         raise CarverBlocked("S27 v2 2023 TEST combined market TBBO registry drift")
+    _EXPECTED_MARKET_SPREAD_EVIDENCE_CACHE = {
+        "registry_sha": registry_sha,
+        "rows_by_index": registry_by_index,
+    }
     try:
         return dict(registry_by_index[row_index])
     except KeyError as exc:
@@ -2493,6 +3461,14 @@ def _expected_market_spread_evidence(row_index: int) -> dict[str, str]:
 def _market_spread_evidence_is_bound(row_index: int) -> bool:
     try:
         _expected_market_spread_evidence(row_index)
+    except CarverBlocked:
+        return False
+    return True
+
+
+def _market_spread_evidence_matches(row_index: int, side: str, fill_timestamp_utc: str) -> bool:
+    try:
+        _load_market_spread_evidence(row_index, side, fill_timestamp_utc)
     except CarverBlocked:
         return False
     return True
@@ -2586,6 +3562,15 @@ def _has_fresh_at_or_before_fill_tbbo(market_spread_evidence: dict[str, str]) ->
     )
 
 
+def _is_zn_quarterly_raw_symbol(raw_symbol: str) -> bool:
+    return (
+        len(raw_symbol) == 4
+        and raw_symbol.startswith("ZN")
+        and raw_symbol[2] in {"H", "M", "U", "Z"}
+        and raw_symbol[3].isdigit()
+    )
+
+
 def _is_session_end_market_case(
     *,
     decision: dict[str, Any],
@@ -2598,12 +3583,48 @@ def _is_session_end_market_case(
     mark_ts = _row_timestamp(mark)
     _, decision_session_end = _session_bounds(decision_ts)
     valuation_label = str(mark.get("valuation_convention_label", VALUATION_CONVENTION_LABEL))
+    same_raw_symbol = str(decision.get("raw_symbol")) == str(fill.get("raw_symbol")) == str(mark.get("raw_symbol"))
     return (
-        str(decision.get("raw_symbol")) == str(fill.get("raw_symbol")) == str(mark.get("raw_symbol")) == "ZNH3"
+        same_raw_symbol
+        and _is_zn_quarterly_raw_symbol(str(decision.get("raw_symbol")))
         and _same_execution_session(decision, fill)
         and not _same_execution_and_valuation_session(decision, fill, mark)
         and fill_ts == decision_session_end
         and _z(_parse_timestamp(fill_ts) + timedelta(hours=1)) == mark_ts
+        and valuation_label == VALUATION_CONVENTION_LABEL
+        and _has_fresh_at_or_before_fill_tbbo(market_spread_evidence)
+    )
+
+
+def _is_row1113_session_end_market_valuation_gap_case(
+    *,
+    row_index: int,
+    decision: dict[str, Any],
+    fill: dict[str, Any],
+    mark: dict[str, Any],
+    position_change: int,
+    side: str,
+    market_spread_evidence: dict[str, str],
+) -> bool:
+    decision_ts = _row_timestamp(decision)
+    fill_ts = _row_timestamp(fill)
+    mark_ts = _row_timestamp(mark)
+    _, decision_session_end = _session_bounds(decision_ts)
+    valuation_label = str(mark.get("valuation_convention_label", VALUATION_CONVENTION_LABEL))
+    return (
+        row_index == 1113
+        and str(decision.get("raw_symbol")) == "ZNM3"
+        and str(fill.get("raw_symbol")) == "ZNM3"
+        and str(mark.get("raw_symbol")) == "ZNM3"
+        and decision_ts == "2023-03-14T20:00:00Z"
+        and fill_ts == "2023-03-14T21:00:00Z"
+        and mark_ts == "2023-03-14T23:00:00Z"
+        and position_change == 2
+        and side == "BUY"
+        and _same_execution_session(decision, fill)
+        and not _same_execution_and_valuation_session(decision, fill, mark)
+        and fill_ts == decision_session_end
+        and _z(_parse_timestamp(fill_ts) + timedelta(hours=1)) != mark_ts
         and valuation_label == VALUATION_CONVENTION_LABEL
         and _has_fresh_at_or_before_fill_tbbo(market_spread_evidence)
     )
@@ -2624,8 +3645,10 @@ def _is_session_open_market_reset_case(
     decision_session = str(decision.get("session_id") or _session_id(decision_ts))
     fill_session = str(fill.get("session_id") or _session_id(fill_ts))
     valuation_label = str(mark.get("valuation_convention_label", VALUATION_CONVENTION_LABEL))
+    same_raw_symbol = str(decision.get("raw_symbol")) == str(fill.get("raw_symbol")) == str(mark.get("raw_symbol"))
     return (
-        str(decision.get("raw_symbol")) == str(fill.get("raw_symbol")) == str(mark.get("raw_symbol")) == "ZNH3"
+        same_raw_symbol
+        and _is_zn_quarterly_raw_symbol(str(decision.get("raw_symbol")))
         and decision_ts == decision_session_end
         and fill_ts == fill_session_start
         and decision_session != fill_session
@@ -2664,6 +3687,92 @@ def _is_session_open_adjacent_limit_fill_case(
         and fill_session == mark_session
         and _parse_timestamp(mark_ts) > _parse_timestamp(fill_ts)
         and valuation_label == VALUATION_CONVENTION_LABEL
+    )
+
+
+def _is_row892_session_end_adjacent_limit_fill_case(
+    *,
+    row_index: int,
+    decision: dict[str, Any],
+    fill: dict[str, Any],
+    mark: dict[str, Any],
+    position_change: int,
+    side: str,
+    fill_executed: bool,
+    fill_close: float,
+    formula_limit: float,
+    limit_price: float,
+) -> bool:
+    decision_ts = _row_timestamp(decision)
+    fill_ts = _row_timestamp(fill)
+    mark_ts = _row_timestamp(mark)
+    _, decision_session_end = _session_bounds(decision_ts)
+    decision_session = str(decision.get("session_id") or _session_id(decision_ts))
+    fill_session = str(fill.get("session_id") or _session_id(fill_ts))
+    mark_session = str(mark.get("session_id") or _session_id(mark_ts))
+    valuation_label = str(mark.get("valuation_convention_label", VALUATION_CONVENTION_LABEL))
+    return (
+        row_index == 892
+        and fill_executed
+        and position_change == -1
+        and side == "SELL"
+        and str(decision.get("raw_symbol")) == "ZNM3"
+        and str(fill.get("raw_symbol")) == "ZNM3"
+        and str(mark.get("raw_symbol")) == "ZNM3"
+        and decision_ts == "2023-02-28T20:00:00Z"
+        and fill_ts == "2023-02-28T21:00:00Z"
+        and mark_ts == "2023-02-28T22:00:00Z"
+        and decision_session == fill_session
+        and fill_ts == decision_session_end
+        and mark_session != fill_session
+        and _z(_parse_timestamp(fill_ts) + timedelta(hours=1)) == mark_ts
+        and valuation_label == VALUATION_CONVENTION_LABEL
+        and abs(formula_limit - 111.6707138465356) <= 1e-12
+        and limit_price == 111.671875
+        and fill_close == 111.671875
+    )
+
+
+def _is_row1355_session_end_adjacent_limit_valuation_gap_case(
+    *,
+    row_index: int,
+    decision: dict[str, Any],
+    fill: dict[str, Any],
+    mark: dict[str, Any],
+    position_change: int,
+    side: str,
+    fill_executed: bool,
+    fill_close: float,
+    formula_limit: float,
+    limit_price: float,
+) -> bool:
+    decision_ts = _row_timestamp(decision)
+    fill_ts = _row_timestamp(fill)
+    mark_ts = _row_timestamp(mark)
+    _, decision_session_end = _session_bounds(decision_ts)
+    decision_session = str(decision.get("session_id") or _session_id(decision_ts))
+    fill_session = str(fill.get("session_id") or _session_id(fill_ts))
+    mark_session = str(mark.get("session_id") or _session_id(mark_ts))
+    valuation_label = str(mark.get("valuation_convention_label", VALUATION_CONVENTION_LABEL))
+    return (
+        row_index == 1355
+        and fill_executed
+        and position_change == 1
+        and side == "BUY"
+        and str(decision.get("raw_symbol")) == "ZNM3"
+        and str(fill.get("raw_symbol")) == "ZNM3"
+        and str(mark.get("raw_symbol")) == "ZNM3"
+        and decision_ts == "2023-03-29T20:00:00Z"
+        and fill_ts == "2023-03-29T21:00:00Z"
+        and mark_ts == "2023-03-29T23:00:00Z"
+        and decision_session == fill_session
+        and fill_ts == decision_session_end
+        and mark_session != fill_session
+        and _z(_parse_timestamp(fill_ts) + timedelta(hours=1)) != mark_ts
+        and valuation_label == VALUATION_CONVENTION_LABEL
+        and abs(formula_limit - 114.49366645867451) <= 1e-12
+        and limit_price == 114.484375
+        and fill_close == 114.46875
     )
 
 
@@ -2746,6 +3855,7 @@ def _is_row304_engineering_session_open_market_reset_case(
 
 def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> dict[str, list[dict[str, Any]]]:
     cost = rows["cost_parameter.csv"][0]
+    roll_dates = {row["roll_transition_date"] for row in rows["roll_calendar.csv"]}
     current_position = 0
     last_mark_price: float | None = None
     cumulative_gross = 0.0
@@ -2800,6 +3910,171 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
             if cap_bound_market_case
             else MARKET_ORDER_TRIGGER_SOURCE_CONDITION
         )
+        live_order_roll_dates = _live_order_roll_boundary_dates(decision, fill, mark, side, roll_dates)
+        if live_order_roll_dates and _roll_boundary_no_new_order_suppression_applies(
+            decision=decision,
+            fill=fill,
+            mark=mark,
+            mechanics={
+                "starting_position_contracts": starting_position,
+                "desired_position_contracts": desired_position,
+                "position_change_contracts": position_change,
+                "order_side": side,
+            },
+            roll_boundary_dates=live_order_roll_dates,
+        ):
+            existing_gross = (
+                0.0
+                if last_mark_price is None
+                else starting_position * (mark_price - last_mark_price) * CONTRACT_POINT_VALUE
+            )
+            row_gross = existing_gross
+            row_net = row_gross
+            cumulative_gross += row_gross
+            cumulative_net = cumulative_gross - cumulative_commission - cumulative_spread
+            current_position = starting_position
+            last_mark_price = mark_price
+            same_session = decision["session_id"] == fill["session_id"] == mark["session_id"]
+            out["runtime"].append(_hash_row({
+                "row_index": index,
+                "runtime_evidence_row_hash": runtime["row_hash"],
+                "ewma5": ewma5,
+                "trend": trend,
+                "sigma": sigma,
+                "vqm_multiplier_m": multiplier,
+                "row_status": "LOCAL_RUNTIME_NUMERIC_ROW_EMITTED_NOT_RESULT",
+            }))
+            out["forecast"].append(_hash_row({
+                "row_index": index,
+                "decision_timestamp_utc": decision["completed_timestamp_utc"],
+                "raw_forecast": raw_forecast,
+                "risk_adjusted_forecast": risk_after_veto,
+                "capped_forecast": capped_forecast,
+                "row_status": "LOCAL_FORECAST_ROW_EMITTED_NOT_RESULT",
+            }))
+            out["position"].append(_hash_row({
+                "row_index": index,
+                "starting_position_contracts": starting_position,
+                "desired_position_contracts": starting_position,
+                "position_change_contracts": 0,
+                "base_position_contracts": base_position,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["order"].append(_hash_row({
+                "row_index": index,
+                "order_side": "NONE",
+                "order_quantity": 0,
+                "adjacent_target_position": starting_position,
+                "formula_limit_price": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+                "limit_order_price": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["market"].append(_hash_row({
+                "row_index": index,
+                "market_order_required": False,
+                "market_order_rows_emitted": False,
+                "market_fallback_status": "NOT_REQUIRED_NO_ORDER_POSITION_UNCHANGED",
+                "engineering_convention_label": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["transition"].append(_hash_row({
+                "row_index": index,
+                "starting_position_contracts": starting_position,
+                "ending_position_contracts": current_position,
+                "working_state_before": "NO_OPEN_WORKING_ORDER_CARRIED",
+                "working_state_after": "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION",
+                "same_session": same_session,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["fill"].append(_hash_row({
+                "row_index": index,
+                "fill_executed": False,
+                "fill_rule": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_CONVENTION,
+                "fill_candidate_close": fill_close,
+                "fill_price": 0.0,
+                "fill_quantity": 0,
+                "position_after_fill": current_position,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["cost"].append(_hash_row({
+                "row_index": index,
+                "cost_policy_id": cost["cost_policy_id"],
+                "commission_amount": 0.0,
+                "spread_cost_amount": 0.0,
+                "total_cost_amount": 0.0,
+                "currency": "USD",
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["pnl"].append(_hash_row({
+                "row_index": index,
+                "valuation_mark_timestamp_utc": mark["completed_timestamp_utc"],
+                "valuation_mark_close_price": mark_price,
+                "valuation_convention_label": VALUATION_CONVENTION_LABEL,
+                "existing_position_gross_pnl": existing_gross,
+                "fill_gross_pnl": 0.0,
+                "row_gross_pnl_amount": row_gross,
+                "row_net_pnl_amount": row_net,
+                "cumulative_gross_pnl_amount": cumulative_gross,
+                "cumulative_commission_amount": cumulative_commission,
+                "cumulative_spread_amount": cumulative_spread,
+                "cumulative_net_pnl_amount": cumulative_net,
+                "ending_position_contracts": current_position,
+                "result_status": RESULT_STATUS,
+                "backtest_status": BACKTEST_STATUS,
+                "pnl_evaluation_status": PNL_EVALUATION_STATUS,
+                "source_faithful_evidence_claimed": False,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            out["validation"].append(_hash_row({
+                "row_index": index,
+                "result_status": RESULT_STATUS,
+                "backtest_status": BACKTEST_STATUS,
+                "source_faithful_evidence_claimed": False,
+                "non_authorizations": NON_AUTHORIZATIONS,
+                "row_status": ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ROW_STATUS,
+            }))
+            continue
+        if live_order_roll_dates:
+            formula_limit = (
+                _formula_limit(adjacent_target, base_position, ewma5, sigma_price, multiplier, trend)
+                if not market_order_required and side != "NONE"
+                else None
+            )
+            limit_price = _round_limit(formula_limit, side) if formula_limit is not None and side != "NONE" else 0.0
+            fill_executed = _limit_fill(side, fill_close, limit_price) if formula_limit is not None and side != "NONE" else False
+            out["fail_closed"].append(_hash_row({
+                "row_index": index,
+                "decision_timestamp_utc": decision["completed_timestamp_utc"],
+                "raw_symbol": decision["raw_symbol"],
+                "starting_position_contracts": starting_position,
+                "desired_position_contracts": desired_position,
+                "position_change_contracts": position_change,
+                "order_side": side,
+                "adjacent_target_position": adjacent_target,
+                "trend": trend,
+                "market_order_required": market_order_required,
+                "market_order_rows_emitted": False,
+                "market_order_reason": market_order_reason,
+                "market_fill_metadata_rows_emitted": False,
+                "market_fill_price_provenance": "FAIL_CLOSED_LIVE_ORDER_ON_UNRESOLVED_ROLL_BOUNDARY_DATE",
+                "market_fill_price": 0.0,
+                "commission_per_contract": ACCEPTED_COMMISSION_PER_CONTRACT,
+                "commission_amount": 0.0,
+                "market_spread_cost_status": "FAIL_CLOSED_LIVE_ORDER_ON_UNRESOLVED_ROLL_BOUNDARY_DATE",
+                "secondary_fail_closed_reason": ",".join(sorted(live_order_roll_dates)),
+                "formula_limit_price": formula_limit if formula_limit is not None else "NOT_APPLICABLE_MARKET_ORDER_OR_UNRESOLVED_FORMULA",
+                "limit_order_price": limit_price if formula_limit is not None else "NOT_APPLICABLE_MARKET_ORDER_OR_UNRESOLVED_FORMULA",
+                "fill_candidate_timestamp_utc": fill["completed_timestamp_utc"],
+                "fill_candidate_close": fill_close,
+                "fill_executed": fill_executed,
+                "same_session": decision["session_id"] == fill["session_id"] == mark["session_id"],
+                "fail_closed_reason": FAIL_CLOSED_LIVE_ORDER_ROLL_BOUNDARY_STATUS,
+                "result_status": RESULT_STATUS,
+                "backtest_status": BACKTEST_STATUS,
+                "source_faithful_evidence_claimed": False,
+                "row_status": "LOCAL_2023_TEST_LIVE_ORDER_ROLL_BOUNDARY_FAIL_CLOSED_NOT_RESULT",
+            }))
+            break
         if market_order_required and not _market_spread_evidence_is_bound(index):
             fail_closed_reason = (
                 FAIL_CLOSED_CAP_BOUND_MARKET_CONTINUATION_STATUS
@@ -2839,7 +4114,40 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
             break
         if market_order_required:
             fill_quantity = abs(position_change)
-            market_spread_evidence = _load_market_spread_evidence(index, side, fill["completed_timestamp_utc"])
+            try:
+                market_spread_evidence = _load_market_spread_evidence(index, side, fill["completed_timestamp_utc"])
+            except CarverBlocked:
+                out["fail_closed"].append(_hash_row({
+                    "row_index": index,
+                    "decision_timestamp_utc": decision["completed_timestamp_utc"],
+                    "raw_symbol": decision["raw_symbol"],
+                    "starting_position_contracts": starting_position,
+                    "desired_position_contracts": desired_position,
+                    "position_change_contracts": position_change,
+                    "order_side": side,
+                    "adjacent_target_position": adjacent_target,
+                    "trend": trend,
+                    "market_order_required": True,
+                    "market_order_rows_emitted": False,
+                    "market_order_reason": market_order_reason,
+                    "market_fill_metadata_rows_emitted": False,
+                    "market_fill_price_provenance": "FAIL_CLOSED_STALE_OR_SIDE_MISMATCH_MARKET_SPREAD_EVIDENCE",
+                    "market_fill_price": 0.0,
+                    "commission_per_contract": ACCEPTED_COMMISSION_PER_CONTRACT,
+                    "commission_amount": 0.0,
+                    "market_spread_cost_status": "FAIL_CLOSED_STALE_OR_SIDE_MISMATCH_MARKET_SPREAD_EVIDENCE",
+                    "secondary_fail_closed_reason": "BOUND_MARKET_SPREAD_EVIDENCE_DOES_NOT_MATCH_CURRENT_POSITION_PATH",
+                    "fill_candidate_timestamp_utc": fill["completed_timestamp_utc"],
+                    "fill_candidate_close": fill_close,
+                    "fill_executed": False,
+                    "same_session": decision["session_id"] == fill["session_id"] == mark["session_id"],
+                    "fail_closed_reason": FAIL_CLOSED_STALE_MARKET_SPREAD_EVIDENCE_STATUS,
+                    "result_status": RESULT_STATUS,
+                    "backtest_status": BACKTEST_STATUS,
+                    "source_faithful_evidence_claimed": False,
+                    "row_status": "LOCAL_2023_TEST_STALE_MARKET_SPREAD_EVIDENCE_FAIL_CLOSED_NOT_RESULT",
+                }))
+                break
             market_fill_price = _market_fill_price_from_evidence(market_spread_evidence, side)
             commission = ACCEPTED_COMMISSION_PER_CONTRACT * fill_quantity
             spread = 0.0
@@ -2875,10 +4183,20 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
                 side=side,
                 market_spread_evidence=market_spread_evidence,
             )
+            row1113_valuation_gap_case = _is_row1113_session_end_market_valuation_gap_case(
+                row_index=index,
+                decision=decision,
+                fill=fill,
+                mark=mark,
+                position_change=position_change,
+                side=side,
+                market_spread_evidence=market_spread_evidence,
+            )
             if (
                 not same_session
                 and not session_end_market_case
                 and not session_open_market_reset_case
+                and not row1113_valuation_gap_case
             ):
                 out["fail_closed"].append(_hash_row({
                     "row_index": index,
@@ -2920,6 +4238,8 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
             engineering_convention_label = (
                 ROW304_ENGINEERING_SESSION_OPEN_MARKET_RESET_CONVENTION
                 if session_open_market_reset_case
+                else ROW1113_SESSION_END_MARKET_VALUATION_GAP_CONVENTION
+                if row1113_valuation_gap_case
                 else "NOT_APPLICABLE"
             )
             if side == "BUY" and market_fill_price != float(market_spread_evidence["ask_px_00"]):
@@ -3103,7 +4423,37 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
             side=side,
             fill_executed=fill_executed,
         )
-        if fill_executed and not same_session and not session_open_limit_fill_case:
+        row892_session_end_limit_fill_case = _is_row892_session_end_adjacent_limit_fill_case(
+            row_index=index,
+            decision=decision,
+            fill=fill,
+            mark=mark,
+            position_change=position_change,
+            side=side,
+            fill_executed=fill_executed,
+            fill_close=fill_close,
+            formula_limit=formula_limit,
+            limit_price=limit_price,
+        )
+        row1355_session_end_limit_valuation_gap_case = _is_row1355_session_end_adjacent_limit_valuation_gap_case(
+            row_index=index,
+            decision=decision,
+            fill=fill,
+            mark=mark,
+            position_change=position_change,
+            side=side,
+            fill_executed=fill_executed,
+            fill_close=fill_close,
+            formula_limit=formula_limit,
+            limit_price=limit_price,
+        )
+        if (
+            fill_executed
+            and not same_session
+            and not session_open_limit_fill_case
+            and not row892_session_end_limit_fill_case
+            and not row1355_session_end_limit_valuation_gap_case
+        ):
             out["fail_closed"].append(_hash_row({"row_index": index, "decision_timestamp_utc": decision["completed_timestamp_utc"], "raw_symbol": decision["raw_symbol"], "starting_position_contracts": starting_position, "desired_position_contracts": desired_position, "position_change_contracts": position_change, "order_side": side, "adjacent_target_position": adjacent_target, "trend": trend, "formula_limit_price": formula_limit, "limit_order_price": limit_price, "fill_candidate_timestamp_utc": fill["completed_timestamp_utc"], "fill_candidate_close": fill_close, "fill_executed": True, "same_session": False, "fail_closed_reason": SECONDARY_SESSION_EOD_BLOCKER_STATUS, "result_status": RESULT_STATUS, "backtest_status": BACKTEST_STATUS, "source_faithful_evidence_claimed": False, "row_status": "LOCAL_2023_TEST_FAIL_CLOSED_BLOCKER_ROW_EMITTED_NOT_RESULT"}))
             break
         fill_quantity = abs(position_change) if fill_executed else 0
@@ -3125,26 +4475,46 @@ def _compute_rows_until_fail_closed(rows: dict[str, list[dict[str, str]]]) -> di
         engineering_convention_label = (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_CONVENTION
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_CONVENTION
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_CONVENTION
+            if row1355_session_end_limit_valuation_gap_case
             else "NOT_APPLICABLE"
         )
         limit_fill_rule = (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_RULE
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_RULE
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_RULE
+            if row1355_session_end_limit_valuation_gap_case
             else "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL"
         )
         limit_row_status = (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_ROW_STATUS
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+            if row1355_session_end_limit_valuation_gap_case
             else "LOCAL_LIMIT_ORDER_ROW_EMITTED_NOT_RESULT"
         )
         transition_row_status = (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_ROW_STATUS
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+            if row1355_session_end_limit_valuation_gap_case
             else "LOCAL_WORKING_ORDER_TRANSITION_ROW_EMITTED_NOT_RESULT"
         )
         fill_row_status = (
             ROW436_ENGINEERING_SESSION_OPEN_LIMIT_FILL_ROW_STATUS
             if session_open_limit_fill_case
+            else ROW892_ENGINEERING_SESSION_END_LIMIT_FILL_ROW_STATUS
+            if row892_session_end_limit_fill_case
+            else ROW1355_ENGINEERING_SESSION_END_LIMIT_VALUATION_GAP_ROW_STATUS
+            if row1355_session_end_limit_valuation_gap_case
             else "LOCAL_FILL_ROW_EMITTED_NOT_RESULT"
         )
         out["runtime"].append(_hash_row({"row_index": index, "runtime_evidence_row_hash": runtime["row_hash"], "ewma5": ewma5, "trend": trend, "sigma": sigma, "vqm_multiplier_m": multiplier, "row_status": "LOCAL_RUNTIME_NUMERIC_ROW_EMITTED_NOT_RESULT"}))

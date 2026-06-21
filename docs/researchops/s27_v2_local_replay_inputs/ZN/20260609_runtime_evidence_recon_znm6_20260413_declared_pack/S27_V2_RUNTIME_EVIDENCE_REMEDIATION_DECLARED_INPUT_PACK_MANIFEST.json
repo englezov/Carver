@@ -1,0 +1,141 @@
+{
+  "artifact": "S27_V2_RUNTIME_EVIDENCE_REMEDIATION_ZN_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_LOCAL_ONLY_RUNTIME_EVIDENCE_REMEDIATION_GATE",
+  "history_evidence": {
+    "commission_spread_policy_status": "FAIL_CLOSED_UNRESOLVED",
+    "daily_continuous_prior_history_rows": 134,
+    "daily_continuous_rows": 135,
+    "daily_history_first_prior_trading_date": "2025-11-02",
+    "daily_history_selected_previous_trading_date": "2026-04-12",
+    "hourly_decision_rows": 8,
+    "hourly_fill_rows": 8,
+    "level_bridge_disposition": "PASS_LOCAL_LEVEL_SPACE_BRIDGE_ZERO_ADJUSTMENT_FOR_ACTIVE_ZNM6_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+    "level_bridge_proof_hash": "b27d940dc13152a0b753ccf51ec61f60473a29f1d097e9ab5c2b055562dc64c7",
+    "multiplier_currency_policy_status": "FAIL_CLOSED_UNRESOLVED",
+    "roll_policy_status": "ROLL_PLAN_READY_FOR_LOCAL_DEV_RECON_CONSTRUCTION",
+    "selected_ewmac_daily_rows_used": "135",
+    "selected_ewmac_first_daily_row_used": "2025-11-02",
+    "selected_ewmac_last_daily_row_used": "2026-04-12",
+    "selected_ewmac_source": "local prevalidated S27 EWMAC16 trend runtime row at selected decision timestamp; runtime-evidence remediation only, not source-faithful evidence claim",
+    "selected_ewmac_status": "PREVALIDATED_S27_EWMAC16_TREND_RUNTIME_VALUE",
+    "selected_sigma_method_status": "LOCKED_TO_PART_ONE_S03_VARIABLE_RISK_FAMILY",
+    "selected_sigma_percent_t": "0.06303195596328175",
+    "selected_sigma_source": "local prevalidated S26 sigma runtime ledger row at selected decision timestamp; runtime-evidence remediation only, not source-faithful evidence claim",
+    "selected_sigma_status": "PREVALIDATED_S26_ZN_SIGMA_PERCENT_RUNTIME_VALUE",
+    "selected_vqm_daily_historical_observation_count": "899",
+    "selected_vqm_method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+    "selected_vqm_multiplier_m": "1.1909924664419365",
+    "selected_vqm_quantile_q": "0.7984409799554566",
+    "selected_vqm_relative_volatility_v": "1.3390923523856344",
+    "selected_vqm_source": "local prevalidated ten-year V/Q/M runtime row at selected decision timestamp; runtime-evidence remediation only, not source-faithful evidence claim",
+    "selected_vqm_source_completed_trading_date": "2026-04-12",
+    "selected_vqm_status": "PREVALIDATED_S27_V_Q_M_VOL_ATTENUATION_RUNTIME_VALUE",
+    "selected_vqm_ten_year_average_sigma": "0.04707065636734342",
+    "session_policy_status": "LOCAL_DECLARED_SESSION_COVERAGE_ONLY_NOT_EXECUTION_POLICY",
+    "tick_rounding_policy_status": "FAIL_CLOSED_UNRESOLVED",
+    "working_order_lifecycle_status": "FAIL_CLOSED_UNRESOLVED"
+  },
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "level_bridge_proof": {
+    "artifact": "S27_V2_ZN_LOCAL_LEVEL_BRIDGE_PROOF_NOT_EXECUTION_EVIDENCE",
+    "bridge_disposition": "PASS_LOCAL_LEVEL_SPACE_BRIDGE_ZERO_ADJUSTMENT_FOR_ACTIVE_ZNM6_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+    "daily_active_contract": "ZNM6",
+    "daily_additive_back_adjustment": "0.0",
+    "hourly_active_contract": "ZNM6",
+    "hourly_additive_back_adjustment_applied_for_bridge": "0.0",
+    "selected_decision_timestamp_utc": "2026-04-13T03:00:00Z",
+    "selected_previous_daily_date": "2026-04-12",
+    "source_daily_risk_history_sha256": "5A34C9F0BAFB915A3584A089C7DE35EFC45FC1E6AA64046C3C6EFCDF202B4C1E",
+    "source_hourly_sanitized_bars_sha256": "EF3425BD6A093D76B4073DCDFEE6E7E9A7E27618EEEAB41024DE39B6FDA6D511"
+  },
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_FORECAST_ORDER_FILL_COST_PNL_RESULT_EVIDENCE_EMISSION",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "E6B7C69A712FD7A5EFFBABBD4C809F24C1A6DFABBFB1CE317B387C923AC7F098"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 135,
+      "sha256": "C3E04982EA9B15382A31C2AEED385197F52F94801FE7BB83FE5A4466FB67D4B6"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "3907CC08C3245C1FFACD42436A9876C47EA8694039AD575290F7B1FAC432973F"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 8,
+      "sha256": "0B06FB40E4C154280D86EA34383633A7E4E6DB557D629651D232804FC31D398E"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 8,
+      "sha256": "969F616AB4581466F793E667BF5B22CFA0C139CAA56513848C3DB57381990A2E"
+    },
+    "roll_calendar.csv": {
+      "row_count": 1,
+      "sha256": "0A8E2219C43E24E359642FCC9634CCE540885DE1751CCA54CA6EFEED436FEF20"
+    },
+    "session_calendar.csv": {
+      "row_count": 1,
+      "sha256": "8EDFAAC6D48450CAE5F54D586D60BAD982B85AD3BB5B05282B1E6B6B23D65D14"
+    }
+  },
+  "selected_decision_timestamp_utc": "2026-04-13T03:00:00Z",
+  "selected_fill_timestamp_utc": "2026-04-13T04:00:00Z",
+  "selected_previous_daily_timestamp_utc": "2026-04-12T00:00:00Z",
+  "selected_raw_symbol": "ZNM6",
+  "selected_slice_rule": "EARLIEST_LOCAL_OVERLAP_AFTER_EWMA5_EWMAC_SIGMA_VQM_AND_HOURLY_ROWS_POPULATED_OR_FAIL_CLOSED",
+  "source_files": {
+    "daily_risk_history": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv",
+      "sha256": "5A34C9F0BAFB915A3584A089C7DE35EFC45FC1E6AA64046C3C6EFCDF202B4C1E"
+    },
+    "ewmac_runtime_rows": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_EWMAC16_TREND_DEPENDENCY/ewmac16_trend_runtime_ledger_2026-05-31/runtime_rows/20260531_ZN_S27_EWMAC16_TREND_RUNTIME_LEDGER_runtime_rows.csv",
+      "sha256": "4632C63A333C356AAAEC0FB4794D8E74215110ADA10CBAB226A0730DA11520EB"
+    },
+    "hourly_sanitized_bars": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S26_WORKED_EXAMPLE/2026-04-13_2026-05-22/databento_ohlcv_1h_extended_forecast_only_quarantine/sanitized_bars/20260531_G_R1D_ZN_S26_OHLCV_1H_EXTENDED_sanitized_quarantine_ohlcv_1h.csv",
+      "sha256": "EF3425BD6A093D76B4073DCDFEE6E7E9A7E27618EEEAB41024DE39B6FDA6D511"
+    },
+    "roll_plan": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_EWMAC16_TREND_DEPENDENCY/local_continuous_daily_lineage_2026-05-31/ledger/20260531_ZN_S27_EWMAC16_LOCAL_CONTINUOUS_DAILY_LIFECYCLE_REPAIR_roll_plan.csv",
+      "sha256": "E8707CB3388A6AE235D7DB02F888B9A1D414BFAB3637E1B5E5E2D4856DF07E3C"
+    },
+    "sigma_runtime_ledger": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S26_WORKED_EXAMPLE/2026-04-13_2026-05-22/forecast_series_only_output/2026-05-31/sigma_runtime_ledger/20260531_G_R1E_ZN_S26_EXTENDED_SIGMA_AND_FORECAST_SERIES_runtime_ledger.csv",
+      "sha256": "26BF37503528CCD5A8DB37DC6015529960C9258AFCB259D81300499910442096"
+    },
+    "symbology": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_EWMAC16_TREND_DEPENDENCY/zn_lifecycle_databento_definition_probe_2026-05-31/raw_provider_metadata/20260531_ZN_S27_EWMAC16_LIFECYCLE_DEFINITION_PROBE_symbology_raw_symbol_to_instrument_id.json",
+      "sha256": "2E1D24FE682B5C4162EC4AF0DDA41305BA51D30894A3C6A044A43DCA455D0D4A"
+    },
+    "vqm_daily_ledger": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_relative_vol_v_q_m_daily_ledger.csv",
+      "sha256": "764660597B7686832C970D908AD82D26899F0792B953072846CB57B44A726161"
+    },
+    "vqm_runtime_rows": {
+      "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/runtime_rows/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_runtime_rows.csv",
+      "sha256": "F53EEFFF0292869115267269B2C3C180817329DC7D24ED341E18A64CF72423AD"
+    }
+  },
+  "status": "LOCAL_INPUT_PACK_DECLARED_FOR_RUNTIME_EVIDENCE_REMEDIATION_ONLY_NOT_REPLAY_NOT_BACKTEST_NOT_RESULT"
+}

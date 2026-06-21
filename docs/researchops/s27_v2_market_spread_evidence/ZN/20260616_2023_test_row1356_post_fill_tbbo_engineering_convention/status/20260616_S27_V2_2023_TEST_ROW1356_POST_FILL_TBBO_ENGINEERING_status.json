@@ -1,0 +1,17 @@
+{
+  "ask_px_00": "114.5",
+  "authorization": "S27_V2_2023_TEST_ROW1356_POST_FILL_TBBO_ENGINEERING_CONVENTION_IMPLEMENTATION_AND_CONTINUATION_GATE",
+  "bid_px_00": "114.484375",
+  "downloads_or_new_data": "NO",
+  "provider_api_access": "NO",
+  "provider_condition_status": "PASS_ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_QUOTE_SELECTED_NOT_RESULT",
+  "quote_lag_seconds": "0.099806785",
+  "result_interpretation": "NO",
+  "row_index": "1356",
+  "selected_executable_market_fill_price": "114.484375",
+  "selected_quote_ts_event": "2023-03-30T00:00:00.099806785Z",
+  "selected_row_count": 1,
+  "selection_status": "PASS_ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_QUOTE_SELECTED_NOT_RESULT",
+  "source_faithful_evidence_claim": "NO",
+  "status": "PASS_ROW1356_POST_FILL_TBBO_ENGINEERING_CONVENTION_BOUND_NOT_RESULT"
+}

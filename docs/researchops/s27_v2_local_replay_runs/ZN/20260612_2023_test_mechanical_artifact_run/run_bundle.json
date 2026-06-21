@@ -1,15 +1,15 @@
 {
   "authorization_label": "S27_V2_CONTROLLED_LOCAL_ONLY_2023_TEST_INPUT_PACK_AND_MECHANICAL_ARTIFACT_RUN_GATE",
-  "bundle_hash": "2a25b3e191fa6fc55fff63bf12882ea20c6c85296f451cb620364226ff1062e8",
-  "candidate_row_count": 704,
-  "cumulative_commission_amount": 1568.5999999999992,
-  "cumulative_gross_pnl_amount": -31250.0,
-  "cumulative_net_pnl_amount": -32818.6,
+  "bundle_hash": "ef62f8ef757f0e049e761b73ef8da9db33862c3de33976b49fa054152c5015fc",
+  "candidate_row_count": 1378,
+  "cumulative_commission_amount": 2881.9000000000005,
+  "cumulative_gross_pnl_amount": -98750.0,
+  "cumulative_net_pnl_amount": -101631.9,
   "cumulative_spread_amount": 0.0,
-  "evidence_manifest_hash": "1953cf9f40b89418fbc6ccb36fb5be9a5437f2a0491ded27f5b25b7d6cbadc73",
-  "fail_closed_reason": "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT",
-  "fail_closed_row_index": 704,
-  "final_position_contracts": -10,
+  "evidence_manifest_hash": "0f79f5f85fc679bac84b0bdcb420f205da4965b882aa9faa0d6151b4386dfdcd",
+  "fail_closed_reason": "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT",
+  "fail_closed_row_index": 0,
+  "final_position_contracts": 3,
   "input_pack_path": "C:\\Users\\apops\\Desktop\\Carver\\docs\\researchops\\s27_v2_local_replay_inputs\\ZN\\20260612_2023_test_declared_pack",
   "instrument": "ZN",
   "lane": "SOURCE_NATIVE_FUTURES",
@@ -32,9 +32,9 @@
     "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
   ],
   "output_root": "C:\\Users\\apops\\Desktop\\Carver\\docs\\researchops\\s27_v2_local_replay_runs\\ZN\\20260612_2023_test_mechanical_artifact_run",
-  "run_manifest_hash": "d6494e86973164006cd2381577cec5390f8b528e4d78c28c2174ce34a51ee17f",
+  "run_manifest_hash": "7821704749fa095f52817e8b4e16cf57d066125e049fccac4142ef75491e8979",
   "status": "LOCAL_2023_TEST_MECHANICAL_ARTIFACT_RUN_FAIL_CLOSED_NOT_RESULT",
   "strategy_id": "S27_V2_ZN",
-  "supported_mechanical_row_count": 703,
-  "trusted_bundle_hash": "1c1d2f4c741e4f2cdf14a05a781cc02d073afadb4b09dd2d951de1751c4a7f51"
+  "supported_mechanical_row_count": 1378,
+  "trusted_bundle_hash": "6f53cf75d2a2f289175217d92511dfea893793296e3ffd2ba60e6a946a864a0b"
 }

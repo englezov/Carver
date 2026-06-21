@@ -1,0 +1,79 @@
+{
+  "artifact": "S27_V2_POSITIVE_ACTION_VALUATION_MARK_DECLARED_INPUT_PACK_MANIFEST",
+  "status": "LOCAL_INPUT_PACK_DECLARED_FOR_POSITIVE_ACTION_VALUATION_MARK_DEV_RECON_ONLY_NOT_PNL_NOT_BACKTEST_NOT_RESULT",
+  "authorization": "S27_V2_POSITIVE_ACTION_DECLARED_VALUATION_MARK_ROW_EXTENSION_GATE",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "strategy_id": "S27_V2",
+  "instrument": "ZN",
+  "raw_symbol": "ZNM6",
+  "base_positive_action_pack": {
+    "path": "docs/researchops/s27_v2_local_replay_inputs/ZN/20260609_positive_action_recon_znm6_20260413T13_declared_pack",
+    "manifest_sha256": "C15F545B1A2D2BD046565FBCA6D010660492C0CED02F6B35806FAE88C81BF6C1",
+    "selected_decision_timestamp_utc": "2026-04-13T13:00:00Z",
+    "selected_fill_timestamp_utc": "2026-04-13T14:00:00Z"
+  },
+  "valuation_convention": {
+    "label": "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT",
+    "convention": "NEXT_COMPLETED_HOURLY_CLOSE_AFTER_FILL",
+    "book_explicit_authority": false,
+    "source_faithful_evidence_claim": false,
+    "gate_record_path": "docs/process/CARVER_S27_ZN_V2_POSITIVE_ACTION_INFERRED_VALUATION_CONVENTION_GATE_2026-06-09.md",
+    "gate_record_sha256": "F91512C6C838ECBE126B3D8F3BD3EA9049A8946F9D66CB6F3D735A4B3591B752",
+    "local_audit_record_path": "docs/process/CARVER_S27_ZN_V2_POSITIVE_ACTION_INFERRED_VALUATION_CONVENTION_LOCAL_AUDIT_RESULT_2026-06-09.md",
+    "local_audit_record_sha256": "2BCA19414553ABC5494245BCD80F5617A7E4A72FD2A8E84E07CA0AE39005E69F"
+  },
+  "selected_valuation_mark": {
+    "completed_timestamp_utc": "2026-04-13T15:00:00Z",
+    "trading_date": "2026-04-13",
+    "raw_symbol": "ZNM6",
+    "session_id": "UTC_ZN_RUNTIME_EVIDENCE_2026-04-12T22_2026-04-13T21Z",
+    "row_locator": "S27V2_POSITIVE_ACTION_ZN_VALUATION_MARK_20260413T150000Z_ZNM6_0001",
+    "close_price": "111.046875",
+    "readiness_status": "READY_COMPLETED_BAR_LOCAL_POSITIVE_ACTION_VALUATION_MARK_DEV_RECON_ONLY",
+    "strictly_after_fill_timestamp_utc": true,
+    "is_pnl_row": false,
+    "is_result_row": false,
+    "is_backtest_readiness": false
+  },
+  "row_family_files": {
+    "valuation_mark_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "B859F397E62ED3E8ACEF743003E3A543929D246D5BB98D95FA9F2FBD08758E26"
+    },
+    "S27_V2_POSITIVE_ACTION_VALUATION_MARK_DECLARED_INPUT_PACK_PROVENANCE.md": {
+      "row_count": "not_applicable",
+      "sha256": "8D2D12EE1824AB47E5638CF585924122AA817017A97D30973C106C9EFD9373B2"
+    }
+  },
+  "source_file": {
+    "path": "docs/researchops/s26_s27_hourly_bridge/ZN_S26_WORKED_EXAMPLE/2026-04-13_2026-05-22/databento_ohlcv_1h_extended_forecast_only_quarantine/sanitized_bars/20260531_G_R1D_ZN_S26_OHLCV_1H_EXTENDED_sanitized_quarantine_ohlcv_1h.csv",
+    "sha256": "EF3425BD6A093D76B4073DCDFEE6E7E9A7E27618EEEAB41024DE39B6FDA6D511",
+    "source_row_line_number": 18,
+    "source_row_text_sha256": "F39F5056C9D1E122E6F62D82E8918745E10233AA95ABEF9949AC5F50BE6F98DA",
+    "source_row_canonical_json_sha256": "A8D60EE8A26EE10B8460FEA2F46C656EBA0EEB7BE507BADD4FE44434DE8B413A",
+    "source_row_strategy_use_status": "QUARANTINE_ONLY_NOT_FORECAST_READY",
+    "provider_api_used": false,
+    "market_data_download_used": false
+  },
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_MARKET_DATA_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_ACTUAL_PNL_LEDGER_EMISSION",
+    "NO_RESULT_EMISSION",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ]
+}

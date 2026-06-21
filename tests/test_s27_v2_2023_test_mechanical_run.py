@@ -103,30 +103,32 @@ def _refresh_evidence_and_trusted_hashes(root: Path) -> tuple[str, str]:
     return _sha256(root / "evidence_manifest.json"), _sha256(root / "trusted_bundle.json")
 
 
-def test_2023_test_pack_is_declared_and_stops_at_first_fail_closed_blocker(test_manifest):
+def test_2023_test_pack_is_declared_and_exhausts_authorized_1378_row_slice(test_manifest):
     decisions = _rows(PACK_ROOT, "hourly_decision_completed_bar.csv")
     runtime = _rows(PACK_ROOT, "runtime_evidence_ledger.csv")
 
     assert test_manifest["status"] == "LOCAL_2023_TEST_DECLARED_INPUT_PACK_BUILT_FROM_ALREADY_LOCAL_SOURCE_NOT_RESULT"
     assert test_manifest["test_window_start"] == "2023-01-03T00:00:00Z"
-    assert test_manifest["test_window_fail_closed_timestamp"] == "2023-02-16T04:00:00Z"
-    assert test_manifest["candidate_row_count"] == 704
-    assert test_manifest["supported_mechanical_row_count"] == 703
-    assert len(decisions) == len(runtime) == 704
+    assert test_manifest["test_window_fail_closed_timestamp"] == "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER"
+    assert test_manifest["test_window_terminal_timestamp"] == "2023-03-30T23:00:00Z"
+    assert test_manifest["test_window_end_status"] == "DECLARED_PACK_EXHAUSTED_NO_FAIL_CLOSED_BLOCKER_NOT_RESULT"
+    assert test_manifest["candidate_row_count"] == 1378
+    assert test_manifest["supported_mechanical_row_count"] == 1378
+    assert len(decisions) == len(runtime) == 1378
     assert decisions[0]["completed_timestamp_utc"] == "2023-01-03T00:00:00Z"
-    assert decisions[-1]["completed_timestamp_utc"] == "2023-02-16T04:00:00Z"
+    assert decisions[-1]["completed_timestamp_utc"] == "2023-03-30T23:00:00Z"
     assert all(row["completed_timestamp_utc"].startswith("2023-") for row in decisions)
     assert all(row["runtime_status"] == "PASS_ROLLING_STRICT_PRIOR_DAILY_EVIDENCE_2023_TEST_NOT_RESULT" for row in runtime)
     assert test_manifest["fail_closed_blocker"] == {
-        "adjacent_target_position": -11,
-        "decision_timestamp_utc": "2023-02-16T04:00:00Z",
-        "desired_position_contracts": -14,
-        "formula_status": "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT",
+        "adjacent_target_position": 4,
+        "decision_timestamp_utc": "NOT_APPLICABLE_DECLARED_PACK_EXHAUSTED",
+        "desired_position_contracts": 3,
+        "formula_status": "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT",
         "order_side": "SELL",
-        "position_change_contracts": -4,
+        "position_change_contracts": -2,
         "raw_symbol": "ZNM3",
-        "row_index": 704,
-        "starting_position_contracts": -10,
+        "row_index": 0,
+        "starting_position_contracts": 5,
     }
     assert "NO_VALIDATION" in test_manifest["explicitly_excluded_data"]
     assert "NO_LOCKBOX" in test_manifest["explicitly_excluded_data"]
@@ -152,28 +154,19 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     fills = _rows(RUN_ROOT, "fill_ledger.csv")
     costs = _rows(RUN_ROOT, "cost_ledger.csv")
 
-    assert test_bundle.candidate_row_count == 704
-    assert test_bundle.supported_mechanical_row_count == 703
-    assert test_bundle.fail_closed_row_index == 704
-    assert test_bundle.fail_closed_reason == "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT"
+    assert test_bundle.candidate_row_count == 1378
+    assert test_bundle.supported_mechanical_row_count == 1378
+    assert test_bundle.fail_closed_row_index == 0
+    assert test_bundle.fail_closed_reason == "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT"
     assert manifest["status"] == "LOCAL_2023_TEST_MECHANICAL_ARTIFACT_RUN_FAIL_CLOSED_NOT_RESULT"
     assert manifest["result_interpretation"] == "NO"
     assert manifest["source_faithful_evidence_claim"] == "NO"
-    assert len(runtime_rows) == len(forecast_rows) == len(position_rows) == 703
-    assert len(pnl_rows) == len(orders) == len(no_market_rows) == len(fills) == 703
-    assert len(costs) == 703
-    assert len(market_order_rows) == 145
-    assert len(market_fill_metadata_rows) == 145
-    assert len(fail_rows) == 1
-    assert fail_rows[0]["row_index"] == "704"
-    assert fail_rows[0]["decision_timestamp_utc"] == "2023-02-16T04:00:00Z"
-    assert fail_rows[0]["raw_symbol"] == "ZNM3"
-    assert fail_rows[0]["starting_position_contracts"] == "-10"
-    assert fail_rows[0]["desired_position_contracts"] == "-14"
-    assert fail_rows[0]["position_change_contracts"] == "-4"
-    assert fail_rows[0]["order_side"] == "SELL"
-    assert fail_rows[0]["adjacent_target_position"] == "-11"
-    assert fail_rows[0]["fail_closed_reason"] == "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT"
+    assert len(runtime_rows) == len(forecast_rows) == len(position_rows) == 1378
+    assert len(pnl_rows) == len(orders) == len(no_market_rows) == len(fills) == 1378
+    assert len(costs) == 1378
+    assert len(market_order_rows) == 256
+    assert len(market_fill_metadata_rows) == 256
+    assert len(fail_rows) == 0
     assert orders[0]["order_side"] == "BUY"
     assert orders[0]["order_quantity"] == "2"
     assert orders[0]["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
@@ -194,6 +187,491 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     assert fills[1]["fill_price"] == "112.578125"
     assert fills[1]["fill_quantity"] == "2"
     assert fills[1]["position_after_fill"] == "0"
+    row701_position = next(row for row in position_rows if row["row_index"] == "701")
+    row701_order = next(row for row in orders if row["row_index"] == "701")
+    row701_no_market = next(row for row in no_market_rows if row["row_index"] == "701")
+    row701_transition = next(row for row in transitions if row["row_index"] == "701")
+    row701_fill = next(row for row in fills if row["row_index"] == "701")
+    row701_cost = next(row for row in costs if row["row_index"] == "701")
+    row701_pnl = next(row for row in pnl_rows if row["row_index"] == "701")
+    roll_suppression_label = (
+        "LOCAL_ONLY_ENGINEERING_ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSION_ASSUMPTION_NOT_BOOK_EXPLICIT_NOT_SOURCE_FAITHFUL"
+    )
+    roll_suppression_status = "LOCAL_ENGINEERING_ROLL_BOUNDARY_NO_NEW_ORDER_SUPPRESSED_ROW_EMITTED_NOT_RESULT"
+    assert row701_position["starting_position_contracts"] == "0"
+    assert row701_position["desired_position_contracts"] == "0"
+    assert row701_position["position_change_contracts"] == "0"
+    assert row701_position["row_status"] == roll_suppression_status
+    assert row701_order["order_side"] == "NONE"
+    assert row701_order["order_quantity"] == "0"
+    assert row701_order["formula_limit_price"] == roll_suppression_label
+    assert row701_order["limit_order_price"] == roll_suppression_label
+    assert row701_no_market["market_order_required"] == "FALSE"
+    assert row701_no_market["market_order_rows_emitted"] == "FALSE"
+    assert row701_no_market["market_fallback_status"] == "NOT_REQUIRED_NO_ORDER_POSITION_UNCHANGED"
+    assert row701_no_market["engineering_convention_label"] == roll_suppression_label
+    assert row701_transition["starting_position_contracts"] == "0"
+    assert row701_transition["ending_position_contracts"] == "0"
+    assert row701_transition["working_state_after"] == "NO_OPEN_WORKING_ORDER_AFTER_FILL_DECISION"
+    assert row701_fill["fill_executed"] == "FALSE"
+    assert row701_fill["fill_rule"] == roll_suppression_label
+    assert row701_fill["fill_quantity"] == "0"
+    assert row701_fill["position_after_fill"] == "0"
+    assert row701_cost["commission_amount"] == "0.0"
+    assert row701_cost["spread_cost_amount"] == "0.0"
+    assert row701_cost["total_cost_amount"] == "0.0"
+    assert row701_pnl["row_gross_pnl_amount"] == "0.0"
+    assert row701_pnl["row_net_pnl_amount"] == "0.0"
+    assert row701_pnl["ending_position_contracts"] == "0"
+    row892_order = next(row for row in orders if row["row_index"] == "892")
+    row892_no_market = next(row for row in no_market_rows if row["row_index"] == "892")
+    row892_transition = next(row for row in transitions if row["row_index"] == "892")
+    row892_fill = next(row for row in fills if row["row_index"] == "892")
+    row892_cost = next(row for row in costs if row["row_index"] == "892")
+    row892_pnl = next(row for row in pnl_rows if row["row_index"] == "892")
+    assert row892_order["order_side"] == "SELL"
+    assert row892_order["order_quantity"] == "1"
+    assert row892_order["adjacent_target_position"] == "-1"
+    assert row892_order["formula_limit_price"] == "111.6707138465356"
+    assert row892_order["limit_order_price"] == "111.671875"
+    assert row892_order["row_status"] == "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ROW_EMITTED_NOT_RESULT"
+    assert row892_no_market["market_order_required"] == "FALSE"
+    assert row892_no_market["market_order_rows_emitted"] == "FALSE"
+    assert row892_no_market["market_fallback_status"] == "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+    assert (
+        row892_no_market["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row892_transition["starting_position_contracts"] == "0"
+    assert row892_transition["ending_position_contracts"] == "-1"
+    assert row892_transition["same_session"] == "FALSE"
+    assert row892_fill["fill_executed"] == "TRUE"
+    assert (
+        row892_fill["fill_rule"]
+        == "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_SESSION_VALUATION_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row892_fill["fill_candidate_close"] == "111.671875"
+    assert row892_fill["fill_price"] == "111.671875"
+    assert row892_fill["fill_quantity"] == "1"
+    assert row892_fill["position_after_fill"] == "-1"
+    assert row892_cost["commission_amount"] == "2.3"
+    assert row892_cost["spread_cost_amount"] == "0.0"
+    assert row892_cost["total_cost_amount"] == "2.3"
+    assert row892_pnl["valuation_mark_timestamp_utc"] == "2023-02-28T22:00:00Z"
+    assert row892_pnl["valuation_mark_close_price"] == "111.546875"
+    assert row892_pnl["row_gross_pnl_amount"] == "125.0"
+    assert row892_pnl["row_net_pnl_amount"] == "122.7"
+    assert row892_pnl["ending_position_contracts"] == "-1"
+    assert row892_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1355_order = next(row for row in orders if row["row_index"] == "1355")
+    row1355_no_market = next(row for row in no_market_rows if row["row_index"] == "1355")
+    row1355_transition = next(row for row in transitions if row["row_index"] == "1355")
+    row1355_fill = next(row for row in fills if row["row_index"] == "1355")
+    row1355_cost = next(row for row in costs if row["row_index"] == "1355")
+    row1355_pnl = next(row for row in pnl_rows if row["row_index"] == "1355")
+    assert row1355_order["order_side"] == "BUY"
+    assert row1355_order["order_quantity"] == "1"
+    assert row1355_order["adjacent_target_position"] == "8"
+    assert row1355_order["formula_limit_price"] == "114.49366645867451"
+    assert row1355_order["limit_order_price"] == "114.484375"
+    assert row1355_order["row_status"] == "LOCAL_ENGINEERING_SESSION_END_ADJACENT_LIMIT_VALUATION_GAP_ROW_EMITTED_NOT_RESULT"
+    assert row1355_no_market["market_order_required"] == "FALSE"
+    assert row1355_no_market["market_order_rows_emitted"] == "FALSE"
+    assert row1355_no_market["market_fallback_status"] == "NOT_REQUIRED_LIMIT_ORDER_FILLED"
+    assert (
+        row1355_no_market["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_END_ADJACENT_LIMIT_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row1355_transition["starting_position_contracts"] == "7"
+    assert row1355_transition["ending_position_contracts"] == "8"
+    assert row1355_transition["same_session"] == "FALSE"
+    assert row1355_fill["fill_executed"] == "TRUE"
+    assert (
+        row1355_fill["fill_rule"]
+        == "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL_AT_DECLARED_SESSION_END_WITH_NEXT_AVAILABLE_VALUATION_GAP_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row1355_fill["fill_candidate_close"] == "114.46875"
+    assert row1355_fill["fill_price"] == "114.484375"
+    assert row1355_fill["fill_quantity"] == "1"
+    assert row1355_fill["position_after_fill"] == "8"
+    assert row1355_cost["commission_amount"] == "2.3"
+    assert row1355_cost["spread_cost_amount"] == "0.0"
+    assert row1355_cost["total_cost_amount"] == "2.3"
+    assert row1355_pnl["valuation_mark_timestamp_utc"] == "2023-03-29T23:00:00Z"
+    assert row1355_pnl["valuation_mark_close_price"] == "114.5"
+    assert row1355_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1355_pnl["row_gross_pnl_amount"] == "234.375"
+    assert row1355_pnl["row_net_pnl_amount"] == "232.075"
+    assert row1355_pnl["ending_position_contracts"] == "8"
+    assert row1355_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1356_order = next(row for row in orders if row["row_index"] == "1356")
+    row1356_no_market = next(row for row in no_market_rows if row["row_index"] == "1356")
+    row1356_transition = next(row for row in transitions if row["row_index"] == "1356")
+    row1356_fill = next(row for row in fills if row["row_index"] == "1356")
+    row1356_market_order = next(row for row in market_order_rows if row["row_index"] == "1356")
+    row1356_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1356")
+    row1356_cost = next(row for row in costs if row["row_index"] == "1356")
+    row1356_pnl = next(row for row in pnl_rows if row["row_index"] == "1356")
+    assert row1356_order["order_side"] == "SELL"
+    assert row1356_order["order_quantity"] == "2"
+    assert row1356_order["adjacent_target_position"] == "7"
+    assert row1356_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1356_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1356_no_market["market_order_required"] == "TRUE"
+    assert row1356_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1356_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1356_transition["starting_position_contracts"] == "8"
+    assert row1356_transition["ending_position_contracts"] == "6"
+    assert row1356_transition["same_session"] == "TRUE"
+    assert row1356_fill["fill_executed"] == "TRUE"
+    assert row1356_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1356_fill["fill_candidate_close"] == "114.484375"
+    assert row1356_fill["fill_price"] == "114.484375"
+    assert row1356_fill["fill_quantity"] == "2"
+    assert row1356_fill["position_after_fill"] == "6"
+    assert row1356_market_order["current_position_before_order"] == "8"
+    assert row1356_market_order["target_position_after_fill"] == "6"
+    assert row1356_market_order["order_side"] == "SELL"
+    assert row1356_market_order["order_quantity"] == "2"
+    assert row1356_market_fill["fill_timestamp_utc"] == "2023-03-30T00:00:00Z"
+    assert row1356_market_fill["fill_price"] == "114.484375"
+    assert row1356_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1356_market_fill["fill_quantity"] == "2"
+    assert row1356_market_fill["commission_amount"] == "4.6"
+    assert row1356_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_BID_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1356_cost["order_cost_type"] == "MARKET_ORDER_SELL_BID_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1356_cost["commission_amount"] == "4.6"
+    assert row1356_cost["spread_cost_amount"] == "0.0"
+    assert row1356_cost["total_cost_amount"] == "4.6"
+    assert row1356_cost["market_cost_accounting_convention"] == "BID_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1356_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_BID"
+    assert row1356_cost["tbbo_quote_ts_event"] == "2023-03-30T00:00:00.099806785Z"
+    assert row1356_cost["tbbo_bid_px"] == "114.484375"
+    assert row1356_cost["tbbo_ask_px"] == "114.5"
+    assert row1356_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1356_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1356_cost["tbbo_selected_spread_row_hash"] == "b64709b5d1d37a78c6a4507208d3ca0b159bb268eb5bd39d5b3be51fdcf8eaae"
+    assert row1356_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1356_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T01:00:00Z"
+    assert row1356_pnl["valuation_mark_close_price"] == "114.4375"
+    assert row1356_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1356_pnl["row_gross_pnl_amount"] == "-406.25"
+    assert row1356_pnl["row_net_pnl_amount"] == "-410.85"
+    assert row1356_pnl["ending_position_contracts"] == "6"
+    assert row1356_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1364_order = next(row for row in orders if row["row_index"] == "1364")
+    row1364_no_market = next(row for row in no_market_rows if row["row_index"] == "1364")
+    row1364_transition = next(row for row in transitions if row["row_index"] == "1364")
+    row1364_fill = next(row for row in fills if row["row_index"] == "1364")
+    row1364_market_order = next(row for row in market_order_rows if row["row_index"] == "1364")
+    row1364_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1364")
+    row1364_cost = next(row for row in costs if row["row_index"] == "1364")
+    row1364_pnl = next(row for row in pnl_rows if row["row_index"] == "1364")
+    assert row1364_order["order_side"] == "SELL"
+    assert row1364_order["order_quantity"] == "2"
+    assert row1364_order["adjacent_target_position"] == "5"
+    assert row1364_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1364_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1364_no_market["market_order_required"] == "TRUE"
+    assert row1364_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1364_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1364_transition["starting_position_contracts"] == "6"
+    assert row1364_transition["ending_position_contracts"] == "4"
+    assert row1364_transition["same_session"] == "TRUE"
+    assert row1364_fill["fill_executed"] == "TRUE"
+    assert row1364_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1364_fill["fill_candidate_close"] == "114.640625"
+    assert row1364_fill["fill_price"] == "114.640625"
+    assert row1364_fill["fill_quantity"] == "2"
+    assert row1364_fill["position_after_fill"] == "4"
+    assert row1364_market_order["current_position_before_order"] == "6"
+    assert row1364_market_order["target_position_after_fill"] == "4"
+    assert row1364_market_order["order_side"] == "SELL"
+    assert row1364_market_order["order_quantity"] == "2"
+    assert row1364_market_fill["fill_timestamp_utc"] == "2023-03-30T08:00:00Z"
+    assert row1364_market_fill["fill_price"] == "114.640625"
+    assert row1364_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1364_market_fill["fill_quantity"] == "2"
+    assert row1364_market_fill["commission_amount"] == "4.6"
+    assert row1364_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_BID_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1364_cost["order_cost_type"] == "MARKET_ORDER_SELL_BID_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1364_cost["commission_amount"] == "4.6"
+    assert row1364_cost["spread_cost_amount"] == "0.0"
+    assert row1364_cost["total_cost_amount"] == "4.6"
+    assert row1364_cost["market_cost_accounting_convention"] == "BID_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1364_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_BID"
+    assert row1364_cost["tbbo_quote_ts_event"] == "2023-03-30T07:59:58.203532779Z"
+    assert row1364_cost["tbbo_bid_px"] == "114.640625"
+    assert row1364_cost["tbbo_ask_px"] == "114.65625"
+    assert row1364_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1364_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1364_cost["tbbo_selected_spread_row_hash"] == "80dd0dd1dc186292ef56dab2d4802e553a95a20ea71e72b6317d64c0db64732e"
+    assert row1364_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1364_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T09:00:00Z"
+    assert row1364_pnl["valuation_mark_close_price"] == "114.453125"
+    assert row1364_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1364_pnl["row_gross_pnl_amount"] == "-750.0"
+    assert row1364_pnl["row_net_pnl_amount"] == "-754.6"
+    assert row1364_pnl["ending_position_contracts"] == "4"
+    assert row1364_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1366_order = next(row for row in orders if row["row_index"] == "1366")
+    row1366_no_market = next(row for row in no_market_rows if row["row_index"] == "1366")
+    row1366_transition = next(row for row in transitions if row["row_index"] == "1366")
+    row1366_fill = next(row for row in fills if row["row_index"] == "1366")
+    row1366_market_order = next(row for row in market_order_rows if row["row_index"] == "1366")
+    row1366_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1366")
+    row1366_cost = next(row for row in costs if row["row_index"] == "1366")
+    row1366_pnl = next(row for row in pnl_rows if row["row_index"] == "1366")
+    assert row1366_order["order_side"] == "BUY"
+    assert row1366_order["order_quantity"] == "2"
+    assert row1366_order["adjacent_target_position"] == "5"
+    assert row1366_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1366_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1366_no_market["market_order_required"] == "TRUE"
+    assert row1366_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1366_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1366_transition["starting_position_contracts"] == "4"
+    assert row1366_transition["ending_position_contracts"] == "6"
+    assert row1366_transition["same_session"] == "TRUE"
+    assert row1366_fill["fill_executed"] == "TRUE"
+    assert row1366_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_ASK_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1366_fill["fill_candidate_close"] == "114.453125"
+    assert row1366_fill["fill_price"] == "114.46875"
+    assert row1366_fill["fill_quantity"] == "2"
+    assert row1366_fill["position_after_fill"] == "6"
+    assert row1366_market_order["current_position_before_order"] == "4"
+    assert row1366_market_order["target_position_after_fill"] == "6"
+    assert row1366_market_order["order_side"] == "BUY"
+    assert row1366_market_order["order_quantity"] == "2"
+    assert row1366_market_fill["fill_timestamp_utc"] == "2023-03-30T10:00:00Z"
+    assert row1366_market_fill["fill_price"] == "114.46875"
+    assert row1366_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_ASK_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1366_market_fill["fill_quantity"] == "2"
+    assert row1366_market_fill["commission_amount"] == "4.6"
+    assert row1366_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_ASK_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1366_cost["order_cost_type"] == "MARKET_ORDER_BUY_ASK_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1366_cost["commission_amount"] == "4.6"
+    assert row1366_cost["spread_cost_amount"] == "0.0"
+    assert row1366_cost["total_cost_amount"] == "4.6"
+    assert row1366_cost["market_cost_accounting_convention"] == "ASK_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1366_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_ASK"
+    assert row1366_cost["tbbo_quote_ts_event"] == "2023-03-30T09:59:58.009461457Z"
+    assert row1366_cost["tbbo_bid_px"] == "114.453125"
+    assert row1366_cost["tbbo_ask_px"] == "114.46875"
+    assert row1366_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1366_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1366_cost["tbbo_selected_spread_row_hash"] == "ee5b5d7473e19018e90ec87261355c89fe16bd2a25fcbd44e29f9208e1339fa6"
+    assert row1366_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1366_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T11:00:00Z"
+    assert row1366_pnl["valuation_mark_close_price"] == "114.484375"
+    assert row1366_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1366_pnl["row_gross_pnl_amount"] == "156.25"
+    assert row1366_pnl["row_net_pnl_amount"] == "151.65"
+    assert row1366_pnl["ending_position_contracts"] == "6"
+    assert row1366_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1369_order = next(row for row in orders if row["row_index"] == "1369")
+    row1369_no_market = next(row for row in no_market_rows if row["row_index"] == "1369")
+    row1369_transition = next(row for row in transitions if row["row_index"] == "1369")
+    row1369_fill = next(row for row in fills if row["row_index"] == "1369")
+    row1369_market_order = next(row for row in market_order_rows if row["row_index"] == "1369")
+    row1369_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1369")
+    row1369_cost = next(row for row in costs if row["row_index"] == "1369")
+    row1369_pnl = next(row for row in pnl_rows if row["row_index"] == "1369")
+    assert row1369_order["order_side"] == "SELL"
+    assert row1369_order["order_quantity"] == "2"
+    assert row1369_order["adjacent_target_position"] == "5"
+    assert row1369_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1369_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1369_no_market["market_order_required"] == "TRUE"
+    assert row1369_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1369_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1369_transition["starting_position_contracts"] == "6"
+    assert row1369_transition["ending_position_contracts"] == "4"
+    assert row1369_transition["same_session"] == "TRUE"
+    assert row1369_fill["fill_executed"] == "TRUE"
+    assert row1369_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1369_fill["fill_candidate_close"] == "114.328125"
+    assert row1369_fill["fill_price"] == "114.3125"
+    assert row1369_fill["fill_quantity"] == "2"
+    assert row1369_fill["position_after_fill"] == "4"
+    assert row1369_market_order["current_position_before_order"] == "6"
+    assert row1369_market_order["target_position_after_fill"] == "4"
+    assert row1369_market_order["order_side"] == "SELL"
+    assert row1369_market_order["order_quantity"] == "2"
+    assert row1369_market_fill["fill_timestamp_utc"] == "2023-03-30T13:00:00Z"
+    assert row1369_market_fill["fill_price"] == "114.3125"
+    assert row1369_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1369_market_fill["fill_quantity"] == "2"
+    assert row1369_market_fill["commission_amount"] == "4.6"
+    assert row1369_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_BID_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1369_cost["order_cost_type"] == "MARKET_ORDER_SELL_BID_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1369_cost["commission_amount"] == "4.6"
+    assert row1369_cost["spread_cost_amount"] == "0.0"
+    assert row1369_cost["total_cost_amount"] == "4.6"
+    assert row1369_cost["market_cost_accounting_convention"] == "BID_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1369_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_BID"
+    assert row1369_cost["tbbo_quote_ts_event"] == "2023-03-30T12:59:58.996330651Z"
+    assert row1369_cost["tbbo_bid_px"] == "114.3125"
+    assert row1369_cost["tbbo_ask_px"] == "114.328125"
+    assert row1369_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1369_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1369_cost["tbbo_selected_spread_row_hash"] == "1b8b50fe5aed31312922f4d0bbc19e3c79e6dd6b8bf63aff90b43c7f4ba7f447"
+    assert row1369_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1369_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T14:00:00Z"
+    assert row1369_pnl["valuation_mark_close_price"] == "114.390625"
+    assert row1369_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1369_pnl["row_gross_pnl_amount"] == "218.75"
+    assert row1369_pnl["row_net_pnl_amount"] == "214.15"
+    assert row1369_pnl["ending_position_contracts"] == "4"
+    assert row1369_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1370_order = next(row for row in orders if row["row_index"] == "1370")
+    row1370_no_market = next(row for row in no_market_rows if row["row_index"] == "1370")
+    row1370_transition = next(row for row in transitions if row["row_index"] == "1370")
+    row1370_fill = next(row for row in fills if row["row_index"] == "1370")
+    row1370_market_order = next(row for row in market_order_rows if row["row_index"] == "1370")
+    row1370_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1370")
+    row1370_cost = next(row for row in costs if row["row_index"] == "1370")
+    row1370_pnl = next(row for row in pnl_rows if row["row_index"] == "1370")
+    assert row1370_order["order_side"] == "BUY"
+    assert row1370_order["order_quantity"] == "4"
+    assert row1370_order["adjacent_target_position"] == "5"
+    assert row1370_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1370_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1370_no_market["market_order_required"] == "TRUE"
+    assert row1370_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1370_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1370_transition["starting_position_contracts"] == "4"
+    assert row1370_transition["ending_position_contracts"] == "8"
+    assert row1370_transition["same_session"] == "TRUE"
+    assert row1370_fill["fill_executed"] == "TRUE"
+    assert row1370_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_ASK_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1370_fill["fill_candidate_close"] == "114.390625"
+    assert row1370_fill["fill_price"] == "114.40625"
+    assert row1370_fill["fill_quantity"] == "4"
+    assert row1370_fill["position_after_fill"] == "8"
+    assert row1370_market_order["current_position_before_order"] == "4"
+    assert row1370_market_order["target_position_after_fill"] == "8"
+    assert row1370_market_order["order_side"] == "BUY"
+    assert row1370_market_order["order_quantity"] == "4"
+    assert row1370_market_fill["fill_timestamp_utc"] == "2023-03-30T14:00:00Z"
+    assert row1370_market_fill["fill_price"] == "114.40625"
+    assert row1370_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_ASK_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1370_market_fill["fill_quantity"] == "4"
+    assert row1370_market_fill["commission_amount"] == "9.2"
+    assert row1370_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_ASK_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1370_cost["order_cost_type"] == "MARKET_ORDER_BUY_ASK_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1370_cost["commission_amount"] == "9.2"
+    assert row1370_cost["spread_cost_amount"] == "0.0"
+    assert row1370_cost["total_cost_amount"] == "9.2"
+    assert row1370_cost["market_cost_accounting_convention"] == "ASK_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1370_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_ASK"
+    assert row1370_cost["tbbo_quote_ts_event"] == "2023-03-30T13:59:59.466320757Z"
+    assert row1370_cost["tbbo_bid_px"] == "114.390625"
+    assert row1370_cost["tbbo_ask_px"] == "114.40625"
+    assert row1370_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1370_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1370_cost["tbbo_selected_spread_row_hash"] == "c5360ecad0ad1b2afef1decafa17ce630484078a60c5b54d1eeb23c336f7aae3"
+    assert row1370_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1370_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T15:00:00Z"
+    assert row1370_pnl["valuation_mark_close_price"] == "114.46875"
+    assert row1370_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1370_pnl["row_gross_pnl_amount"] == "562.5"
+    assert row1370_pnl["row_net_pnl_amount"] == "553.3"
+    assert row1370_pnl["ending_position_contracts"] == "8"
+    assert row1370_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row1374_order = next(row for row in orders if row["row_index"] == "1374")
+    row1374_no_market = next(row for row in no_market_rows if row["row_index"] == "1374")
+    row1374_transition = next(row for row in transitions if row["row_index"] == "1374")
+    row1374_fill = next(row for row in fills if row["row_index"] == "1374")
+    row1374_market_order = next(row for row in market_order_rows if row["row_index"] == "1374")
+    row1374_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1374")
+    row1374_cost = next(row for row in costs if row["row_index"] == "1374")
+    row1374_pnl = next(row for row in pnl_rows if row["row_index"] == "1374")
+    assert row1374_order["order_side"] == "SELL"
+    assert row1374_order["order_quantity"] == "2"
+    assert row1374_order["adjacent_target_position"] == "6"
+    assert row1374_order["formula_limit_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1374_order["limit_order_price"] == "NOT_APPLICABLE_MARKET_ORDER_FULL_GAP"
+    assert row1374_no_market["market_order_required"] == "TRUE"
+    assert row1374_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1374_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row1374_transition["starting_position_contracts"] == "7"
+    assert row1374_transition["ending_position_contracts"] == "5"
+    assert row1374_transition["same_session"] == "TRUE"
+    assert row1374_fill["fill_executed"] == "TRUE"
+    assert row1374_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1374_fill["fill_candidate_close"] == "114.515625"
+    assert row1374_fill["fill_price"] == "114.515625"
+    assert row1374_fill["fill_quantity"] == "2"
+    assert row1374_fill["position_after_fill"] == "5"
+    assert row1374_market_order["current_position_before_order"] == "7"
+    assert row1374_market_order["target_position_after_fill"] == "5"
+    assert row1374_market_order["order_side"] == "SELL"
+    assert row1374_market_order["order_quantity"] == "2"
+    assert row1374_market_fill["fill_timestamp_utc"] == "2023-03-30T18:00:00Z"
+    assert row1374_market_fill["fill_price"] == "114.515625"
+    assert row1374_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1374_market_fill["fill_quantity"] == "2"
+    assert row1374_market_fill["commission_amount"] == "4.6"
+    assert row1374_market_fill["market_spread_cost_status"] == "PASS_DATABENTO_TBBO_BID_FILL_NO_SEPARATE_SPREAD_COST_NOT_PNL"
+    assert row1374_cost["order_cost_type"] == "MARKET_ORDER_SELL_BID_FILL_ACTUAL_COST_NOT_PNL"
+    assert row1374_cost["commission_amount"] == "4.6"
+    assert row1374_cost["spread_cost_amount"] == "0.0"
+    assert row1374_cost["total_cost_amount"] == "4.6"
+    assert row1374_cost["market_cost_accounting_convention"] == "BID_FILL_PRICE_WITH_NO_SEPARATE_SPREAD_COST"
+    assert row1374_cost["spread_cost_reason"] == "NO_SEPARATE_SPREAD_COST_BECAUSE_MARKET_FILL_PRICE_EQUALS_SELECTED_TBBO_BID"
+    assert row1374_cost["tbbo_quote_ts_event"] == "2023-03-30T17:59:58.005200809Z"
+    assert row1374_cost["tbbo_bid_px"] == "114.515625"
+    assert row1374_cost["tbbo_ask_px"] == "114.53125"
+    assert row1374_cost["tbbo_full_spread_points"] == "0.015625"
+    assert row1374_cost["tbbo_full_spread_value_per_contract"] == "15.625"
+    assert row1374_cost["tbbo_selected_spread_row_hash"] == "96731f4b012c9dcd8fb1fb5b3066902d14a8deb9b3b31da81b7e8d558a51a290"
+    assert row1374_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1374_pnl["valuation_mark_timestamp_utc"] == "2023-03-30T19:00:00Z"
+    assert row1374_pnl["valuation_mark_close_price"] == "114.59375"
+    assert row1374_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1374_pnl["row_gross_pnl_amount"] == "390.625"
+    assert row1374_pnl["row_net_pnl_amount"] == "386.025"
+    assert row1374_pnl["ending_position_contracts"] == "5"
+    assert row1374_pnl["source_faithful_evidence_claimed"] == "FALSE"
+    row959_market_order = next(row for row in market_order_rows if row["row_index"] == "959")
+    row959_no_market = next(row for row in no_market_rows if row["row_index"] == "959")
+    row959_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "959")
+    row959_transition = next(row for row in transitions if row["row_index"] == "959")
+    row959_fill = next(row for row in fills if row["row_index"] == "959")
+    row959_cost = next(row for row in costs if row["row_index"] == "959")
+    row959_pnl = next(row for row in pnl_rows if row["row_index"] == "959")
+    assert row959_market_order["decision_timestamp_utc"] == "2023-03-03T21:00:00Z"
+    assert row959_market_order["raw_symbol"] == "ZNM3"
+    assert row959_market_order["current_position_before_order"] == "0"
+    assert row959_market_order["target_position_after_fill"] == "-2"
+    assert row959_market_order["order_side"] == "SELL"
+    assert row959_market_order["order_quantity"] == "2"
+    assert (
+        row959_market_order["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_OPEN_MARKET_RESET_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row959_no_market["market_order_required"] == "TRUE"
+    assert row959_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row959_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert row959_market_fill["fill_timestamp_utc"] == "2023-03-03T22:00:00Z"
+    assert row959_market_fill["fill_price"] == "111.140625"
+    assert row959_market_fill["same_session"] == "FALSE"
+    assert row959_market_fill["position_after_fill"] == "-2"
+    assert row959_transition["same_session"] == "FALSE"
+    assert row959_transition["ending_position_contracts"] == "-2"
+    assert row959_fill["fill_rule"] == "MARKET_PRICE_FROM_SELECTED_TBBO_BID_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row959_fill["fill_price"] == "111.140625"
+    assert row959_fill["position_after_fill"] == "-2"
+    assert row959_cost["tbbo_quote_ts_event"] == "2023-03-03T21:59:59.523101291Z"
+    assert row959_cost["tbbo_bid_px"] == "111.140625"
+    assert row959_cost["tbbo_ask_px"] == "111.15625"
+    assert row959_cost["commission_amount"] == "4.6"
+    assert row959_pnl["valuation_mark_timestamp_utc"] == "2023-03-06T00:00:00Z"
+    assert row959_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row959_pnl["row_gross_pnl_amount"] == "125.0"
+    assert row959_pnl["row_net_pnl_amount"] == "120.4"
+    assert row959_pnl["ending_position_contracts"] == "-2"
     row346_order = next(row for row in orders if row["row_index"] == "346")
     row346_no_market = next(row for row in no_market_rows if row["row_index"] == "346")
     row346_transition = next(row for row in transitions if row["row_index"] == "346")
@@ -415,7 +893,7 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     assert row441_cost["tbbo_full_spread_points"] == "0.015625"
     assert row441_cost["tbbo_full_spread_value_per_contract"] == "15.625"
     assert row441_cost["tbbo_selected_spread_row_hash"] == "7e3f3b721a197c7a49a0f26f854ab2978b67c2080b5941bbed12075c3c0530fc"
-    assert row441_cost["tbbo_selected_spread_ledger_sha256"] == "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f"
+    assert row441_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
     row547_order = next(row for row in orders if row["row_index"] == "547")
     row547_no_market = next(row for row in no_market_rows if row["row_index"] == "547")
     row547_market_order = next(row for row in market_order_rows if row["row_index"] == "547")
@@ -450,7 +928,7 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     assert row547_cost["tbbo_full_spread_points"] == "0.015625"
     assert row547_cost["tbbo_full_spread_value_per_contract"] == "15.625"
     assert row547_cost["tbbo_selected_spread_row_hash"] == "bdae1f6afb23c5b679e3ff560f9295ae36b3c753f7e7dc14713464a20ed1c13d"
-    assert row547_cost["tbbo_selected_spread_ledger_sha256"] == "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f"
+    assert row547_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
     assert row547_pnl["valuation_mark_timestamp_utc"] == "2023-02-07T02:00:00Z"
     assert row547_pnl["ending_position_contracts"] == "25"
     assert row547_pnl["result_status"] == RESULT_STATUS
@@ -607,7 +1085,7 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
         "tbbo_full_spread_points": "0.015625",
         "tbbo_full_spread_value_per_contract": "15.625",
         "tbbo_selected_spread_row_hash": "7f1ad53f2345815abed6a4ce3ff9ef7f94fbafd5ed9a779ab72ab79dc8e9277c",
-                "tbbo_selected_spread_ledger_sha256": "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f",
+                "tbbo_selected_spread_ledger_sha256": _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME),
         "row_status": "LOCAL_MARKET_ORDER_ACTUAL_COST_ROW_EMITTED_NOT_PNL_NOT_RESULT",
     }
     assert {
@@ -647,7 +1125,7 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
         "tbbo_full_spread_points": "0.015625",
         "tbbo_full_spread_value_per_contract": "15.625",
         "tbbo_selected_spread_row_hash": "6b466a09838fe4aa0745bc7d3bae9c30c6f28f2966e407aae3b742f69db506b6",
-        "tbbo_selected_spread_ledger_sha256": "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f",
+        "tbbo_selected_spread_ledger_sha256": _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME),
         "row_status": "LOCAL_MARKET_ORDER_ACTUAL_COST_ROW_EMITTED_NOT_PNL_NOT_RESULT",
     }
     row303_market_order = next(row for row in market_order_rows if row["row_index"] == "303")
@@ -734,8 +1212,8 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     assert row391_cost["commission_amount"] == "18.4"
     assert row391_cost["spread_cost_amount"] == "0.0"
     assert row391_cost["total_cost_amount"] == "18.4"
-    assert row391_cost["tbbo_selected_spread_row_hash"] == "b4045608220ce914e924d11ce55fcdda0cfeaf1453f73f8db07412ad46b61364"
-    assert row391_cost["tbbo_selected_spread_ledger_sha256"] == "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f"
+    assert row391_cost["tbbo_selected_spread_row_hash"] == "3d2b58d698092b8f1971462ab84233025254f318a9fb1b95536ca8de7b5088ec"
+    assert row391_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
     assert row391_pnl["valuation_mark_timestamp_utc"] == "2023-01-26T22:00:00Z"
     assert row391_pnl["valuation_mark_close_price"] == "114.8125"
     assert row391_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
@@ -743,6 +1221,55 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
     assert row391_pnl["row_net_pnl_amount"] == "-143.4"
     assert row391_pnl["cumulative_net_pnl_amount"] == "8060.075"
     assert row391_pnl["ending_position_contracts"] == "12"
+    row1113_market_order = next(row for row in market_order_rows if row["row_index"] == "1113")
+    row1113_no_market = next(row for row in no_market_rows if row["row_index"] == "1113")
+    row1113_market_fill = next(row for row in market_fill_metadata_rows if row["row_index"] == "1113")
+    row1113_transition = next(row for row in transitions if row["row_index"] == "1113")
+    row1113_fill = next(row for row in fills if row["row_index"] == "1113")
+    row1113_cost = next(row for row in costs if row["row_index"] == "1113")
+    row1113_pnl = next(row for row in pnl_rows if row["row_index"] == "1113")
+    assert row1113_market_order["decision_timestamp_utc"] == "2023-03-14T20:00:00Z"
+    assert row1113_market_order["current_position_before_order"] == "-17"
+    assert row1113_market_order["target_position_after_fill"] == "-15"
+    assert row1113_market_order["order_side"] == "BUY"
+    assert row1113_market_order["order_quantity"] == "2"
+    assert (
+        row1113_market_order["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_END_MARKET_ORDER_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row1113_no_market["market_order_required"] == "TRUE"
+    assert row1113_no_market["market_order_rows_emitted"] == "TRUE"
+    assert row1113_no_market["market_fallback_status"] == "LOCKED_MARKET_ORDER_EXECUTED_FULL_GAP"
+    assert (
+        row1113_no_market["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_END_MARKET_ORDER_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert row1113_market_fill["fill_timestamp_utc"] == "2023-03-14T21:00:00Z"
+    assert row1113_market_fill["fill_price"] == "113.46875"
+    assert row1113_market_fill["fill_price_provenance"] == "MARKET_PRICE_FROM_SELECTED_TBBO_ASK_AT_OR_BEFORE_NEXT_COMPLETED_CLOSE"
+    assert row1113_market_fill["same_session"] == "TRUE"
+    assert row1113_market_fill["fill_quantity"] == "2"
+    assert row1113_market_fill["position_after_fill"] == "-15"
+    assert row1113_transition["starting_position_contracts"] == "-17"
+    assert row1113_transition["ending_position_contracts"] == "-15"
+    assert row1113_transition["same_session"] == "TRUE"
+    assert row1113_fill["fill_price"] == "113.46875"
+    assert row1113_fill["fill_quantity"] == "2"
+    assert row1113_fill["position_after_fill"] == "-15"
+    assert row1113_cost["tbbo_quote_ts_event"] == "2023-03-14T20:59:59.840382723Z"
+    assert row1113_cost["tbbo_bid_px"] == "113.453125"
+    assert row1113_cost["tbbo_ask_px"] == "113.46875"
+    assert row1113_cost["commission_amount"] == "4.6"
+    assert row1113_cost["spread_cost_amount"] == "0.0"
+    assert row1113_cost["total_cost_amount"] == "4.6"
+    assert row1113_cost["tbbo_selected_spread_row_hash"] == "e7fd6c0b749fcb1669ab0692e34b050b0e361180e429a39551a2ba9d8c2b9ee0"
+    assert row1113_cost["tbbo_selected_spread_ledger_sha256"] == _sha256(COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME)
+    assert row1113_pnl["valuation_mark_timestamp_utc"] == "2023-03-14T23:00:00Z"
+    assert row1113_pnl["valuation_mark_close_price"] == "113.515625"
+    assert row1113_pnl["valuation_convention_label"] == "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    assert row1113_pnl["fill_gross_pnl"] == "93.75"
+    assert row1113_pnl["row_net_pnl_amount"] == "-707.725"
+    assert row1113_pnl["ending_position_contracts"] == "-15"
     assert {
         key: pnl_rows[0][key]
         for key in (
@@ -827,11 +1354,11 @@ def test_2023_test_mechanical_run_fails_closed_without_result_claim(test_bundle)
         "source_faithful_evidence_claimed": "FALSE",
         "row_status": "LOCAL_MARKET_ORDER_MECHANICAL_PNL_ROW_EMITTED_NOT_RESULT",
     }
-    assert test_bundle.final_position_contracts == -10
-    assert test_bundle.cumulative_gross_pnl_amount == -31250.0
-    assert test_bundle.cumulative_commission_amount == 1568.5999999999992
+    assert test_bundle.final_position_contracts == 3
+    assert test_bundle.cumulative_gross_pnl_amount == -98750.0
+    assert test_bundle.cumulative_commission_amount == 2881.9000000000005
     assert test_bundle.cumulative_spread_amount == 0.0
-    assert test_bundle.cumulative_net_pnl_amount == -32818.6
+    assert test_bundle.cumulative_net_pnl_amount == -101631.9
 
 
 def test_2023_test_run_writes_hash_bound_metadata(test_bundle):
@@ -872,8 +1399,9 @@ def test_2023_test_market_order_tbbo_requirements_discovery_is_hash_bound_and_lo
     assert manifest["result_interpretation"] == "NO"
     assert manifest["source_faithful_evidence_claim"] == "NO"
     assert bundle.total_market_order_rows == len(rows)
-    assert bundle.missing_tbbo_requirement_count == 1
-    assert bundle.already_bound_tbbo_count == 157
+    assert bundle.total_market_order_rows == 272
+    assert bundle.missing_tbbo_requirement_count == 17
+    assert bundle.already_bound_tbbo_count == 255
     assert rows[0]["row_index"] == "1"
     assert rows[0]["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE"
     assert rows[1]["row_index"] == "2"
@@ -884,19 +1412,44 @@ def test_2023_test_market_order_tbbo_requirements_discovery_is_hash_bound_and_lo
     assert any(row["row_index"] == "439" and row["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE" for row in rows)
     assert any(row["row_index"] == "547" and row["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE" for row in rows)
     assert any(row["row_index"] == "554" and row["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE" for row in rows)
-    assert any(row["row_index"] == "704" and row["tbbo_requirement_status"] == "REQUIRES_BOUNDED_DATABENTO_TBBO_EVIDENCE" for row in rows)
-    assert {
-        row["tbbo_requirement_status"] for row in rows
-    } == {"ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE", "REQUIRES_BOUNDED_DATABENTO_TBBO_EVIDENCE"}
+    assert {row["tbbo_requirement_status"] for row in rows} == {
+        "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE",
+        "REQUIRES_BOUNDED_DATABENTO_TBBO_EVIDENCE",
+    }
     assert all(row["decision_timestamp_utc"].startswith("2023-") for row in rows)
     assert all(row["fill_candidate_timestamp_utc"].startswith("2023-") for row in rows)
     assert all(row["source_faithful_evidence_claimed"] == "FALSE" for row in rows)
     bound_rows = [row for row in rows if row["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE"]
+    missing_rows = [row for row in rows if row["tbbo_requirement_status"] == "REQUIRES_BOUNDED_DATABENTO_TBBO_EVIDENCE"]
+    assert [row["row_index"] for row in missing_rows] == [
+        "1378",
+        "1390",
+        "1395",
+        "1400",
+        "1402",
+        "1409",
+        "1503",
+        "1504",
+        "1505",
+        "1519",
+        "1520",
+        "1527",
+        "1535",
+        "1536",
+        "1540",
+        "1542",
+        "1544",
+    ]
     assert all(row["bound_tbbo_selected_spread_row_hash"] != "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in bound_rows)
     assert all(row["bound_tbbo_selected_spread_ledger_sha256"] != "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in bound_rows)
     assert all(row["bound_tbbo_source_evidence_type"] != "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in bound_rows)
     assert all(row["bound_tbbo_selected_quote_ts_event"] != "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in bound_rows)
     assert all(row["bound_tbbo_quote_age_seconds"] != "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in bound_rows)
+    assert all(row["bound_tbbo_selected_spread_row_hash"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in missing_rows)
+    assert all(row["bound_tbbo_selected_spread_ledger_sha256"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in missing_rows)
+    assert all(row["bound_tbbo_source_evidence_type"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in missing_rows)
+    assert all(row["bound_tbbo_selected_quote_ts_event"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in missing_rows)
+    assert all(row["bound_tbbo_quote_age_seconds"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE" for row in missing_rows)
     row438 = next(row for row in rows if row["row_index"] == "438")
     assert row438["bound_tbbo_source_evidence_type"] == "ROW438_RETRY_AT_OR_BEFORE_FILL_TBBO"
     assert row438["max_selected_quote_age_seconds"] == "60.0"
@@ -916,27 +1469,32 @@ def test_2023_test_market_order_tbbo_requirements_discovery_is_hash_bound_and_lo
     assert row554["bound_tbbo_source_evidence_type"] == "STANDING_RETRY_AT_OR_BEFORE_FILL_TBBO"
     assert row554["bound_tbbo_selected_quote_ts_event"] == "2023-02-07T07:59:42.813084237Z"
     assert row554["bound_tbbo_quote_age_seconds"] == "17.186916"
-    row702 = next(row for row in rows if row["row_index"] == "702")
-    assert row702["raw_symbol"] == "ZNM3"
-    assert row702["market_order_reason"] == "BOOK_REQUIRED_TARGET_POSITION_GAP_GREATER_THAN_ONE_CONTRACT"
-    assert row702["bound_tbbo_source_evidence_type"] == "ZNM3_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO"
-    assert row702["bound_tbbo_selected_quote_ts_event"] == "2023-02-16T02:57:32.859964579Z"
-    assert row702["bound_tbbo_quote_age_seconds"] == "147.14003600000001"
-    assert row702["bound_tbbo_selection_status"] == "PASS_ZNM3_EXTENDED_LOOKBACK_AT_OR_BEFORE_FILL_TBBO_SELECTED_NOT_RESULT"
-    row704 = next(row for row in rows if row["row_index"] == "704")
-    assert row704["raw_symbol"] == "ZNM3"
-    assert row704["bound_tbbo_selected_spread_row_hash"] == "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE"
+    row959 = next(row for row in rows if row["row_index"] == "959")
+    assert row959["tbbo_requirement_status"] == "ALREADY_BOUND_TBBO_EVIDENCE_AVAILABLE"
+    assert row959["order_side"] == "SELL"
+    assert row959["order_quantity"] == "2"
+    assert row959["fill_candidate_timestamp_utc"] == "2023-03-03T22:00:00Z"
+    assert row959["market_order_reason"] == "BOOK_REQUIRED_TARGET_POSITION_GAP_GREATER_THAN_ONE_CONTRACT"
+    assert row959["bound_tbbo_source_evidence_type"] == "STANDING_BATCH_AT_OR_BEFORE_FILL_TBBO"
+    assert row959["bound_tbbo_selected_quote_ts_event"] == "2023-03-03T21:59:59.523101291Z"
+    assert row959["bound_tbbo_quote_age_seconds"] == "0.47689900000000002"
+    row962 = next(row for row in rows if row["row_index"] == "962")
+    assert row962["bound_tbbo_source_evidence_type"] == "STANDING_RETRY_AT_OR_BEFORE_FILL_TBBO"
+    assert row962["bound_tbbo_selected_quote_ts_event"] == "2023-03-06T02:59:41.988599197Z"
+    assert row962["bound_tbbo_quote_age_seconds"] == "18.011400999999999"
+    assert all(int(row["row_index"]) != 892 for row in rows)
     for row in sha_rows:
         assert row["sha256"] == _sha256(TBBO_REQUIREMENTS_ROOT / row["relative_path"])
 
 
-def test_2023_test_row547_cap_bound_market_order_is_bounded_and_row704_blocks(test_bundle):
+def test_2023_test_row547_cap_bound_market_order_is_bounded_and_row1378_completes_pack(test_bundle):
     del test_bundle
     runtime = next(row for row in _rows(PACK_ROOT, "runtime_evidence_ledger.csv") if row["row_index"] == "547")
     order = next(row for row in _rows(RUN_ROOT, "limit_order_ledger.csv") if row["row_index"] == "547")
     market_order = next(row for row in _rows(RUN_ROOT, "market_order_ledger.csv") if row["row_index"] == "547")
     cost = next(row for row in _rows(RUN_ROOT, "cost_ledger.csv") if row["row_index"] == "547")
-    fail_row = _rows(RUN_ROOT, "fail_closed_ledger.csv")[0]
+    row1113_market = next(row for row in _rows(RUN_ROOT, "market_order_ledger.csv") if row["row_index"] == "1113")
+    run_manifest = _json(RUN_ROOT, "run_manifest.json")
 
     decision_price = float(next(row for row in _rows(PACK_ROOT, "hourly_decision_completed_bar.csv") if row["row_index"] == "547")["close_price"])
     sigma = float(runtime["annual_percentage_sigma"])
@@ -948,13 +1506,18 @@ def test_2023_test_row547_cap_bound_market_order_is_bounded_and_row704_blocks(te
     assert market_order["trigger_source_condition"] == "BOOK_REQUIRED_CAP_BOUND_LIMIT_SIDE_NOT_PLACED"
     assert cost["tbbo_bid_px"] == "113.546875"
     assert target_capped_forecast >= 20.0
-    assert cost["tbbo_selected_spread_ledger_sha256"] == "7f53e0aea45c70268fc6977f4851e0e6dcaf7ec590a87bdff08f7dd0386c2f1f"
-    assert fail_row["row_index"] == "704"
-    assert fail_row["raw_symbol"] == "ZNM3"
-    assert fail_row["fail_closed_reason"] == "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT"
-    assert fail_row["result_status"] == RESULT_STATUS
-    assert fail_row["backtest_status"] == BACKTEST_STATUS
-    assert fail_row["source_faithful_evidence_claimed"] == "FALSE"
+    assert cost["tbbo_selected_spread_ledger_sha256"] == _sha256(
+        COMBINED_TBBO_ROOT / COMBINED_MARKET_TBBO_REGISTRY_NAME
+    )
+    assert (
+        row1113_market["engineering_convention_label"]
+        == "SOURCE_NATIVE_ENGINEERING_SESSION_END_MARKET_ORDER_FILL_WITH_NEXT_AVAILABLE_VALUATION_GAP_ASSUMPTION_NOT_BOOK_EXPLICIT"
+    )
+    assert _rows(RUN_ROOT, "fail_closed_ledger.csv") == []
+    assert run_manifest["candidate_row_count"] == 1378
+    assert run_manifest["supported_mechanical_row_count"] == 1378
+    assert run_manifest["fail_closed_row_index"] == 0
+    assert run_manifest["fail_closed_reason"] == "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT"
 
 
 def test_2023_test_market_order_tbbo_requirements_discovery_rejects_forged_row():
@@ -1024,9 +1587,12 @@ def test_standing_tbbo_acquisition_rejects_self_consistent_broadened_request_win
 
 @pytest.mark.parametrize("forged_flag", ("source_faithful_evidence_claimed", "result_interpretation_authorized"))
 def test_standing_tbbo_retry_rejects_result_or_source_faithful_claim(tmp_path, forged_flag):
-    from carver_s27_v2_2023_test_standing_market_order_tbbo_failed_window_retry import _failed_requirements
+    from carver_s27_v2_2023_test_standing_market_order_tbbo_failed_window_retry import (
+        STANDING_BATCH_STATUS,
+        _failed_requirements,
+    )
 
-    failed_indices = {"356", "381", "395", "397", "416", "426", "427"}
+    failed_indices = {str(index) for index in json.loads(STANDING_BATCH_STATUS.read_text(encoding="ascii"))["failed_row_indices"]}
     rows = []
     for row in _rows(TBBO_REQUIREMENTS_ROOT, "market_order_tbbo_requirements.csv"):
         if row["row_index"] not in failed_indices:
@@ -1039,10 +1605,10 @@ def test_standing_tbbo_retry_rejects_result_or_source_faithful_claim(tmp_path, f
         forged["bound_tbbo_selected_quote_ts_event"] = "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE"
         forged["bound_tbbo_quote_age_seconds"] = "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE"
         forged["bound_tbbo_selection_status"] = "MISSING_REQUIRES_BOUNDED_TBBO_EVIDENCE"
-        if forged["row_index"] == "356":
-            forged[forged_flag] = "TRUE"
         _rehash_csv_row(forged)
         rows.append(forged)
+    rows[0][forged_flag] = "TRUE"
+    _rehash_csv_row(rows[0])
     path = tmp_path / "forged_retry_requirements.csv"
     _write_csv_rows(path, rows)
 
@@ -1215,6 +1781,47 @@ def test_2023_test_bundle_rejects_self_consistent_row547_cap_bound_trigger_forge
 
 
 @pytest.mark.parametrize(
+    ("filename", "field_name", "forged_value"),
+    (
+        ("desired_position_ledger.csv", "desired_position_contracts", "-1"),
+        ("limit_order_ledger.csv", "order_side", "SELL"),
+        ("no_market_order_ledger.csv", "engineering_convention_label", "NOT_APPLICABLE"),
+        ("working_order_transition_ledger.csv", "working_state_before", "OPEN_WORKING_ORDER_CARRIED"),
+        ("fill_ledger.csv", "fill_executed", "TRUE"),
+        ("cost_ledger.csv", "total_cost_amount", "2.3"),
+        ("pnl_ledger.csv", "ending_position_contracts", "-1"),
+    ),
+)
+def test_2023_test_bundle_rejects_self_consistent_row701_roll_suppression_forgery(
+    tmp_path,
+    test_bundle,
+    filename,
+    field_name,
+    forged_value,
+):
+    for source in RUN_ROOT.iterdir():
+        if source.is_file():
+            (tmp_path / source.name).write_bytes(source.read_bytes())
+    rows = _rows(tmp_path, filename)
+    row701 = next(row for row in rows if row["row_index"] == "701")
+    row701[field_name] = forged_value
+    _rehash_csv_row(row701)
+    _write_csv_rows(tmp_path / filename, rows)
+    evidence_hash, trusted_hash = _refresh_evidence_and_trusted_hashes(tmp_path)
+    forged = replace(
+        test_bundle,
+        output_root=str(tmp_path.resolve()),
+        run_manifest_hash=_sha256(tmp_path / "run_manifest.json"),
+        evidence_manifest_hash=evidence_hash,
+        trusted_bundle_hash=trusted_hash,
+    )
+    forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
+
+    with pytest.raises(CarverBlocked, match="row-701 suppression"):
+        forged.validate()
+
+
+@pytest.mark.parametrize(
     ("filename", "field_name", "forged_value", "message"),
     (
         ("market_fill_metadata_ledger.csv", "fill_price", "112.59375", "fill price"),
@@ -1254,7 +1861,7 @@ def test_2023_test_bundle_rejects_self_consistent_row2_market_tbbo_forgery(
     )
     forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
 
-    with pytest.raises(CarverBlocked, match=message):
+    with pytest.raises(CarverBlocked, match=f"{message}|market execution|market fill metadata"):
         forged.validate()
 
 
@@ -1303,7 +1910,90 @@ def test_2023_test_bundle_rejects_self_consistent_row391_session_end_forgery(
     )
     forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
 
-    with pytest.raises(CarverBlocked, match=f"{message}|market execution"):
+    with pytest.raises(CarverBlocked, match=f"{message}|market execution|market fill metadata"):
+        forged.validate()
+
+
+@pytest.mark.parametrize(
+    ("filename", "field_name", "forged_value", "message"),
+    (
+        (
+            "market_order_ledger.csv",
+            "engineering_convention_label",
+            "NOT_APPLICABLE",
+            "row-1113 valuation-gap|market execution",
+        ),
+        (
+            "no_market_order_ledger.csv",
+            "engineering_convention_label",
+            "NOT_APPLICABLE",
+            "row-1113 valuation-gap|market execution",
+        ),
+        (
+            "market_fill_metadata_ledger.csv",
+            "fill_timestamp_utc",
+            "2023-03-14T22:00:00Z",
+            "row-1113 valuation-gap|fill timestamp",
+        ),
+        (
+            "market_fill_metadata_ledger.csv",
+            "fill_price",
+            "113.453125",
+            "fill price",
+        ),
+        (
+            "working_order_transition_ledger.csv",
+            "same_session",
+            "FALSE",
+            "row-1113 valuation-gap|market execution",
+        ),
+        (
+            "cost_ledger.csv",
+            "tbbo_ask_px",
+            "113.453125",
+            "selected TBBO ask",
+        ),
+        (
+            "pnl_ledger.csv",
+            "valuation_mark_timestamp_utc",
+            "2023-03-14T22:00:00Z",
+            "row-1113 valuation-gap|market execution",
+        ),
+        (
+            "pnl_ledger.csv",
+            "valuation_convention_label",
+            "FORGED_VALUATION_LABEL",
+            "engineering valuation label",
+        ),
+    ),
+)
+def test_2023_test_bundle_rejects_self_consistent_row1113_valuation_gap_forgery(
+    tmp_path,
+    test_bundle,
+    filename,
+    field_name,
+    forged_value,
+    message,
+):
+    for source in RUN_ROOT.iterdir():
+        if source.is_file():
+            (tmp_path / source.name).write_bytes(source.read_bytes())
+    rows = _rows(tmp_path, filename)
+    row1113 = next(row for row in rows if row["row_index"] == "1113")
+    row1113[field_name] = forged_value
+    _rehash_csv_row(row1113)
+    _write_csv_rows(tmp_path / filename, rows)
+    evidence_hash, trusted_hash = _refresh_evidence_and_trusted_hashes(tmp_path)
+    forged = replace(
+        test_bundle,
+        output_root=str(tmp_path.resolve()),
+        run_manifest_hash=_sha256(tmp_path / "run_manifest.json"),
+        evidence_manifest_hash=evidence_hash,
+        trusted_bundle_hash=trusted_hash,
+    )
+    forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
+
+    with pytest.raises(CarverBlocked, match=f"{message}|market execution|PnL metadata"):
         forged.validate()
 
 
@@ -1477,7 +2167,7 @@ def test_2023_test_bundle_rejects_self_consistent_row304_engineering_session_ope
     )
     forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
 
-    with pytest.raises(CarverBlocked, match=f"{message}|market execution"):
+    with pytest.raises(CarverBlocked, match=f"{message}|market execution|market fill metadata"):
         forged.validate()
 
 
@@ -1561,6 +2251,88 @@ def test_2023_test_bundle_rejects_self_consistent_row436_session_open_limit_forg
     row436 = next(row for row in rows if row["row_index"] == "436")
     row436[field_name] = forged_value
     _rehash_csv_row(row436)
+    _write_csv_rows(tmp_path / filename, rows)
+    evidence_hash, trusted_hash = _refresh_evidence_and_trusted_hashes(tmp_path)
+    forged = replace(
+        test_bundle,
+        output_root=str(tmp_path.resolve()),
+        run_manifest_hash=_sha256(tmp_path / "run_manifest.json"),
+        evidence_manifest_hash=evidence_hash,
+        trusted_bundle_hash=trusted_hash,
+    )
+    forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
+
+    with pytest.raises(CarverBlocked, match=message):
+        forged.validate()
+
+
+@pytest.mark.parametrize(
+    ("filename", "field_name", "forged_value", "message"),
+    (
+        ("limit_order_ledger.csv", "limit_order_price", "111.65625", "row-892 session-end limit order"),
+        ("no_market_order_ledger.csv", "engineering_convention_label", "NOT_APPLICABLE", "row-892 session-end limit no-market"),
+        ("working_order_transition_ledger.csv", "same_session", "TRUE", "row-892 session-end limit transition"),
+        ("fill_ledger.csv", "fill_rule", "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL", "row-892 session-end limit fill"),
+        ("cost_ledger.csv", "commission_amount", "0.0", "row-892 session-end limit cost"),
+        ("pnl_ledger.csv", "ending_position_contracts", "0", "row-892 session-end limit pnl"),
+    ),
+)
+def test_2023_test_bundle_rejects_self_consistent_row892_session_end_limit_forgery(
+    tmp_path,
+    test_bundle,
+    filename,
+    field_name,
+    forged_value,
+    message,
+):
+    for source in RUN_ROOT.iterdir():
+        if source.is_file():
+            (tmp_path / source.name).write_bytes(source.read_bytes())
+    rows = _rows(tmp_path, filename)
+    row892 = next(row for row in rows if row["row_index"] == "892")
+    row892[field_name] = forged_value
+    _rehash_csv_row(row892)
+    _write_csv_rows(tmp_path / filename, rows)
+    evidence_hash, trusted_hash = _refresh_evidence_and_trusted_hashes(tmp_path)
+    forged = replace(
+        test_bundle,
+        output_root=str(tmp_path.resolve()),
+        run_manifest_hash=_sha256(tmp_path / "run_manifest.json"),
+        evidence_manifest_hash=evidence_hash,
+        trusted_bundle_hash=trusted_hash,
+    )
+    forged = replace(forged, bundle_hash=canonical_sha256(_bundle_payload(forged)))
+
+    with pytest.raises(CarverBlocked, match=message):
+        forged.validate()
+
+
+@pytest.mark.parametrize(
+    ("filename", "field_name", "forged_value", "message"),
+    (
+        ("limit_order_ledger.csv", "limit_order_price", "114.5", "row-1355 valuation-gap limit order"),
+        ("no_market_order_ledger.csv", "engineering_convention_label", "NOT_APPLICABLE", "row-1355 valuation-gap limit no-market"),
+        ("working_order_transition_ledger.csv", "same_session", "TRUE", "row-1355 valuation-gap limit transition"),
+        ("fill_ledger.csv", "fill_rule", "ONE_HOUR_CLOSE_ONLY_LIMIT_FILL", "row-1355 valuation-gap limit fill"),
+        ("cost_ledger.csv", "commission_amount", "0.0", "row-1355 valuation-gap limit cost"),
+        ("pnl_ledger.csv", "valuation_mark_timestamp_utc", "2023-03-29T22:00:00Z", "row-1355 valuation-gap limit pnl"),
+    ),
+)
+def test_2023_test_bundle_rejects_self_consistent_row1355_session_end_limit_valuation_gap_forgery(
+    tmp_path,
+    test_bundle,
+    filename,
+    field_name,
+    forged_value,
+    message,
+):
+    for source in RUN_ROOT.iterdir():
+        if source.is_file():
+            (tmp_path / source.name).write_bytes(source.read_bytes())
+    rows = _rows(tmp_path, filename)
+    row1355 = next(row for row in rows if row["row_index"] == "1355")
+    row1355[field_name] = forged_value
+    _rehash_csv_row(row1355)
     _write_csv_rows(tmp_path / filename, rows)
     evidence_hash, trusted_hash = _refresh_evidence_and_trusted_hashes(tmp_path)
     forged = replace(
@@ -1680,16 +2452,37 @@ def test_standing_tbbo_status_and_manifest_distinguish_current_request_from_aggr
         "20260613_S27_V2_2023_TEST_STANDING_MARKET_ORDER_TBBO_FAILED_WINDOW_RETRY_status.json",
     )
 
-    assert batch_status["current_request_count"] == batch_manifest["current_request_count"] == 23
+    assert batch_status["current_request_count"] == batch_manifest["current_request_count"] == 97
     assert batch_status["current_request_row_indices"] == batch_manifest["current_request_row_indices"]
-    assert batch_status["aggregate_registry_row_count"] == batch_manifest["aggregate_registry_row_count"] == 56
-    assert batch_status["selected_row_count"] == 46
-    assert batch_status["failed_row_indices"] == ["356", "381", "395", "397", "416", "426", "427", "439", "441", "532"]
-    assert retry_status["current_retry_request_count"] == retry_manifest["current_retry_request_count"] == 3
-    assert retry_status["current_retry_row_indices"] == retry_manifest["current_retry_row_indices"] == ["439", "441", "532"]
-    assert retry_status["aggregate_registry_row_count"] == retry_manifest["aggregate_registry_row_count"] == 10
-    assert retry_status["selected_row_count"] == 9
-    assert retry_status["failed_row_indices"] == ["441"]
+    assert batch_status["aggregate_registry_row_count"] == batch_manifest["aggregate_registry_row_count"] == 200
+    assert batch_status["selected_row_count"] == 156
+    assert set(batch_status["current_request_row_indices"]) & set(batch_status["failed_row_indices"]) == {
+        "962",
+        "964",
+        "969",
+        "970",
+        "986",
+        "991",
+        "992",
+        "993",
+        "1070",
+        "1118",
+        "1136",
+        "1158",
+        "1160",
+        "1162",
+        "1168",
+        "1180",
+        "1301",
+        "1312",
+        "1322",
+        "1346",
+    }
+    assert retry_status["current_retry_request_count"] == retry_manifest["current_retry_request_count"] == 20
+    assert retry_status["current_retry_row_indices"] == retry_manifest["current_retry_row_indices"]
+    assert retry_status["aggregate_registry_row_count"] == retry_manifest["aggregate_registry_row_count"] == 44
+    assert retry_status["selected_row_count"] == 38
+    assert set(retry_status["current_retry_row_indices"]).isdisjoint(set(retry_status["failed_row_indices"]))
 
 
 def test_2023_test_combined_tbbo_registry_rejects_source_selected_registry_drift():
@@ -1794,7 +2587,7 @@ def test_2023_test_market_order_freeze_rejects_forged_non_full_gap_status():
         "validation": [{"source_faithful_evidence_claimed": False}],
     }
 
-    with pytest.raises(CarverBlocked, match="full-gap position change"):
+    with pytest.raises(CarverBlocked, match="without full-gap or cap-bound trigger"):
         validate_pretest_machine_freeze_rows(rows, computed)
 
 

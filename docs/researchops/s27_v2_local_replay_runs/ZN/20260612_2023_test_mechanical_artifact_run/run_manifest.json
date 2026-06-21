@@ -16,10 +16,10 @@
     "fail_closed_ledger.csv"
   ],
   "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_2023_TEST_INPUT_PACK_AND_MECHANICAL_ARTIFACT_RUN_GATE",
-  "candidate_row_count": 704,
-  "fail_closed_reason": "FAIL_CLOSED_MARKET_ORDER_SPREAD_EVIDENCE_UNAVAILABLE_FOR_CONTINUATION_NOT_RESULT",
-  "fail_closed_row_index": 704,
-  "input_manifest_hash": "929c08328235595bef035952f431644e233a7945bfad42bbde74596778f8c2cc",
+  "candidate_row_count": 1378,
+  "fail_closed_reason": "NO_FAIL_CLOSED_BLOCKER_DECLARED_PACK_EXHAUSTED_NOT_RESULT",
+  "fail_closed_row_index": 0,
+  "input_manifest_hash": "cb13c452628041094078bfa8899959bc16f1d30fe6c39374ce8904220901bda4",
   "input_pack_path": "C:\\Users\\apops\\Desktop\\Carver\\docs\\researchops\\s27_v2_local_replay_inputs\\ZN\\20260612_2023_test_declared_pack",
   "non_authorizations": [
     "NO_PROVIDER_API",
@@ -44,5 +44,5 @@
   "source_faithful_evidence_claim": "NO",
   "source_hourly_ledger": "docs\\researchops\\s27_v2_2023_test_local_source_build\\20260612_2023_test_from_already_local_2022_2023_source\\20260612_S27_V2_2023_TEST_MECHANICAL_hourly_available.csv",
   "status": "LOCAL_2023_TEST_MECHANICAL_ARTIFACT_RUN_FAIL_CLOSED_NOT_RESULT",
-  "supported_mechanical_row_count": 703
+  "supported_mechanical_row_count": 1378
 }

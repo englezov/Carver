@@ -1,0 +1,2 @@
+completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,annual_percentage_sigma,readiness_status
+2022-01-02T00:00:00Z,2022-01-02,ZNH2,S27V2_OLDEST_DEV_ZN_DAILY_CURRENT_20220102_ZNH2_001,130.34375,0.028742668931510368,READY_COMPLETED_BAR

@@ -1,0 +1,23 @@
+{
+  "active_fail_closed_ledger": "docs/researchops/s27_v2_local_replay_runs/ZN/20260612_2023_test_mechanical_artifact_run/fail_closed_ledger.csv",
+  "active_fail_closed_ledger_sha256": "638855B4069862E132E2273B953FBB6EE108CE7C37400E77B3ED93CD63239C73",
+  "authorization": "S27_V2_2023_TEST_ROW1356_BOUNDED_MARKET_ORDER_TBBO_EVIDENCE_AND_CONTINUATION_GATE",
+  "broader_provider_api_access": "NO",
+  "broader_test_continuation": "NO",
+  "dataset": "GLBX.MDP3",
+  "general_historical_download": "NO",
+  "pnl_result_emission": "NO",
+  "provider": "DATABENTO_HISTORICAL",
+  "raw_symbol": "ZNM3",
+  "request_end_utc": "2023-03-30T00:00:05Z",
+  "request_start_utc": "2023-03-29T23:59:55Z",
+  "requirement_row_hash": "f4f17fa49f6ee0efcaae5bef6f7dc6230adf9c70716a2cf45a443cb4690ff4d0",
+  "row_index": "1356",
+  "run_id": "20260616_S27_V2_2023_TEST_ROW1356_MARKET_ORDER_TBBO",
+  "schema": "tbbo",
+  "scope": "ROW1356_ONLY_BOUNDED_2023_TEST_MARKET_ORDER_TBBO_REQUIREMENT",
+  "source_faithful_evidence_claim": "NO",
+  "standing_authorization": "S27_V2_STANDING_BOUNDED_MARKET_ORDER_TBBO_SPREAD_EVIDENCE_POLICY",
+  "stype_in": "raw_symbol",
+  "validation_oos_lockbox_forward_access": "NO"
+}

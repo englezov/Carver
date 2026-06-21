@@ -1,0 +1,17 @@
+{
+  "authorization": "S27_V2_2023_TEST_ROW1356_POST_FILL_TBBO_ENGINEERING_CONVENTION_IMPLEMENTATION_AND_CONTINUATION_GATE",
+  "downloads_or_new_data": "NO",
+  "evidence_label": "ROW1356_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT",
+  "policy_record": "docs/process/CARVER_S27_ZN_V2_2023_TEST_ROW1356_TBBO_POLICY_DECISION_2026-06-16.md",
+  "policy_record_sha256": "78E06667684CDA7E40AFF4684A27D5FC0BBBB929E364EDCC746EEBC2C89F9628",
+  "provider_api_access": "NO",
+  "raw_symbol": "ZNM3",
+  "result_interpretation": "NO",
+  "row_index": "1356",
+  "run_id": "20260616_S27_V2_2023_TEST_ROW1356_POST_FILL_TBBO_ENGINEERING",
+  "selected_quote_ts_event": "2023-03-30T00:00:00.099806785Z",
+  "selected_spread_row_hash": "072e5ed6e19b747b5ba78665686626d7d2403101f9a0adadc183088434dfcc77",
+  "source_faithful_evidence_claim": "NO",
+  "strict_evidence_root": "docs/researchops/s27_v2_market_spread_evidence/ZN/20260616_2023_test_row1356_market_order_tbbo",
+  "strict_evidence_status": "FAIL_CLOSED_ROW1356_BOUNDED_DATABENTO_TBBO_INCOMPLETE_NOT_RESULT"
+}

@@ -8,9 +8,9 @@ Status:
 FAIL_CLOSED_STANDING_BOUNDED_DATABENTO_TBBO_FAILED_WINDOW_RETRY_INCOMPLETE_NOT_RESULT
 ```
 
-Current retry count: `14`
-Aggregate registry row count: `24`
-Selected row count: `18`
+Current retry count: `20`
+Aggregate registry row count: `44`
+Selected row count: `38`
 Failed row count: `6`
 Failed row indices: `441,702,703,704,708,829`
 

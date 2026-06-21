@@ -1,0 +1,2 @@
+ts_recv,ts_event,rtype,publisher_id,instrument_id,action,side,depth,price,size,flags,ts_in_delta,sequence,bid_px_00,ask_px_00,bid_sz_00,ask_sz_00,bid_ct_00,ask_ct_00,symbol
+2023-03-31 00:00:00.184099738+00:00,2023-03-31 00:00:00.183796035+00:00,1,1,69078,T,B,0,114.53125,3,0,23423,68334905,114.515625,114.53125,459,74,52,20,ZNM3

@@ -1,0 +1,24 @@
+{
+  "ask_px_00": "",
+  "authorization": "S27_V2_CONTROLLED_LOCAL_ONLY_2023_TEST_CONTINUATION_FAST_OPERATIONAL_RUNNER_GATE",
+  "bid_px_00": "",
+  "broader_test_continuation": "NO",
+  "downloads": "ROW1378_ONLY_BOUNDED_TBBO_WINDOW",
+  "failed_row_count": 1,
+  "failed_row_indices": [
+    "1378"
+  ],
+  "provider_api_access": "ROW1378_ONLY_BOUNDED_DATABENTO_TBBO",
+  "provider_condition_status": "FAIL_CLOSED_NO_FRESH_NON_CROSSED_TBBO_QUOTE_SELECTED",
+  "quote_age_seconds": "",
+  "result_interpretation": "NO",
+  "row_index": "1378",
+  "selected_executable_market_fill_price": "",
+  "selected_quote_ts_event": "",
+  "selected_row_count": 0,
+  "selection_status": "FAIL_CLOSED_NO_SELECTED_TBBO_QUOTE",
+  "source_faithful_evidence_claim": "NO",
+  "standing_authorization": "S27_V2_STANDING_BOUNDED_MARKET_ORDER_TBBO_SPREAD_EVIDENCE_POLICY",
+  "status": "FAIL_CLOSED_ROW1378_BOUNDED_DATABENTO_TBBO_INCOMPLETE_NOT_RESULT",
+  "validation_oos_lockbox_forward_access": "NO"
+}
