@@ -1,0 +1,22 @@
+{
+  "end_date": "2026-05-23",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "42000661": [
+      {
+        "d0": "2026-04-10",
+        "d1": "2026-05-23",
+        "s": "ZNM6"
+      }
+    ]
+  },
+  "start_date": "2026-04-12",
+  "status": 0,
+  "stype_in": "instrument_id",
+  "stype_out": "raw_symbol",
+  "symbols": [
+    "42000661"
+  ]
+}

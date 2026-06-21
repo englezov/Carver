@@ -1,0 +1,7 @@
+rule,average_turnover,threshold_source,status,evidence_basis,blocker_or_note,next_required_action
+EWMAC2,98.5,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."
+EWMAC4,50.2,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."
+EWMAC8,25.4,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."
+EWMAC16,13.2,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."
+EWMAC32,7.6,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."
+EWMAC64,5.2,0.15 SR,FAIL_CLOSED_S09_MES_SPEED_ELIGIBILITY_NOT_COMPUTABLE,"P05/S09 source packet records Strategy 9 turnover table and 0.15 SR threshold.","MES risk-adjusted cost is not locked.","Compute risk-adjusted cost then apply threshold."

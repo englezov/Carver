@@ -1,0 +1,36 @@
+{
+  "status": "S09_MES_TEST_RESULT_DOWNGRADED_TO_DIAGNOSTIC_ONLY_VALIDATION_BLOCKED",
+  "date": "2026-06-04",
+  "run_id": "20260604_S09_MES_TEST_WINDOW_BACKTEST",
+  "window_role": "TEST",
+  "window_start": "2020-04-06",
+  "window_end": "2022-02-08",
+  "historical_receipt_preserved": "YES_BACKTEST_EXECUTED_EXACTLY_ONCE",
+  "clean_test_evidence_admissibility": "NO_DIAGNOSTIC_ONLY",
+  "validation_stage_access": "BLOCKED",
+  "lockbox_forward_access": "NO",
+  "new_databento_api_access": "NO",
+  "new_data_download": "NO",
+  "new_backtest_or_diagnostic": "NO",
+  "git_operations": "NO",
+  "remediation_guards_added": [
+    "lineage_readiness_fail_closed_guard",
+    "sunday_provider_date_cadence_guard",
+    "degraded_ohlcv_policy_diagnostic_only_guard",
+    "whole_contract_equivalent_trade_count_guard",
+    "direct_databento_download_helper_quarantine",
+    "manifest_write_deferred_until_after_remediation_guards",
+    "stale_original_pass_receipt_wording_retired_for_future_clean_runs"
+  ],
+  "known_blockers_before_clean_test": [
+    "session_or_trading_day_semantics_repair",
+    "cold_shape_based_degraded_ohlcv_policy_lock",
+    "warmup_budget_reconciliation",
+    "machinery_hostile_audit_before_backtest"
+  ],
+  "verification": {
+    "py_compile": "PASS",
+    "unit_tests": "PASS_RAN_97_TESTS"
+  },
+  "process_record": "docs/process/CARVER_S09_MES_TEST_OPUS_REMEDIATION_RESULT_2026-06-04.md"
+}

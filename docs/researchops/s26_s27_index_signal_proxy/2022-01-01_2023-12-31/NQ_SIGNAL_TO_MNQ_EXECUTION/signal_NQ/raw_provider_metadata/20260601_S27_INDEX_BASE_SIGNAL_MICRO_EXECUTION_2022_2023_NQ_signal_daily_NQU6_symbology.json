@@ -1,0 +1,24 @@
+{
+  "end_date": "2016-11-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "NQU6"
+  ],
+  "result": {
+    "NQU6": [
+      {
+        "d0": "2015-06-07",
+        "d1": "2016-10-03",
+        "s": "2563"
+      }
+    ]
+  },
+  "start_date": "2015-05-30",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "NQU6"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "authorized_degraded_completed_dates": [
+    "2020-06-30",
+    "2020-07-01",
+    "2021-12-05",
+    "2022-01-02"
+  ],
+  "backtest_authorized_by_this_policy": "NO",
+  "dataset": "GLBX.MDP3",
+  "forbidden_actions": [
+    "fill",
+    "interpolate",
+    "substitute_provider",
+    "borrow_es_or_cfd",
+    "widen_window",
+    "validation_lockbox_forward_access",
+    "backtest_without_separate_authorization"
+  ],
+  "gate": "S09_MES_TEST_DEGRADED_OHLCV_ADMISSION_POLICY_LOCK",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "policy": "SOURCE_NATIVE_DEGRADED_OHLCV_OPERATOR_POLICY_LOCKED",
+  "provider": "DATABENTO_HISTORICAL",
+  "row_level_overlay": "20260604_S09_MES_TEST_DEGRADED_OHLCV_ADMISSION_POLICY_row_overlay.csv",
+  "row_id": "APPENDIX_C_174_006",
+  "run_id": "20260604_S09_MES_TEST_DEGRADED_OHLCV_ADMISSION_POLICY",
+  "status": "LOCKED_SOURCE_NATIVE_TEST_DEGRADED_OHLCV_ADMISSION_POLICY_NOT_BACKTEST",
+  "window_end": "2022-02-08",
+  "window_role": "TEST",
+  "window_start": "2020-04-06"
+}

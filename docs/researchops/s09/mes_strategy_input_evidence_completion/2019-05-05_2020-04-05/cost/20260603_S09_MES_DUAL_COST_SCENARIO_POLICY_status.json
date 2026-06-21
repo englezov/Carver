@@ -1,0 +1,24 @@
+{
+  "backtests_run": "NO",
+  "diagnostics_run": "NO",
+  "evidence_completion_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETION_NOT_READY",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_DUAL_COST_SCENARIO_POLICY_LOCK",
+  "git_operations": "NO",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "machinery_development_slice": "2019-05-05 through 2020-04-05",
+  "remaining_evidence_count": 5,
+  "risk_adjusted_cost_values_lock": "NO",
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "scenario_count": 2,
+  "scenario_names": [
+    "CONSERVATIVE_LIVE_FUTURES_PASS_THROUGH",
+    "ETF_SIM_FEE_ALL_IN_EXCHANGE_NFA_EXCLUDED"
+  ],
+  "selected_evidence_name": "cost_scenario_policy",
+  "speed_eligibility_computation": "NO",
+  "status": "LOCKED_S09_MES_DUAL_COST_SCENARIO_POLICY_NOT_RISK_ADJUSTED_COST",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY",
+  "test_validation_lockbox_forward_access": "NO"
+}

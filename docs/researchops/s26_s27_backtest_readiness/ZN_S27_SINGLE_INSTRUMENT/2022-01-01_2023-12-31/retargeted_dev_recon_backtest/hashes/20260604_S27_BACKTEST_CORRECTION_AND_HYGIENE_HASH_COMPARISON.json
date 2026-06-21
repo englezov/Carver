@@ -1,0 +1,108 @@
+{
+  "comparison_status": "PASS_WITH_LIMITATIONS_DISTINGUISH_OLD_UNCORRECTED_FROM_HYGIENE_ONLY_REMEDIATION",
+  "created_date": "2026-06-04",
+  "purpose": "Record the two distinct S27 comparison questions raised by GPT Extended Pro 5.5: old uncorrected versus corrected, and corrected pre-hygiene versus corrected post-hygiene.",
+  "comparison_1_old_uncorrected_git_anchor_to_current_corrected": {
+    "old_git_anchor": "dc6324e4e0a61001c7c058ff646be9f6ee2b12e3",
+    "current_git_anchor": "2f8c69606e0ba79c7e511332406dd2d1eaf6dd7a",
+    "comparison_result": "STRATEGY_BEARING_ARTIFACTS_CHANGED_MATERIALLY",
+    "interpretation": "This supports the remediation story against the concern that the corrected package merely repackaged the old bad result.",
+    "artifacts": [
+      {
+        "name": "s27_forecast_rows",
+        "old_sha256": "6409165FAD733A77E1FF0E74683080C10D4AAD9A75AB5914A2E8FAB721BF1A9D",
+        "current_sha256": "0FB0EF0E8A04A07EFC4110AA61405773199DBF61D9535A869C8C0D3D811E5021",
+        "unchanged": false
+      },
+      {
+        "name": "unit_no_cost_backtest_rows",
+        "old_sha256": "C7A2F1E5B58B7EB166ED34BA2A8F4C4C60CB8C9EE0A193DC3E600D4AEC4F2AAA",
+        "current_sha256": "86087EC8CD3B0140D422A2999F26EC08ABF21FCDC2DD6D72D539CEBEB8E29DD1",
+        "unchanged": false
+      },
+      {
+        "name": "status_json",
+        "old_sha256": "3BE7B04D947B9CC0088D8D7FD7B491506ADC346477C1111D91F8EC83FE9DD9F1",
+        "current_sha256": "C8CE29EA00B3DBE79197CFF1F595948D8190ACCA8D0C14A858B760BC982A0597",
+        "unchanged": false
+      }
+    ],
+    "status_fields": {
+      "old_gross_no_cost_pnl_usd": 2968.75,
+      "current_gross_no_cost_pnl_usd": 531.25,
+      "old_s27_forecast_rows": 11771,
+      "current_s27_forecast_rows": 11775,
+      "old_backtest_rows": 11770,
+      "current_backtest_rows": 11774,
+      "old_blocked_dependency_rows": 4,
+      "current_blocked_dependency_rows": 0,
+      "old_daily_runtime_rows": 4750,
+      "current_corrected_runtime_alignment_rows": 11775
+    }
+  },
+  "comparison_2_corrected_pre_hygiene_to_corrected_post_hygiene": {
+    "comparison_result": "STRATEGY_BEARING_HEADLINE_ARTIFACTS_UNCHANGED_BY_HYGIENE_REMEDIATION",
+    "evidence_scope": "Pre-hygiene values are from the active Codex terminal transcript after the operator-authorized corrected S27 first-window backtest and before the orphan quarantine/headered blocked-ledger remediation. Post-hygiene values are from the current committed package.",
+    "evidence_limitation": "The pre-hygiene values were not preserved in a committed machine-readable receipt before remediation; this file records them retrospectively from the active run transcript. Future remediations should write this comparison before changing package files.",
+    "strategy_bearing_artifacts": [
+      {
+        "name": "s27_forecast_rows",
+        "pre_hygiene_sha256": "0FB0EF0E8A04A07EFC4110AA61405773199DBF61D9535A869C8C0D3D811E5021",
+        "post_hygiene_sha256": "0FB0EF0E8A04A07EFC4110AA61405773199DBF61D9535A869C8C0D3D811E5021",
+        "unchanged": true
+      },
+      {
+        "name": "unit_no_cost_backtest_rows",
+        "pre_hygiene_sha256": "86087EC8CD3B0140D422A2999F26EC08ABF21FCDC2DD6D72D539CEBEB8E29DD1",
+        "post_hygiene_sha256": "86087EC8CD3B0140D422A2999F26EC08ABF21FCDC2DD6D72D539CEBEB8E29DD1",
+        "unchanged": true
+      },
+      {
+        "name": "status_json",
+        "pre_hygiene_sha256": "C8CE29EA00B3DBE79197CFF1F595948D8190ACCA8D0C14A858B760BC982A0597",
+        "post_hygiene_sha256": "C8CE29EA00B3DBE79197CFF1F595948D8190ACCA8D0C14A858B760BC982A0597",
+        "unchanged": true
+      }
+    ],
+    "expected_hygiene_changes": [
+      {
+        "name": "package_sha256_manifest",
+        "pre_hygiene_sha256": "C8310F24342448AB2BAE4CCE82758419D183C85A6AE6860316BF3ED227270326",
+        "post_hygiene_sha256": "8A2D76D453B580C455ABBFDEBD1170D05006AFDCED2177B1D23D7C566D7DD386",
+        "allowed_change_reason": "Hash manifest was patched to exclude the orphan legacy daily_runtime_rows folder and include only declared current package folders."
+      },
+      {
+        "name": "s27_blocked_dependency_rows",
+        "pre_hygiene_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "post_hygiene_sha256": "8DF441A9642CA427B0455D10AEB11534F57FE6C51BD0AF919AA3A27C91B8E633",
+        "allowed_change_reason": "Zero-row blocked dependency ledger was changed from 0-byte empty file to header-only CSV with zero data rows."
+      },
+      {
+        "name": "orphan_daily_runtime_rows",
+        "pre_hygiene_location": "retargeted_dev_recon_backtest/daily_runtime_rows",
+        "post_hygiene_location": "retargeted_dev_recon_backtest_orphan_quarantine/daily_runtime_rows",
+        "allowed_change_reason": "Orphan legacy artifact was preserved but removed from corrected package evidence."
+      }
+    ]
+  },
+  "boundary": {
+    "stage": "DEV_RECON_UNIT_PLUMBING_NO_COST_NOT_ALPHA_NOT_PROMOTION",
+    "not_external_attestation": [
+      "no_provider_api_access",
+      "no_oos_lockbox_forward",
+      "costs_fail_closed",
+      "real_m1_position_sizing_blocked"
+    ],
+    "non_authorization": [
+      "NO_PROVIDER_API_ACCESS",
+      "NO_NEW_DATA_DOWNLOAD",
+      "NO_OOS",
+      "NO_LOCKBOX",
+      "NO_FORWARD",
+      "NO_DEPLOYMENT",
+      "NO_TRADING",
+      "NO_PROMOTION",
+      "NO_GIT_OPERATION_FROM_THIS_FILE"
+    ]
+  }
+}

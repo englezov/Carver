@@ -1,0 +1,29 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTU3"
+  ],
+  "result": {
+    "ZTU3": [
+      {
+        "d0": "2012-06-17",
+        "d1": "2014-03-23",
+        "s": "224332"
+      },
+      {
+        "d0": "2022-12-18",
+        "d1": "2024-01-01",
+        "s": "72156"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTU3"
+  ]
+}

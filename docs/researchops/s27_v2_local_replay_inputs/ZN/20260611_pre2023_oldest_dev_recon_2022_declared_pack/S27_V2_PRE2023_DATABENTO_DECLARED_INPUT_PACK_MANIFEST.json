@@ -1,0 +1,121 @@
+{
+  "artifact": "S27_V2_PRE2023_DATABENTO_ZN_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_EXACTLY_ONE_DATABENTO_ZN_OLDER_HISTORY_DOWNLOAD_BUILD_GATE",
+  "explicitly_excluded_data": [
+    "NO_2023_TEST_DATA",
+    "NO_VALIDATION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD"
+  ],
+  "history_evidence": {
+    "commission_spread_policy_status": "INFERRED_RETAIL_FUTURES_COST_ACCEPTED_FOR_LOCAL_DEV_RECON_ONLY_NOT_BOOK_EXPLICIT",
+    "daily_continuous_order": "CHRONOLOGICAL_ASCENDING_SELECTED_ROW_LAST",
+    "daily_continuous_prior_history_rows": "63",
+    "daily_continuous_rows": "64",
+    "daily_history_first_prior_trading_date": "2021-10-17",
+    "daily_history_selected_previous_trading_date": "2021-12-31",
+    "future_roll_deltas_after_cutoff_excluded": "YES",
+    "level_bridge_disposition": "PASS_LOCAL_LEVEL_SPACE_BRIDGE_SHARED_DATABENTO_DAILY_ROLL_LEVEL_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+    "level_bridge_proof_hash": "dad06c4491fa4f71b290d46121fd3e8582761d9b673490dfc0050398f189eb40",
+    "multiplier_currency_policy_status": "APPENDIX_C_STATIC_ZN_POINT_VALUE_AND_USD_CURRENCY_BOUND_FOR_POSITION_ONLY",
+    "point_in_time_roll_cutoff_date": "2021-12-31",
+    "selected_sigma_method_status": "STRATEGY_3_STYLE_EWMA32_PERCENT_RETURN_SIGMA_ANNUALIZED_256",
+    "selected_sigma_percent_t": "0.04668909552506636",
+    "selected_sigma_status": "RECOMPUTED_STRATEGY3_SIGMA_FROM_DATABENTO_PRE2023_DAILY_HISTORY",
+    "selected_vqm_method_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME_PRE2023_DATABENTO",
+    "selected_vqm_multiplier_m": "0.9047281454440286",
+    "selected_vqm_observation_count": "976",
+    "selected_vqm_quantile_q": "0.8348717948717949",
+    "selected_vqm_relative_volatility_v": "1.124936736045575",
+    "selected_vqm_source_completed_trading_date": "2021-12-31",
+    "selected_vqm_status": "RECOMPUTED_S27_V_Q_M_ATTENUATION_DAILY_VALUE_STRICT_PRIOR_TO_DECISION",
+    "tick_rounding_policy_status": "APPENDIX_C_STATIC_ZN_TICK_POLICY_BOUND_FOR_DEV_RECON_PLANNING_ONLY",
+    "valuation_policy_status": "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT_FOR_LOCAL_DEV_RECON_ONLY",
+    "working_order_lifecycle_status": "FIRST_ROW_EMPTY_WORKING_ORDER_STATE_DECLARED_RUNNER_MUST_BIND_SUBSEQUENT_STATE"
+  },
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "level_bridge_proof": {
+    "artifact": "S27_V2_ZN_PRE2023_DATABENTO_LEVEL_BRIDGE_PROOF_NOT_RESULT_EVIDENCE",
+    "bridge_disposition": "PASS_LOCAL_LEVEL_SPACE_BRIDGE_SHARED_DATABENTO_DAILY_ROLL_LEVEL_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+    "daily_active_contract": "ZNH2",
+    "daily_additive_back_adjustment": "0.0",
+    "future_roll_deltas_after_cutoff_excluded": "YES",
+    "hourly_active_contract": "ZNH2",
+    "hourly_additive_back_adjustment_applied_for_bridge": "0.0",
+    "point_in_time_roll_cutoff_date": "2021-12-31",
+    "selected_decision_timestamp_utc": "2022-01-03T01:00:00Z",
+    "selected_previous_daily_date": "2021-12-31",
+    "source_daily_risk_history_sha256": "298848BC90FFB94239E4E224C2F863F730CE8A161FBD434DBEDD6D4D04677AB4",
+    "source_hourly_available_bars_sha256": "77F80D295EE014A96E0C1572CDC1791B1E735987914C8A88396DF605736A2A83"
+  },
+  "non_authorizations": [
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS_ACCESS",
+    "NO_LOCKBOX_ACCESS",
+    "NO_FORWARD_ACCESS",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "21C4A80AA4E5E149829CB995FD49BFC74D1463F0BF948BC03F9E8DB266C44B56"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 64,
+      "sha256": "5CCA506733FE6E31D998CF0CF343042C9E595EB6C6FF355FB6E43E33D9C3CCD8"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "53D8F5CC6DF9B5CF778751D73E6CE9C410D609C32DF78CC4BD1EB97C0C5DA60C"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "EB98E5DBC69EF86ED478A956FEFD20CB824363C2DA48B54E571B2373B223AF7C"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "8141CCE9C6C8288AA03EFB0314C9E15FEA3531C9194AEF40C3309DB30E98F767"
+    },
+    "roll_calendar.csv": {
+      "row_count": 46,
+      "sha256": "EEF62BE7BCEED1309BEB35DF203C154E8CE2C778612A805D4F8A21751B73FA50"
+    },
+    "session_calendar.csv": {
+      "row_count": 1,
+      "sha256": "0281FDD1DDB6941A8D300C18C188956A263CF7753F5CFF90C2AC1E36144914EC"
+    }
+  },
+  "selected_decision_timestamp_utc": "2022-01-03T01:00:00Z",
+  "selected_fill_timestamp_utc": "2022-01-03T02:00:00Z",
+  "selected_previous_daily_timestamp_utc": "2021-12-31T00:00:00Z",
+  "selected_raw_symbol": "ZNH2",
+  "selected_slice_rule": "PRESERVE_2023_FOR_TEST_USE_OLDEST_2022_ROW_AFTER_STRICT_PRIOR_VQM_AND_LEVEL_COMPATIBILITY_POPULATED",
+  "source_files": {
+    "continuous_daily_risk_history": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_selected_point_in_time_daily_risk_history.csv",
+    "download_build_status": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\status\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_status.json",
+    "relative_vol_v_q_m_daily_ledger": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_selected_point_in_time_relative_vol_v_q_m_daily_ledger.csv",
+    "sigma_i_t_ledger": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_selected_point_in_time_sigma_i_t_ledger.csv",
+    "strategy_facing_hourly_available_bars": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_strategy_facing_hourly_available_bars.csv"
+  },
+  "status": "LOCAL_INPUT_PACK_DECLARED_FOR_2022_DEVELOPMENT_RECON_ONLY_NOT_BACKTEST_NOT_RESULT",
+  "working_order_lifecycle_context": {
+    "initial_current_position_contracts": "0",
+    "open_working_orders": "0",
+    "runner_must_bind_subsequent_state": "YES",
+    "selected_decision_timestamp_utc": "2022-01-03T01:00:00Z",
+    "state_scope": "FIRST_ROW_CONTEXT_ONLY_NOT_FULL_MULTI_ROW_LIFECYCLE_EVIDENCE",
+    "status": "FIRST_ROW_EMPTY_WORKING_ORDER_STATE_DECLARED_FOR_2022_LOCAL_DEV_RECON_RUNNER_BINDING"
+  }
+}

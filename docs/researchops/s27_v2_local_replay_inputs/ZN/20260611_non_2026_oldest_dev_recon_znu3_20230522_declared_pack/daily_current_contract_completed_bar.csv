@@ -1,0 +1,2 @@
+completed_timestamp_utc,trading_date,raw_symbol,row_locator,close_price,annual_percentage_sigma,readiness_status
+2023-05-21T00:00:00Z,2023-05-21,ZNU3,S27V2_NON_2026_OLDEST_ZN_DAILY_CURRENT_20230521_ZNU3_SELECTED_0001,114.546875,0.061240880678963244,READY_COMPLETED_BAR_LOCAL_NON_2026_DEV_RECON

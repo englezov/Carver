@@ -1,0 +1,24 @@
+{
+  "end_date": "2014-11-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZFU4"
+  ],
+  "result": {
+    "ZFU4": [
+      {
+        "d0": "2013-06-16",
+        "d1": "2014-11-04",
+        "s": "861321"
+      }
+    ]
+  },
+  "start_date": "2013-05-29",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZFU4"
+  ]
+}

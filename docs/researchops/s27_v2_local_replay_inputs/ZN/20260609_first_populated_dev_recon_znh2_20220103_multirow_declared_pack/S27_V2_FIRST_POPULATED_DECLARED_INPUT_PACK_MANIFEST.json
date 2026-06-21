@@ -1,0 +1,99 @@
+{
+  "artifact": "S27_V2_FIRST_POPULATED_ZN_MULTIROW_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_LOCAL_ONLY_FIRST_POPULATED_ZN_INPUT_PACK_P3_HARDENING_AND_BUILD",
+  "history_evidence": {
+    "daily_continuous_prior_history_rows": 63,
+    "daily_continuous_rows": 64,
+    "hourly_decision_rows": 8,
+    "hourly_fill_rows": 8,
+    "selected_sigma_source": "forecast sigma bridge row converted to annual percentage sigma decimal for selected prior daily/current row; not source-faithful evidence claim.",
+    "vqm_history_gap_note": "Local R2 V/Q/M ledger ends before selected 2022 hourly decision; pack is construction input only and must remain fail-closed for source-faithful runtime evidence until V/Q/M is recomputed or source-locked.",
+    "vqm_source_latest_completed_trading_date": "2020-12-21",
+    "vqm_source_latest_status": "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME"
+  },
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "row_family_files": {
+    "cost_parameter.csv": {
+      "row_count": 1,
+      "sha256": "42F00022D7225450098DC7DA63A8937E1D823F4F218248A534828CCE74FEC888"
+    },
+    "daily_continuous_completed_bar.csv": {
+      "row_count": 64,
+      "sha256": "5437BCF2C7BCBB40BAF0BA1245DD8AE156D6E2378F482D8E7ECE3EAA551E5516"
+    },
+    "daily_current_contract_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "A085989CA4DB1753333B2E99E7D1A270E137FEC691C9AF88006D9CD22D4B8DA5"
+    },
+    "hourly_decision_completed_bar.csv": {
+      "row_count": 8,
+      "sha256": "C00FB1425C8A3682A9C20E3743D0C212D948D72C608950A80E281EC97C06D5C8"
+    },
+    "hourly_fill_completed_bar.csv": {
+      "row_count": 8,
+      "sha256": "9B98AC49842164A60A19DA6DB519695A9B12E884A6C268917F4C06AFAD349243"
+    },
+    "roll_calendar.csv": {
+      "row_count": 1,
+      "sha256": "69DD394C97A4B11CCF47FB3CCC3030625F45FFE19340F65E453088B8BE8DF657"
+    },
+    "session_calendar.csv": {
+      "row_count": 1,
+      "sha256": "D4FEC50876E1B845913E0C2125ED64725A365538A01BB1BC147999FFEA8C9AE3"
+    }
+  },
+  "selected_decision_timestamp_utc": "2022-01-03T05:00:00Z",
+  "selected_fill_timestamp_utc": "2022-01-03T06:00:00Z",
+  "selected_previous_daily_timestamp_utc": "2022-01-02T00:00:00Z",
+  "selected_slice_rule": "FIRST_CONTIGUOUS_LOCAL_SLICE_AFTER_REQUIRED_INDICATORS_POPULATED_OR_FAIL_CLOSED",
+  "source_files": {
+    "daily_current_provider": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/raw_provider_output/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_ZN_daily_ZNH2_provider.csv",
+      "sha256": "2CEEC7C80D9A8D0D11A662B8353828E64D98AFEE1F92F226C30275CDB08FD840"
+    },
+    "daily_lineage": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_daily_continuous_lineage.csv",
+      "sha256": "FFECE029996036CB4FEB7B7A3EE875EC89E6BDA5A9B58D577760241504E31BB7"
+    },
+    "forecast_rows": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/forecast_rows/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_s27_forecast_rows.csv",
+      "sha256": "5BFAB67585E104227F10758BC5989C089215A2D16BB33E7993DDF333BF6D79D1"
+    },
+    "hourly_lineage": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_continuous_lineage.csv",
+      "sha256": "D5B06948D9C0584F93845B3C80A67B7A8EC87602E75D55D2C065ADBEEFB774A1"
+    },
+    "hourly_roll_plan": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_roll_plan.csv",
+      "sha256": "391FA4BC7D911001396E5CCEE72437AAEB1C8240054BBCA903B1FF887EDBF47A"
+    },
+    "sigma_rows": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/daily_runtime_rows/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_sigma_rows.csv",
+      "sha256": "A87122933630F6DFFD2138EF6BAA649450C14432EA49DF0A7D0B17B88F848749"
+    },
+    "vqm_rows": {
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/daily_runtime_rows/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_vqm_rows.csv",
+      "sha256": "72CA1D88B79940A99467F0F535707F50CF5710BA95E321FBD4572AA2BCAE6ADE"
+    }
+  },
+  "status": "LOCAL_INPUT_PACK_DECLARED_FOR_PARSER_REPLAY_CONSTRUCTION_ONLY_NOT_EVIDENCE"
+}

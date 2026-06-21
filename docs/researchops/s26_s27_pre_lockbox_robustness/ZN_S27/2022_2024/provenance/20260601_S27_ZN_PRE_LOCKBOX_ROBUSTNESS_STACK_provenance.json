@@ -1,0 +1,44 @@
+{
+  "inputs": [
+    {
+      "path": "docs\\researchops\\s26_s27_ladder_attribution\\ZN_S27\\2022_2024\\row_attribution\\20260601_S27_ZN_LADDER_ATTRIBUTION_AND_BASELINE_RECONCILIATION_row_attribution.csv",
+      "sha256": "BA5E2838A7AD882937DF8DD487B8F3E89D766A250A0FE011FB1450966B569C1B"
+    },
+    {
+      "path": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\forecast_rows\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_s27_forecast_rows.csv",
+      "sha256": "6409165FAD733A77E1FF0E74683080C10D4AAD9A75AB5914A2E8FAB721BF1A9D"
+    },
+    {
+      "path": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\forecast_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_s27_forecast_rows.csv",
+      "sha256": "2AC7B79F509B2720D3B3CBE0206EEDD0E9AB8E5D212174EE8E82A57DFBF37970"
+    }
+  ],
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "process_companion_docs": [
+    "docs\\process\\CARVER_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_RESULT_2026-06-01.md",
+    "docs\\process\\CARVER_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_LOCAL_HOSTILE_AUDIT_2026-06-01.md"
+  ],
+  "status": {
+    "claim_scope": "S27_SIGNAL_PLUS_M1_LADDER_NOT_PURE_CARVER_S27",
+    "combined_window_statistic_used_for_pass_fail": "NO",
+    "diagnostics_scope": "WINDOW_SCOPED_2022_2023_AND_2024_SEPARATELY",
+    "gate": "S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_DEV_RECON_ONLY",
+    "lane": "SOURCE_NATIVE_FUTURES",
+    "lockbox_opened": "NO",
+    "market_row_parsing": "NO_NEW_MARKET_ROWS_EXISTING_LOCAL_ARTIFACTS_ONLY",
+    "matched_avg_abs_beta_strip": "ATTRIBUTION_ONLY_FRACTIONAL_EXPOSURE_BASELINE_NOT_TRADABLE_POSITION",
+    "mcpt_executed": "NO",
+    "new_data_download": "NO",
+    "null_rows": 8,
+    "provider_api_access": "NO",
+    "run_id": "20260601_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK",
+    "source_rows": 17688,
+    "status": "PASS_S27_ZN_PRE_LOCKBOX_ROBUSTNESS_STACK_DEV_RECON_ONLY_NOT_MCPT_NOT_LOCKBOX",
+    "summary_rows": 10,
+    "validation_failed": "NO",
+    "windows": [
+      "2022_2023_INITIAL_DEV_RECON",
+      "2024_VALIDATION_STYLE"
+    ]
+  }
+}

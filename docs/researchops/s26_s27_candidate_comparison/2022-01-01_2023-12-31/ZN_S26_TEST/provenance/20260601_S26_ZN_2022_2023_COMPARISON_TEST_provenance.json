@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-06-01T06:59:45.475082Z",
+  "gate": "S26_ZN_2022_2023_COMPARISON_TEST_EXCEPTION",
+  "lockbox_access": "NO",
+  "new_data_download": "NO",
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "run_id": "20260601_S26_ZN_2022_2023_COMPARISON_TEST",
+  "source_files": {
+    "hourly_lineage_csv": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\local_lineage\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_continuous_lineage.csv",
+    "s26_forecast_csv": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\forecast_rows\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_s26_forecast_rows.csv",
+    "s27_backtest_csv": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\backtest_rows\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_unit_etf_cost_backtest_rows.csv",
+    "s27_status_json": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\status\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_status.json"
+  },
+  "source_sha256": {
+    "hourly_lineage_csv": "D5B06948D9C0584F93845B3C80A67B7A8EC87602E75D55D2C065ADBEEFB774A1",
+    "s26_forecast_csv": "3FC27518DAE1E2E86E26B00F4C5007825726A2406E3B05A8095F0969BFE5D8E9",
+    "s27_backtest_csv": "27BF6EF8403C75EB6E3DDD28494EECECE49870C0010E6E5AAC5688549497FAF4",
+    "s27_status_json": "C85353DE339CAB9DBE54DAA1CA8076A6C18636BA99E9CBAA5099A682D5CC8E68"
+  },
+  "status": "PASS_S26_ZN_2022_2023_COMPARISON_TEST_NOT_PROMOTION"
+}

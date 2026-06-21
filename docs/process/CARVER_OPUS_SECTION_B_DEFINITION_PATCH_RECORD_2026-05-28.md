@@ -57,9 +57,9 @@ The local `Carver.pdf` remains ignored by Git and is not part of this process co
 
 The patch intentionally does not solve the following by inference:
 
-- Exact S09 0.15 SR quote/page verification.
-- Exact S11 Table 51 and Table 52 table-number/page-label verification.
-- Exact S11 worked-example row/page verification.
+- S09 `0.15 SR` cost-units threshold is book-verified at PDF page 216, but it has not yet been transcribed as a hash-bound machine-readable production lock; per-instrument cost eligibility derived from real prevalidated costs and turnover policy remains closed.
+- S11 Table 51 forecast-weight rows are book-verified at PDF page 268, and Table 52 FDM rows plus interpolation policy are book-verified at PDF page 269, but they have not yet been transcribed as hash-bound machine-readable production locks.
+- S11 worked-example row/page material must remain production-locked only after a future hash-bound source extract, even where the table pages are book-verified.
 - Exact P02 IDM 1.81 quote/page verification.
 - Exact Jumbo IDM 2.47 quote/page verification.
 

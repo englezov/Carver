@@ -1,0 +1,11 @@
+check_name,check_status,observed_count
+r2_deduped_rows_available,PASS,3071
+vqm_bridge_rows_available,PASS,3527
+extended_daily_dates_unique,PASS,4750
+extended_daily_covers_2022_2023,PASS,4750
+sigma_rows_nonempty,PASS,4717
+vqm_rows_cover_2022_2023,PASS,2157
+daily_runtime_rows_match_extended_daily,PASS,4750
+no_provider_api_access,PASS,0
+no_new_data_download,PASS,0
+no_oos_lockbox_forward,PASS,0

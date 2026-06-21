@@ -1,0 +1,22 @@
+{
+  "end_date": "2015-05-05",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ZNH5": [
+      {
+        "d0": "2014-01-01",
+        "d1": "2015-04-12",
+        "s": "42281"
+      }
+    ]
+  },
+  "start_date": "2014-01-01",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNH5"
+  ]
+}

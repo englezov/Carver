@@ -1,0 +1,9 @@
+check_name,check_status,observed_count
+operator_authorization_recorded,PASS,1
+provider_errors_absent,PASS,0
+all_oldest_slice_symbols_have_rows,PASS,5
+oldest_actual_completed_date_is_2019_05_05,PASS,1
+latest_completed_date_is_2020_04_05,PASS,1
+slice_is_not_default_two_year_window,PASS,336
+no_forecast_diagnostics_or_backtests,PASS,0
+no_test_validation_lockbox_forward_access,PASS,0

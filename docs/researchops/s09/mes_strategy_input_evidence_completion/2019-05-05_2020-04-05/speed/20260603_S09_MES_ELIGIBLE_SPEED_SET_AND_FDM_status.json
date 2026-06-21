@@ -1,0 +1,33 @@
+{
+  "backtests_run": "NO",
+  "diagnostics_run": "NO",
+  "eligible_spans": [
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "eligible_speed_set_lock": "YES",
+  "evidence_completion_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETION_NOT_READY",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_ELIGIBLE_SPEED_SET_AND_TABLE36_FDM_ROW_LOCK",
+  "git_operations": "NO",
+  "hash_bound_provenance_lock": "NO",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "machinery_development_slice": "2019-05-05 through 2020-04-05",
+  "remaining_evidence_count": 1,
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "selected_evidence_names": [
+    "eligible_speed_set",
+    "table36_fdm_row"
+  ],
+  "source_dual_speed_status": "LOCKED_S09_MES_DUAL_SPEED_ELIGIBILITY_VALUES_ALL_SPEEDS_SURVIVE_NOT_ELIGIBLE_SET_NOT_BACKTEST",
+  "status": "LOCKED_S09_MES_ELIGIBLE_SPEED_SET_AND_TABLE36_FDM_ROW_NOT_BACKTEST",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY",
+  "table36_fdm": 1.26,
+  "table36_fdm_row_lock": "YES",
+  "test_validation_lockbox_forward_access": "NO"
+}

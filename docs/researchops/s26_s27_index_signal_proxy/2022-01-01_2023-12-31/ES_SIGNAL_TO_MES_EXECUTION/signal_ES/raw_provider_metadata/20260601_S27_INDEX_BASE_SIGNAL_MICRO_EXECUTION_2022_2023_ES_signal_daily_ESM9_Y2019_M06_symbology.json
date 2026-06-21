@@ -1,0 +1,24 @@
+{
+  "end_date": "2019-08-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ESM9"
+  ],
+  "result": {
+    "ESM9": [
+      {
+        "d0": "2018-03-04",
+        "d1": "2019-08-04",
+        "s": "736"
+      }
+    ]
+  },
+  "start_date": "2018-02-26",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ESM9"
+  ]
+}

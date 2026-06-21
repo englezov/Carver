@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTZ9"
+  ],
+  "result": {
+    "ZTZ9": [
+      {
+        "d0": "2019-03-17",
+        "d1": "2020-03-12",
+        "s": "429364"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTZ9"
+  ]
+}

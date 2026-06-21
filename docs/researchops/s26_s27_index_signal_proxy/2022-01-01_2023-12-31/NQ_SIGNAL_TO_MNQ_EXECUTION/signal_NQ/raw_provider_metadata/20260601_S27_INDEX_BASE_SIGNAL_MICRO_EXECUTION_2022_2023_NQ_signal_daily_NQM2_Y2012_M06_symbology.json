@@ -1,0 +1,24 @@
+{
+  "end_date": "2012-08-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "NQM2"
+  ],
+  "result": {
+    "NQM2": [
+      {
+        "d0": "2011-03-02",
+        "d1": "2012-08-04",
+        "s": "20924"
+      }
+    ]
+  },
+  "start_date": "2011-02-27",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "NQM2"
+  ]
+}

@@ -1,0 +1,145 @@
+book_symbol,provider_symbol,contract_month_label,chain_role,error_type,error_redacted
+ZT,ZTH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZT,ZTM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZT,ZTU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZF,ZFH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZF,ZFM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZF,ZFU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZN,ZNH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZN,ZNM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZN,ZNU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MES,MESH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MES,MESM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MES,MESU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MNQ,MNQH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MNQ,MNQM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MNQ,MNQU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+M2K,M2KH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+M2K,M2KM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+M2K,M2KU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MYM,MYMH6,MAR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MYM,MYMM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+MYM,MYMU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+QM,QMM6,JUN_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+QM,QMN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+QM,QMQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+RB,RBM6,JUN_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+RB,RBN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+RB,RBQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZC,ZCK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZC,ZCN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZC,ZCU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZS,ZSK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZS,ZSN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZS,ZSQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZM,ZMK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZM,ZMN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZM,ZMQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZL,ZLK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZL,ZLN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZL,ZLQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZW,ZWK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZW,ZWN6,JUL_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+ZW,ZWU6,SEP_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+HE,HEK6,MAY_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+HE,HEM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+HE,HEN6,JUL_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+LE,LEJ6,APR_2026,PREVIOUS,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+LE,LEM6,JUN_2026,CURRENT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"
+LE,LEQ6,AUG_2026,NEXT,BentoClientError,"422 data_end_after_available_end
+The dataset GLBX.MDP3 has data available up to '2026-05-30 00:00:00+00:00'. The `end` in the query ('2026-05-31 00:00:00+00:00') is after the available range. Try requesting with an earlier `end`.
+documentation: https://databento.com/docs/api-reference-historical/basics/datasets"

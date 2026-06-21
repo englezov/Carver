@@ -1,0 +1,16 @@
+{
+  "backtests_run": "NO",
+  "continuous_daily_rows": 175,
+  "diagnostics_run": "NO",
+  "fast_span_days": 16,
+  "no_lookahead_policy": "Use only local continuous daily rows with continuous_row_date strictly before the S26 hourly row completed_trading_date.",
+  "positions_run": "NO",
+  "run_id": "20260531_ZN_S27_EWMAC16_TREND_RUNTIME_LEDGER",
+  "runtime_rows": 686,
+  "s26_forecast_rows": 686,
+  "s27_computed": "NO",
+  "slow_span_days": 64,
+  "status": "PASS_S27_EWMAC16_TREND_RUNTIME_LEDGER_REAL_ZN_DEV_RECON_ONLY",
+  "strategy_test_run": "NO",
+  "trend_computed": "YES_EWMAC16_RUNTIME_ONLY"
+}

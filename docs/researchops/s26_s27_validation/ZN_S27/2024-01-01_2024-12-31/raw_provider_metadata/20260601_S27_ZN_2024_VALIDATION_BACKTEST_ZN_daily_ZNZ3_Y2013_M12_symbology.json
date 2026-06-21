@@ -1,0 +1,24 @@
+{
+  "end_date": "2014-02-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNZ3"
+  ],
+  "result": {
+    "ZNZ3": [
+      {
+        "d0": "2012-09-05",
+        "d1": "2014-02-04",
+        "s": "780401"
+      }
+    ]
+  },
+  "start_date": "2012-08-28",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNZ3"
+  ]
+}

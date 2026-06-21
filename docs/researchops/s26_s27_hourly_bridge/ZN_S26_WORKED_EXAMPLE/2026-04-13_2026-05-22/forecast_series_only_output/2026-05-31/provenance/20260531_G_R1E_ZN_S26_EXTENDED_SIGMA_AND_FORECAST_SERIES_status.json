@@ -1,0 +1,20 @@
+{
+  "backtests_run": "NO",
+  "carry_run": "NO",
+  "costs_run": "NO",
+  "daily_source_returns_per_runtime": 33,
+  "daily_source_rows_available_normal": 168,
+  "daily_source_window_rows_per_runtime": 34,
+  "diagnostics_run": "NO",
+  "first_forecast_as_of": "2026-04-13T03:00:00Z",
+  "forecast_rows": 686,
+  "gate": "G_R1E_ZN_S26_EXTENDED_NO_LOOKAHEAD_SIGMA_RUNTIME_LEDGER_AND_FORECAST_SERIES_ONLY",
+  "input_hourly_rows": 690,
+  "last_forecast_as_of": "2026-05-22T21:00:00Z",
+  "positions_run": "NO",
+  "s27_run": "NO",
+  "series_output_status": "PASS_G_R1C_S26_ZN_HOURLY_FORECAST_SERIES_ONLY",
+  "sigma_runtime_rows": 686,
+  "status": "PASS_G_R1E_S26_ZN_EXTENDED_SIGMA_RUNTIME_LEDGER_AND_FORECAST_SERIES_ONLY",
+  "trend_run": "NO"
+}

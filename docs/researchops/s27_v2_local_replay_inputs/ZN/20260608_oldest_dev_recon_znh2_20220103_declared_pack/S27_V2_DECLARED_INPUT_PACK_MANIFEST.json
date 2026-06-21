@@ -1,0 +1,237 @@
+{
+  "artifact": "S27_V2_OLDEST_LOCAL_ZN_DECLARED_INPUT_PACK",
+  "declared_input_directory": "docs/researchops/s27_v2_local_replay_inputs/ZN/20260608_oldest_dev_recon_znh2_20220103_declared_pack",
+  "derived_values": {
+    "additive_back_adjustment": 2.1875,
+    "annual_percentage_sigma_decimal": 0.028742668931510368,
+    "commission_policy_hash": "de4ec1aa0f0d126a5b9f55794f261b9acad33615aaab7094784d595cb8bdab45",
+    "continuous_previous_close": 132.53125,
+    "contract_multiplier_value_from_provenance": 1000.0,
+    "contract_multiplier_value_hash": "6ba48c801eff2733eb931491fe5c4dda57622d584eb5cc4209e9e05dd11bb9fb",
+    "currency_policy_hash": "3da9e2275a1b95153c55c3798a7f3abe50dc6f899a17ed7b9e11cff595a06a8e",
+    "previous_current_close": 130.34375,
+    "roll_policy_hash": "bfd0be157b3b364d2fa8e235077eaf60338689d57a23f421b93cedb9a11d1a13",
+    "sigma_price_i_t": 0.23415170334634716,
+    "spread_policy_hash": "dd8d1b898198bff6a56630cee7f56ad9d38cdca81f6e7c6a49215b677271ac33"
+  },
+  "instrument": "ZN",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "operator_authorization": "S27_V2_OLDEST_LOCAL_ZN_INPUT_DECLARATION_AND_NORMALIZATION_GATE",
+  "output_files": [
+    {
+      "file": "daily_continuous_completed_bar.csv",
+      "row_count": 1,
+      "row_family": "DAILY_CONTINUOUS_COMPLETED_BAR",
+      "sha256": "B1845D317E03F9B39283F0BC880E38CC53E6E45830665E755F40189721D4BD02"
+    },
+    {
+      "file": "daily_current_contract_completed_bar.csv",
+      "row_count": 1,
+      "row_family": "DAILY_CURRENT_CONTRACT_COMPLETED_BAR",
+      "sha256": "183111EBD0812F147A89F97798A934C05D55F1010C1024DF0A9FC21F59BBA51D"
+    },
+    {
+      "file": "hourly_decision_completed_bar.csv",
+      "row_count": 1,
+      "row_family": "HOURLY_DECISION_COMPLETED_BAR",
+      "sha256": "452796708770D200F88037F7EC5BEBAD8C9F203BE4DFABB6D9E9F9DB02D419D7"
+    },
+    {
+      "file": "hourly_fill_completed_bar.csv",
+      "row_count": 1,
+      "row_family": "HOURLY_FILL_COMPLETED_BAR",
+      "sha256": "121BD0A785174F91B41E625F675E32EFE2946400C4DFDBE977B7A0161F680563"
+    },
+    {
+      "file": "session_calendar.csv",
+      "row_count": 1,
+      "row_family": "SESSION_CALENDAR",
+      "sha256": "EA86B7F95F536ACA56FC70E662E2483D684B8C13AE0EF82252D297CCF7037167"
+    },
+    {
+      "file": "roll_calendar.csv",
+      "row_count": 1,
+      "row_family": "ROLL_CALENDAR",
+      "sha256": "E56ECA7676759330BD06EB7BD69A3EC0A3BD240E35DE30DF0D3593F0BA3C9387"
+    },
+    {
+      "file": "cost_parameter.csv",
+      "row_count": 1,
+      "row_family": "COST_PARAMETER",
+      "sha256": "81277B7D9D5EF88D4F7EF29B1C0ABAAAC6A3D8591C9518B54ABFA3AC4F5EAB39"
+    }
+  ],
+  "selected_source_rows": {
+    "daily_current_provider_row": {
+      "close": "130.34375",
+      "high": "130.34375",
+      "instrument_id": "768155",
+      "low": "130.234375",
+      "open": "130.328125",
+      "publisher_id": "1",
+      "rtype": "35",
+      "symbol": "ZNH2",
+      "ts_event": "2022-01-02 00:00:00+00:00",
+      "volume": "15862"
+    },
+    "forecast_sigma_bridge_row": {
+      "adjusted_raw_forecast": "0.0",
+      "book_label": "10-year US",
+      "capped_forecast": "0.0",
+      "completed_trading_date": "2022-01-03",
+      "continuous_close": "132.453125",
+      "derived_completed_bar_end_utc": "2022-01-03T05:00:00Z",
+      "forecast_scalar": "20.0",
+      "forecast_status": "PASS_S27_FORECAST_RUNTIME_DEV_RECON_ONLY",
+      "quantile_q": "0.1723419041000695",
+      "raw_symbol": "ZNH2",
+      "relative_volatility_v": "0.7000540032945426",
+      "risk_adjusted_forecast": "0.0",
+      "root": "ZN",
+      "row_id": "APPENDIX_C_172_004",
+      "s26_raw_forecast": "0.029706790123498195",
+      "s27_opposes_trend": "YES",
+      "s27_trend_forecast_proxy_fast_minus_slow": "-0.15806055518791595",
+      "scaled_forecast": "0.0",
+      "sigma_price_i_t": "0.23415170334634716",
+      "source_vqm_completed_trading_date": "2020-12-21",
+      "vol_multiplier_m_ewma10": "1.6372577146853637"
+    },
+    "hourly_decision_lineage_row": {
+      "additive_back_adjustment": "2.1875",
+      "asset_group": "bond",
+      "book_label": "10-year US",
+      "completed_trading_date": "2022-01-03",
+      "continuous_close": "132.453125",
+      "continuous_high": "132.484375",
+      "continuous_low": "132.453125",
+      "continuous_open": "132.484375",
+      "continuous_volume": "2533.0",
+      "derived_completed_bar_end_utc": "2022-01-03T05:00:00Z",
+      "instrument_id": "768155",
+      "lane_class": "SOURCE_NATIVE_FUTURES",
+      "lineage_status": "DEV_RECON_LOCAL_BACK_ADJUSTED_DATED_CONTRACT_CHAIN",
+      "provider_condition_status": "PROVIDER_CONDITION_AVAILABLE",
+      "raw_close": "130.265625",
+      "raw_high": "130.296875",
+      "raw_low": "130.265625",
+      "raw_open": "130.296875",
+      "raw_symbol": "ZNH2",
+      "raw_volume": "2533.0",
+      "root": "ZN",
+      "row_id": "APPENDIX_C_172_004"
+    },
+    "hourly_fill_lineage_row": {
+      "additive_back_adjustment": "2.1875",
+      "asset_group": "bond",
+      "book_label": "10-year US",
+      "completed_trading_date": "2022-01-03",
+      "continuous_close": "132.4375",
+      "continuous_high": "132.46875",
+      "continuous_low": "132.40625",
+      "continuous_open": "132.46875",
+      "continuous_volume": "5883.0",
+      "derived_completed_bar_end_utc": "2022-01-03T06:00:00Z",
+      "instrument_id": "768155",
+      "lane_class": "SOURCE_NATIVE_FUTURES",
+      "lineage_status": "DEV_RECON_LOCAL_BACK_ADJUSTED_DATED_CONTRACT_CHAIN",
+      "provider_condition_status": "PROVIDER_CONDITION_AVAILABLE",
+      "raw_close": "130.25",
+      "raw_high": "130.28125",
+      "raw_low": "130.21875",
+      "raw_open": "130.28125",
+      "raw_symbol": "ZNH2",
+      "raw_volume": "5883.0",
+      "root": "ZN",
+      "row_id": "APPENDIX_C_172_004"
+    },
+    "hourly_roll_plan_row": {
+      "additive_delta_to_prior_history": "-0.015625",
+      "first_notice_proxy": "2022-02-28",
+      "new_close": "126.015625",
+      "new_contract_key": "ZNM2_2022",
+      "new_raw_symbol": "ZNM2",
+      "old_close": "126.03125",
+      "old_contract_key": "ZNH2_2022",
+      "old_raw_symbol": "ZNH2",
+      "roll_rule_status": "LOCKED_DETERMINISTIC_LIFECYCLE_BUFFER_ROLL_PROXY_DEV_RECON",
+      "roll_transition_date": "2022-02-14"
+    }
+  },
+  "selection_summary": {
+    "annual_percentage_sigma_derivation": "forecast sigma_price_i_t * 16 / previous completed current-contract close; decimal annual percentage unit per existing S27_V2 source-lock tests",
+    "cost_parameter_scope": "policy hashes only; numeric commission/spread cost evidence remains unresolved and not claimed",
+    "daily_continuous_close_derivation": "daily current-contract close plus hourly lineage additive_back_adjustment from decision row",
+    "daily_current_close_source": "daily_current_provider_csv row ts_event 2022-01-02 00:00:00+00:00",
+    "decision_timestamp_utc": "2022-01-03T05:00:00Z",
+    "fill_timestamp_utc": "2022-01-03T06:00:00Z",
+    "instrument_id": "768155",
+    "oldest_suitable_local_area": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN",
+    "previous_daily_current_contract_timestamp_utc": "2022-01-02T00:00:00Z",
+    "raw_symbol": "ZNH2",
+    "reason_not_using_2011_daily_only": "Hourly completed-bar local lineage for this dev/recon candidate begins at 2022-01-03; daily short raw symbols are decade-ambiguous without instrument/date context."
+  },
+  "source_files": [
+    {
+      "label": "status_json",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/status/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_status.json",
+      "sha256": "C85353DE339CAB9DBE54DAA1CA8076A6C18636BA99E9CBAA5099A682D5CC8E68"
+    },
+    {
+      "label": "hash_manifest_json",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/hashes/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_sha256.json",
+      "sha256": "8CBC72E16397F5475170BCAC5A300A13FD4F2D857DC5100564553D428112DE0C"
+    },
+    {
+      "label": "daily_current_provider_csv",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/raw_provider_output/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_ZN_daily_ZNH2_provider.csv",
+      "sha256": "2CEEC7C80D9A8D0D11A662B8353828E64D98AFEE1F92F226C30275CDB08FD840"
+    },
+    {
+      "label": "hourly_continuous_lineage_csv",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_continuous_lineage.csv",
+      "sha256": "D5B06948D9C0584F93845B3C80A67B7A8EC87602E75D55D2C065ADBEEFB774A1"
+    },
+    {
+      "label": "hourly_roll_plan_csv",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_roll_plan.csv",
+      "sha256": "391FA4BC7D911001396E5CCEE72437AAEB1C8240054BBCA903B1FF887EDBF47A"
+    },
+    {
+      "label": "forecast_rows_csv",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/forecast_rows/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_s27_forecast_rows.csv",
+      "sha256": "5BFAB67585E104227F10758BC5989C089215A2D16BB33E7993DDF333BF6D79D1"
+    },
+    {
+      "label": "provenance_json",
+      "path": "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/provenance/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_provenance.json",
+      "sha256": "3FDD233BB09F54D687B27AFB65320EB136C87F0FEC7626A953E06274EF9D6A7A"
+    },
+    {
+      "label": "book_source_lock_md",
+      "path": "docs/process/CARVER_S27_ZN_BOOK_SOURCE_LOCK_2026-06-05.md",
+      "sha256": "72A3357F320F9D92C742F58CA9B5EC0D1B865DAD488D7ADDFFBCB5CD23DAB51F"
+    }
+  ],
+  "status": "LOCAL_INPUT_PACK_DECLARED_FOR_PARSER_REPLAY_CONSTRUCTION_ONLY_NOT_EVIDENCE",
+  "strategy": "S27_V2"
+}

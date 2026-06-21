@@ -1,0 +1,23 @@
+{
+  "annual_risk_runtime_status": "FAIL_CLOSED_S09_MES_ANNUAL_RISK_RUNTIME_NOT_LOCKED",
+  "cost_source_status": "FAIL_CLOSED_S09_MES_SOURCE_NATIVE_COST_SOURCE_NOT_LOCKED",
+  "daily_price_risk_conversion_source_status": "LOCKED_BOOK_SOURCE_ATOM",
+  "daily_price_risk_runtime_status": "FAIL_CLOSED_S09_MES_DAILY_PRICE_RISK_RUNTIME_BLOCKED_BY_ANNUAL_RISK",
+  "databento_api_access": "NO",
+  "eligible_speed_set_status": "FAIL_CLOSED_S09_MES_ELIGIBLE_SPEED_SET_NOT_LOCKED",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_OFFICIAL_LIFECYCLE_ROLL_SEMANTICS_ANNUAL_RISK_AND_COST_SOURCE_LOCK_EXECUTION_GATE",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "official_lifecycle_evidence_status": "FAIL_CLOSED_S09_MES_OFFICIAL_LIFECYCLE_EVIDENCE_NOT_HASH_BOUND",
+  "position_computation": "NO",
+  "provider": "DATABENTO_HISTORICAL_EXISTING_LOCAL_ARTIFACTS_ONLY",
+  "risk_adjusted_cost_status": "FAIL_CLOSED_S09_MES_RISK_ADJUSTED_COST_NOT_LOCKED",
+  "roll_trading_day_semantics_status": "FAIL_CLOSED_S09_MES_PROVIDER_DATE_ROLL_SEMANTICS_NOT_SOURCE_LOCKED",
+  "root": "MES",
+  "run_id": "20260603_S09_MES_SOURCE_LOCK",
+  "speed_cost_eligibility_status": "FAIL_CLOSED_S09_MES_SPEED_COST_ELIGIBILITY_NOT_LOCKED",
+  "status": "FAIL_CLOSED_S09_MES_SOURCE_LOCK_INCOMPLETE_NOT_STRATEGY_READY",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY"
+}

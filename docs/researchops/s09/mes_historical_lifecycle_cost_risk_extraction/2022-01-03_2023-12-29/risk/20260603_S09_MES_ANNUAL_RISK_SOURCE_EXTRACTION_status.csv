@@ -1,0 +1,4 @@
+component,status,evidence_basis,blocker_or_note,next_required_action
+s03_synthetic_plumbing,LOCAL_SYNTHETIC_CODE_EXISTS,"src/carver/spine/s03.py","Local code has EWMA32, annualization 256, and 30/70 blend plumbing, but this is not a production source lock for MES.","Lock book source atoms and runtime policy."
+annual_risk_runtime_source,FAIL_CLOSED_S09_MES_S03_ANNUAL_RISK_SOURCE_NOT_PRODUCTION_LOCKED,"No production source-atom extraction in this gate.","Warm-up, long-run risk source, first usable date, and no-lookahead policy remain unresolved.","Open S03 annual-risk source/runtime lock gate."
+daily_price_risk_runtime,FAIL_CLOSED_S09_MES_DAILY_PRICE_RISK_RUNTIME_BLOCKED_BY_ANNUAL_RISK,"S09 conversion atom is locked but annual risk is not.","No daily price-risk rows may be emitted.","Execute after annual risk runtime passes."

@@ -1,0 +1,14 @@
+{
+  "authorization": "S27_V2_2023_TEST_ROW438_BOUNDED_MARKET_ORDER_TBBO_FAILED_WINDOW_RETRY_GATE",
+  "downloads": "BOUNDED_FAILED_ROW_TBBO_WINDOWS_ONLY",
+  "failed_row_count": 0,
+  "failed_row_indices": [],
+  "provider_api_access": "ROW438_ONLY_BOUNDED_DATABENTO_TBBO_RETRY",
+  "provider_condition_pass_count": 1,
+  "requirements_count": 1,
+  "result_interpretation": "NO",
+  "selected_row_count": 1,
+  "source_faithful_evidence_claim": "NO",
+  "status": "PASS_ROW438_BOUNDED_DATABENTO_TBBO_FAILED_WINDOW_RETRY_SELECTED_NOT_RESULT",
+  "validation_oos_lockbox_forward_access": "NO"
+}

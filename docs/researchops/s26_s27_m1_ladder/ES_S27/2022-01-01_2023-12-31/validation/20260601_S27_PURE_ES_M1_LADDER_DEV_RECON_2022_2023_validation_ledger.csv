@@ -1,0 +1,10 @@
+check_name,check_status,observed_count
+source_forecast_rows_nonempty,PASS,11777
+source_hourly_rows_nonempty,PASS,11781
+source_daily_runtime_lag_within_policy,PASS,11777
+ladder_rows_match_forecast_rows,PASS,11777
+position_rows_match_ladder_rows,PASS,11777
+backtest_rows_nonempty,PASS,11776
+no_provider_api_access,PASS,0
+no_oos_lockbox_forward,PASS,0
+no_alpha_statistics,PASS,0

@@ -1,0 +1,10 @@
+{
+  "artifact": "S27_V2_2023_TEST_TRUSTED_BUNDLE_METADATA",
+  "evidence_manifest_hash": "0f79f5f85fc679bac84b0bdcb420f205da4965b882aa9faa0d6151b4386dfdcd",
+  "fail_closed_row_hash": "NO_FAIL_CLOSED_ROW_DECLARED_PACK_EXHAUSTED_NOT_RESULT",
+  "final_supported_pnl_row_hash": "db3c8dca6236595cbbb360e3f1f691a3a4e67ea90b418248f84b6ad61a94b6d8",
+  "result_status": "FAIL_CLOSED_RESULT_ROW_NOT_EMITTED_NOT_AUTHORIZED",
+  "run_manifest_hash": "7821704749fa095f52817e8b4e16cf57d066125e049fccac4142ef75491e8979",
+  "source_faithful_evidence_claimed": false,
+  "status": "LOCAL_2023_TEST_TRUSTED_BUNDLE_METADATA_FAIL_CLOSED_NOT_RESULT_NOT_PROMOTION"
+}

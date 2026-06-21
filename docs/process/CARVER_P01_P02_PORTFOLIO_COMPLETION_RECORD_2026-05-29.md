@@ -29,6 +29,46 @@ The package now contains:
 - A named real-data conformance preflight that blocks future real-data sizing until the completion report is ready.
 - Continuous/roll/back-adjustment placeholders that intentionally refuse to build a series until separate source rules are locked.
 
+## Source Identity And Ticker Provenance
+
+P01 and P02 source identity must preserve both the book's descriptive instrument labels and the later source-native ticker mapping.
+
+P01 book identity:
+
+```text
+Strategy Four risk-parity example using S&P 500 micro future and US 10-year bond future, 50/50 risk allocation.
+```
+
+P02 book identity:
+
+```text
+Carver's take on the "All Weather" portfolio.
+```
+
+P02 book descriptive labels:
+
+```text
+S&P 500 micro futures
+US 10-year bond futures
+US 5-year bond futures
+WTI Crude Oil mini futures
+Corn futures
+Gold micro futures
+```
+
+Ticker mapping provenance:
+
+| Process ticker | Book descriptive label | Strategy Four source | Appendix C source |
+| --- | --- | --- | --- |
+| `MES` | S&P 500 micro future(s) | PDF pages 120 and 125 | Table 174, PDF pages 691-692 |
+| `ZN` | US 10-year bond future(s) | PDF pages 120 and 125 | Table 172, PDF pages 690-691 |
+| `ZF` | US 5-year bond futures | PDF page 125 | Table 172, PDF pages 690-691 |
+| `QM` | WTI Crude Oil mini futures | PDF page 125 | Table 182, PDF page 695 |
+| `ZC` | Corn futures | PDF page 125 | Table 183, PDF page 695 |
+| `MGC` | Gold micro futures | PDF page 125 | Table 181, PDF page 694 |
+
+The descriptive-label-to-ticker mapping is a source-lock atom. It is not a book-native equation and must remain explicit in any future P01/P02 real-data readiness packet.
+
 ## Current Mapping Status
 
 Locked for P01/P02 validation:

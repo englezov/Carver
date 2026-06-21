@@ -1,0 +1,128 @@
+{
+  "packet_created_utc": "2026-06-02",
+  "core_question": "Could the S27 ZN 2025-2026 negative touched-support result be caused by a mechanical mistake or artifact?",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "target_result": {
+    "name": "CARVER_S27_ZN_2025_2026_TOUCHED_SUPPORT_DEV_RECON_BACKTEST_RESULT_2026-06-01",
+    "gate": "S27_ZN_2025_2026_TOUCHED_SUPPORT_DEVELOPMENT_RECONCILIATION_BACKTEST",
+    "status": "FAIL_CLOSED_S27_ZN_2025_2026_TOUCHED_SUPPORT_PROVIDER_DEGRADED_DAYS_AVAILABLE_ROWS_ONLY_NOT_COMPLETE_BACKTEST",
+    "evidence_class": "TOUCHED_SUPPORT_DEVELOPMENT_RECONCILIATION_NOT_LOCKBOX_NOT_PROMOTION",
+    "requested_window": [
+      "2025-01-01",
+      "2026-05-22"
+    ],
+    "effective_backtest_window": [
+      "2025-01-02",
+      "2026-05-22"
+    ],
+    "hourly_source_rows": 15306,
+    "hourly_continuous_rows": 8097,
+    "hourly_inactive_rows_explicitly_ledgered": 7209,
+    "hourly_roll_transition_count": 6,
+    "s26_forecast_rows": 8093,
+    "s27_forecast_rows": 8093,
+    "position_rows": 8093,
+    "ladder_rows": 8093,
+    "same_input_backtest_rows": 8092,
+    "blocked_dependency_rows": 4,
+    "source_daily_runtime_lag_policy": "STRICT_PRIOR_GT_0_AND_NON_STALE_MAX_10_DAYS",
+    "source_daily_runtime_lag_max_days": 4,
+    "daily_runtime_source_status": "PASS_LOCAL_EXTENDED_DAILY_RUNTIME_DEV_RECON_ONLY",
+    "daily_runtime_source_end": "2026-05-22",
+    "support_touch_status": "DAILY_RUNTIME_SUPPORT_ALREADY_TOUCHED_THROUGH_2026-05-22_NOT_PRISTINE_LOCKBOX",
+    "provider_condition_degraded_dates": [
+      "2025-09-17",
+      "2025-09-24",
+      "2025-11-28",
+      "2026-03-15",
+      "2026-03-16",
+      "2026-04-10"
+    ],
+    "provider_condition_degraded_day_count": 6,
+    "available_rows_numeric_result_status": "PRESERVED_FOR_DIAGNOSTIC_CONTEXT_NOT_COMPLETE_WINDOW_BACKTEST",
+    "recorded_fee_model": "ETF_PUBLIC_PER_SIDE_COMMISSION_ONLY_NO_SPREAD_NO_SLIPPAGE",
+    "futures_realistic_cost_status": "FAIL_CLOSED_FUTURES_REALISTIC_COST_READINESS_NOT_EXECUTED",
+    "diagnostics_scope": "TOUCHED_SUPPORT_SUMMARY_STATISTICS_ONLY_NO_SHARPE_NO_DRAWDOWN_NO_ALPHA_CLAIM"
+  },
+  "target_result_summary": {
+    "unit_no_ladder_same_input": {
+      "gross_pnl_usd": -8562.50,
+      "recorded_fees_usd": 1879.95,
+      "net_after_recorded_fees_usd": -10442.45,
+      "position_change_sides": 1241,
+      "total_fee_sides": 1245,
+      "nonzero_pnl_row_win_rate": 0.322792,
+      "nonzero_daily_win_rate": 0.517857
+    },
+    "m1_ladder_same_input": {
+      "gross_pnl_usd": -15593.75,
+      "recorded_fees_usd": 10103.41,
+      "net_after_recorded_fees_usd": -25697.16,
+      "position_change_sides": 6667,
+      "total_fee_sides": 6691,
+      "nonzero_pnl_row_win_rate": 0.341958,
+      "nonzero_daily_win_rate": 0.613181
+    },
+    "delta_m1_ladder_minus_unit_no_ladder": {
+      "gross_pnl_usd": -7031.25,
+      "recorded_fee_delta_usd": 8223.46,
+      "net_after_recorded_fee_delta_usd": -15254.71,
+      "nonzero_daily_win_rate": 0.607450
+    }
+  },
+  "yearly_breakdown": {
+    "2025": {
+      "unit_no_ladder_net_after_recorded_fees_usd": -6243.19,
+      "m1_ladder_net_after_recorded_fees_usd": -7222.12,
+      "delta_m1_minus_unit_net_after_recorded_fees_usd": -978.93
+    },
+    "2026_partial_through_2026_05_22": {
+      "unit_no_ladder_net_after_recorded_fees_usd": -4199.26,
+      "m1_ladder_net_after_recorded_fees_usd": -18475.04,
+      "delta_m1_minus_unit_net_after_recorded_fees_usd": -14275.78
+    }
+  },
+  "positive_comparator_context": {
+    "touched_history_2022_2024": {
+      "status": "PASS_S27_ZN_TOUCHED_HISTORY_DEV_RECON_BACKTEST_NOT_LOCKBOX_NOT_PROMOTION",
+      "usable_hourly_evidence": [
+        "2022-01-04",
+        "2024-12-31"
+      ],
+      "unit_no_ladder_net_after_recorded_fees_usd": 9048.16,
+      "m1_ladder_net_after_recorded_fees_usd": 29961.45,
+      "delta_m1_minus_unit_net_after_recorded_fees_usd": 20913.30
+    },
+    "2022_2023_reference_from_comparison_and_robustness_records": {
+      "s27_reference_net_after_etf_fees_usd": 16517.25,
+      "pre_lockbox_robustness_initial_m1_ladder_net_usd": 5342.63,
+      "notes": "Different local records report different surfaces/fee assumptions; audit should reconcile surface labels before comparing."
+    },
+    "2024_validation_style": {
+      "status": "PASS_S27_ZN_2024_VALIDATION_BACKTEST_NOT_PROMOTION",
+      "opus_status": "2024 is touched / validation-style / not pristine Lockbox",
+      "m1_ladder_reference_net_after_etf_fees_usd": 24618.82
+    }
+  },
+  "prior_opus_audit_context": {
+    "pre_lockbox_opus_verdict": "ROBUSTNESS_PROTOCOL_REQUIRED_BEFORE_LOCKBOX",
+    "robustness_opus_verdict": "DEV_RECON_ONLY_BLOCKED_BEFORE_LOCKBOX_BY_COST_READINESS_NULL_SUFFICIENCY_AND_LADDER_SOURCE_FAITHFULNESS_NOT_PROMOTION",
+    "robustness_opus_observed_pattern": {
+      "2022_2023": "Positive but MCPT primary window not significant.",
+      "2024": "Strongly positive, MCPT-significant, but touched / validation-style / not pristine Lockbox.",
+      "2025_2026": "Negative available-row result; complete-window interpretation fail-closed because provider degraded dates exist."
+    }
+  },
+  "known_risks_for_hostile_audit": [
+    "Provider-degraded dates are excluded and complete-window interpretation is fail-closed; determine whether this exclusion could mechanically skew the available-row result negative or merely preserves a fragility warning.",
+    "Daily runtime/V/Q/M support history was already touched through 2026-05-22; not pristine Lockbox.",
+    "Futures-realistic costs are not locked; recorded fee model is ETF public per-side commission only, no spread and no slippage.",
+    "M1 ladder is a local overlay, not a confirmed Carver book atom; it amplifies both positive and negative periods.",
+    "Need to verify strict-prior daily runtime alignment for every hourly forecast row.",
+    "Need to verify hourly roll lineage and inactive-contract exclusion do not introduce a sign/price-adjustment/contract-selection bug after 2024.",
+    "Need to verify PnL sign conventions, tick/multiplier/value scaling, fee-side counts, and position-shift timing.",
+    "Need to reconcile why nonzero daily win rate remains above 0.5 while gross/net PnL is negative.",
+    "Need to verify 2026 partial-year behavior is not caused by incomplete end-window handling or unsupported contract roll endpoint.",
+    "Need to determine whether the negative signature is robust evidence against S27, an available-row diagnostic only, or unresolved pending cleaner provider-condition data."
+  ]
+}

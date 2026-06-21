@@ -1,0 +1,2 @@
+completed_timestamp_utc,trading_date,raw_symbol,session_id,row_locator,close_price,readiness_status
+2022-01-03T06:00:00Z,2022-01-03,ZNH2,UTC_DECISION_FILL_SPAN_2022-01-03_0500_0600Z,S27V2_OLDEST_DEV_ZN_HOURLY_FILL_20220103T0600Z_ZNH2_001,132.4375,READY_COMPLETED_BAR

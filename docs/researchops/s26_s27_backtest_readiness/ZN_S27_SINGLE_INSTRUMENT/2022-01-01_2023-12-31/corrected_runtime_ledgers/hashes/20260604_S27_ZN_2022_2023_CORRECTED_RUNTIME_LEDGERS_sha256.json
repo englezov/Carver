@@ -1,0 +1,9 @@
+{
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\provenance\\20260604_S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGERS_provenance.json": "BB0898066F65B74227F481AFBD212C2B9D759797554BA810E6E05C0715D0F946",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\s26_daily_ewma5_equilibrium_runtime_rows.csv": "534740DD88E3DD396991EDC477D8BFB1FC7680BBBA5B833D58878A2D33CE2F3B",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\s26_sigma_runtime_rows.csv": "128598FDBEFEF56AB74D82BF2E6CA38386C62780D23B7A346D177B79B68A917B",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\s27_daily_ewmac16_64_trend_runtime_rows.csv": "6AE50B702A63C20972976637973D51A9A9ED603DB409C6E54FA7F59CF096A260",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\s27_daily_ten_year_vqm_runtime_rows.csv": "0636621516FF626686A372F5BFDAD9ABAA81D92EC2C22E410B63F039A537065B",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\status\\20260604_S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGERS_status.json": "895EE01BA357375A9DB3841FC15AD885660EACA11CF6BC76A9A6022E92301164",
+  "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\corrected_runtime_ledgers\\validation\\20260604_S27_ZN_2022_2023_CORRECTED_RUNTIME_LEDGERS_validation_ledger.csv": "D52F520EEA4AC849523EE3E137DFD7069ABEE68C380EBA8B1010C0595014CBFF"
+}

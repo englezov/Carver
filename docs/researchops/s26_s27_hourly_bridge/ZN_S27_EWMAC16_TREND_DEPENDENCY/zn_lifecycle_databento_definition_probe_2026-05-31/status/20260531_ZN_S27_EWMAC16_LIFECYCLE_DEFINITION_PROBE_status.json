@@ -1,0 +1,24 @@
+{
+  "backtests_run": "NO",
+  "dataset": "GLBX.MDP3",
+  "definition_rows": 176,
+  "diagnostics_run": "NO",
+  "gate": "ZN_LOCAL_CONTINUOUS_DAILY_LIFECYCLE_EVIDENCE_DATABENTO_DEFINITION_PROBE",
+  "ledger_rows": 3,
+  "market_rows_requested": "NO",
+  "next_required_gate": "OFFICIAL_STATIC_ZN_LIFECYCLE_EVIDENCE_OR_FAIL_CLOSED_ROLL_POLICY_DECISION",
+  "ohlcv_requested": "NO",
+  "request_end_utc": "2026-05-30T00:00:00Z",
+  "request_start_utc": "2026-03-01T00:00:00Z",
+  "result": "FAIL_CLOSED_DATABENTO_DEFINITION_PROVES_EXPIRATION_ACTIVATION_ONLY_OFFICIAL_LIFECYCLE_STILL_REQUIRED",
+  "run_id": "20260531_ZN_S27_EWMAC16_LIFECYCLE_DEFINITION_PROBE",
+  "schema": "definition",
+  "strategy_computation": "NO",
+  "stype_in": "raw_symbol",
+  "symbols": [
+    "ZNH6",
+    "ZNM6",
+    "ZNU6"
+  ],
+  "trend_computation": "NO"
+}

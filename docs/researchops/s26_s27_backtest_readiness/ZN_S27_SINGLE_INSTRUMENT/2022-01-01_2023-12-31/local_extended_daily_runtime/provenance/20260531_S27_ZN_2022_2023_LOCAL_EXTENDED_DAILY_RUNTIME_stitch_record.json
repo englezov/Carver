@@ -1,0 +1,10 @@
+{
+  "bridge_day": "2015-01-01",
+  "from_2015_source": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S27_V_Q_M_VOL_ATTENUATION\\ten_year_vol_history_runtime_2026-05-31\\ledger\\20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv",
+  "gate": "S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_RECONSTRUCTION",
+  "pre_2015_bridge_offset_added_to_r2_history": -0.28125,
+  "pre_2015_source": "docs\\researchops\\s26_s27_candidate_comparison\\2022-01-01_2023-12-31\\ZN\\local_lineage\\20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_daily_continuous_lineage.csv",
+  "r2_bridge_continuous_close": 119.734375,
+  "stitch_status": "PASS_EXPLICIT_CONSTANT_BRIDGE_OFFSET_DEV_RECON_ONLY",
+  "vqm_bridge_continuous_close": 119.453125
+}

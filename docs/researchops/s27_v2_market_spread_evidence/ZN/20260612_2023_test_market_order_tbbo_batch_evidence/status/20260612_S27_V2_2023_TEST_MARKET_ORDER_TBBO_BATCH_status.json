@@ -1,0 +1,26 @@
+{
+  "authorization": "S27_V2_BOUNDED_DATABENTO_2023_TEST_MARKET_ORDER_TBBO_BATCH_EVIDENCE_ACQUISITION",
+  "downloads": "BOUNDED_TBBO_WINDOWS_ONLY",
+  "failed_row_count": 11,
+  "failed_row_indices": [
+    "78",
+    "208",
+    "210",
+    "212",
+    "215",
+    "220",
+    "306",
+    "328",
+    "329",
+    "335",
+    "340"
+  ],
+  "provider_api_access": "BOUNDED_DATABENTO_TBBO_ONLY",
+  "provider_condition_pass_count": 39,
+  "requirements_count": 50,
+  "result_interpretation": "NO",
+  "selected_row_count": 39,
+  "source_faithful_evidence_claim": "NO",
+  "status": "FAIL_CLOSED_BOUNDED_DATABENTO_TBBO_BATCH_EVIDENCE_INCOMPLETE_NOT_RESULT",
+  "validation_oos_lockbox_forward_access": "NO"
+}

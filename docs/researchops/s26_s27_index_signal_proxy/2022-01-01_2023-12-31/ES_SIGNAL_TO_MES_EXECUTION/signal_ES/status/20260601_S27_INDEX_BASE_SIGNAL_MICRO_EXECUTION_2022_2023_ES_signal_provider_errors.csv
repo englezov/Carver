@@ -1,0 +1,4 @@
+root,purpose,raw_symbol,error,message
+ES,signal_hourly,ESZ2,BentoServerError,502 <empty message>
+ES,signal_daily,ESU3,BentoServerError,502 <empty message>
+ES,signal_daily,ESZ3,BentoServerError,502 <empty message>

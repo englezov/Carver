@@ -1,0 +1,22 @@
+{
+  "end_date": "2023-08-04",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ESM3": [
+      {
+        "d0": "2022-02-25",
+        "d1": "2023-08-04",
+        "s": "95414"
+      }
+    ]
+  },
+  "start_date": "2022-02-26",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ESM3"
+  ]
+}

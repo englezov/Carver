@@ -1,0 +1,17 @@
+{
+  "backtests_run": "NO",
+  "databento_api_access": "NO",
+  "diagnostics_run": "NO",
+  "evidence_completion_status": "LOCKED_S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETE_NOT_BACKTEST_AUTHORIZATION",
+  "forecast_computation": "NO",
+  "handoff_status": "S09_MES_EVIDENCE_COMPLETION_HANDOFF_READY_FOR_READINESS_GATE_NOT_BACKTEST",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "machinery_development_slice": "2019-05-05 through 2020-04-05",
+  "market_row_parsing": "NO",
+  "next_gate": "S09_MES_STRATEGY_INPUT_READINESS_GATE",
+  "remaining_evidence_count": 0,
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "strategy_input_readiness_status": "S09_MES_STRATEGY_INPUT_EVIDENCE_LOCKED_AWAITING_READINESS_GATE",
+  "test_validation_lockbox_forward_access": "NO"
+}

@@ -1,0 +1,18 @@
+{
+  "annual_risk_runtime_source_status": "FAIL_CLOSED_S09_MES_S03_ANNUAL_RISK_SOURCE_NOT_PRODUCTION_LOCKED",
+  "cost_value_status": "FAIL_CLOSED_S09_MES_HISTORICAL_COST_VALUES_NOT_EXTRACTED",
+  "daily_price_risk_conversion_source_status": "LOCKED_BOOK_SOURCE_ATOM",
+  "databento_api_access": "NO",
+  "generic_final_settlement_status": "LOCKED_OFFICIAL_CME_PUBLIC_STATIC",
+  "generic_mes_product_faq_status": "LOCKED_OFFICIAL_CME_PUBLIC_STATIC",
+  "generic_mes_product_spec_status": "LOCKED_OFFICIAL_CME_PUBLIC_STATIC",
+  "historical_contract_lifecycle_status": "FAIL_CLOSED_S09_MES_HISTORICAL_CONTRACT_LIFECYCLE_NOT_HASH_BOUND_PER_CONTRACT",
+  "historical_fee_source_availability_status": "LOCKED_SOURCE_LOCATION_ONLY",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "ohlcv_request": "NO",
+  "roll_trading_day_semantics_status": "FAIL_CLOSED_S09_MES_PROVIDER_DATE_ROLL_SEMANTICS_NOT_SOURCE_LOCKED",
+  "speed_cost_eligibility_status": "FAIL_CLOSED_S09_MES_SPEED_COST_ELIGIBILITY_NOT_LOCKED",
+  "status": "PARTIAL_LOCK_GENERIC_MES_FACTS_STRATEGY_INPUT_FAIL_CLOSED",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY"
+}

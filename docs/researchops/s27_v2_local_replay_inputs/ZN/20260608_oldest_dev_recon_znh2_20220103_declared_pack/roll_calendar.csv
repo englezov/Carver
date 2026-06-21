@@ -1,0 +1,2 @@
+trading_date,expiring_raw_symbol,incoming_raw_symbol,roll_policy_hash,row_locator,readiness_status
+2022-02-14,ZNH2,ZNM2,bfd0be157b3b364d2fa8e235077eaf60338689d57a23f421b93cedb9a11d1a13,S27V2_OLDEST_DEV_ZN_ROLL_20220214_ZNH2_ZNM2_001,READY_ROLL_CALENDAR

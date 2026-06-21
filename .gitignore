@@ -1,6 +1,16 @@
 # Local book/reference files
 *.pdf
 
+# Local Codex/GPT handoff and scratch state
+.codex_tmp/
+GPT/
+
+# Binary/raw provider/source archives stay local unless separately approved
+*.dbn
+*.zip
+*.xls
+*.xlsx
+
 # Research data and platform/runtime state
 data/
 exports/
@@ -31,6 +41,8 @@ venv/
 
 # OS/editor noise
 .DS_Store
+._*
+__MACOSX/
 Thumbs.db
 .idea/
 .vscode/

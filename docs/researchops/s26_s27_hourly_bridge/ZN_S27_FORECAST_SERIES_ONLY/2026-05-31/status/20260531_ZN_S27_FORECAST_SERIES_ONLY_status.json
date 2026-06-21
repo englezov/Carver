@@ -1,0 +1,17 @@
+{
+  "backtests_run": "NO",
+  "carry_run": "NO",
+  "costs_run": "NO",
+  "diagnostics_run": "NO",
+  "first_forecast_as_of": "2026-04-13T03:00:00Z",
+  "forecast_rows": 686,
+  "gate": "S27_ZN_REAL_HOURLY_FORECAST_SERIES_ONLY_EXECUTION_NOT_TEST",
+  "input_s26_forecast_rows": 686,
+  "last_forecast_as_of": "2026-05-22T21:00:00Z",
+  "positions_run": "NO",
+  "series_output_status": "PASS_S27_REAL_HOURLY_FORECAST_SERIES_ONLY_HANDOFF_PLUMBING",
+  "status": "PASS_S27_ZN_REAL_HOURLY_FORECAST_SERIES_ONLY_NOT_TEST",
+  "strategy_test_run": "NO",
+  "trend_runtime_rows": 686,
+  "vqm_runtime_rows": 686
+}

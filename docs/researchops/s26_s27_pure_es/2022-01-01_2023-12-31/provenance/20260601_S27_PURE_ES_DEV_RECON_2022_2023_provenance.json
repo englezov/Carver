@@ -1,0 +1,12 @@
+{
+  "created_utc": "2026-06-01T00:23:14.688098+00:00",
+  "non_authorization": [
+    "NO_NEW_PROVIDER_API_ACCESS",
+    "NO_CFD_ADAPTER",
+    "NO_OOS_LOCKBOX_FORWARD",
+    "NO_TRADING_PROMOTION"
+  ],
+  "run_id": "20260601_S27_PURE_ES_DEV_RECON_2022_2023",
+  "source_provider_files_root": "docs\\researchops\\s26_s27_index_signal_proxy\\2022-01-01_2023-12-31\\ES_SIGNAL_TO_MES_EXECUTION\\signal_ES\\raw_provider_output",
+  "source_status": "LOCAL_CACHED_PROVIDER_CSV_REUSE_NO_DATABENTO_CLIENT_CREATED"
+}

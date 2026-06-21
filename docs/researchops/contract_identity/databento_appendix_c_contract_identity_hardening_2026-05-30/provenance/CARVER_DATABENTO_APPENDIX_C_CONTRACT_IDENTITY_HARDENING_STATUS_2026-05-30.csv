@@ -1,0 +1,14 @@
+status_key,status_value,notes
+gate_name,CARVER_DATABENTO_APPENDIX_C_CONTRACT_IDENTITY_REVIEW_HARDENING_2026-05-30,Resolve or fail-close the 34 selected-but-review-required rows.
+appendix_c_rows,102,All Appendix C rows preserved.
+pre_hardening_static_ready_rows,35,From previous contract identity gate.
+pre_hardening_review_rows,34,Rows targeted by this hardening gate.
+review_rows_hardened_to_static_ready,31,Review rows preserved by static hardening.
+review_rows_fail_closed_after_hardening,3,Review rows not safe to carry forward.
+hardened_static_contract_identity_and_dated_contract_selected_not_market_ready,66,Final hardening result count.
+preserved_fail_closed_not_in_69_databento_static_provider_candidates,33,Final hardening result count.
+hardening_fail_closed_contract_identity_not_source_native_safe,3,Final hardening result count.
+eligible_for_session_roll_provider_condition_data_intake_shape_gate,66,"Static identity ready, not OHLCV-ready."
+market_row_access,NO,No OHLCV or market-row parsing.
+ohlcv_download_authorized,NO,No data authorization.
+strategy_use_status,NOT_STRATEGY_INPUT_NOT_BACKTEST_READY,No strategy use.

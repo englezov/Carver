@@ -1,0 +1,2 @@
+row_index,fill_candidate_timestamp_utc,request_start_utc,request_end_utc,raw_symbol,order_side,quote_rows_returned,selected_quote_ts_event,quote_age_seconds,provider_condition_status,provider_error_count,provider_error_summary,source_raw_sequence,row_hash
+1356,2023-03-30T00:00:00Z,2023-03-29T23:59:55Z,2023-03-30T00:00:05Z,ZNM3,SELL,2,2023-03-30T00:00:00.099806785Z,0.099806785,PASS_ROW1356_FIRST_POST_FILL_TBBO_ENGINEERING_QUOTE_SELECTED_NOT_RESULT,0,,53304411,dffeb1b000b9e03bb1213e47b0f706086cb88d9bf7a06b92dddc77446e4e23fd

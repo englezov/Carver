@@ -1,0 +1,20 @@
+{
+  "authorization": "S27_V2_2023_TEST_CAP_BOUND_MARKET_ORDER_CLASS_IMPLEMENTATION_AND_CONTINUATION_GATE",
+  "broader_provider_api_access": "NO",
+  "dataset": "GLBX.MDP3",
+  "general_historical_download": "NO",
+  "pnl_result_emission": "NO",
+  "provider": "DATABENTO_HISTORICAL",
+  "request_end_utc": "2023-02-07T01:00:05Z",
+  "request_start_utc": "2023-02-07T00:59:55Z",
+  "requirements_ledger": "docs/researchops/s27_v2_market_spread_evidence/ZN/20260612_2023_test_market_order_tbbo_requirements_discovery/market_order_tbbo_requirements.csv",
+  "requirements_ledger_sha256": "63A4E0185FB72C7F53F39AE9DB85BF049E26E2991484B6E9027AB1E73CF25D3E",
+  "row_index": "547",
+  "run_id": "20260614_S27_V2_2023_TEST_ROW547_CAP_BOUND_MARKET_ORDER_TBBO",
+  "schema": "tbbo",
+  "scope": "ROW547_ONLY_BOUNDED_CAP_BOUND_MARKET_ORDER_TBBO_REQUIREMENT",
+  "source_faithful_evidence_claim": "NO",
+  "standing_authorization": "S27_V2_STANDING_BOUNDED_MARKET_ORDER_TBBO_SPREAD_EVIDENCE_POLICY",
+  "stype_in": "raw_symbol",
+  "validation_oos_lockbox_forward_access": "NO"
+}

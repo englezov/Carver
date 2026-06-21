@@ -1,0 +1,194 @@
+{
+  "ZTH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:08.201077000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZTM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:10.223783000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZTU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:16.226173000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZFH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:19.075895000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZFM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:22.634612000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZFU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:24.576383000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZNH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:26.252085000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZNM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:28.976288000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZNU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:37.238889000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MESH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:39.177628000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MESM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:41.658904000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MESU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:47.377954000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MNQH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:49.969055000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MNQM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:53.353042000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MNQU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:55.255443000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "M2KH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:06:57.074684000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "M2KM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:00.365007000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "M2KU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:03.698472000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MYMH6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:06.393533000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MYMM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:08.027699000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "MYMU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:11.205568000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "QMM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:13.736852000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "QMN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:15.717819000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "QMQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:19.186032000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "RBM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:21.389380000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "RBN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:23.998371000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "RBQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:26.606231000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZCK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:28.641152000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZCN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:30.680711000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZCU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:36.098341000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZSK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:39.802233000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZSN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:43.279906000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZSQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:45.154044000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZMK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:50.574479000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZMN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:52.960983000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZMQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:54.964221000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZLK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:57.009167000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZLN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:07:59.462174000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZLQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:01.648876000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZWK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:03.627182000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZWN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:05.413910000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "ZWU6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:08.067315000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "HEK6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:13.964370000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "HEM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:17.059590000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "HEN6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:18.754742000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "LEJ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:22.033644000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "LEM6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:24.904587000Z.\ndocumentation: https://databento.com/pricing#cme"
+  },
+  "LEQ6": {
+    "error_type": "BentoClientError",
+    "error": "422 dataset_unavailable_range\nPart or all of your request for dataset 'GLBX.MDP3' requires a subscription and/or license to access. Try again with an end time before 2026-05-30T11:08:26.915041000Z.\ndocumentation: https://databento.com/pricing#cme"
+  }
+}

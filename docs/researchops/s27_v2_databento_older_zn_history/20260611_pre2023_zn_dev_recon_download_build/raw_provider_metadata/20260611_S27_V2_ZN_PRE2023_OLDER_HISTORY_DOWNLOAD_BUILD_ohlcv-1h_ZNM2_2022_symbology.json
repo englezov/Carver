@@ -1,0 +1,22 @@
+{
+  "end_date": "2022-08-04",
+  "message": "OK",
+  "not_found": [],
+  "partial": [],
+  "result": {
+    "ZNM2": [
+      {
+        "d0": "2021-12-31",
+        "d1": "2022-06-28",
+        "s": "146095"
+      }
+    ]
+  },
+  "start_date": "2021-12-31",
+  "status": 0,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNM2"
+  ]
+}

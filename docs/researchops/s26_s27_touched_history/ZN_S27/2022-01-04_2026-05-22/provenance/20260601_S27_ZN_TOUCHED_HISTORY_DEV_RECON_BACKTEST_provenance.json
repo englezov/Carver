@@ -1,0 +1,27 @@
+{
+  "created_at_utc": "2026-06-01T05:34:51.443829Z",
+  "gate": "S27_ZN_TOUCHED_HISTORY_DEVELOPMENT_RECONCILIATION_BACKTEST",
+  "git_operations": "NO",
+  "inputs": [
+    {
+      "path": "docs\\researchops\\s26_s27_ladder_attribution\\ZN_S27\\2022_2024\\row_attribution\\20260601_S27_ZN_LADDER_ATTRIBUTION_AND_BASELINE_RECONCILIATION_row_attribution.csv",
+      "sha256": "BA5E2838A7AD882937DF8DD487B8F3E89D766A250A0FE011FB1450966B569C1B"
+    },
+    {
+      "path": "docs\\researchops\\s26_s27_ladder_attribution\\ZN_S27\\2022_2024\\status\\20260601_S27_ZN_LADDER_ATTRIBUTION_AND_BASELINE_RECONCILIATION_status.json",
+      "sha256": "8E71E34E76D12CAD02B118E8CC2A1AD34C9EEBEEFA1A39DE0F9C67C1CF234FD5"
+    },
+    {
+      "path": "docs\\researchops\\s26_s27_lockbox_readiness\\ZN_S27\\20260601_S27_ZN_LOCKBOX_READINESS_DECISION\\status\\20260601_S27_ZN_LOCKBOX_READINESS_DECISION_status.json",
+      "sha256": "610CE7469DBFAC4F6F29AFCA0131EEA3981E3F23C3614382A5F9C7D8A8CEEB3E"
+    },
+    {
+      "path": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\local_extended_daily_runtime\\status\\20260531_S27_ZN_2022_2023_LOCAL_EXTENDED_DAILY_RUNTIME_status.json",
+      "sha256": "7489B7FDAEADDF7A7B870617A803CC440A038EF5BAD6B13B245E3C325B088261"
+    }
+  ],
+  "new_data_download": "NO",
+  "provider_api_access": "NO",
+  "run_id": "20260601_S27_ZN_TOUCHED_HISTORY_DEV_RECON_BACKTEST",
+  "status": "PASS_S27_ZN_TOUCHED_HISTORY_DEV_RECON_BACKTEST_NOT_LOCKBOX_NOT_PROMOTION"
+}

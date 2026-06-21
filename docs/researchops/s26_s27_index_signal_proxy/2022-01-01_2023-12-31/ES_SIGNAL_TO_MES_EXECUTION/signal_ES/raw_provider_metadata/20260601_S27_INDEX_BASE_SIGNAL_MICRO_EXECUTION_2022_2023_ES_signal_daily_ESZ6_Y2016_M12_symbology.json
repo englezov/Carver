@@ -1,0 +1,24 @@
+{
+  "end_date": "2017-02-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ESZ6"
+  ],
+  "result": {
+    "ESZ6": [
+      {
+        "d0": "2015-09-06",
+        "d1": "2017-01-01",
+        "s": "2928"
+      }
+    ]
+  },
+  "start_date": "2015-08-29",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ESZ6"
+  ]
+}

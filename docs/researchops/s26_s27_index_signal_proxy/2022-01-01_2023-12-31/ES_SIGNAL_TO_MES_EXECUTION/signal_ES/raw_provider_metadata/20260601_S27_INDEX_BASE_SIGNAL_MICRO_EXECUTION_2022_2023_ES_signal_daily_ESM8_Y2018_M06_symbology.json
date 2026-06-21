@@ -1,0 +1,24 @@
+{
+  "end_date": "2018-08-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ESM8"
+  ],
+  "result": {
+    "ESM8": [
+      {
+        "d0": "2017-03-05",
+        "d1": "2018-07-01",
+        "s": "23252"
+      }
+    ]
+  },
+  "start_date": "2017-02-26",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ESM8"
+  ]
+}

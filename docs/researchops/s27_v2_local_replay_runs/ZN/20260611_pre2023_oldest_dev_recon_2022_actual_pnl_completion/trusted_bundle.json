@@ -1,0 +1,32 @@
+{
+  "actual_pnl_bundle_hash": "409ebaed618fd15bafb523a0b9c57fd38a54ca0110be04cf54925efda6a28349",
+  "actual_pnl_row_hash": "0a7a0b65997c643b63ca47b215d42c04466f83e19921defaad2bdb25812ba0f6",
+  "artifact": "S27_V2_PRE2023_DEVELOPMENT_RECON_ACTUAL_PNL_TRUSTED_BUNDLE_METADATA",
+  "backtest_status": "FAIL_CLOSED_BACKTEST_RESULT_NOT_EMITTED_NOT_AUTHORIZED",
+  "evidence_manifest_hash": "a21766e2728d0a60caed54ef1f7a9278fe9ee598cdcff1dbe63c7b19c69d5c7b",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_SCORED_RUN",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION_BEYOND_MECHANICAL_ROW_CONSTRUCTION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "pnl_evaluation_status": "NOT_EMITTED_MECHANICAL_LEDGER_ROW_ONLY",
+  "result_rows_emitted": false,
+  "result_status": "FAIL_CLOSED_RESULT_ROW_NOT_EMITTED_NOT_AUTHORIZED",
+  "source_faithful_evidence_claimed": false,
+  "status": "LOCAL_ACTUAL_PNL_TRUSTED_BUNDLE_METADATA_NOT_RESULT_NOT_PROMOTION"
+}

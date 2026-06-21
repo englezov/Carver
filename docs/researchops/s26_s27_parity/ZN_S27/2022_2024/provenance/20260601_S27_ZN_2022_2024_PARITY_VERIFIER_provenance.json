@@ -1,0 +1,58 @@
+{
+  "created_at_utc": "2026-06-01T02:49:46.174872Z",
+  "gate": "S27_ZN_BACKTEST_PARITY_VERIFICATION_BEFORE_LOCKBOX",
+  "input_artifacts": [
+    {
+      "backtest_csv": "docs\\researchops\\s26_s27_m1_ladder\\ZN_S27\\2022-01-01_2023-12-31\\backtest_rows\\20260531_S27_ZN_M1_LADDER_DEV_RECON_BACKTEST_ladder_backtest_rows.csv",
+      "backtest_sha256": "034C0491677E7676178D4E65F692E2AF338A7B163D352887B56809DDCF0D25CF",
+      "forecast_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\forecast_rows\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_s27_forecast_rows.csv",
+      "forecast_sha256": "6409165FAD733A77E1FF0E74683080C10D4AAD9A75AB5914A2E8FAB721BF1A9D",
+      "hourly_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\retargeted_dev_recon_backtest\\local_hourly_lineage\\20260531_S27_ZN_2022_2023_RETARGETED_DEV_RECON_BACKTEST_local_hourly_continuous_lineage.csv",
+      "hourly_sha256": "60D11EEADBFCCECA17CF443F4DA666DE6E1121BF5BD215DC11F9C069FD7622A9",
+      "period_label": "ZN_2022_2023_INITIAL_TEST"
+    },
+    {
+      "backtest_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\backtest_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_ladder_backtest_rows.csv",
+      "backtest_sha256": "090570A37969C7E454ABB0DDE5291DA9CFBE9FB22F78C5ECEB1BA72F20DCEAE9",
+      "forecast_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\forecast_rows\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_s27_forecast_rows.csv",
+      "forecast_sha256": "2AC7B79F509B2720D3B3CBE0206EEDD0E9AB8E5D212174EE8E82A57DFBF37970",
+      "hourly_csv": "docs\\researchops\\s26_s27_validation\\ZN_S27\\2024-01-01_2024-12-31\\local_lineage\\20260601_S27_ZN_2024_VALIDATION_BACKTEST_ZN_hourly_continuous_lineage.csv",
+      "hourly_sha256": "290806DEFB9C074D5C06D0969A04E9748C0E97127C81BA11A23EAFF1060D5D20",
+      "period_label": "ZN_2024_VALIDATION"
+    }
+  ],
+  "non_authorization": [
+    "NO_PROVIDER_API_ACCESS",
+    "NO_NEW_DATA_DOWNLOAD",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_PARAMETER_TUNING"
+  ],
+  "status": {
+    "aggregate_parity_rows": 12,
+    "blocking_findings": 0,
+    "deployment": "NO",
+    "forward_access": "NO",
+    "gate": "S27_ZN_BACKTEST_PARITY_VERIFICATION_BEFORE_LOCKBOX",
+    "lineage_rows": 16,
+    "lockbox_access": "NO",
+    "lookahead_rows": 12,
+    "new_data_download": "NO",
+    "null_tests_run": "YES_BUG_DETECTION_ONLY_NOT_TUNING",
+    "oos_access": "NO",
+    "period_count": 2,
+    "periods": [
+      "ZN_2022_2023_INITIAL_TEST",
+      "ZN_2024_VALIDATION"
+    ],
+    "promotion": "NO",
+    "provider_api_access": "NO",
+    "row_replay_rows": 80,
+    "status": "PASS_S27_ZN_BACKTEST_PARITY_VERIFIED_BEFORE_LOCKBOX",
+    "trading": "NO"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "columns": [
+    "rtype",
+    "publisher_id",
+    "instrument_id",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "symbol"
+  ],
+  "index_names": [
+    "ts_event"
+  ]
+}

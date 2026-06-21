@@ -1,0 +1,13 @@
+{
+  "accepted_quarantine_rows": 115,
+  "backtests_run": "NO",
+  "blocked_before_forecast_reason": "S26 sigma_percent_t runtime value not available in this gate; rows remain quarantine-only.",
+  "diagnostics_run": "NO",
+  "forecasts_run": "NO",
+  "gate": "G_R1A_ZN_S26_WORKED_EXAMPLE_DATABENTO_OHLCV_1H_TINY_QUARANTINE_INTAKE",
+  "intake_status": "PASS_ZN_S26_HOURLY_OHLCV_1H_QUARANTINE_ONLY_NOT_FORECAST_READY",
+  "next_gate": "G_R1B_ZN_S26_HOURLY_SIGMA_PERCENT_AND_FORECAST_ONLY_HANDOFF",
+  "positions_run": "NO",
+  "row_validation_json": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\validation\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_row_validation.json",
+  "sanitized_bars_csv": "docs\\researchops\\s26_s27_hourly_bridge\\ZN_S26_WORKED_EXAMPLE\\2026-05-18_2026-05-22\\databento_ohlcv_1h_quarantine\\sanitized_bars\\20260531_G_R1A_ZN_S26_OHLCV_1H_TINY_sanitized_quarantine_ohlcv_1h.csv"
+}

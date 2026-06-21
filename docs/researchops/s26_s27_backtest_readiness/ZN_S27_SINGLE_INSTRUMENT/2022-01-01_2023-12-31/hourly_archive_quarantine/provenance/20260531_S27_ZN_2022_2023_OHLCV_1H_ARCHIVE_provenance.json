@@ -1,0 +1,43 @@
+{
+  "author_market_code": "ZN",
+  "created_at_utc": "2026-05-31T15:17:20.659808Z",
+  "dataset": "GLBX.MDP3",
+  "gate": "S27_ZN_2022_2023_DATABENTO_OHLCV_1H_QUARANTINE_INTAKE",
+  "non_authorization": [
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_FORECASTS",
+    "NO_POSITIONS",
+    "NO_COSTS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "provider": "DATABENTO_HISTORICAL",
+  "raw_symbols": [
+    "ZNH2",
+    "ZNM2",
+    "ZNU2",
+    "ZNZ2",
+    "ZNH3",
+    "ZNM3",
+    "ZNU3",
+    "ZNZ3",
+    "ZNH4"
+  ],
+  "request_end_utc": "2024-01-01T00:00:00Z",
+  "request_start_utc": "2021-12-31T00:00:00Z",
+  "row_id": "APPENDIX_C_172_004",
+  "sanitized_csv": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\sanitized_hourly_bars\\20260531_S27_ZN_2022_2023_OHLCV_1H_ARCHIVE_sanitized_quarantine_ohlcv_1h.csv",
+  "schema": "ohlcv-1h",
+  "secret_handling": "API key read locally and not written to artifacts or stdout",
+  "status_json": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\status\\20260531_S27_ZN_2022_2023_OHLCV_1H_ARCHIVE_quarantine_intake_status.json",
+  "stype_in": "raw_symbol",
+  "target_completed_trading_date_end": "2023-12-31",
+  "target_completed_trading_date_start": "2022-01-01",
+  "validation_json": "docs\\researchops\\s26_s27_backtest_readiness\\ZN_S27_SINGLE_INSTRUMENT\\2022-01-01_2023-12-31\\hourly_archive_quarantine\\validation\\20260531_S27_ZN_2022_2023_OHLCV_1H_ARCHIVE_row_validation.json"
+}

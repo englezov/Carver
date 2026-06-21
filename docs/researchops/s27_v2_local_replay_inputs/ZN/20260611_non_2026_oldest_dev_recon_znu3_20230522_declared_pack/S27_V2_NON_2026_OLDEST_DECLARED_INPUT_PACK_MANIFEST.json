@@ -1,0 +1,147 @@
+{
+    "artifact":  "S27_V2_NON_2026_OLDEST_ZN_DECLARED_INPUT_PACK_MANIFEST",
+    "authorization":  "S27_V2_NON_2026_OLDEST_LOCAL_DEVELOPMENT_PACK_BUILD_GATE",
+    "status":  "LOCAL_INPUT_PACK_DECLARED_FOR_NON_2026_DEVELOPMENT_RECON_ONLY_NOT_BACKTEST_NOT_RESULT",
+    "lane":  "SOURCE_NATIVE_FUTURES",
+    "selected_slice_rule":  "MINIMUM_OLDEST_LOCAL_NON_2026_SLICE_AFTER_STRICT_PRIOR_VQM_AND_POST_ROLL_LEVEL_COMPATIBILITY_POPULATED",
+    "selected_raw_symbol":  "ZNU3",
+    "selected_decision_timestamp_utc":  "2023-05-22T00:00:00Z",
+    "selected_fill_timestamp_utc":  "2023-05-22T01:00:00Z",
+    "selected_previous_daily_timestamp_utc":  "2023-05-21T00:00:00Z",
+    "explicitly_excluded_data":  [
+                                     "NO_2026_DATA",
+                                     "NO_TEST",
+                                     "NO_VALIDATION",
+                                     "NO_OOS",
+                                     "NO_LOCKBOX",
+                                     "NO_FORWARD"
+                                 ],
+    "history_evidence":  {
+                             "daily_continuous_rows":  "64",
+                             "daily_continuous_prior_history_rows":  "63",
+                             "daily_history_first_prior_trading_date":  "2023-03-08",
+                             "daily_history_selected_previous_trading_date":  "2023-05-21",
+                             "daily_continuous_order":  "CHRONOLOGICAL_ASCENDING_SELECTED_ROW_LAST",
+                             "selected_sigma_status":  "PREVALIDATED_STRATEGY3_SIGMA_FROM_ALREADY_LOCAL_TEN_YEAR_RUNTIME_LEDGER",
+                             "selected_sigma_method_status":  "STRATEGY_3_STYLE_EWMA32_PERCENT_RETURN_SIGMA_ANNUALIZED_256",
+                             "selected_sigma_percent_t":  "0.061240880678963244",
+                             "selected_vqm_status":  "PREVALIDATED_S27_V_Q_M_VOL_ATTENUATION_DAILY_VALUE_STRICT_PRIOR_TO_DECISION",
+                             "selected_vqm_method_status":  "LOCKED_S13_STYLE_V_Q_M_ATTENUATION_RUNTIME",
+                             "selected_vqm_source_completed_trading_date":  "2023-05-21",
+                             "selected_vqm_relative_volatility_v":  "1.3831478154868233",
+                             "selected_vqm_quantile_q":  "0.0",
+                             "selected_vqm_multiplier_m":  "1.2747933884297518",
+                             "selected_vqm_observation_count":  "3",
+                             "level_bridge_disposition":  "PASS_LOCAL_LEVEL_SPACE_BRIDGE_SHARED_TEN_YEAR_ROLL_LEVEL_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+                             "level_bridge_proof_hash":  "bffc412f65bd301e1891cc70632013b0970a4797d9d812f4d9cd35010ed792eb",
+                             "hourly_adjustment_source":  "TEN_YEAR_VQM_DAILY_ROLL_LEVEL_APPLIED_TO_ALREADY_LOCAL_RAW_HOURLY_ZNU3_BARS",
+                             "rejected_hourly_lineage_adjustment":  "0.84375",
+                             "accepted_ten_year_roll_level_adjustment":  "2.28125",
+                             "tick_rounding_policy_status":  "APPENDIX_C_STATIC_ZN_TICK_POLICY_BOUND_FOR_DEV_RECON_PLANNING_ONLY",
+                             "multiplier_currency_policy_status":  "APPENDIX_C_STATIC_ZN_POINT_VALUE_AND_USD_CURRENCY_BOUND_FOR_POSITION_ONLY",
+                             "commission_spread_policy_status":  "INFERRED_RETAIL_FUTURES_COST_ACCEPTED_FOR_LOCAL_DEV_RECON_ONLY_NOT_BOOK_EXPLICIT",
+                             "valuation_policy_status":  "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT_FOR_LOCAL_DEV_RECON_ONLY",
+                             "working_order_lifecycle_status":  "FIRST_ROW_EMPTY_WORKING_ORDER_STATE_DECLARED_RUNNER_MUST_BIND_SUBSEQUENT_STATE",
+                             "working_order_lifecycle_context_hash":  "b19dab9cc0f116f15bab5972e301824b48ba92f8baaf9ea4c4a481ddd38ec891"
+                         },
+    "level_bridge_proof":  {
+                               "artifact":  "S27_V2_ZN_NON_2026_LOCAL_LEVEL_BRIDGE_PROOF_NOT_EXECUTION_EVIDENCE",
+                               "bridge_disposition":  "PASS_LOCAL_LEVEL_SPACE_BRIDGE_SHARED_TEN_YEAR_ROLL_LEVEL_NOT_PRICE_EQUALITY_NOT_RESULT_EVIDENCE",
+                               "daily_active_contract":  "ZNU3",
+                               "daily_additive_back_adjustment":  "2.28125",
+                               "hourly_active_contract":  "ZNU3",
+                               "hourly_additive_back_adjustment_applied_for_bridge":  "2.28125",
+                               "selected_decision_timestamp_utc":  "2023-05-22T00:00:00Z",
+                               "selected_previous_daily_date":  "2023-05-21",
+                               "source_daily_risk_history_sha256":  "5A34C9F0BAFB915A3584A089C7DE35EFC45FC1E6AA64046C3C6EFCDF202B4C1E",
+                               "source_hourly_raw_bars_sha256":  "ECFF69034C8DDAE994F29932D3AFBCB276FDD803F811DAC0A18DE53BD3915AFE",
+                               "rejected_candidate_hourly_lineage_sha256":  "D5B06948D9C0584F93845B3C80A67B7A8EC87602E75D55D2C065ADBEEFB774A1",
+                               "rejected_candidate_hourly_lineage_reason":  "OLDER_CANDIDATE_COMPARISON_HOURLY_LINEAGE_USES_DIFFERENT_ROLL_ADJUSTMENT_0_84375; PACK_NORMALIZES_FROM_RAW_HOURLY_BARS_TO_TEN_YEAR_DAILY_ROLL_LEVEL_2_28125"
+                           },
+    "working_order_lifecycle_context":  {
+                                            "status":  "FIRST_ROW_EMPTY_WORKING_ORDER_STATE_DECLARED_FOR_LOCAL_DEV_RECON_RUNNER_BINDING",
+                                            "selected_decision_timestamp_utc":  "2023-05-22T00:00:00Z",
+                                            "initial_current_position_contracts":  "0",
+                                            "open_working_orders":  "0",
+                                            "state_scope":  "FIRST_ROW_CONTEXT_ONLY_NOT_FULL_MULTI_ROW_LIFECYCLE_EVIDENCE",
+                                            "runner_must_bind_subsequent_state":  "YES"
+                                        },
+    "row_family_files":  {
+                             "daily_continuous_completed_bar.csv":  {
+                                                                        "row_count":  64,
+                                                                        "sha256":  "89A4F2FFC0881D4C1B796EB9D84C5B8548C4B172C9F06329493F7A4576D27970"
+                                                                    },
+                             "daily_current_contract_completed_bar.csv":  {
+                                                                              "row_count":  1,
+                                                                              "sha256":  "59448057FF7557B4490B53CEE7B5745C54D187EE984F1167700C106907FC51C9"
+                                                                          },
+                             "hourly_decision_completed_bar.csv":  {
+                                                                       "row_count":  1,
+                                                                       "sha256":  "115B49BAB42E3D16BC5BD7571C48A2B09FD6334CEA0710452FF18DAF65B8A5F0"
+                                                                   },
+                             "hourly_fill_completed_bar.csv":  {
+                                                                   "row_count":  1,
+                                                                   "sha256":  "60B590A17BEC33C06BC4D9415BB2CBDE018CE9B7B3DFB7924642C8AA99764C62"
+                                                               },
+                             "session_calendar.csv":  {
+                                                          "row_count":  1,
+                                                          "sha256":  "827662ED700E0CF21CE70214FACC360FB267BDCC893037E2D50FB04DAC74ED55"
+                                                      },
+                             "roll_calendar.csv":  {
+                                                       "row_count":  1,
+                                                       "sha256":  "641BB921E97E9CE43FE07236EBA75387B5266F38FF2DD2F9F3C1DED35289E0F8"
+                                                   },
+                             "cost_parameter.csv":  {
+                                                        "row_count":  1,
+                                                        "sha256":  "299C720028FEB61C23E63D88D83F3272A632A37B1364BF9655914F6086E75C20"
+                                                    }
+                         },
+    "source_files":  {
+                         "20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv":  {
+                                                                                                                    "path":  "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_local_continuous_daily_risk_history.csv",
+                                                                                                                    "sha256":  "5A34C9F0BAFB915A3584A089C7DE35EFC45FC1E6AA64046C3C6EFCDF202B4C1E"
+                                                                                                                },
+                         "20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_sigma_i_t_ledger.csv":  {
+                                                                                                 "path":  "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_sigma_i_t_ledger.csv",
+                                                                                                 "sha256":  "58EEB770CC76E4391CE346098E4B1BA95308EEBC88B72EEF18660D3024B8B5D5"
+                                                                                             },
+                         "20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_relative_vol_v_q_m_daily_ledger.csv":  {
+                                                                                                                "path":  "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_relative_vol_v_q_m_daily_ledger.csv",
+                                                                                                                "sha256":  "764660597B7686832C970D908AD82D26899F0792B953072846CB57B44A726161"
+                                                                                                            },
+                         "20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_roll_plan.csv":  {
+                                                                                          "path":  "docs/researchops/s26_s27_hourly_bridge/ZN_S27_V_Q_M_VOL_ATTENUATION/ten_year_vol_history_runtime_2026-05-31/ledger/20260531_ZN_S27_V_Q_M_TEN_YEAR_VOL_RUNTIME_roll_plan.csv",
+                                                                                          "sha256":  "B4A5AFB95E1E7F133438C55F21ADC2A2EBA26697648014052930B275862E3AB1"
+                                                                                      },
+                         "20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_ZNU3_provider.csv":  {
+                                                                                                                          "path":  "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/raw_provider_output/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_ZNU3_provider.csv",
+                                                                                                                          "sha256":  "ECFF69034C8DDAE994F29932D3AFBCB276FDD803F811DAC0A18DE53BD3915AFE"
+                                                                                                                      },
+                         "20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_continuous_lineage.csv":  {
+                                                                                                                               "path":  "docs/researchops/s26_s27_candidate_comparison/2022-01-01_2023-12-31/ZN/local_lineage/20260531_S27_SOURCE_NATIVE_CANDIDATE_COMPARISON_2022_2023_R2_ZN_hourly_continuous_lineage.csv",
+                                                                                                                               "sha256":  "D5B06948D9C0584F93845B3C80A67B7A8EC87602E75D55D2C065ADBEEFB774A1"
+                                                                                                                           }
+                     },
+    "non_authorizations":  [
+                               "NO_PROVIDER_API",
+                               "NO_DOWNLOADS",
+                               "NO_NEW_DATA_ACQUISITION",
+                               "NO_2026_DATA",
+                               "NO_OOS",
+                               "NO_LOCKBOX",
+                               "NO_FORWARD",
+                               "NO_TEST",
+                               "NO_VALIDATION",
+                               "NO_BACKTESTS",
+                               "NO_RESULT_SCORED_RUNS",
+                               "NO_RESULT_INTERPRETATION",
+                               "NO_PNL_EVALUATION",
+                               "NO_TUNING",
+                               "NO_ADAPTER_WORK",
+                               "NO_DEPLOYMENT",
+                               "NO_TRADING",
+                               "NO_PROMOTION",
+                               "NO_GIT_ACTIONS",
+                               "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+                           ]
+}

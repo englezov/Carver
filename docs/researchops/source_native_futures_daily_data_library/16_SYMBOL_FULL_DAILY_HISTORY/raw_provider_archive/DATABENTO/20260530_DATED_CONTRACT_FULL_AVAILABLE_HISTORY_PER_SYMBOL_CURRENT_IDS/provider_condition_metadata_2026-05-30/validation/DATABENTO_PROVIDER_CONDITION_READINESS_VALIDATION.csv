@@ -1,0 +1,6 @@
+metric,value,count
+row_count_by_provider_condition_readiness_status,ROW_QUARANTINED_PROVIDER_CONDITION_DEGRADED,85
+row_count_by_provider_condition_readiness_status,ROW_READY_PROVIDER_CONDITION_NORMAL,4483
+archive_rows,total,4568
+condition_records_returned,total,948
+rows_joined,total,4568

@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "MNQM1"
+  ],
+  "result": {
+    "MNQM1": [
+      {
+        "d0": "2020-03-08",
+        "d1": "2021-07-04",
+        "s": "9485"
+      }
+    ]
+  },
+  "start_date": "2019-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "MNQM1"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "artifact": "S27_V2_2023_TEST_COMBINED_MARKET_ORDER_TBBO_REGISTRY",
+  "authorization": "S27_V2_2023_TEST_COMBINED_MARKET_ORDER_TBBO_REGISTRY_AND_MECHANICAL_CONTINUATION_GATE",
+  "registry": "combined_market_order_tbbo_registry.csv",
+  "registry_sha256": "33f7b270d546e9a4d37a7bafa7c6607c181dd96fa68c3b9019669e8e18b34552",
+  "result_interpretation": "NO",
+  "row215_policy": "ROW215_FIRST_POST_FILL_TBBO_QUOTE_SPREAD_EVIDENCE_ENGINEERING_CONVENTION_NOT_BOOK_EXPLICIT",
+  "row215_policy_record": "docs/process/CARVER_S27_ZN_V2_2023_TEST_ROW215_TBBO_POLICY_DECISION_2026-06-12.md",
+  "row_count": 262,
+  "row_index_max": "1378",
+  "row_index_min": "1",
+  "source_faithful_evidence_claim": "NO",
+  "status": "LOCAL_2023_TEST_COMBINED_MARKET_ORDER_TBBO_REGISTRY_BUILT_NOT_RESULT",
+  "validation_oos_lockbox_forward_access": "NO"
+}

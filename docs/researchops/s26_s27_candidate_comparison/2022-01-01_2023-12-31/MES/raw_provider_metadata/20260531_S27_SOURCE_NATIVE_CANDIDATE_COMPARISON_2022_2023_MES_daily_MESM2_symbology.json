@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "MESM2"
+  ],
+  "result": {
+    "MESM2": [
+      {
+        "d0": "2021-03-07",
+        "d1": "2022-06-26",
+        "s": "13615"
+      }
+    ]
+  },
+  "start_date": "2019-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "MESM2"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "end_date": "2024-01-01",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZNZ5"
+  ],
+  "result": {
+    "ZNZ5": [
+      {
+        "d0": "2014-09-05",
+        "d1": "2016-01-06",
+        "s": "184597"
+      }
+    ]
+  },
+  "start_date": "2011-01-01",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZNZ5"
+  ]
+}

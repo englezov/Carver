@@ -1,0 +1,13 @@
+status_key,status_value,notes
+gate_name,CARVER_DATABENTO_APPENDIX_C_CONTRACT_IDENTITY_STATIC_LOCK_AND_DATED_SELECTION_2026-05-30,Databento metadata/symbology and definition schema only.
+appendix_c_rows,102,Full audited Appendix C universe preserved.
+candidate_rows_attempted,69,69 post-alias static provider candidates.
+provider_metadata_safe_window,2026-05-27_TO_2026-05-29,Avoids live-license boundary encountered after 2026-05-29T22:00Z for some datasets.
+static_dated_contract_selected_but_contract_identity_requires_review_or_fail_closed,34,Contract identity static result count.
+preserved_fail_closed_not_in_69_databento_static_provider_candidates,33,Contract identity static result count.
+static_contract_identity_and_dated_contract_selected_not_market_ready,35,Contract identity static result count.
+definition_error_count,0,Definition metadata request errors.
+market_row_access,NO,No OHLCV request or market-row parsing.
+ohlcv_download_authorized,NO,No data download authorization.
+strategy_use_status,NOT_STRATEGY_INPUT_NOT_BACKTEST_READY,No strategy use.
+provider_api_access,DATABENTO_METADATA_SYMBOLOGY_AND_DEFINITION_ONLY,No OHLCV schema requested.

@@ -62,6 +62,8 @@ Real S09 data work remains blocked until separate artifacts lock:
 
 The prior Opus finding on the `0.15 SR` speed-limit citation remains unresolved for real data. Therefore this gate does not compute eligibility from costs. It accepts only an explicitly locked eligible EWMAC speed set and fails closed otherwise.
 
+Opus 4.7 later verified the book source for the `0.15 SR` cost-units threshold at PDF page 216. That verification does not turn it into a production machine lock. Future real-data or production-facing S09 gates must still transcribe the source into a hash-bound machine-readable lock and separately lock per-instrument cost eligibility from prevalidated costs and turnover policy before use.
+
 ## P05 Boundary
 
 P05 Jumbo multiple trend is recorded only as a future portfolio shape:

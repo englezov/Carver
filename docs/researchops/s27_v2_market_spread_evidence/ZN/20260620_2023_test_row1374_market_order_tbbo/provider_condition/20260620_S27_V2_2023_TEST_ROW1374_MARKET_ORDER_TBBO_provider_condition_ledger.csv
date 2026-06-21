@@ -1,0 +1,2 @@
+row_index,fill_candidate_timestamp_utc,request_start_utc,request_end_utc,raw_symbol,order_side,quote_rows_returned,selected_quote_ts_event,quote_age_seconds,provider_condition_status,provider_error_count,provider_error_summary,row_hash
+1374,2023-03-30T18:00:00Z,2023-03-30T17:59:55Z,2023-03-30T18:00:05Z,ZNM3,SELL,2,2023-03-30T17:59:58.005200809Z,1.9947999999999999,PASS_FRESH_NON_CROSSED_TBBO_QUOTE_SELECTED,0,,f01bd4cb32a20f81c23fd27a8b4fc122c79f44fe323cf91d8f70313843a15c9d

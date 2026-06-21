@@ -1,0 +1,15 @@
+{
+  "annual_risk_runtime_source_status": "FAIL_CLOSED_S09_MES_S03_ANNUAL_RISK_SOURCE_NOT_PRODUCTION_LOCKED",
+  "contract_count": 13,
+  "cost_value_status": "FAIL_CLOSED_S09_MES_HISTORICAL_COST_VALUES_NOT_EXTRACTED",
+  "databento_api_access": "NO",
+  "historical_contract_lifecycle_status": "LOCKED_DERIVED_THIRD_FRIDAY_RULE_FROM_GENERIC_CME_STATIC_SOURCE",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "ohlcv_request": "NO",
+  "roll_trading_day_semantics_status": "FAIL_CLOSED_S09_MES_PROVIDER_DATE_ROLL_SEMANTICS_NOT_SOURCE_LOCKED",
+  "source_extract_hash_status": "LOCKED_LOCAL_STATIC_EXTRACT_HASHES",
+  "speed_cost_eligibility_status": "FAIL_CLOSED_S09_MES_SPEED_COST_ELIGIBILITY_NOT_LOCKED",
+  "status": "PARTIAL_LOCK_MES_HISTORICAL_LIFECYCLE_DATES_STRATEGY_INPUT_FAIL_CLOSED",
+  "strategy_input_readiness_status": "FAIL_CLOSED_S09_MES_STRATEGY_INPUT_NOT_READY"
+}

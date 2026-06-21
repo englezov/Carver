@@ -1,0 +1,24 @@
+{
+  "end_date": "2018-11-04",
+  "message": "Partially resolved",
+  "not_found": [],
+  "partial": [
+    "ZTU8"
+  ],
+  "result": {
+    "ZTU8": [
+      {
+        "d0": "2017-12-17",
+        "d1": "2018-10-14",
+        "s": "587209"
+      }
+    ]
+  },
+  "start_date": "2017-05-29",
+  "status": 1,
+  "stype_in": "raw_symbol",
+  "stype_out": "instrument_id",
+  "symbols": [
+    "ZTU8"
+  ]
+}

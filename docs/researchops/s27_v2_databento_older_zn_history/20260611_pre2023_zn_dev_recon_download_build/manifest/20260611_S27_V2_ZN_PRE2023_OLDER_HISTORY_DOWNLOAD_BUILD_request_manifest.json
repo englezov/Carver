@@ -1,0 +1,40 @@
+{
+  "authorization": "S27_V2_EXACTLY_ONE_DATABENTO_ZN_OLDER_HISTORY_DOWNLOAD_BUILD_GATE",
+  "daily_schema": "ohlcv-1d",
+  "dataset": "GLBX.MDP3",
+  "definition_schema": "definition",
+  "development_reconciliation_end": "2022-12-31",
+  "development_reconciliation_start": "2022-01-01",
+  "gate": "S27_V2_DATABENTO_SOURCE_NATIVE_ZN_OLDER_HISTORY_DOWNLOAD_BUILD_GATE",
+  "hourly_schema": "ohlcv-1h",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS_ACCESS",
+    "NO_LOCKBOX_ACCESS",
+    "NO_FORWARD_ACCESS",
+    "NO_BACKTESTS",
+    "NO_RESULT_SCORED_RUNS",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "protected_windows": [
+    "2023_TEST",
+    "2024_VALIDATION",
+    "2025_2026_LOCKBOX_FORWARD_CANDIDATES"
+  ],
+  "provider": "DATABENTO_HISTORICAL",
+  "request_end_exclusive": "2023-01-01",
+  "request_start": "2010-01-01",
+  "root_symbol": "ZN",
+  "secret_handling": "DataBento key read locally and never written to artifacts/stdout",
+  "stype_in": "raw_symbol"
+}

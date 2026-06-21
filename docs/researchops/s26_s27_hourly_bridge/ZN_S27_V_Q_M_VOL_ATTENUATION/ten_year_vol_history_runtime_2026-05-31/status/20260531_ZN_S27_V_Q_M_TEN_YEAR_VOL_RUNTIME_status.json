@@ -1,0 +1,17 @@
+{
+  "backtests_run": "NO",
+  "continuous_rows": 3527,
+  "contract_requests": 46,
+  "diagnostics_run": "NO",
+  "first_runtime_as_of": "2026-04-13T03:00:00Z",
+  "gate": "S27_ZN_V_Q_M_TEN_YEAR_VOL_HISTORY_DATABENTO_EXECUTION_OR_FAIL_CLOSED_DECISION",
+  "last_runtime_as_of": "2026-05-22T21:00:00Z",
+  "positions_run": "NO",
+  "relative_vol_rows": 934,
+  "runtime_rows": 686,
+  "s26_forecast_rows": 686,
+  "s27_forecast_run": "NO",
+  "sigma_rows": 3494,
+  "status": "PASS_S27_ZN_V_Q_M_TEN_YEAR_VOL_RUNTIME_LEDGER_DEV_RECON_ONLY",
+  "strategy_test_run": "NO"
+}

@@ -1,0 +1,10 @@
+check_name,check_status,observed_count
+hourly_source_rows_provider_condition_available,PASS,16996
+hourly_source_accounted_by_active_plus_inactive,PASS,16996
+s26_rows_nonempty,PASS,11789
+s27_rows_nonempty,PASS,11789
+position_rows_match_s27_rows,PASS,11789
+backtest_rows_nonempty,PASS,11788
+no_oos_lockbox_forward,PASS,0
+no_alpha_statistics,PASS,0
+unit_plumbing_only,PASS,0

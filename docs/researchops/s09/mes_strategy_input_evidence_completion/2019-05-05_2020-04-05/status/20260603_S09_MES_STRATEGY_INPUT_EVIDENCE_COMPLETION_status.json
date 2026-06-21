@@ -1,0 +1,33 @@
+{
+  "backtests_run": "NO",
+  "databento_api_access": "NO",
+  "design_ordering": "oldest authorized completed source-native data first",
+  "diagnostics_run": "NO",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETION_GATE",
+  "hash_bound_provenance_status": "LOCKED_SOURCE_NATIVE_HASH_BOUND_PROVENANCE",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "locked_evidence_names": [
+    "official_lifecycle_evidence",
+    "roll_trading_day_semantics",
+    "annual_risk_runtime_values",
+    "daily_price_risk_values",
+    "historical_mes_cost_values",
+    "risk_adjusted_cost_values",
+    "speed_eligibility_values",
+    "eligible_speed_set",
+    "table36_fdm_row",
+    "hash_bound_provenance"
+  ],
+  "machinery_development_slice": "2019-05-05 through 2020-04-05",
+  "market_row_parsing": "NO",
+  "new_provider_data_download": "NO",
+  "next_gate": "S09_MES_STRATEGY_INPUT_READINESS_GATE",
+  "remaining_evidence_count": 0,
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "runtime_input_lock_scope": "oldest minimum machinery-development slice only",
+  "status": "LOCKED_S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETE_NOT_BACKTEST_AUTHORIZATION",
+  "strategy_input_readiness_status": "S09_MES_STRATEGY_INPUT_EVIDENCE_LOCKED_AWAITING_READINESS_GATE",
+  "test_validation_lockbox_forward_access": "NO"
+}

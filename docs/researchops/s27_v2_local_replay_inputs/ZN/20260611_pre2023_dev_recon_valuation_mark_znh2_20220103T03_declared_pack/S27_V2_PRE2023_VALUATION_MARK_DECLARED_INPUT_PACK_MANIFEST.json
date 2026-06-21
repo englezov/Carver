@@ -1,0 +1,80 @@
+{
+  "artifact": "S27_V2_PRE2023_VALUATION_MARK_DECLARED_INPUT_PACK_MANIFEST",
+  "authorization": "S27_V2_PRE2023_DEVELOPMENT_RECON_POST_FILL_VALUATION_MARK_ROW_DECLARATION_GATE",
+  "instrument": "ZN",
+  "lane": "SOURCE_NATIVE_FUTURES",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "raw_symbol": "ZNH2",
+  "row_family_files": {
+    "valuation_mark_completed_bar.csv": {
+      "row_count": 1,
+      "sha256": "9AA8B3999A80058342C8E40236B2A926A500355D6D5FED6F6877DE4147961031"
+    }
+  },
+  "selected_provider_row": {
+    "close": "130.296875",
+    "high": "130.328125",
+    "instrument_id": "768155",
+    "low": "130.296875",
+    "open": "130.328125",
+    "symbol": "ZNH2",
+    "ts_event": "2022-01-03 02:00:00+00:00",
+    "volume": "4075"
+  },
+  "selected_source_row": {
+    "close": "130.296875",
+    "completed_trading_date": "2022-01-03",
+    "derived_completed_bar_end_utc": "2022-01-03T03:00:00Z",
+    "high": "130.328125",
+    "instrument_id": "768155",
+    "low": "130.296875",
+    "open": "130.328125",
+    "provider_condition_status": "PROVIDER_CONDITION_AVAILABLE",
+    "provider_ts_event_start_utc": "2022-01-03T02:00:00Z",
+    "volume": "4075.0"
+  },
+  "source_controlled_run_bundle_sha256": "7668D2F2212D382355EFC00CA80E2345E7418B32661FC4C4612EDE9EF6A0AD30",
+  "source_controlled_run_root": "docs\\researchops\\s27_v2_local_replay_runs\\ZN\\20260611_pre2023_oldest_dev_recon_2022_controlled_run",
+  "source_controlled_run_trusted_bundle_sha256": "8CC16C9D7100F67090C2EA6F80C220E4EDD0EB86EDDABF85E86F776634350368",
+  "source_files": {
+    "raw_provider_hourly_csv": {
+      "path": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\raw_provider_output\\hourly\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_ohlcv-1h_ZNH2_2022_provider.csv",
+      "selected_line_number": 27,
+      "selected_line_sha256": "08D84D1B9EA335E5761F7CB597D56843A75E6FA067832448A1CB4CE4A9993877",
+      "selected_row_hash": "CDCCDD56CDAD2AE5E442613F11673F7CA654DF095D52F2735BF8A613432BCFA7",
+      "sha256": "EB397C882C3B7F7CB56FFA91F67883171EFA9A4373817C8059AD88DCFD1E6502"
+    },
+    "strategy_facing_hourly_available_bars": {
+      "path": "docs\\researchops\\s27_v2_databento_older_zn_history\\20260611_pre2023_zn_dev_recon_download_build\\ledger\\20260611_S27_V2_ZN_PRE2023_OLDER_HISTORY_DOWNLOAD_BUILD_strategy_facing_hourly_available_bars.csv",
+      "selected_line_number": 4,
+      "selected_line_sha256": "965130BBCB02DC34A182AC47747FDDBE488DFE11E001164078F7085A2FE98593",
+      "selected_row_hash": "64913784BD91E26B2F6FD03701E184DB306D68AB4D288E4D4AF7B76754B26FAF",
+      "sha256": "77F80D295EE014A96E0C1572CDC1791B1E735987914C8A88396DF605736A2A83"
+    }
+  },
+  "source_fill_timestamp_utc": "2022-01-03T02:00:00Z",
+  "status": "LOCAL_PRE2023_VALUATION_MARK_ROW_DECLARED_NOT_PNL_NOT_RESULT",
+  "strategy_id": "S27_V2_ZN",
+  "valuation_convention_label": "SOURCE_NATIVE_ENGINEERING_VALUATION_ASSUMPTION_NOT_BOOK_EXPLICIT",
+  "valuation_convention_status": "ACCEPTED_ENGINEERING_ASSUMPTION_NOT_BOOK_EXPLICIT_FOR_LOCAL_DEV_RECON_ONLY",
+  "valuation_mark_completed_timestamp_utc": "2022-01-03T03:00:00Z",
+  "valuation_mark_is_strictly_after_fill": "YES"
+}

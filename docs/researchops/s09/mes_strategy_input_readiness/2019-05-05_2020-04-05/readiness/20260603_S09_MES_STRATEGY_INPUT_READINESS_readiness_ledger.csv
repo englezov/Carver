@@ -1,0 +1,7 @@
+check_name,value,status,notes
+evidence_completion_status,LOCKED_S09_MES_STRATEGY_INPUT_EVIDENCE_COMPLETE_NOT_BACKTEST_AUTHORIZATION,LOCKED,Evidence packet hash-bound on machinery-development slice.
+evidence_handoff_status,S09_MES_EVIDENCE_COMPLETION_HANDOFF_READY_FOR_READINESS_GATE_NOT_BACKTEST,LOCKED,Handoff is readiness-gate only and not backtest authorization.
+hash_bound_provenance_status,LOCKED_SOURCE_NATIVE_HASH_BOUND_PROVENANCE,LOCKED,Evidence SHA256 manifest recomputed before readiness status write.
+source_native_lane,SOURCE_NATIVE_FUTURES,LOCKED,No CFD adapter or old QuantLab active pipeline used.
+strategy_input_readiness_status,S09_MES_STRATEGY_INPUT_READY_DEV_RECON_ONLY,READY_DEV_RECON_ONLY,Inputs are ready only for a separately authorized Development/Reconciliation backtest.
+next_gate,S09_MES_FIRST_DEV_RECON_BACKTEST_AUTHORIZATION_GATE,AUTHORIZATION_REQUIRED,Operator must separately authorize the first backtest.

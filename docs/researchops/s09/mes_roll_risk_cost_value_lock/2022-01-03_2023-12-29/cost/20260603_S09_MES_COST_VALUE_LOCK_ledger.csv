@@ -1,0 +1,8 @@
+component,status,evidence_basis,blocker_or_note,next_required_action
+historical_fee_source_location,LOCKED_SOURCE_LOCATION_ONLY,"docs/researchops/s09/mes_historical_lifecycle_cost_risk_extraction/2022-01-03_2023-12-29/cost/20260603_S09_MES_COST_SOURCE_EXTRACTION_status.csv","CME historical fees source location exists, but values are not extracted.","Open fee-value extraction gate."
+current_fee_source_location,LOCKED_SOURCE_LOCATION_ONLY,"CME current fees source-location extract","Current fee source family is context only and is not a 2022-2023 historical cost lock.","Do not use current values as historical default."
+exchange_fee_value,FAIL_CLOSED_S09_MES_EXCHANGE_FEE_VALUE_NOT_EXTRACTED,"No exchange fee value extracted.","Cannot compute source-native commission/fee cost.","Extract historical MES exchange fee values."
+clearing_regulatory_fee_value,FAIL_CLOSED_S09_MES_CLEARING_REGULATORY_FEE_VALUE_NOT_EXTRACTED,"No clearing/regulatory fee value extracted.","Cannot compute all-in exchange-side cost.","Extract historical clearing/regulatory fees if applicable."
+broker_commission_value,FAIL_CLOSED_S09_MES_BROKER_COMMISSION_NOT_LOCKED,"No broker-specific source named.","Cannot compute source-native all-in cost.","Name and hash broker commission source or explicitly gate a no-broker-cost sensitivity."
+spread_slippage_policy,FAIL_CLOSED_S09_MES_SPREAD_SLIPPAGE_POLICY_NOT_LOCKED,"No spread/slippage source or conservative policy locked.","Cannot perform S09 cost eligibility.","Lock spread/slippage treatment before cost computation."
+cost_value_status,FAIL_CLOSED_S09_MES_HISTORICAL_COST_VALUES_NOT_EXTRACTED,"Source locations only.","No cost computation authorized.","Extract values under a later gate."

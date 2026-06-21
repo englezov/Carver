@@ -1,0 +1,2 @@
+root,status,requested_window_start,requested_window_end,effective_backtest_start,effective_backtest_end,s27_forecast_rows,backtest_rows,gross_pnl_usd,estimated_costs_usd,net_after_placeholder_costs_usd,cost_model_status,validation_2024_status
+NQ,FAIL_CLOSED_S27_PURE_NQ_CACHE_ONLY_TEST_NOT_EXECUTABLE,2022-01-01,2023-12-31,,,,,,,,,NOT_RUN_AFTER_TEST_FAIL_CLOSED

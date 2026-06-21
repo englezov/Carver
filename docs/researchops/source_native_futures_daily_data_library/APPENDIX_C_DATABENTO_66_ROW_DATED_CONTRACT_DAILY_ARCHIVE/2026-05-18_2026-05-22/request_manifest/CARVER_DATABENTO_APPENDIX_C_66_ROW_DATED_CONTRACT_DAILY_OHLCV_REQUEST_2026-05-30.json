@@ -1,0 +1,43 @@
+{
+  "completed_trading_dates": [
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21",
+    "2026-05-22"
+  ],
+  "dataset_counts": {
+    "GLBX.MDP3": 52,
+    "XCBF.PITCH": 1,
+    "XEUR.EOBI": 13
+  },
+  "eligible_rows": 66,
+  "gate": "CARVER_DATABENTO_APPENDIX_C_66_ROW_DATED_CONTRACT_DAILY_OHLCV_QUARANTINE_INTAKE_EXECUTION_2026-05-30",
+  "non_authorization": [
+    "NO_DIAGNOSTICS",
+    "NO_BACKTESTS",
+    "NO_FORECASTS",
+    "NO_POSITIONS",
+    "NO_COSTS",
+    "NO_CARRY",
+    "NO_TREND",
+    "NO_RISK_CALCULATIONS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_CFD_ADAPTERS",
+    "NO_OLD_QUANTLAB_PIPELINE",
+    "NO_TUNING",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_OPERATIONS"
+  ],
+  "provider": "DATABENTO",
+  "request_end_utc_exclusive": "2026-05-23T00:00:00Z",
+  "request_start_utc": "2026-05-18T00:00:00Z",
+  "run_utc": "2026-05-30T20:31:48Z",
+  "schema": "ohlcv-1d",
+  "source_ledger": "C:/Users/openclaw/Desktop/Carver/docs/researchops/contract_identity/databento_appendix_c_contract_identity_hardening_2026-05-30/ledger/CARVER_DATABENTO_APPENDIX_C_CONTRACT_IDENTITY_HARDENED_LEDGER_2026-05-30.csv",
+  "stype_in": "instrument_id"
+}

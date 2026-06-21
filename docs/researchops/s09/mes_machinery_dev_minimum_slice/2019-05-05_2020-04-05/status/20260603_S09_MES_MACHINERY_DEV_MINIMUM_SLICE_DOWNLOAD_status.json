@@ -1,0 +1,39 @@
+{
+  "backtests_run": "NO",
+  "databento_api_access": "YES_OPERATOR_AUTHORIZED_BOUNDED_HISTORY_CHECK_AND_WINDOW_DOWNLOAD",
+  "dataset": "GLBX.MDP3",
+  "diagnostics_run": "NO",
+  "failed_validation_checks": 0,
+  "first_completed_date": "2019-05-05",
+  "forecast_computation": "NO",
+  "gate": "S09_MES_MACHINERY_DEV_MINIMUM_SLICE_DOWNLOAD_GATE",
+  "lane_class": "SOURCE_NATIVE_FUTURES",
+  "last_completed_date": "2020-04-05",
+  "market_row_parsing": "YES_DAILY_OHLCV_SHAPE_AND_PROVIDER_CONDITION_ONLY",
+  "new_provider_data_download": "YES_OLDEST_MINIMUM_MACHINERY_DEVELOPMENT_SLICE_ONLY",
+  "provider": "DATABENTO_HISTORICAL",
+  "provider_condition_counts": {
+    "DEGRADED_OR_UNRESOLVED_PROVIDER_CONDITION_QUARANTINED_NOT_STRATEGY_READY": 4,
+    "NORMAL_PROVIDER_CONDITION": 635
+  },
+  "provider_errors": 0,
+  "raw_symbols": [
+    "MESM9",
+    "MESU9",
+    "MESZ9",
+    "MESH0",
+    "MESM0"
+  ],
+  "root": "MES",
+  "row_id": "APPENDIX_C_174_006",
+  "run_id": "20260603_S09_MES_MACHINERY_DEV_MINIMUM_SLICE_DOWNLOAD",
+  "sanitized_csv": "docs\\researchops\\s09\\mes_machinery_dev_minimum_slice\\2019-05-05_2020-04-05\\sanitized_daily_bars\\20260603_S09_MES_MACHINERY_DEV_MINIMUM_SLICE_DOWNLOAD_sanitized_quarantine_ohlcv_1d.csv",
+  "sanitized_rows": 639,
+  "schema": "ohlcv-1d",
+  "status": "PASS_S09_MES_MACHINERY_DEV_MINIMUM_SLICE_DOWNLOAD_QUARANTINE_ONLY_NOT_BACKTEST",
+  "test_validation_lockbox_forward_access": "NO",
+  "unique_completed_dates": 289,
+  "window_end": "2020-04-05",
+  "window_role": "MINIMUM_OLDEST_MACHINERY_DEVELOPMENT_SLICE_NOT_SCORED_EVIDENCE",
+  "window_start": "2019-05-05"
+}

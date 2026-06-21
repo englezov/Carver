@@ -1,0 +1,11 @@
+check_name,check_status,observed_count
+operator_authorized_exactly_one_test_backtest,PASS,1
+no_validation_lockbox_forward_access,PASS,0
+source_native_mes_only,PASS,8
+test_completed_dates_match_locked_budget,PASS,574
+test_first_date_matches_locked_boundary,PASS,1
+test_last_date_matches_locked_boundary,PASS,1
+source_native_provider_condition_policy_admitted_rows,PASS,1517
+forecast_rows_after_test_warmup,PASS,318
+backtest_rows_from_next_bar_application,PASS,317
+test_trade_count_minimum_met,PASS,317

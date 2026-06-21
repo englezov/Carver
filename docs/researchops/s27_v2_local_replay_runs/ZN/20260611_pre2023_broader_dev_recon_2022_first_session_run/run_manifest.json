@@ -1,0 +1,42 @@
+{
+  "artifact": "S27_V2_PRE2023_BROADER_DEVELOPMENT_RECON_RUN_MANIFEST",
+  "artifact_files": [
+    "runtime_history_ledger.csv",
+    "forecast_replay_ledger.csv",
+    "desired_position_ledger.csv",
+    "limit_order_ledger.csv",
+    "no_market_order_ledger.csv",
+    "working_order_transition_ledger.csv",
+    "fill_ledger.csv",
+    "cost_ledger.csv",
+    "pnl_ledger.csv",
+    "validation_ledger.csv"
+  ],
+  "authorization": "S27_V2_CONSOLIDATED_LOCAL_ONLY_PRE2023_BROADER_DEVELOPMENT_RECON_IMPLEMENTATION_AND_RUN_GATE",
+  "input_manifest_sha256": "0937B1F499A67C488B0F02B7CD998D21D1DD74797BB02001D0E8AFBB581CEC86",
+  "input_pack_path": "C:\\Users\\apops\\Desktop\\Carver\\docs\\researchops\\s27_v2_local_replay_inputs\\ZN\\20260611_pre2023_broader_dev_recon_2022_first_session_declared_pack",
+  "non_authorizations": [
+    "NO_PROVIDER_API",
+    "NO_DOWNLOADS",
+    "NO_NEW_DATA_ACQUISITION",
+    "NO_TEST_ACCESS",
+    "NO_VALIDATION_ACCESS",
+    "NO_OOS",
+    "NO_LOCKBOX",
+    "NO_FORWARD",
+    "NO_RESULT_SCORED_RUN",
+    "NO_RESULT_INTERPRETATION",
+    "NO_PNL_EVALUATION_BEYOND_MECHANICAL_ROW_CONSTRUCTION",
+    "NO_TUNING",
+    "NO_ADAPTER_WORK",
+    "NO_DEPLOYMENT",
+    "NO_TRADING",
+    "NO_PROMOTION",
+    "NO_GIT_ACTIONS",
+    "NO_SOURCE_FAITHFUL_EVIDENCE_CLAIM"
+  ],
+  "result_interpretation": "NO",
+  "row_count": 4,
+  "source_faithful_evidence_claim": "NO",
+  "status": "S27_V2_PRE2023_BROADER_DEVELOPMENT_RECON_RUN_EMITTED_NOT_RESULT"
+}

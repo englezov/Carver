@@ -1,0 +1,22 @@
+{
+  "blocking_findings": 0,
+  "check_rows": 80,
+  "deployment": "NO",
+  "episode_rows": 1716,
+  "fee_rows": 4815,
+  "forward_access": "NO",
+  "gate": "S27_ZN_MECHANICAL_VERIFICATION_BEFORE_ANY_LOCKBOX_OR_PROMOTION",
+  "lockbox_access": "NO",
+  "market_row_source": "EXISTING_LOCAL_ARTIFACTS_ONLY",
+  "new_data_download": "NO",
+  "oos_access": "NO",
+  "periods": [
+    "ZN_2022_2023_INITIAL_TEST",
+    "ZN_2024_VALIDATION"
+  ],
+  "promotion": "NO",
+  "provider_api_access": "NO",
+  "roll_rows": 17694,
+  "status": "PASS_S27_ZN_MECHANICAL_VERIFICATION_DEV_RECON",
+  "trading": "NO"
+}

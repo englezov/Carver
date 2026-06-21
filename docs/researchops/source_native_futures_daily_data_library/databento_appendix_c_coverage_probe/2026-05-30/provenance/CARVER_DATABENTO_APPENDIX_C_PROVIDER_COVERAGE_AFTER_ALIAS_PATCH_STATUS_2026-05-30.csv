@@ -1,0 +1,16 @@
+status_key,status_value,notes
+gate_name,CARVER_DATABENTO_APPENDIX_C_PROVIDER_COVERAGE_AFTER_ALIAS_PATCH_DECISION_2026-05-30,Post-alias provider coverage rollup.
+appendix_c_rows,102,Full audited Appendix C source universe count.
+databento_exact_metadata_candidate_not_data_ready,53,Exact metadata candidates still require contract identity and dated-contract gates.
+databento_alias_static_mapping_resolved_not_data_ready,16,Alias rows resolved using static official evidence and still not data-ready.
+databento_alias_fail_closed_currency_venue_normalization_required,1,SMI/FSMI product family identified but full lock withheld.
+databento_no_coverage_candidate_fail_closed,32,Rows with no usable Databento provider candidate from current evidence.
+databento_static_provider_candidates_after_alias_patch,69,53 exact plus 16 alias-resolved candidates.
+still_fail_closed_or_unresolved,33,32 no-coverage plus 1 SMI currency/venue fail-closed row.
+ninjatrader_prior_static_candidates,41,NinjaTrader mapped/review-required count from prior chapter.
+net_static_coverage_gain_vs_ninjatrader,28,69 minus 41.
+market_row_access,NO,No OHLCV or market-row parsing.
+ohlcv_download_authorized,NO,No data download authorization is created.
+strategy_use_status,NOT_STRATEGY_INPUT_NOT_BACKTEST_READY,No strategy use authorized.
+next_required_gate,DATABENTO_APPENDIX_C_CONTRACT_IDENTITY_STATIC_LOCK_AND_DATED_CONTRACT_SELECTION_GATE,Static contract identity and dated contract selection only.
+disposition,PASS_PROVIDER_COVERAGE_AFTER_ALIAS_PATCH_PRE_REAL_DATA_SCOPE,No blocking findings.

@@ -1,0 +1,3 @@
+period_label,stage,runtime_rows,min_runtime_lag_days,median_runtime_lag_days,max_runtime_lag_days,lag_zero_rows,runtime_lag_status,lag_days,lag_row_count,lag_row_fraction
+ZN_2022_2023_INITIAL_TEST,INITIAL_TEST,11771,1,1,1,0,PASS_STRICT_PRIOR_MIN_LAG_GE_1,1,11771,1.0
+ZN_2024_VALIDATION,VALIDATION,5919,1,1,1,0,PASS_STRICT_PRIOR_MIN_LAG_GE_1,1,5919,1.0
